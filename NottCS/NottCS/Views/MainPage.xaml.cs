@@ -10,6 +10,7 @@ namespace NottCS.Views
 	{
 		public MainPage ()
 		{
+            //HELLO
 			InitializeComponent ();
 		}
 	}
