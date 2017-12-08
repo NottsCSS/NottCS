@@ -19,7 +19,10 @@ namespace NottCS.Views
 			InitializeComponent ();
 		    // ...
 		    // NOTE: use for debugging, not in released app code!
-		    var assembly = typeof(Page1).GetTypeInfo().Assembly;
+		    if (iconOne != null) iconOne.Source = ImageSource.FromResource("NottCS.Icons.logo1.jpeg");
+		    if (iconTwo != null) iconTwo.Source = ImageSource.FromResource("NottCS.Icons.icon2.png");
+
+            var assembly = typeof(Page1).GetTypeInfo().Assembly;
 		    foreach (var res in assembly.GetManifestResourceNames())
 		    {
 		        System.Diagnostics.Debug.WriteLine("found resource: " + res);

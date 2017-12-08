@@ -5,10 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\ImageResourceExtension.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Icons\icon2.png" />
     <None Remove="Icons\logo1.jpeg" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Icons\icon2.png" />
     <EmbeddedResource Include="Icons\logo1.jpeg" />
   </ItemGroup>
 

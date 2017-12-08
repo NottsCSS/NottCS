@@ -9,7 +9,8 @@
             <Label Text="Welcome to Xamarin.Forms!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-<!--            <Image Source="{local:ImageResource NottCS.Icons.logo1.jpeg}"></Image>-->
+            <Image x:Name="iconOne"></Image>
+            <Image x:Name="iconTwo"></Image>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
