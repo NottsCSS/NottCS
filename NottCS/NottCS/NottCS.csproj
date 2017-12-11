@@ -5,25 +5,37 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModels\**" />
+    <EmbeddedResource Remove="ViewModels\**" />
+    <None Remove="ViewModels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Icons\icon2.png" />
+    <None Remove="Icons\logo1.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\icon2.png" />
+    <EmbeddedResource Include="Icons\logo1.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.77107" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\AboutPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\ItemDetailPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\ItemsPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\MainPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\NewItemPage.xaml.cs">
-      <SubType>Code</SubType>
+    <Compile Update="Views\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
 </Project>

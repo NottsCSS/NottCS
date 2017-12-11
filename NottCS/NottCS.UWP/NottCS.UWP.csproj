@@ -150,11 +150,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.77107" />
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.1"/>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NottCS\NottCS.csproj">
-      <Project>{3399794A-71A5-454B-9CDE-3F084FC21E8D}</Project>
+      <Project>{3dd5d3fd-391f-4e0f-bc6f-7ff69a5fbd14}</Project>
       <Name>NottCS</Name>
     </ProjectReference>
   </ItemGroup>
