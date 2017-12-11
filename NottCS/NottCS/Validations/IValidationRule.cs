@@ -1,4 +1,4 @@
-﻿namespace NottCS.ViewModels.Validations
+﻿namespace NottCS.Validations
 {
     public interface IValidationRule<T>
     {

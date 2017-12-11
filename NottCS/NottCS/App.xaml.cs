@@ -11,8 +11,6 @@ namespace NottCS
 		public App ()
 		{
 			InitializeComponent();
-
-
             MainPage = new MainPage();
         }
 

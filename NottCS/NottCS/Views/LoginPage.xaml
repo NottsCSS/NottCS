@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.LoginPage"
+             x:Name="Login Page"
+             Title="{Binding Title}"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:rootViewModel="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+             d:DataContext="{d:DesignInstance viewModels:LoginViewModel}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringListToStringConverter x:Key="StringListToStringConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+
+        <StackLayout>
+            <Label Text="Login Pageasd"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Image x:Name="IconOne" Margin="10,20">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding SignInCommand}"
+                        NumberOfTapsRequired="1" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Entry
+                Text ="{Binding UserName.Value}"></Entry>
+            <Label
+                Text ="{Binding UserName.Errors, Converter={StaticResource StringListToStringConverter}}"></Label>
+            <ActivityIndicator Color="Green" IsRunning="{Binding IsBusy}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

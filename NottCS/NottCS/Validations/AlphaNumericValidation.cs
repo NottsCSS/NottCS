@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
-namespace NottCS.ViewModels.Validations
+namespace NottCS.Validations
 {
     class AlphaNumericValidation<T> : IValidationRule<T>
     {

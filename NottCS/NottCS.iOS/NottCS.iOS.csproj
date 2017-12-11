@@ -148,11 +148,5 @@
   <ItemGroup>
     <BundleResource Include="Resources\xamarin_logo%403x.png" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NottCS\NottCS.csproj">
-      <Project>{3399794A-71A5-454B-9CDE-3F084FC21E8D}</Project>
-      <Name>NottCS</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

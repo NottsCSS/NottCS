@@ -14,7 +14,7 @@
                 <views:ItemsPage />
             </x:Arguments>
         </NavigationPage>
-        
+
         <NavigationPage Title="About">
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
@@ -25,16 +25,6 @@
                 <views:AboutPage />
             </x:Arguments>
         </NavigationPage>
-        <NavigationPage Title="New1">
-            <NavigationPage.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="iOS" Value="tab_feed.png"/>
-                </OnPlatform>
-            </NavigationPage.Icon>
-            <x:Arguments>
-                <views:MasterDetailPage1 />
-            </x:Arguments>
-        </NavigationPage>
         <NavigationPage Title="New2">
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
@@ -42,18 +32,8 @@
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
-                <views:Page1 />
+                <views:LoginPage />
             </x:Arguments>
         </NavigationPage>
-<!--        <NavigationPage Title="New3">-->
-<!--            <NavigationPage.Icon>-->
-<!--                <OnPlatform x:TypeArguments="FileImageSource">-->
-<!--                    <On Platform="iOS" Value="tab_feed.png"/>-->
-<!--                </OnPlatform>-->
-<!--            </NavigationPage.Icon>-->
-<!--            <x:Arguments>-->
-<!--                <views:View1 />-->
-<!--            </x:Arguments>-->
-<!--        </NavigationPage>-->
     </TabbedPage.Children>
 </TabbedPage>

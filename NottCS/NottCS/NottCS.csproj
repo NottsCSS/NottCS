@@ -16,6 +16,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\ItemDetailViewModel.cs" />
+    <Compile Include="ViewModels\ItemsViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="Icons\icon2.png" />
     <EmbeddedResource Include="Icons\logo1.jpeg" />
   </ItemGroup>
@@ -24,4 +32,9 @@
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.77107" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Views\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>
