@@ -39,12 +39,8 @@ namespace NottCS.ViewModels
             IsBusy = true;
 
             bool isValid = Validate();
+            //Implement actual login business logic in the next line
             await Task.Delay(500);
-            Debug.WriteLine("Sign in attempted");
-            foreach (var error in _userName.Errors)
-            {
-                Debug.WriteLine(error);
-            }
             IsBusy = false;
         }
     }
