@@ -5,20 +5,18 @@ using System.Runtime.CompilerServices;
 
 using Xamarin.Forms;
 
-using NottCS.Models;
 using NottCS.Services;
 
 namespace NottCS.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>() ?? new MockDataStore();
 
-        bool isBusy = false;
+        bool _isBusy = false;
         public bool IsBusy
         {
-            get => isBusy;
-            set => SetProperty(ref isBusy, value);
+            get => _isBusy;
+            set => SetProperty(ref _isBusy, value);
         }
 
         string _title = string.Empty;

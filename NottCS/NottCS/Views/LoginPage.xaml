@@ -20,20 +20,24 @@
 
         <StackLayout>
             <Label Text="Login Pageasd"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <Image x:Name="IconOne" Margin="10,20">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer
-                        Command="{Binding SignInCommand}"
-                        NumberOfTapsRequired="1" />
-                </Image.GestureRecognizers>
+                   FontSize="Large"
+                   VerticalOptions="Start" 
+                   HorizontalOptions="CenterAndExpand" />
+            <Image x:Name="IconOne" Margin="10,20"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Fill">
             </Image>
             <Entry
-                Text ="{Binding UserName.Value}"></Entry>
+                Text ="{Binding UserName.Value}"
+                Margin="20,0"></Entry>
             <Label
-                Text ="{Binding UserName.Errors, Converter={StaticResource StringListToStringConverter}}"></Label>
+                Margin="20,0"
+                TextColor="Red"
+                FontSize="Medium"
+                Text ="{Binding UserName.Errors, Converter={StaticResource StringListToStringConverter}}" />
+            <Button Text="Login" Command="{Binding SignInCommand}" />
             <ActivityIndicator Color="Green" IsRunning="{Binding IsBusy}" />
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
