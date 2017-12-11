@@ -19,23 +19,51 @@
     <ContentPage.Content>
 
         <StackLayout>
-            <Label Text="Login Pageasd"
+            <Label Text="NottCS Login"
                    FontSize="Large"
                    VerticalOptions="Start" 
                    HorizontalOptions="CenterAndExpand" />
-            <Image x:Name="IconOne" Margin="10,20"
+            <Image x:Name = "IconOne" Margin="10,20"
                    HorizontalOptions="Center"
                    VerticalOptions="Fill">
             </Image>
-            <Entry
+            <Entry Placeholder="Username"
                 Text ="{Binding UserName.Value}"
-                Margin="20,0"></Entry>
-            <Label
-                Margin="20,0"
-                TextColor="Red"
-                FontSize="Medium"
-                Text ="{Binding UserName.Errors, Converter={StaticResource StringListToStringConverter}}" />
-            <Button Text="Login" Command="{Binding SignInCommand}" />
+                Margin = "30,0,30,0" />
+            <Label Margin = "30,0,0,0"
+                   TextColor = "Red"
+                   FontSize = "Medium"
+                   Text = "{Binding UserName.Errors, Converter = {StaticResource StringListToStringConverter}}" />
+            <Entry Placeholder="Password"
+                   IsPassword="True"
+                   Text ="{Binding Password.Value}"
+                   Margin = "30,0,30,0"/>
+            <Label Margin = "30,0,0,0"
+                   TextColor = "Red"
+                   FontSize = "Medium"
+                   Text = "{Binding Password.Errors, Converter = {StaticResource StringListToStringConverter}}" />
+            <Button Text = "Login" Command = "{Binding SignInCommand}" 
+                    Margin="50,0,50,0" />
+            <Label Margin = "50,0,0,0"
+                   Text = "Register"
+                   FontSize="Medium"
+                   TextColor="{Binding RegisterTextColor}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding RegisterCommand}"
+                                          NumberOfTapsRequired="1">
+                    </TapGestureRecognizer>
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Margin = "50,10,0,0"
+                   Text = "Forgot Password"
+                   FontSize="Medium"
+                   TextColor="{Binding ForgotPasswordTextColor}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}"
+                                          NumberOfTapsRequired="1">
+                    </TapGestureRecognizer>
+                </Label.GestureRecognizers>
+            </Label>
             <ActivityIndicator Color="Green" IsRunning="{Binding IsBusy}" />
 
         </StackLayout>

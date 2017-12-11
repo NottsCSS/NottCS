@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
-using Xamarin.Forms;
 
 namespace NottCS.Validations
 {
-    class AlphaNumericValidation<T> : IValidationRule<T>
+    class NotEmptyRule<T> : IValidationRule<T>
     {
         public string ValidationMessage { get; set; }
 
@@ -16,9 +14,10 @@ namespace NottCS.Validations
             {
                 return false;
             }
+
             var str = value as string;
-            Regex r = new Regex("^[a-zA-Z0-9]*$");
-            return r.IsMatch(str);
+
+            return !string.IsNullOrWhiteSpace(str);
         }
     }
 }

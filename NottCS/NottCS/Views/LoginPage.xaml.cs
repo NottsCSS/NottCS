@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using NottCS.Services;
@@ -15,7 +15,8 @@ namespace NottCS.Views
 		{
 			InitializeComponent ();
 		    BindingContext = viewModel = new LoginViewModel();
-            if (IconOne != null) IconOne.Source = ImageSource.FromResource("NottCS.Icons.icon2.png");
+		    var assembly = typeof(NottCS.Views.LoginPage);
+            if (IconOne != null) IconOne.Source = ImageSource.FromResource("NottCS.Icons.icon2.png", assembly);
             
         }
 	}
