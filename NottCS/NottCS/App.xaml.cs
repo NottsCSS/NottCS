@@ -11,7 +11,7 @@ namespace NottCS
 		public App ()
 		{
 			InitializeComponent();
-            MainPage = new LoginPage();
+            MainPage = new RegisterationPage();
         }
 
 		protected override void OnStart ()

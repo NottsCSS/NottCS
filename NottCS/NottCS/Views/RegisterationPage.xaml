@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.RegisterationPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType ="Entry">
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="WidthRequest" Value="500"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="Center">
+            <Label FontSize="Large" Margin="10">REGISTERATION</Label>
+            <Entry x:Name="NameEntry" Placeholder="Name"/>
+            <Entry x:Name="OWAEntry" Placeholder="OWA Email"/>
+            <Entry x:Name="Password" Placeholder="Password"/>
+            <Entry x:Name="StudentIDEntry" Placeholder="Student ID"/>
+            <Entry x:Name="LibraryNumberEntry" Placeholder="Library Number"/>
+            <Entry x:Name="CourseEntry" Placeholder="Course"/>
+            <Button x:Name="RegisterButton" Text="REGISTER" WidthRequest="300" HeightRequest="50" HorizontalOptions="Start" Margin="10"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

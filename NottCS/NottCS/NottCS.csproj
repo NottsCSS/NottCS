@@ -11,6 +11,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\RegisterationPagexaml.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\RegisterationPagexaml.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Icons\icon2.png" />
     <None Remove="Icons\logo1.jpeg" />
   </ItemGroup>
@@ -37,5 +45,11 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\RegisterationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
