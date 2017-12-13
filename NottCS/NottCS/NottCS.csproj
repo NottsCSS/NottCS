@@ -19,8 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Icons\icon2.png" />
-    <None Remove="Icons\logo1.jpeg" />
+    <None Remove="Images\example-background.jpg" />
+    <None Remove="Images\Icons\icon2.png" />
+    <None Remove="Images\Icons\logo1.jpeg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,8 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Icons\icon2.png" />
-    <EmbeddedResource Include="Icons\logo1.jpeg" />
+    <EmbeddedResource Include="Images\example-background.jpg" />
+    <EmbeddedResource Include="Images\Icons\icon2.png" />
+    <EmbeddedResource Include="Images\Icons\logo1.jpeg" />
   </ItemGroup>
 
   <ItemGroup>

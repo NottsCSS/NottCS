@@ -23,13 +23,17 @@
     <ContentPage.Content>
         <StackLayout HorizontalOptions="Center">
             <Label FontSize="Large" Margin="10">REGISTRATION</Label>
-            <Entry x:Name="NameEntry" Placeholder="Name" Text="{Binding Name.Value}"/>
-            <Label Text="{Binding Name.Errors, Converter=StringListToStringConverter}" />
-            <Entry x:Name="OWAEntry" Placeholder="OWA Email"/>
-            <Entry x:Name="Password" Placeholder="Password"/>
-            <Entry x:Name="StudentIDEntry" Placeholder="Student ID"/>
-            <Entry x:Name="LibraryNumberEntry" Placeholder="Library Number"/>
-            <Entry x:Name="CourseEntry" Placeholder="Course"/>
+            <ScrollView>
+                <StackLayout>
+                    <Entry x:Name="NameEntry" Placeholder="Name" Text="{Binding Name.Value}"/>
+                    <Label Text="{Binding Name.Errors, Converter=StringListToStringConverter}" />
+                    <Entry x:Name="OWAEntry" Placeholder="OWA Email"/>
+                    <Entry x:Name="Password" Placeholder="Password" IsPassword="True"/>
+                    <Entry x:Name="StudentIDEntry" Placeholder="Student ID"/>
+                    <Entry x:Name="LibraryNumberEntry" Placeholder="Library Number"/>
+                    <Entry x:Name="CourseEntry" Placeholder="Course"/>
+                </StackLayout>
+            </ScrollView>
             <Button x:Name="RegisterButton" Text="REGISTER" WidthRequest="300" HeightRequest="50" HorizontalOptions="Start" Margin="10"/>
         </StackLayout>
     </ContentPage.Content>
