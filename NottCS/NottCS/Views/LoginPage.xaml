@@ -48,7 +48,7 @@
                            Margin = "30,0,30,0" />
                     <Label Margin = "30,0,0,0"
                            TextColor = "Red"
-                           FontSize = "Medium"
+                           FontSize = "Small"
                            Text = "{Binding UserName.Errors, Converter = {StaticResource StringListToStringConverter}}" />
                     <Entry Placeholder="Password"
                            IsPassword="True"
@@ -56,7 +56,7 @@
                            Margin = "30,0,30,0"/>
                     <Label Margin = "30,0,0,0"
                            TextColor = "Red"
-                           FontSize = "Medium"
+                           FontSize = "Small"
                            Text = "{Binding Password.Errors, Converter = {StaticResource StringListToStringConverter}}" />
                     <Button Text = "Login" Command = "{Binding SignInCommand}" 
                             Margin="50,0,50,0" />
