@@ -11,18 +11,29 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Icons\icon2.png" />
-    <None Remove="Icons\logo1.jpeg" />
+    <Compile Remove="Views\RegisterationPagexaml.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\RegisterationPagexaml.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Images\example-background.jpg" />
+    <None Remove="Images\Icons\icon2.png" />
+    <None Remove="Images\Icons\logo1.jpeg" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\RegistrationViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Icons\icon2.png" />
-    <EmbeddedResource Include="Icons\logo1.jpeg" />
+    <EmbeddedResource Include="Images\example-background.jpg" />
+    <EmbeddedResource Include="Images\Icons\icon2.png" />
+    <EmbeddedResource Include="Images\Icons\logo1.jpeg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +44,15 @@
     <Compile Update="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\RegistrationPage.xaml.cs">
+      <DependentUpon>RegistrationPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\RegistrationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
