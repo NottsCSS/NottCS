@@ -65,7 +65,8 @@ namespace NottCS.ViewModels
         //Private methods
         private void AddValidationRules()
         {
-            _userName.Validations.Add(new AlphaNumericRule<string>() { ValidationMessage = "A valid username is required" });
+            _userName.Validations.Add(new NotEmptyRule<string>() {ValidationMessage = "Username cannot be empty"});
+            _userName.Validations.Add(new AlphaNumericRule<string>() { ValidationMessage = "Only OWA is accepted" });
             _password.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Password cannot be empty" });
         }
         

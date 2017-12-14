@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.RegistrationPage"
+             Title ="{Binding Title}"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:rootViewModel="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+             d:DataContext="{d:DesignInstance viewModels:RegistrationViewModel}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringListToStringConverter x:Key="StringListToStringConverter" />
+            <Style TargetType ="Entry">
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="WidthRequest" Value="500"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="Center">
+            <Label FontSize="Large" Margin="10">REGISTRATION</Label>
+            <ScrollView>
+                <StackLayout>
+                    <Entry x:Name="NameEntry" Placeholder="Name" Text="{Binding Name.Value}"/>
+                    <Label Text="{Binding Name.Errors, Converter=StringListToStringConverter}" />
+                    <Entry x:Name="OWAEntry" Placeholder="OWA Email"/>
+                    <Entry x:Name="Password" Placeholder="Password" IsPassword="True"/>
+                    <Entry x:Name="StudentIDEntry" Placeholder="Student ID"/>
+                    <Entry x:Name="LibraryNumberEntry" Placeholder="Library Number"/>
+                    <Entry x:Name="CourseEntry" Placeholder="Course"/>
+                </StackLayout>
+            </ScrollView>
+            <Button x:Name="RegisterButton" Text="REGISTER" WidthRequest="300" HeightRequest="50" HorizontalOptions="Start" Margin="10"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
