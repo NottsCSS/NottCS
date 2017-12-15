@@ -7,7 +7,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             xmlns:rootViewModel="clr-namespace:NottCS.ViewModels;assembly=NottCS"
              xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
              xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
              d:DataContext="{d:DesignInstance viewModels:LoginViewModel}">
@@ -32,7 +31,7 @@
                 <Image x:Name="BannerImage"
                        Aspect="AspectFill"
                        HorizontalOptions="FillAndExpand"
-                       Grid.RowSpan="2"/>
+                       Grid.Row="0" Grid.RowSpan="2"/>
                 <Image x:Name = "IconOne" 
                        Margin="10,20"
                        HorizontalOptions="Center"
