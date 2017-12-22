@@ -16,5 +16,16 @@ namespace NottCS.Views
 		{
 			InitializeComponent ();
 		}
+
+
+
+        private void AddImage(Image imageContainer, string imageLocation)
+        {
+            var assembly = typeof(NottCS.Views.LoginPage);
+            if (imageContainer != null)
+            {
+                imageContainer.Source = ImageSource.FromResource(imageLocation, assembly);
+            }
+        }
 	}
 }
