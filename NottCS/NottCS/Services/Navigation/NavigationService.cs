@@ -21,7 +21,9 @@ namespace NottCS.Services.Navigation
                 {
                     var viewModel = mainPage.Navigation.NavigationStack[mainPage.Navigation.NavigationStack.Count - 2].BindingContext;
                     return viewModel as BaseViewModel;
+                    
                 }
+                return null;
             }
         }
 

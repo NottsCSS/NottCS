@@ -10,16 +10,14 @@ using Xamarin.Forms.Xaml;
 namespace NottCS.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class RegistrationSuccessPage : ContentPage
+	public partial class EventRegSuccessPage : ContentPage
 	{
-		public RegistrationSuccessPage ()
+		public EventRegSuccessPage ()
 		{
 			InitializeComponent ();
             AddImage(SuccessIcon, "NottCS.Images.Icons.ok.png");
             //AddImage(Back, "NottCS.Images.Icons.back.png");
         }
-
-
 
         private void AddImage(Image imageContainer, string imageLocation)
         {
@@ -29,5 +27,5 @@ namespace NottCS.Views
                 imageContainer.Source = ImageSource.FromResource(imageLocation, assembly);
             }
         }
-	}
+    }
 }
