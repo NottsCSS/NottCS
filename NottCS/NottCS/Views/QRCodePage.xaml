@@ -20,7 +20,7 @@
                             HorizontalOptions="Center"
                             Margin="10,10">
                     <StackLayout>
-                        <Label Text="Thank you for signing up, please verify your registeration by paying the membership fees and scan the QR code."
+                        <Label Text="Thank you for signing up, please verify your registration by paying the membership fees and scan the QR code."
                                HorizontalOptions="CenterAndExpand"/>
                         <Button Text = "SAVE QR CODE"
                                 FontSize="Large"

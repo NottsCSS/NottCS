@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace NottCS.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ClubRegisterationPage : ContentPage
+	public partial class ClubRegistrationPage : ContentPage
 	{
-		public ClubRegisterationPage ()
+		public ClubRegistrationPage ()
 		{
 			InitializeComponent ();
             AddImage(PlaceHolder, "NottCS.Images.example-background.jpg");
