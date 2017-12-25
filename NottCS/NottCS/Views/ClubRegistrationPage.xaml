@@ -7,35 +7,37 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Image x:Name="PlaceHolder"
                        Aspect="AspectFill"
                        HorizontalOptions="FillAndExpand"
                        Grid.Row="0" Grid.RowSpan="2"/>
                 <Image x:Name = "Logo1" 
-                       Margin="10,2"
+                       Margin="10,10"
                        HorizontalOptions="Center"
                        VerticalOptions="Fill"
                        Grid.Row="1"
                        Grid.RowSpan="2">
                 </Image>
                 <ScrollView Grid.Row="3"
-                            Margin="5,0">
+                            HorizontalOptions="Center"
+                            Margin="0,0,5,0">
                     <StackLayout>
                         <Label Text="Lorem ipsum dolor sit amet, consectetur  adipiscing elit, sed do eiusmod tempor incididunt  ut labore et dolore magna aliqua. Ut enim ad  minim veniam, quis nostrud exercitation ullamco  laboris nisi ut aliquip ex ea commodo consequat."
-                               HorizontalOptions="CenterAndExpand"/>
+                               HorizontalOptions="CenterAndExpand"
+                               HorizontalTextAlignment="Center"/>
                     </StackLayout>
                 </ScrollView>
                 <Button Text = "SIGN UP"
                         FontSize="Large"
                         Grid.Row="4"
-                        HorizontalOptions="CenterAndExpand"
+                        HorizontalOptions="FillAndExpand"
                         VerticalOptions="EndAndExpand"
-                        Margin="0,0" />
+                        Clicked="OnButtonClicked"/>
             </Grid>
         </Grid>
     </ContentPage.Content>

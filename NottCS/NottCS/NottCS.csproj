@@ -21,9 +21,11 @@
   <ItemGroup>
     <None Remove="Images\example-background.jpg" />
     <None Remove="Images\Icons\back.png" />
+    <None Remove="Images\Icons\EmailContent.png" />
     <None Remove="Images\Icons\icon2.png" />
     <None Remove="Images\Icons\logo1.jpeg" />
     <None Remove="Images\Icons\ok.png" />
+    <None Remove="Images\Icons\okfixed.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,9 +37,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Images\example-background.jpg" />
     <EmbeddedResource Include="Images\Icons\back.png" />
+    <EmbeddedResource Include="Images\Icons\EmailContent.png" />
     <EmbeddedResource Include="Images\Icons\icon2.png" />
     <EmbeddedResource Include="Images\Icons\logo1.jpeg" />
     <EmbeddedResource Include="Images\Icons\ok.png" />
+    <EmbeddedResource Include="Images\Icons\okfixed.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,6 +51,9 @@
   <ItemGroup>
     <Compile Update="Views\ClubRegistrationPage.xaml.cs">
       <DependentUpon>ClubRegistrationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Home.xaml.cs">
+      <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -58,6 +65,12 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Views\ClubRegistrationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\EventPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Home.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\EventRegSuccessPage.xaml">

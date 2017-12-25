@@ -15,7 +15,7 @@ namespace NottCS.Views
 		public EventRegSuccessPage ()
 		{
 			InitializeComponent ();
-            AddImage(SuccessIcon, "NottCS.Images.Icons.ok.png");
+            AddImage(SuccessIcon, "NottCS.Images.Icons.okfixed.png");
             //AddImage(Back, "NottCS.Images.Icons.back.png");
         }
 

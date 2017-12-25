@@ -6,22 +6,21 @@
         <Grid>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10"/>
                     <RowDefinition Height="150"/>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Image x:Name="PlaceHolder"
-                       Margin="5,5"
+                       Margin="10,5"
                        HorizontalOptions="CenterAndExpand"
                        VerticalOptions="FillAndExpand"
-                       Grid.Row="1"/>
-                <ScrollView Grid.Row="2"
+                       Grid.Row="0"/>
+                <ScrollView Grid.Row="1"
                             HorizontalOptions="Center"
                             Margin="10,10">
                     <StackLayout>
                         <Label Text="Thank you for signing up, please verify your registration by paying the membership fees and scan the QR code."
-                               HorizontalOptions="CenterAndExpand"/>
+                               HorizontalOptions="CenterAndExpand"
+                               HorizontalTextAlignment="Center"/>
                         <Button Text = "SAVE QR CODE"
                                 FontSize="Large"
                             Margin="5,10,5,0" />

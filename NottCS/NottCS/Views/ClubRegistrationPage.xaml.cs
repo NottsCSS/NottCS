@@ -18,7 +18,11 @@ namespace NottCS.Views
             AddImage(PlaceHolder, "NottCS.Images.example-background.jpg");
             AddImage(Logo1, "NottCS.Images.Icons.icon2.png");
         }
-
+        async void OnButtonClicked(object sender, EventArgs args)
+        {
+            Button button = (Button)sender;
+            await Navigation.PushAsync(new QRCodePage());
+        }
 
 
         private void AddImage(Image imageContainer, string imageLocation)
