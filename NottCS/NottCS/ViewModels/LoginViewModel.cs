@@ -95,7 +95,6 @@ namespace NottCS.ViewModels
             //Debugging code
             Debug.WriteLine("Registration function called");
 
-            RegisterTextColor = Color.Black;
 
             //TODO: implement navigation to registration page
             //Delay to simulate real code running
@@ -107,6 +106,7 @@ namespace NottCS.ViewModels
             {
                 Debug.WriteLine(exception.Message);
             }
+            RegisterTextColor = Color.Black;
             IsBusy = false;
         }
         private async Task ForgotPassword()

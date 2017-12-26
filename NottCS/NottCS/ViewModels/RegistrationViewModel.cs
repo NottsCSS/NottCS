@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using NottCS.Validations;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace NottCS.ViewModels
 {
@@ -18,6 +19,11 @@ namespace NottCS.ViewModels
         {
             Title = "NottCS Login";
             AddValidationRules();
+        }
+
+        public override Task InitializeAsync(object navigationData)
+        {
+            return base.InitializeAsync(navigationData);
         }
 
         private void AddValidationRules()
