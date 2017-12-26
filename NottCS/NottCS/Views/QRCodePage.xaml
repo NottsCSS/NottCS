@@ -17,7 +17,7 @@
                 <ScrollView Grid.Row="1"
                             HorizontalOptions="Center"
                             Margin="10,10">
-                    <StackLayout>
+                    <StackLayout WidthRequest="500">
                         <Label Text="Thank you for signing up, please verify your registration by paying the membership fees and scan the QR code."
                                HorizontalOptions="CenterAndExpand"
                                HorizontalTextAlignment="Center"/>

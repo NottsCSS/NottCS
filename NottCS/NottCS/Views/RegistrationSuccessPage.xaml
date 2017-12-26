@@ -32,10 +32,7 @@
                                Margin="10,20"
                                VerticalOptions="Fill"
                                HorizontalOptions="CenterAndExpand"/>
-                        <Label Text="Thanks for joining"
-                               FontSize="Large"
-                               HorizontalOptions="Center"/>
-                        <Label Text="NottCS!"
+                        <Label Text="Thanks for joining NottCS!"
                                FontSize="Large"
                                HorizontalOptions="Center"/>
                     </StackLayout>
