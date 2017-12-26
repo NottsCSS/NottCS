@@ -6,110 +6,64 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using NottCS.ViewModels;
-using NottCS.Views;
 using Xamarin.Forms;
 
 namespace NottCS.Services.Navigation
 {
-    class NavigationService : INavigationService
+    static class NavigationService
     {
-        public BaseViewModel PreviousPageViewModel
+        public static async Task NavigateToAsync<TViewModel>(object parameter = null) where TViewModel : BaseViewModel, new()
         {
-            get
+            if (Application.Current.MainPage is NavigationPage navigationPage)
             {
-                if (Application.Current.MainPage is NavigationPage mainPage)
+                Page page = null;
+                Type viewModelType = typeof(TViewModel);
+                try
                 {
-                    var viewModel = mainPage.Navigation.NavigationStack[mainPage.Navigation.NavigationStack.Count - 2].BindingContext;
-                    return viewModel as BaseViewModel;
-                    
+                    page = CreatePage(viewModelType);
                 }
-                return null;
-            }
-        }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
 
-        public Task InitializeAsync() => NavigateToAsync<LoginViewModel>();
+                if (page != null)
+                {
+                    if (page.BindingContext is BaseViewModel viewModel)
+                    {
+                        await viewModel.InitializeAsync(parameter);
+                    }
+                    else
+                    {
+                        Type pageType = page.GetType();
+                        throw new Exception($"{pageType} has binding context that is not derived from BaseViewModel");
+                    }
+                    await navigationPage.PushAsync(page);
+                }
 
-        public Task NavigateToAsync<TViewModel>() where TViewModel : BaseViewModel
-        {
-            return InternalNavigateToAsync(typeof(TViewModel), null);
-        }
-
-        public Task NavigateToAsync<TViewModel>(object parameter) where TViewModel : BaseViewModel
-        {
-            return InternalNavigateToAsync(typeof(TViewModel), parameter);
-        }
-
-        public Task RemoveLastFromBackStackAsync()
-        {
-            if (Application.Current.MainPage is NavigationPage mainPage)
-            {
-                mainPage.Navigation.RemovePage(
-                    mainPage.Navigation.NavigationStack[mainPage.Navigation.NavigationStack.Count - 2]);
-            }
-
-            return Task.FromResult(true);
-        }
-
-        public Task RemoveBackStackAsync()
-        {
-            if (!(Application.Current.MainPage is NavigationPage mainPage)) return Task.FromResult(true);
-            for (var i = 0; i < mainPage.Navigation.NavigationStack.Count - 1; i++)
-            {
-                var page = mainPage.Navigation.NavigationStack[i];
-                mainPage.Navigation.RemovePage(page);
-            }
-
-            return Task.FromResult(true);
-        }
-
-        private async Task InternalNavigateToAsync(Type viewModelType, object parameter)
-        {
-            Page page = null;
-            try
-            {
-                page = CreatePage(viewModelType, parameter);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-            }
-
-            if (page is LoginPage)
-            {
-                Application.Current.MainPage = new NavigationPage(page);
             }
             else
             {
-                if (Application.Current.MainPage is NavigationPage navigationPage)
-                {
-                    await navigationPage.PushAsync(page);
-                }
-                else
-                {
-                    Application.Current.MainPage = new NavigationPage(page);
-                }
+                Type pageType = Application.Current.MainPage.GetType();
+                String pageTypeString = pageType.ToString();
+                throw new Exception($"{pageTypeString} is not navigationPage");
             }
-
-            await (page.BindingContext as BaseViewModel).InitializeAsync(parameter);
         }
-
-        private Type GetPageTypeForViewModel(Type viewModelType)
+        private static Type GetPageTypeForViewModel(Type viewModelType)
         {
-            var viewName = viewModelType.FullName.Replace("Model", string.Empty);
+            var viewName = viewModelType.FullName.Replace("ViewModel", "Page");
             var viewModelAssemblyName = viewModelType.GetTypeInfo().Assembly.FullName;
             var viewAssemblyName = string.Format(CultureInfo.InvariantCulture, "{0}, {1}", viewName, viewModelAssemblyName);
             var viewType = Type.GetType(viewAssemblyName);
             return viewType;
         }
-
-        private Page CreatePage(Type viewModelType, object parameter)
+        private static Page CreatePage(Type viewModelType)
         {
             Type pageType = GetPageTypeForViewModel(viewModelType);
             if (pageType == null)
             {
                 throw new Exception($"Cannot locate page type for {viewModelType}");
             }
-
             Page page = Activator.CreateInstance(pageType) as Page;
             return page;
         }
