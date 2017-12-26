@@ -9,7 +9,7 @@ using NottCS.Services;
 
 namespace NottCS.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel : INotifyPropertyChanged
     {
 
         bool _isBusy = false;
