@@ -45,7 +45,7 @@
                             HorizontalOptions="Center"
                             WidthRequest="500">
                     <StackLayout>
-                        <Entry Placeholder="Username"
+                        <Entry Placeholder="Username (OWA)"
                            Text ="{Binding UserName.Value}"
                            Margin = "30,0,30,0" />
                         <Label Margin = "30,0,0,0"
