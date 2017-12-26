@@ -52,7 +52,6 @@ namespace NottCS.Services.Navigation
         private static Type GetPageTypeForViewModel(Type viewModelType)
         {
             string viewName = (viewModelType.FullName.Replace("ViewModels", "Views")).Replace("ViewModel", "Page");
-            Debug.WriteLine(viewName);
             string viewModelAssemblyName = viewModelType.GetTypeInfo().Assembly.FullName;
             string viewAssemblyName = string.Format(CultureInfo.InvariantCulture, "{0}, {1}", viewName, viewModelAssemblyName);
             Type viewType = Type.GetType(viewAssemblyName);

@@ -13,6 +13,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:StringListToStringConverter x:Key="StringListToStringConverter" />
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
             <Style TargetType ="Entry">
                 <Setter Property="Margin" Value="10"/>
                 <Setter Property="WidthRequest" Value="500"/>
@@ -26,15 +27,40 @@
             <ScrollView>
                 <StackLayout>
                     <Entry x:Name="NameEntry" Placeholder="Name" Text="{Binding Name.Value}"/>
-                    <Label Text="{Binding Name.Errors, Converter=StringListToStringConverter}" />
-                    <Entry x:Name="OWAEntry" Placeholder="OWA Email"/>
-                    <Entry x:Name="Password" Placeholder="Password" IsPassword="True"/>
-                    <Entry x:Name="StudentIDEntry" Placeholder="Student ID"/>
-                    <Entry x:Name="LibraryNumberEntry" Placeholder="Library Number"/>
+                    <Label x:Name="NameErrorMessage"  
+                           IsVisible="{Binding IsValidName, Converter={StaticResource InverseBoolConverter}}"
+                           TextColor = "Red"
+                           FontSize = "Small"
+                           Text="{Binding Name.Errors, Converter={StaticResource StringListToStringConverter}}" />
+                    <Entry x:Name="OWAEntry" Placeholder="OWA Username" Text="{Binding OWA.Value}"/>
+                    <Label x:Name="OWAErrorMessage" 
+                           IsVisible="{Binding IsValidOWA, Converter={StaticResource InverseBoolConverter}}"
+                           TextColor = "Red"
+                           FontSize = "Small"
+                           Text="{Binding OWA.Errors, Converter={StaticResource StringListToStringConverter}}" />
+                    <Entry x:Name="Password" Placeholder="Password" IsPassword="True" Text="{Binding Password.Value}"/>
+                    <Label x:Name="PasswordErrorMessage"
+                           IsVisible="{Binding IsValidPassword, Converter={StaticResource InverseBoolConverter}}"
+                           TextColor = "Red"
+                           FontSize = "Small"
+                           Text="{Binding Password.Errors, Converter={StaticResource StringListToStringConverter}}" />
+                    <Entry x:Name="StudentIDEntry" Placeholder="Student ID" Text="{Binding StudentID.Value}"/>
+                    <Label x:Name="StudentIDErrorMessage"
+                           IsVisible="{Binding IsValidStudentID, Converter={StaticResource InverseBoolConverter}}"
+                           TextColor = "Red"
+                           FontSize = "Small"
+                           Text="{Binding StudentID.Errors, Converter={StaticResource StringListToStringConverter}}" />
+                    <Entry x:Name="LibraryNumberEntry" Placeholder="Library Number" Text="{Binding LibraryNumber.Value}" />
+                    <Label x:Name="LibraryNumberErrorMessage"
+                           IsVisible="{Binding IsValidLibraryNumber, Converter={StaticResource InverseBoolConverter}}"
+                           TextColor = "Red"
+                           FontSize = "Small"
+                           Text="{Binding LibraryNumber.Errors, Converter={StaticResource StringListToStringConverter}}" />
                     <Entry x:Name="CourseEntry" Placeholder="Course"/>
                 </StackLayout>
             </ScrollView>
-            <Button x:Name="RegisterButton" Text="REGISTER" WidthRequest="300" HeightRequest="50" HorizontalOptions="Start" Margin="10"/>
+            <Button x:Name="RegisterButton" Text="REGISTER" WidthRequest="300" HeightRequest="50" HorizontalOptions="Start" Margin="10" Command="{Binding RegisterCommand}"/>
+            <ActivityIndicator Color="Green" IsRunning="{Binding IsBusy}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
