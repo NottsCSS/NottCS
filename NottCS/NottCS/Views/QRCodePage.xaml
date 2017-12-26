@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.QRCodePage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="PlaceHolder"
+                       Margin="10,5"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="FillAndExpand"
+                       Grid.Row="0"/>
+                <ScrollView Grid.Row="1"
+                            HorizontalOptions="Center"
+                            Margin="10,10">
+                    <StackLayout>
+                        <Label Text="Thank you for signing up, please verify your registration by paying the membership fees and scan the QR code."
+                               HorizontalOptions="CenterAndExpand"
+                               HorizontalTextAlignment="Center"/>
+                        <Button Text = "SAVE QR CODE"
+                                FontSize="Large"
+                            Margin="5,10,5,0" />
+                    </StackLayout>
+                </ScrollView>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

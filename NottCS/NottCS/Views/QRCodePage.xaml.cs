@@ -10,12 +10,12 @@ using Xamarin.Forms.Xaml;
 namespace NottCS.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class RegistrationSuccessPage : ContentPage
+	public partial class QRCodePage : ContentPage
 	{
-		public RegistrationSuccessPage ()
+		public QRCodePage ()
 		{
 			InitializeComponent ();
-            AddImage(SuccessIcon, "NottCS.Images.Icons.okfixed.png");
+            AddImage(PlaceHolder, "NottCS.Images.example-background.jpg");
             //AddImage(Back, "NottCS.Images.Icons.back.png");
         }
 
@@ -29,5 +29,5 @@ namespace NottCS.Views
                 imageContainer.Source = ImageSource.FromResource(imageLocation, assembly);
             }
         }
-	}
+    }
 }
