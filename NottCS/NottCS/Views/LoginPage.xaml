@@ -13,6 +13,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:StringListToStringConverter x:Key="StringListToStringConverter" />
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -48,6 +49,7 @@
                            Text ="{Binding UserName.Value}"
                            Margin = "30,0,30,0" />
                         <Label Margin = "30,0,0,0"
+                           IsVisible="{Binding IsValidUser, Converter={StaticResource InverseBoolConverter}}"
                            TextColor = "Red"
                            FontSize = "Small"
                            Text = "{Binding UserName.Errors, Converter = {StaticResource StringListToStringConverter}}" />
@@ -56,6 +58,7 @@
                            Text ="{Binding Password.Value}"
                            Margin = "30,0,30,0"/>
                         <Label Margin = "30,0,0,0"
+                           IsVisible="{Binding IsValidUser, Converter={StaticResource InverseBoolConverter}}"
                            TextColor = "Red"
                            FontSize = "Small"
                            Text = "{Binding Password.Errors, Converter = {StaticResource StringListToStringConverter}}" />
