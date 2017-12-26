@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -100,11 +101,9 @@ namespace NottCS.ViewModels
             RegisterTextColor = Color.DarkBlue;
             //Debugging code
             Debug.WriteLine("Registration function called");
-            
             try
             {
-                const string asd = "Hello world";
-                await NavigationService.NavigateToAsync<RegistrationViewModel>(asd);
+                await NavigationService.NavigateToAsync<RegistrationViewModel>(UserName.Value);
             }
             catch (Exception exception)
             {

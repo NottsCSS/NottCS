@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using NottCS.Validations;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NottCS.Services.Navigation;
 using Xamarin.Forms;
 
 namespace NottCS.ViewModels
@@ -73,11 +72,19 @@ namespace NottCS.ViewModels
 
             bool isValid = Validate();
             //TODO: call Registration service and go to registration success page
+            if (isValid)
+            {
+                await NavigationService.NavigateToAsync<RegistrationSuccessViewModel>();
+            }
             await Task.Delay(500);
             IsBusy = false;
         }
         public override Task InitializeAsync(object navigationData)
         {
+            if (navigationData is string s)
+            {
+                OWA.Value = s;
+            }
             return base.InitializeAsync(navigationData);
         }
 
