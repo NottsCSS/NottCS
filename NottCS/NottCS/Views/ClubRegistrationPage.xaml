@@ -10,6 +10,7 @@
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Image x:Name="PlaceHolder"
@@ -35,12 +36,11 @@
                 </ScrollView>
                 <Button Text = "SIGN UP"
                         FontSize="Large"
-                        Grid.Row="4"
+                        Grid.Row="5"
                         HorizontalOptions="FillAndExpand"
                         WidthRequest="500"
                         HeightRequest="50"
-                        VerticalOptions="EndAndExpand"
-                        Clicked="OnButtonClicked"/>
+                        VerticalOptions="EndAndExpand"/>
             </Grid>
         </Grid>
     </ContentPage.Content>

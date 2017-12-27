@@ -16,11 +16,6 @@
             <Label Text="Home"
                    FontSize="Large"
                    Margin="10,10"/>
-            <Label>
-                <Label.Margin>
-                    
-                </Label.Margin>
-            </Label>
             <Picker x:Name="ColumnPicker"  
                     HorizontalOptions="FillAndExpand"
                     Margin="5,0">
