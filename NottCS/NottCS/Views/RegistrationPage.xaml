@@ -9,11 +9,14 @@
              xmlns:rootViewModel="clr-namespace:NottCS.ViewModels;assembly=NottCS"
              xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
              xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+             xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
              d:DataContext="{d:DesignInstance viewModels:RegistrationViewModel}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:StringListToStringConverter x:Key="StringListToStringConverter" />
             <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter" />
+            <converters:TextChangedEventArgsToString x:Key="TextChangedConverter" />
             <Style TargetType ="Entry">
                 <Setter Property="Margin" Value="10"/>
                 <Setter Property="WidthRequest" Value="500"/>
@@ -56,7 +59,34 @@
                            TextColor = "Red"
                            FontSize = "Small"
                            Text="{Binding LibraryNumber.Errors, Converter={StaticResource StringListToStringConverter}}" />
-                    <Entry x:Name="CourseEntry" Placeholder="Course"/>
+                    <Entry x:Name="CourseEntry" Placeholder="Course" Text="{Binding Course}">
+                        <Entry.Behaviors>
+                            <behaviors:EventToCommandBehavior 
+                                Command="{Binding TextChangedCommand}" 
+                                EventName="TextChanged" 
+                                Converter="{StaticResource TextChangedConverter}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+<!--                    TODO: format the suggestions properly-->
+                    <ListView x:Name="CourseSuggestions"
+                              ItemsSource="{Binding Suggestions}"
+                              CachingStrategy="RecycleElement">
+                        <ListView.Behaviors>
+                            <behaviors:EventToCommandBehavior 
+                                Command="{Binding ItemSelectedCommand}" 
+                                EventName="ItemSelected" 
+                                Converter="{StaticResource SelectedItemConverter}"/>
+                        </ListView.Behaviors> 
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout>
+                                        <Label Text="{Binding .}" />
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </StackLayout>
             </ScrollView>
             <Button x:Name="RegisterButton" Text="REGISTER" WidthRequest="300" HeightRequest="50" HorizontalOptions="Start" Margin="10" Command="{Binding RegisterCommand}"/>

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using NottCS.Validations;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -10,12 +12,16 @@ namespace NottCS.ViewModels
 {
     class RegistrationViewModel : BaseViewModel
     {
+        private List<string> _courseList = new List<string>();
         #region PublicMethodsWithPrivateBackingFields
         private bool _isValidName = true;
         private bool _isValidOWA = true;
         private bool _isValidStudentId = true;
         private bool _isValidPassword = true;
         private bool _isValidLibraryNumber = true;
+        private string _course;
+        private ObservableCollection<string> _suggestions = new ObservableCollection<string>();
+
         public bool IsValidName
         {
             get => _isValidName;
@@ -41,19 +47,34 @@ namespace NottCS.ViewModels
             get => _isValidLibraryNumber;
             set => SetProperty(ref _isValidLibraryNumber, value);
         }
-#endregion
+        public string Course
+        {
+            get => _course;
+            set => SetProperty(ref _course, value);
+        }
+        #endregion
         public ValidatableObject<string> Name { get; set; } = new ValidatableObject<string>();
         public ValidatableObject<string> OWA { get; set; } = new ValidatableObject<string>();
         public ValidatableObject<string> StudentID { get; set; } = new ValidatableObject<string>();
         public ValidatableObject<string> Password { get; set; } = new ValidatableObject<string>();
         public ValidatableObject<string> LibraryNumber { get; set; } = new ValidatableObject<string>();
 
+        public ObservableCollection<string> Suggestions
+        {
+            get => _suggestions;
+            set => SetProperty(ref _suggestions, value);
+        }
+
+
         public RegistrationViewModel()
         {
             Title = "NottCS Registration";
             AddValidationRules();
+            AddCoursesToList();
         }
         public ICommand RegisterCommand => new Command(async () => await Register());
+        public ICommand ItemSelectedCommand => new Command(ItemSelected);
+        public ICommand TextChangedCommand => new Command(CourseTextChanged);
 
         private bool Validate()
         {
@@ -66,6 +87,25 @@ namespace NottCS.ViewModels
 
             return result;
         }
+
+        private void AddCoursesToList()
+        {
+            //TODO: get courses from database instead of hardcoding
+            _courseList.Add("Foundation in Engineering");
+            _courseList.Add("Mechanical Engineering");
+            _courseList.Add("Mechatronic Engineering");
+            _courseList.Add("Electrical and Electronic Engineering");
+            _courseList.Add("Chemical Engineering");
+            _courseList.Add("Chemical Engineering with Environmental Engineering");
+            _courseList.Add("Civil Engineering");
+            _courseList.Add("Applied Mathematics");
+            _courseList.Add("Computer Science");
+            _courseList.Add("Computer Science with Artificial Intelligence");
+            _courseList.Add("Computer Science and Management Studies");
+            _courseList.Add("Software Engineering");
+            _courseList.Add("Foundation in Computer Science");
+        }
+
         private async Task Register()
         {
             IsBusy = true;
@@ -78,6 +118,29 @@ namespace NottCS.ViewModels
             }
             await Task.Delay(500);
             IsBusy = false;
+        }
+        private void ItemSelected(object param)
+        {
+            if (param is string s)
+            {
+                Debug.WriteLine($"{s} is selected");
+                Course = s;
+            }
+        }
+
+        private void CourseTextChanged(object courseEntryParameter)
+        {
+            Suggestions.Clear();
+            if (courseEntryParameter is string courseEntryString)
+            {
+                foreach (string course in _courseList)
+                {
+                    if (course.ToUpper().Contains(courseEntryString.ToUpper()) && Suggestions.Count < 5 && course!=courseEntryString)
+                    {
+                        Suggestions.Add(course);
+                    }
+                }
+            }
         }
         public override Task InitializeAsync(object navigationData)
         {
