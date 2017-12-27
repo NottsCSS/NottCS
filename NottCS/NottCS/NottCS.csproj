@@ -50,6 +50,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Include="ViewModels\ListViewModel1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Views\ClubRegistrationPage.xaml.cs">
       <DependentUpon>ClubRegistrationPage.xaml</DependentUpon>
     </Compile>
