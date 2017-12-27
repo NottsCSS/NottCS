@@ -84,8 +84,8 @@ namespace NottCS.ViewModels
         }
 
         /// <summary>
-        /// Validates all the user input fields to make sure everything is valid
-        /// Errors are auto generated and displayed during validation process
+        /// <para>Validates all the user input fields to make sure everything is valid</para>
+        /// <para>Errors are auto generated and displayed during validation process</para>
         /// </summary>
         /// <returns>true all fields are valid, false otherwise</returns>
         private bool Validate()
