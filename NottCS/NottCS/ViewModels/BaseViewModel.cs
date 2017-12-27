@@ -27,9 +27,9 @@ namespace NottCS.ViewModels
         }
 
         /// <summary>
-        /// Sets a property, then tell the application that the property is changed such that it can re-render
-        /// To be used in property's set method, e.g. set => SetProperty(ref _backingStore, value);
-        /// Have to be used when non-user input field changed, e.g. change in Label's text, change in ActivityIndicator's bool
+        /// <para>Sets a property, then tells the application that the property is changed such that it can re-render</para>
+        /// <para>To be used in property's set method, e.g. set => SetProperty(ref _backingStore, value);</para>
+        /// <para>Have to be used when non-user input field changed, e.g. change in Label's text, change in ActivityIndicator's bool</para>
         /// </summary>
         /// <typeparam name="T">generic type parameter, can be auto deduced from backingStore</typeparam>
         /// <param name="backingStore">private backing field of the property</param>
@@ -50,8 +50,8 @@ namespace NottCS.ViewModels
             return true;
         }
         /// <summary>
-        /// Have to be overriden by derived classes that needs navigationData during navigation
-        /// Overriden method needs to typecheck navigationData, and then process the data
+        /// <para>Have to be overriden by derived classes that needs navigationData during navigation</para>
+        /// <para>Overriden method needs to typecheck navigationData, and then process the data</para>
         /// </summary>
         /// <param name="navigationData"></param>
         /// <returns></returns>

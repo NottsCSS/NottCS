@@ -98,9 +98,9 @@ namespace NottCS.ViewModels
         #endregion
         #region PrivateAsyncTasks
         /// <summary>
-        /// Function that runs when sign in is called
-        /// Checks for input field validity and call login service
-        /// Navigates if both passes
+        /// <para>Function that runs when sign in is called</para>
+        /// <para>Checks for input field validity and call login service</para>
+        /// <para>Navigates if both passes</para>
         /// </summary>
         /// <returns></returns>
         private async Task SignInAsync()
@@ -118,8 +118,8 @@ namespace NottCS.ViewModels
             IsBusy = false;
         }
         /// <summary>
-        /// Function that runs when register is pressed
-        /// Checks for input field validity and navigate
+        /// <para>Function that runs when register is pressed</para>
+        /// <para>Checks for input field validity and navigate</para>
         /// </summary>
         /// <returns></returns>
         private async Task Register()
@@ -140,8 +140,8 @@ namespace NottCS.ViewModels
             IsBusy = false;
         }
         /// <summary>
-        /// Function that runs when forgot password is pressed
-        /// Navigates to forgot password page
+        /// <para>Function that runs when forgot password is pressed</para>
+        /// <para>Navigates to forgot password page</para>
         /// </summary>
         /// <returns></returns>
         private async Task ForgotPassword()
