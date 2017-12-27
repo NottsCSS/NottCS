@@ -52,19 +52,30 @@ namespace NottCS.ViewModels
         public ValidatableObject<string> UserName { get; set; } = new ValidatableObject<string>();
         public ValidatableObject<string> Password { get; set; } = new ValidatableObject<string>();
         #endregion
+        /// <summary>
+        /// Constructor to initialise values of various fields
+        /// </summary>
         public LoginViewModel()
         {
             Title = "NottCS Login";
             AddValidationRules();
         }
-        public override Task InitializeAsync(object navigationData)
-        {
-            return base.InitializeAsync(navigationData);
-        }
+        /// <summary>
+        /// Command wrapper for sign in function
+        /// </summary>
         public ICommand SignInCommand => new Command(async () => await SignInAsync());
+        /// <summary>
+        /// Command wrapper for register function
+        /// </summary>
         public ICommand RegisterCommand => new Command(async () => await Register());
+        /// <summary>
+        /// Command wrapper for forgot password function
+        /// </summary>
         public ICommand ForgotPasswordCommand => new Command(async () => await ForgotPassword());
         #region PrivateMethods
+        /// <summary>
+        /// Adds validation rules to all user input fields
+        /// </summary>
         private void AddValidationRules()
         {
             UserName.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Username cannot be empty" });
@@ -72,6 +83,11 @@ namespace NottCS.ViewModels
             Password.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Password cannot be empty" });
         }
 
+        /// <summary>
+        /// Validates all the user input fields to make sure everything is valid
+        /// Errors are auto generated and displayed during validation process
+        /// </summary>
+        /// <returns>true all fields are valid, false otherwise</returns>
         private bool Validate()
         {
             IsValidUser = UserName.Validate();
@@ -81,6 +97,12 @@ namespace NottCS.ViewModels
         }
         #endregion
         #region PrivateAsyncTasks
+        /// <summary>
+        /// Function that runs when sign in is called
+        /// Checks for input field validity and call login service
+        /// Navigates if both passes
+        /// </summary>
+        /// <returns></returns>
         private async Task SignInAsync()
         {
             IsBusy = true;
@@ -95,6 +117,11 @@ namespace NottCS.ViewModels
 
             IsBusy = false;
         }
+        /// <summary>
+        /// Function that runs when register is pressed
+        /// Checks for input field validity and navigate
+        /// </summary>
+        /// <returns></returns>
         private async Task Register()
         {
             IsBusy = true;
@@ -112,6 +139,11 @@ namespace NottCS.ViewModels
             RegisterTextColor = Color.Black;
             IsBusy = false;
         }
+        /// <summary>
+        /// Function that runs when forgot password is pressed
+        /// Navigates to forgot password page
+        /// </summary>
+        /// <returns></returns>
         private async Task ForgotPassword()
         {
             IsBusy = true;
