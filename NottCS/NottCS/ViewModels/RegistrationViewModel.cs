@@ -114,7 +114,14 @@ namespace NottCS.ViewModels
             //TODO: call Registration service and go to registration success page
             if (isValid)
             {
-                await NavigationService.NavigateToAsync<RegistrationSuccessViewModel>();
+                try
+                {
+                    await NavigationService.NavigateToAsync<RegistrationSuccessViewModel>();
+                }
+                catch(Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
             }
             await Task.Delay(500);
             IsBusy = false;
