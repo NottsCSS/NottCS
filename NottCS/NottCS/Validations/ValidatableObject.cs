@@ -6,7 +6,7 @@ using NottCS.ViewModels;
 
 namespace NottCS.Validations
 {
-    [JsonConverter(typeof(ValidatableObjectSerializer))]
+    [JsonConverter(typeof(ValidatableObjectJsonConverter))]
     public class ValidatableObject<T> : BaseViewModel
     {
         private readonly List<IValidationRule<T>> _validations;
