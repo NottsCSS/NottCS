@@ -116,7 +116,16 @@ namespace NottCS.ViewModels
             
             if (isValid)
             {
-                string json = JsonConvert.SerializeObject(LoginParameters);
+                string json = "";
+                try
+                {
+                    json = JsonConvert.SerializeObject(LoginParameters);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.TargetSite);
+                    Debug.WriteLine(e.Message);
+                }
                 Debug.WriteLine(json);
             }
             //Delay to simulate real code running
