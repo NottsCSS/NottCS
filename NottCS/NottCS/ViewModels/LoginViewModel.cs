@@ -15,16 +15,13 @@ namespace NottCS.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
-
-        #region PublicPropertiesWithPrivateBackingFields
+        #region NonInputProperties
         //Private Backing Fields
         private Color _registerTextColor = Color.Black;
         private Color _forgotPasswordTextColor = Color.Black;
 
         private bool _isValidUser = true;
         private bool _isValidPassword = true;
-
-
         //Public Properties
         public Color RegisterTextColor
         {
@@ -49,11 +46,8 @@ namespace NottCS.ViewModels
         }
 
         #endregion
-        #region AutomaticPublicProperties
-
+        #region InputProperties
         public LoginModel LoginParameters { get; set; } = new LoginModel();
-//        public ValidatableObject<string> Username { get; set; } = new ValidatableObject<string>();
-//        public ValidatableObject<string> Password { get; set; } = new ValidatableObject<string>();
         #endregion
         /// <summary>
         /// Constructor to initialise values of various fields
@@ -75,7 +69,6 @@ namespace NottCS.ViewModels
         /// Command wrapper for forgot password function
         /// </summary>
         public ICommand ForgotPasswordCommand => new Command(async () => await ForgotPassword());
-        #region PrivateMethods
         /// <summary>
         /// Adds validation rules to all user input fields
         /// </summary>
@@ -85,7 +78,6 @@ namespace NottCS.ViewModels
             LoginParameters.Username.Validations.Add(new AlphaNumericRule<string>() { ValidationMessage = "Only OWA is accepted" });
             LoginParameters.Password.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Password cannot be empty" });
         }
-
         /// <summary>
         /// <para>Validates all the user input fields to make sure everything is valid</para>
         /// <para>Errors are auto generated and displayed during validation process</para>
@@ -98,8 +90,6 @@ namespace NottCS.ViewModels
 
             return IsValidUser && IsValidPassword;
         }
-        #endregion
-        #region PrivateAsyncTasks
         /// <summary>
         /// <para>Function that runs when sign in is called</para>
         /// <para>Checks for input field validity and call login service</para>
@@ -185,6 +175,5 @@ namespace NottCS.ViewModels
             ForgotPasswordTextColor = Color.Black;
             IsBusy = false;
         }
-        #endregion
     }
 }
