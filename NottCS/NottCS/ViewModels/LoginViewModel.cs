@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
+using NottCS.Models;
 using Xamarin.Forms;
+using Newtonsoft.Json;
 
 using NottCS.Validations;
 using NottCS.Views;
@@ -49,8 +50,10 @@ namespace NottCS.ViewModels
 
         #endregion
         #region AutomaticPublicProperties
-        public ValidatableObject<string> UserName { get; set; } = new ValidatableObject<string>();
-        public ValidatableObject<string> Password { get; set; } = new ValidatableObject<string>();
+
+        public LoginModel LoginParameters { get; set; } = new LoginModel();
+//        public ValidatableObject<string> Username { get; set; } = new ValidatableObject<string>();
+//        public ValidatableObject<string> Password { get; set; } = new ValidatableObject<string>();
         #endregion
         /// <summary>
         /// Constructor to initialise values of various fields
@@ -78,9 +81,9 @@ namespace NottCS.ViewModels
         /// </summary>
         private void AddValidationRules()
         {
-            UserName.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Username cannot be empty" });
-            UserName.Validations.Add(new AlphaNumericRule<string>() { ValidationMessage = "Only OWA is accepted" });
-            Password.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Password cannot be empty" });
+            LoginParameters.Username.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Username cannot be empty" });
+            LoginParameters.Username.Validations.Add(new AlphaNumericRule<string>() { ValidationMessage = "Only OWA is accepted" });
+            LoginParameters.Password.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Password cannot be empty" });
         }
 
         /// <summary>
@@ -90,8 +93,8 @@ namespace NottCS.ViewModels
         /// <returns>true all fields are valid, false otherwise</returns>
         private bool Validate()
         {
-            IsValidUser = UserName.Validate();
-            IsValidPassword = Password.Validate();
+            IsValidUser = LoginParameters.Username.Validate();
+            IsValidPassword = LoginParameters.Password.Validate();
 
             return IsValidUser && IsValidPassword;
         }
@@ -110,6 +113,12 @@ namespace NottCS.ViewModels
             bool isValid = Validate();
             //TODO: Implement login service under services, and then call the service from here
 
+            
+            if (isValid)
+            {
+                string json = JsonConvert.SerializeObject(LoginParameters);
+                Debug.WriteLine(json);
+            }
             //Delay to simulate real code running
             await Task.Delay(500);
             //Debugging code
@@ -130,7 +139,7 @@ namespace NottCS.ViewModels
             Debug.WriteLine("Registration function called");
             try
             {
-                await NavigationService.NavigateToAsync<RegistrationViewModel>(UserName.Value);
+                await NavigationService.NavigateToAsync<RegistrationViewModel>(LoginParameters.Username.Value);
             }
             catch (Exception exception)
             {

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-
+using Newtonsoft.Json;
+using NottCS.Services.JSONSerializer;
 using NottCS.ViewModels;
 
 namespace NottCS.Validations
 {
+    [JsonConverter(typeof(ValidatableObjectSerializer))]
     public class ValidatableObject<T> : BaseViewModel
     {
         private readonly List<IValidationRule<T>> _validations;
@@ -50,6 +52,11 @@ namespace NottCS.Validations
             IsValid = !Errors.Any();
 
             return this.IsValid;
+        }
+
+        public override string ToString()
+        {
+            return Value.ToString();
         }
     }
 }
