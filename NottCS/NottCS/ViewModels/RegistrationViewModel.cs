@@ -5,6 +5,8 @@ using NottCS.Validations;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Newtonsoft.Json;
+using NottCS.Models;
 using NottCS.Services.Navigation;
 using Xamarin.Forms;
 
@@ -12,13 +14,16 @@ namespace NottCS.ViewModels
 {
     class RegistrationViewModel : BaseViewModel
     {
+        public RegistrationModel RegistrationParameters { get; set; } = new RegistrationModel();
         private List<string> _courseList = new List<string>();
         #region PublicMethodsWithPrivateBackingFields
         private bool _isValidName = true;
         private bool _isValidOWA = true;
-        private bool _isValidStudentId = true;
+        private bool _isValidStudentID = true;
         private bool _isValidPassword = true;
         private bool _isValidLibraryNumber = true;
+        private bool _isValidCourse = true;
+
         private string _course;
         private ObservableCollection<string> _suggestions = new ObservableCollection<string>();
 
@@ -34,8 +39,8 @@ namespace NottCS.ViewModels
         }
         public bool IsValidStudentID
         {
-            get => _isValidStudentId;
-            set => SetProperty(ref _isValidStudentId, value);
+            get => _isValidStudentID;
+            set => SetProperty(ref _isValidStudentID, value);
         }
         public bool IsValidPassword
         {
@@ -47,18 +52,12 @@ namespace NottCS.ViewModels
             get => _isValidLibraryNumber;
             set => SetProperty(ref _isValidLibraryNumber, value);
         }
-        public string Course
+        public bool IsValidCourse
         {
-            get => _course;
-            set => SetProperty(ref _course, value);
+            get => _isValidCourse;
+            set => SetProperty(ref _isValidLibraryNumber, value);
         }
         #endregion
-        public ValidatableObject<string> Name { get; set; } = new ValidatableObject<string>();
-        public ValidatableObject<string> OWA { get; set; } = new ValidatableObject<string>();
-        public ValidatableObject<string> StudentID { get; set; } = new ValidatableObject<string>();
-        public ValidatableObject<string> Password { get; set; } = new ValidatableObject<string>();
-        public ValidatableObject<string> LibraryNumber { get; set; } = new ValidatableObject<string>();
-
         public ObservableCollection<string> Suggestions
         {
             get => _suggestions;
@@ -78,14 +77,26 @@ namespace NottCS.ViewModels
 
         private bool Validate()
         {
-            IsValidName = Name.Validate();
-            IsValidOWA = OWA.Validate();
-            IsValidStudentID = StudentID.Validate();
-            IsValidPassword = Password.Validate();
-            IsValidLibraryNumber = LibraryNumber.Validate();
+            IsValidName = RegistrationParameters.Name.Validate();
+            IsValidOWA = RegistrationParameters.OWA.Validate();
+            IsValidStudentID = RegistrationParameters.StudentID.Validate();
+            IsValidPassword = RegistrationParameters.Password.Validate();
+            IsValidLibraryNumber = RegistrationParameters.LibraryNumber.Validate();
+            IsValidCourse = RegistrationParameters.Course.Validate();
             bool result = IsValidName && IsValidOWA && IsValidStudentID && IsValidPassword && IsValidLibraryNumber;
 
             return result;
+        }
+        private void AddValidationRules()
+        {
+            RegistrationParameters.Name.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Name cannot be empty" });
+            RegistrationParameters.OWA.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "OWA Username cannot be empty" });
+            RegistrationParameters.OWA.Validations.Add(new AlphaNumericRule<string>() { ValidationMessage = "A valid OWA Username is required" });
+            RegistrationParameters.Password.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Password cannot be empty" });
+            RegistrationParameters.StudentID.Validations.Add(new DigitsRule<string>() { ValidationMessage = "A valid student ID is required" });
+            RegistrationParameters.StudentID.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Student ID cannot be empty" });
+            RegistrationParameters.LibraryNumber.Validations.Add(new DigitsRule<string>() { ValidationMessage = "A valid library number is required" });
+            RegistrationParameters.LibraryNumber.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Library number cannot be empty" });
         }
 
         private void AddCoursesToList()
@@ -114,6 +125,18 @@ namespace NottCS.ViewModels
             //TODO: call Registration service and go to registration success page
             if (isValid)
             {
+                string json="";
+                try
+                {
+                    json = JsonConvert.SerializeObject(RegistrationParameters);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.ToString());
+                    Debug.WriteLine(e.TargetSite);
+                    Debug.WriteLine(e.Message);
+                }
+                Debug.WriteLine(json);
                 try
                 {
                     await NavigationService.NavigateToAsync<RegistrationSuccessViewModel>();
@@ -131,7 +154,7 @@ namespace NottCS.ViewModels
             if (param is string s)
             {
                 Debug.WriteLine($"{s} is selected");
-                Course = s;
+                RegistrationParameters.Course.Value = s;
             }
         }
 
@@ -153,22 +176,11 @@ namespace NottCS.ViewModels
         {
             if (navigationData is string s)
             {
-                OWA.Value = s;
+                RegistrationParameters.OWA.Value = s;
             }
             return base.InitializeAsync(navigationData);
         }
 
-        private void AddValidationRules()
-        {
-            Name.Validations.Add(new NotEmptyRule<string>() {ValidationMessage = "Name cannot be empty"});
-            OWA.Validations.Add(new NotEmptyRule<string>(){ValidationMessage = "OWA Username cannot be empty"});
-            OWA.Validations.Add(new AlphaNumericRule<string>(){ValidationMessage = "A valid OWA Username is required"});
-            Password.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Password cannot be empty" });
-            StudentID.Validations.Add(new DigitsRule<string>(){ValidationMessage = "A valid student ID is required"});
-            StudentID.Validations.Add(new NotEmptyRule<string>(){ValidationMessage = "Student ID cannot be empty"});
-            LibraryNumber.Validations.Add(new DigitsRule<string>() { ValidationMessage = "A valid library number is required" });
-            LibraryNumber.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Library number cannot be empty" });
 
-        }
     }
 }

@@ -29,37 +29,37 @@
             <Label FontSize="Large" Margin="10">REGISTRATION</Label>
             <ScrollView>
                 <StackLayout>
-                    <Entry x:Name="NameEntry" Placeholder="Name" Text="{Binding Name.Value}"/>
+                    <Entry x:Name="NameEntry" Placeholder="Name" Text="{Binding RegistrationParameters.Name.Value}"/>
                     <Label x:Name="NameErrorMessage"  
                            IsVisible="{Binding IsValidName, Converter={StaticResource InverseBoolConverter}}"
                            TextColor = "Red"
                            FontSize = "Small"
-                           Text="{Binding Name.Errors, Converter={StaticResource StringListToStringConverter}}" />
-                    <Entry x:Name="OWAEntry" Placeholder="OWA Username" Text="{Binding OWA.Value}"/>
+                           Text="{Binding RegistrationParameters.Name.Errors, Converter={StaticResource StringListToStringConverter}}" />
+                    <Entry x:Name="OWAEntry" Placeholder="OWA Username" Text="{Binding RegistrationParameters.OWA.Value}"/>
                     <Label x:Name="OWAErrorMessage" 
                            IsVisible="{Binding IsValidOWA, Converter={StaticResource InverseBoolConverter}}"
                            TextColor = "Red"
                            FontSize = "Small"
-                           Text="{Binding OWA.Errors, Converter={StaticResource StringListToStringConverter}}" />
-                    <Entry x:Name="Password" Placeholder="Password" IsPassword="True" Text="{Binding Password.Value}"/>
+                           Text="{Binding RegistrationParameters.OWA.Errors, Converter={StaticResource StringListToStringConverter}}" />
+                    <Entry x:Name="Password" Placeholder="Password" IsPassword="True" Text="{Binding RegistrationParameters.Password.Value}"/>
                     <Label x:Name="PasswordErrorMessage"
                            IsVisible="{Binding IsValidPassword, Converter={StaticResource InverseBoolConverter}}"
                            TextColor = "Red"
                            FontSize = "Small"
-                           Text="{Binding Password.Errors, Converter={StaticResource StringListToStringConverter}}" />
-                    <Entry x:Name="StudentIDEntry" Placeholder="Student ID" Text="{Binding StudentID.Value}"/>
+                           Text="{Binding RegistrationParameters.Password.Errors, Converter={StaticResource StringListToStringConverter}}" />
+                    <Entry x:Name="StudentIDEntry" Placeholder="Student ID" Text="{Binding RegistrationParameters.StudentID.Value}"/>
                     <Label x:Name="StudentIDErrorMessage"
                            IsVisible="{Binding IsValidStudentID, Converter={StaticResource InverseBoolConverter}}"
                            TextColor = "Red"
                            FontSize = "Small"
-                           Text="{Binding StudentID.Errors, Converter={StaticResource StringListToStringConverter}}" />
-                    <Entry x:Name="LibraryNumberEntry" Placeholder="Library Number" Text="{Binding LibraryNumber.Value}" />
+                           Text="{Binding RegistrationParameters.StudentID.Errors, Converter={StaticResource StringListToStringConverter}}" />
+                    <Entry x:Name="LibraryNumberEntry" Placeholder="Library Number" Text="{Binding RegistrationParameters.LibraryNumber.Value}" />
                     <Label x:Name="LibraryNumberErrorMessage"
                            IsVisible="{Binding IsValidLibraryNumber, Converter={StaticResource InverseBoolConverter}}"
                            TextColor = "Red"
                            FontSize = "Small"
-                           Text="{Binding LibraryNumber.Errors, Converter={StaticResource StringListToStringConverter}}" />
-                    <Entry x:Name="CourseEntry" Placeholder="Course" Text="{Binding Course}">
+                           Text="{Binding RegistrationParameters.LibraryNumber.Errors, Converter={StaticResource StringListToStringConverter}}" />
+                    <Entry x:Name="CourseEntry" Placeholder="Course" Text="{Binding RegistrationParameters.Course.Value}">
                         <Entry.Behaviors>
                             <behaviors:EventToCommandBehavior 
                                 Command="{Binding TextChangedCommand}" 
