@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace NottCS.Services.JSONSerializer
 {
-    class ValidatableObjectSerializer : JsonConverter
+    internal class ValidatableObjectJsonConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
