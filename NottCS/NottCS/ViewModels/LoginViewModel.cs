@@ -151,10 +151,18 @@ namespace NottCS.ViewModels
 
             //TODO: navigate to forgot password page
             //Delay to simulate real code running
-            await Task.Delay(1500);
+            //await Task.Delay(1500);
 
             //Debugging Code
             Debug.WriteLine("Forgot password function called");
+            try
+            {
+                await NavigationService.NavigateToAsync<ForgotPasswordViewModel>();
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine(exception.Message);
+            }
 
             ForgotPasswordTextColor = Color.Black;
             IsBusy = false;

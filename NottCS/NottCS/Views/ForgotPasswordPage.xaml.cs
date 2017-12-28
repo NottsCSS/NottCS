@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NottCS.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace NottCS.Views
 	{
 		public ForgotPasswordPage ()
 		{
+            BindingContext = new ForgotPasswordViewModel();
 			InitializeComponent ();
 		}
 	}

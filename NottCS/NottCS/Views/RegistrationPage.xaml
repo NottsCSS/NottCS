@@ -70,7 +70,9 @@
 <!--                    TODO: format the suggestions properly-->
                     <ListView x:Name="CourseSuggestions"
                               ItemsSource="{Binding Suggestions}"
-                              CachingStrategy="RecycleElement">
+                              CachingStrategy="RecycleElement"
+                              HeightRequest="100"
+                              WidthRequest="500">
                         <ListView.Behaviors>
                             <behaviors:EventToCommandBehavior 
                                 Command="{Binding ItemSelectedCommand}" 
