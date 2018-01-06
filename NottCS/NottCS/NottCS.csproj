@@ -1,23 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="ViewModels\**" />
     <EmbeddedResource Remove="ViewModels\**" />
     <None Remove="ViewModels\**" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Remove="Views\RegisterationPagexaml.xaml.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Remove="Views\RegisterationPagexaml.xaml" />
   </ItemGroup>
-
   <ItemGroup>
     <None Remove="Images\example-background.jpg" />
     <None Remove="Images\Icons\back.png" />
@@ -27,7 +22,6 @@
     <None Remove="Images\Icons\ok.png" />
     <None Remove="Images\Icons\okfixed.png" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ForgotPasswordViewModel.cs" />
@@ -35,7 +29,6 @@
     <Compile Include="ViewModels\RegistrationSuccessViewModel.cs" />
     <Compile Include="ViewModels\RegistrationViewModel.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Include="Images\example-background.jpg" />
     <EmbeddedResource Include="Images\Icons\back.png" />
@@ -45,17 +38,9 @@
     <EmbeddedResource Include="Images\Icons\ok.png" />
     <EmbeddedResource Include="Images\Icons\okfixed.png" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.77107" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Page Include="ViewModels\ListViewModel1.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Views\ClubRegistrationPage.xaml.cs">
       <DependentUpon>ClubRegistrationPage.xaml</DependentUpon>
@@ -70,7 +55,6 @@
       <DependentUpon>RegistrationPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Update="Views\ClubRegistrationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -91,7 +75,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Update="Views\ForgotPasswordPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
