@@ -15,7 +15,7 @@ namespace NottCS.ViewModels
     class RegistrationViewModel : BaseViewModel
     {
         public RegistrationModel RegistrationParameters { get; set; } = new RegistrationModel();
-        private List<string> _courseList = new List<string>();
+        private readonly List<string> _courseList = new List<string>();
         #region PublicMethodsWithPrivateBackingFields
         private bool _isValidName = true;
         private bool _isValidOWA = true;
@@ -24,7 +24,6 @@ namespace NottCS.ViewModels
         private bool _isValidLibraryNumber = true;
         private bool _isValidCourse = true;
 
-        private string _course;
         private ObservableCollection<string> _suggestions = new ObservableCollection<string>();
 
         public bool IsValidName
@@ -151,24 +150,20 @@ namespace NottCS.ViewModels
         }
         private void ItemSelected(object param)
         {
-            if (param is string s)
-            {
-                Debug.WriteLine($"{s} is selected");
-                RegistrationParameters.Course.Value = s;
-            }
+            if (!(param is string s)) return;
+            Debug.WriteLine($"{s} is selected");
+            RegistrationParameters.Course.Value = s;
         }
 
         private void CourseTextChanged(object courseEntryParameter)
         {
             Suggestions.Clear();
-            if (courseEntryParameter is string courseEntryString)
+            if (!(courseEntryParameter is string courseEntryString)) return;
+            foreach (string course in _courseList)
             {
-                foreach (string course in _courseList)
+                if (course.ToUpper().Contains(courseEntryString.ToUpper()) && Suggestions.Count < 5 && course!=courseEntryString)
                 {
-                    if (course.ToUpper().Contains(courseEntryString.ToUpper()) && Suggestions.Count < 5 && course!=courseEntryString)
-                    {
-                        Suggestions.Add(course);
-                    }
+                    Suggestions.Add(course);
                 }
             }
         }
