@@ -121,24 +121,20 @@ namespace NottCS.ViewModels
         }
         private void ItemSelected(object param)
         {
-            if (param is string s)
-            {
-                Debug.WriteLine($"{s} is selected");
-                Course = s;
-            }
+            if (!(param is string s)) return;
+            Debug.WriteLine($"{s} is selected");
+            Course = s;
         }
 
         private void CourseTextChanged(object courseEntryParameter)
         {
             Suggestions.Clear();
-            if (courseEntryParameter is string courseEntryString)
+            if (!(courseEntryParameter is string courseEntryString)) return;
+            foreach (string course in _courseList)
             {
-                foreach (string course in _courseList)
+                if (course.ToUpper().Contains(courseEntryString.ToUpper()) && Suggestions.Count < 5 && course!=courseEntryString)
                 {
-                    if (course.ToUpper().Contains(courseEntryString.ToUpper()) && Suggestions.Count < 5 && course!=courseEntryString)
-                    {
-                        Suggestions.Add(course);
-                    }
+                    Suggestions.Add(course);
                 }
             }
         }
