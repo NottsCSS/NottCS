@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace NottCS.ViewModels
 {
-
-    class RegistrationSuccessViewModel : BaseViewModel
+    internal class RegistrationSuccessViewModel : BaseViewModel
     {
         public RegistrationSuccessViewModel()
         {

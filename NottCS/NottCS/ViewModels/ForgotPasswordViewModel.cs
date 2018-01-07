@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NottCS.ViewModels
 {
-    class ForgotPasswordViewModel : BaseViewModel
+    internal class ForgotPasswordViewModel : BaseViewModel
     {
         public ForgotPasswordViewModel()
         {

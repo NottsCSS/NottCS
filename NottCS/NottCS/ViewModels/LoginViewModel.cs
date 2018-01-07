@@ -13,7 +13,7 @@ using NottCS.Services.Navigation;
 
 namespace NottCS.ViewModels
 {
-    public class LoginViewModel : BaseViewModel
+    internal class LoginViewModel : BaseViewModel
     {
         #region NonInputProperties
         //Private Backing Fields

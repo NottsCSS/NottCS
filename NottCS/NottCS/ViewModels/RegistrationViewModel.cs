@@ -12,7 +12,7 @@ using Xamarin.Forms;
 
 namespace NottCS.ViewModels
 {
-    class RegistrationViewModel : BaseViewModel
+    internal class RegistrationViewModel : BaseViewModel
     {
         public RegistrationModel RegistrationParameters { get; set; } = new RegistrationModel();
         private readonly List<string> _courseList = new List<string>();

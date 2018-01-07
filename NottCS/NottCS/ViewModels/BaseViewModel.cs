@@ -11,15 +11,14 @@ namespace NottCS.ViewModels
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
-
-        bool _isBusy = false;
+        private bool _isBusy = false;
         public bool IsBusy
         {
             get => _isBusy;
             set => SetProperty(ref _isBusy, value);
         }
-        
-        string _title = string.Empty;
+
+        private string _title = string.Empty;
         public string Title
         {
             get => _title;
@@ -64,10 +63,8 @@ namespace NottCS.ViewModels
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             var changed = PropertyChanged;
-            if (changed == null)
-                return;
 
-            changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            changed?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }
