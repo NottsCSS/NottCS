@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NottCS.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,11 @@ using Xamarin.Forms.Xaml;
 namespace NottCS.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class RegisterationPagexaml : ContentPage
+	public partial class ForgotPasswordPage : ContentPage
 	{
-		public RegisterationPagexaml ()
+		public ForgotPasswordPage ()
 		{
+            BindingContext = new ForgotPasswordViewModel();
 			InitializeComponent ();
 		}
 	}

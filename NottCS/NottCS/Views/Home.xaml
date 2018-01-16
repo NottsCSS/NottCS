@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.Home">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <x:Double x:Key="hortMargin">5</x:Double>
+            <x:Double x:Key="vertMargin">5</x:Double>
+            <x:String x:Key="EventNameFontSize">Medium</x:String>
+            <x:String x:Key="EventDescriptionFontSize">Small</x:String>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Home"
+                   FontSize="Large"
+                   Margin="10,10"/>
+            <Picker x:Name="ColumnPicker"  
+                    HorizontalOptions="FillAndExpand"
+                    Margin="5,0">
+                <Picker.Items>
+                    <x:String>My Clubs Only</x:String>
+                    <x:String>All Clubs</x:String>
+                    <x:String>Favourited Clubs</x:String>
+                </Picker.Items>
+                <Picker.SelectedIndex>0</Picker.SelectedIndex>
+            </Picker>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

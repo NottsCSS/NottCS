@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.ClubRegistrationPage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="PlaceHolder"
+                       Aspect="AspectFill"
+                       HorizontalOptions="FillAndExpand"
+                       Grid.Row="0" Grid.RowSpan="2"/>
+                <Image x:Name = "Logo1" 
+                       Margin="10,10"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Fill"
+                       Grid.Row="1"
+                       Grid.RowSpan="2">
+                </Image>
+                <ScrollView Grid.Row="3"
+                            HorizontalOptions="Center"
+                            WidthRequest="500"
+                            Margin="0,0,5,0">
+                    <StackLayout>
+                        <Label Text="Lorem ipsum dolor sit amet, consectetur  adipiscing elit, sed do eiusmod tempor incididunt  ut labore et dolore magna aliqua. Ut enim ad  minim veniam, quis nostrud exercitation ullamco  laboris nisi ut aliquip ex ea commodo consequat."
+                               HorizontalOptions="CenterAndExpand"
+                               HorizontalTextAlignment="Center"/>
+                    </StackLayout>
+                </ScrollView>
+                <Button Text = "SIGN UP"
+                        FontSize="Large"
+                        Grid.Row="5"
+                        HorizontalOptions="FillAndExpand"
+                        WidthRequest="500"
+                        HeightRequest="50"
+                        VerticalOptions="EndAndExpand"/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
