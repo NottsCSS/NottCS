@@ -11,10 +11,7 @@ namespace NottCS.ViewModels
 {
     internal class ForgotPasswordViewModel : BaseViewModel
     {
-        public ValidatableObject<string> ValidatableObject
-        {
-            get; set;
-        }
+        public ValidatableObject<string> ValidatableObject { get; set; } = new ValidatableObject<string>();
 
         #region PublicMethodsWithPrivateBackingFields
         private string _owaAccount;
