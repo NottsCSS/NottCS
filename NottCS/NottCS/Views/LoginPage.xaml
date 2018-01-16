@@ -13,6 +13,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:StringListToStringConverter x:Key="StringListToStringConverter" />
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -44,21 +45,23 @@
                             HorizontalOptions="Center"
                             WidthRequest="500">
                     <StackLayout>
-                        <Entry Placeholder="Username"
-                           Text ="{Binding UserName.Value}"
+                        <Entry Placeholder="Username (OWA)"
+                           Text ="{Binding LoginParameters.Username.Value}"
                            Margin = "30,0,30,0" />
                         <Label Margin = "30,0,0,0"
+                           IsVisible="{Binding IsValidUser, Converter={StaticResource InverseBoolConverter}}"
                            TextColor = "Red"
                            FontSize = "Small"
-                           Text = "{Binding UserName.Errors, Converter = {StaticResource StringListToStringConverter}}" />
+                           Text = "{Binding LoginParameters.Username.Errors, Converter = {StaticResource StringListToStringConverter}}" />
                         <Entry Placeholder="Password"
                            IsPassword="True"
-                           Text ="{Binding Password.Value}"
+                           Text ="{Binding LoginParameters.Password.Value}"
                            Margin = "30,0,30,0"/>
                         <Label Margin = "30,0,0,0"
+                           IsVisible="{Binding IsValidUser, Converter={StaticResource InverseBoolConverter}}"
                            TextColor = "Red"
                            FontSize = "Small"
-                           Text = "{Binding Password.Errors, Converter = {StaticResource StringListToStringConverter}}" />
+                           Text = "{Binding LoginParameters.Password.Errors, Converter = {StaticResource StringListToStringConverter}}" />
                         <Button Text = "LOGIN" Command = "{Binding SignInCommand}" 
                             Margin="50,0,50,0" />
                         <Label  Margin = "50,0,0,0"

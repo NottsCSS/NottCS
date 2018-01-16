@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using NottCS.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,6 +14,7 @@ namespace NottCS.Views
 	{
 		public RegistrationSuccessPage ()
 		{
+		    BindingContext = new RegistrationSuccessViewModel();
 			InitializeComponent ();
             AddImage(SuccessIcon, "NottCS.Images.Icons.okfixed.png");
             //AddImage(Back, "NottCS.Images.Icons.back.png");
