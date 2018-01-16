@@ -11,6 +11,8 @@ namespace NottCS.ViewModels
 {
     internal class ForgotPasswordViewModel : BaseViewModel
     {
+        //TODO: Delete this comment
+        //Some comment
         public ValidatableObject<string> ValidatableObject { get; set; } = new ValidatableObject<string>();
 
         #region PublicMethodsWithPrivateBackingFields
