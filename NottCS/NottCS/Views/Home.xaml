@@ -1,7 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NottCS.Views.Home">
+             x:Class="NottCS.Views.Home"
+             x:Name="Home"
+             Title="{Binding Title}"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+             d:DataContext="{d:DesignInstance viewModels:Dummy}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <x:Double x:Key="hortMargin">5</x:Double>
@@ -26,6 +34,18 @@
                 </Picker.Items>
                 <Picker.SelectedIndex>0</Picker.SelectedIndex>
             </Picker>
+            <ListView>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ImageCell Height="30" 
+                                   Text="{Binding Title}"
+                                   Detail="{Binding Description}"
+                                   ImageSource="{Binding ImageUrl}">
+                        </ImageCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
