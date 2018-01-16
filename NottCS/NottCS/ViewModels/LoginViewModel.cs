@@ -165,7 +165,7 @@ namespace NottCS.ViewModels
             Debug.WriteLine("Forgot password function called");
             try
             {
-                await NavigationService.NavigateToAsync<ForgotPasswordViewModel>();
+                await NavigationService.NavigateToAsync<ForgotPasswordViewModel>(LoginParameters.Username.Value);
             }
             catch (Exception exception)
             {
