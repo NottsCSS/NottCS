@@ -90,7 +90,7 @@ namespace NottCS.ViewModels
         {
             RegistrationParameters.Name.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Name cannot be empty" });
             RegistrationParameters.OWA.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "OWA Username cannot be empty" });
-            RegistrationParameters.OWA.Validations.Add(new AlphaNumericRule<string>() { ValidationMessage = "A valid OWA Username is required" });
+            RegistrationParameters.OWA.Validations.Add(new AlphaNumericRule() { ValidationMessage = "A valid OWA Username is required" });
             RegistrationParameters.Password.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Password cannot be empty" });
             RegistrationParameters.StudentID.Validations.Add(new DigitsRule<string>() { ValidationMessage = "A valid student ID is required" });
             RegistrationParameters.StudentID.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Student ID cannot be empty" });

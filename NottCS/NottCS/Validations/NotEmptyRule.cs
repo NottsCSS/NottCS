@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("NottCSTest")]
 namespace NottCS.Validations
 {
-    public class NotEmptyRule<T> : IValidationRule<T>
+
+    internal class NotEmptyRule<T> : IValidationRule<T>
     {
         public string ValidationMessage { get; set; }
 

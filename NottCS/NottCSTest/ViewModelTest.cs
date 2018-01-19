@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Xunit;
 using NottCS.ViewModels;
-using Xamarin.Forms;
 
 namespace NottCSTest
 {
     public class ViewModelTest
     {
-        //   
-//        [Theory]
-        public void ViewModelNavigationRequirements(Type viewModelType)
+        private static void ViewModelNavigationRequirements(Type viewModelType)
         {
             string viewName = (viewModelType.FullName.Replace("ViewModels", "Views")).Replace("ViewModel", "Page");
             string viewModelAssemblyName = viewModelType.GetTypeInfo().Assembly.FullName;
@@ -26,21 +23,21 @@ namespace NottCSTest
                 throw new Exception($"Cannot locate page type for {viewModelType}");
             }
 
-
         }
 
         [Fact]
-        public void AllViewModelTest()
+        private void ViewModelNavigationTest()
         {
             Type baseViewModelType = typeof(BaseViewModel);
-            string nspace = "NottCS.ViewModels";
+            const string viewModelNamespace = "NottCS.ViewModels";
 
+            //Get all viewmodels in the viewmodel assembly
             var viewModelTypes = from t in baseViewModelType.Assembly.GetTypes()
-                where t.IsClass && t.Namespace == nspace && baseViewModelType.IsAssignableFrom(t) && t!= baseViewModelType
-                select t;
-//            q.ToList().ForEach(t => Console.WriteLine(t.Name));
+                                 where t.IsClass && t.Namespace == viewModelNamespace && baseViewModelType.IsAssignableFrom(t) && t != baseViewModelType
+                                 select t;
             List<Type> viewModelTypeList = viewModelTypes.ToList();
-            foreach (var viewModelType in viewModelTypeList)
+
+            foreach (Type viewModelType in viewModelTypeList)
             {
                 ViewModelNavigationRequirements(viewModelType);
             }
@@ -48,7 +45,7 @@ namespace NottCSTest
 
 
         }
-        
+
 
     }
 }

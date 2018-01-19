@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -21,12 +18,12 @@ namespace NottCS.ViewModels
         }
 
         private int Count { get; set; } = 0;
-        public ICommand Button1Command => new Command(async () => await ChangeLabel());
+        public ICommand Button1Command => new Command(ChangeLabel);
         
 
         public string SelectedClubType { get; set; }
 
-        public async Task ChangeLabel()
+        private void ChangeLabel()
         {
             Label = $"Hello World {Count}";
             Count++;
