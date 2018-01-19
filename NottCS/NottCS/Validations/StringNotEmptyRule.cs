@@ -7,20 +7,18 @@ using System.Runtime.CompilerServices;
 namespace NottCS.Validations
 {
 
-    internal class NotEmptyRule<T> : IValidationRule<T>
+    internal class StringNotEmptyRule : IValidationRule<string>
     {
         public string ValidationMessage { get; set; }
 
-        public bool Check(T value)
+        public bool Check(string value)
         {
             if (value == null)
             {
                 return false;
             }
-
-            var str = value as string;
-
-            return !string.IsNullOrWhiteSpace(str);
+            
+            return !string.IsNullOrWhiteSpace(value);
         }
     }
 }

@@ -6,7 +6,7 @@ using NottCS.Validations;
 
 namespace NottCS.Models
 {
-    public class LoginModel
+    internal class LoginModel
     {
         public ValidatableObject<string> Username { get; set; } = new ValidatableObject<string>();
         public ValidatableObject<string> Password { get; set; } = new ValidatableObject<string>();

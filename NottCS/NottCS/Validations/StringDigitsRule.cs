@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using Xamarin.Forms;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("NottCSTest")]
 namespace NottCS.Validations
 {
-    internal class AlphaNumericRule : IValidationRule<string>
+    internal class StringDigitsRule : IValidationRule<string>
     {
         public string ValidationMessage { get; set; }
 
@@ -19,7 +18,7 @@ namespace NottCS.Validations
                 return false;
             }
             var str = value as string;
-            Regex r = new Regex("^[a-zA-Z0-9]*$");
+            Regex r = new Regex("^[0-9]*$");
             return r.IsMatch(str);
         }
     }
