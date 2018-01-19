@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
-using Xamarin.Forms;
+﻿using System.Text.RegularExpressions;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("NottCSTest")]
@@ -18,7 +14,7 @@ namespace NottCS.Validations
             {
                 return false;
             }
-            var str = value as string;
+            var str = value;
             Regex r = new Regex("^[a-zA-Z0-9]*$");
             return r.IsMatch(str);
         }

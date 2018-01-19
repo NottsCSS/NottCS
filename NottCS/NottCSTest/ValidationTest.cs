@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
+﻿using Xunit;
 using NottCS.Validations;
 
 
@@ -57,19 +54,13 @@ namespace NottCSTest
             string emptyString = "";
             string validationMessage = "Some Message";
 
-            var stringNotEmptyRule = new StringNotEmptyRule(){ValidationMessage = validationMessage};
-            Assert.Equal(validationMessage,stringNotEmptyRule.ValidationMessage);
+            var stringNotEmptyRule = new StringNotEmptyRule() {ValidationMessage = validationMessage};
+            Assert.Equal(validationMessage, stringNotEmptyRule.ValidationMessage);
 
             Assert.True(stringNotEmptyRule.Check(someString));
 
             Assert.False(stringNotEmptyRule.Check(emptyString));
             Assert.False(stringNotEmptyRule.Check(nullString));
-        }
-
-        [Fact]
-        private void ValidatableObjectTest()
-        {
-
         }
     }
 }

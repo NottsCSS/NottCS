@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Xunit;
 using NottCS.ViewModels;
 
@@ -23,6 +23,15 @@ namespace NottCSTest
                 throw new Exception($"Cannot locate page type for {viewModelType}");
             }
 
+            try
+            {
+                Activator.CreateInstance(viewModelType);
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("ViewModel creation failed, possible constructor throw");
+                throw;
+            }
         }
 
         [Fact]

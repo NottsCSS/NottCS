@@ -53,7 +53,7 @@ namespace NottCS.Validations
             Errors = errors.ToList();
             IsValid = !Errors.Any();
 
-            return this.IsValid;
+            return IsValid;
         }
 
         public override string ToString()
