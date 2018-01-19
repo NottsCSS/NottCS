@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NottCS.Validations
 {
-    class NotEmptyRule<T> : IValidationRule<T>
+    public class NotEmptyRule<T> : IValidationRule<T>
     {
         public string ValidationMessage { get; set; }
 
