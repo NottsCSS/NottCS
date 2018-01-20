@@ -58,7 +58,7 @@ namespace NottCS.Validations
 
         public override string ToString()
         {
-            return Value != null ? Value.ToString() : "NULL";
+            return Value != null ? Value.ToString() : null;
         }
     }
 }
