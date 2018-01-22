@@ -25,6 +25,7 @@
   <ItemGroup>
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ForgotPasswordViewModel.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\RegistrationSuccessViewModel.cs" />
     <Compile Include="ViewModels\RegistrationViewModel.cs" />
@@ -41,6 +42,7 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.77107" />
+    <PackageReference Include="ZXing.Net" Version="0.16.2" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\ClubRegistrationPage.xaml.cs">

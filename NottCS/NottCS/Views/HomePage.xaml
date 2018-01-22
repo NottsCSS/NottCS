@@ -1,16 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NottCS.Views.Home"
-             x:Name="HomePage"
+             x:Class="NottCS.Views.HomePage"
+             x:Name="Home"
              Title="{Binding Title}"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
-             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
              xmlns:models="clr-namespace:NottCS.Models;assembly=NottCS"
-             d:DataContext="{d:DesignInstance viewModels:Dummy}">
+             d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <x:Double x:Key="HorizontalMargin">5</x:Double>
@@ -27,15 +26,22 @@
                    Margin="10,10"/>
             <Picker x:Name="ColumnPicker"  
                     HorizontalOptions="FillAndExpand"
-                    Margin="5,0">
-                <Picker.Items>
-                    <x:String>My Clubs Only</x:String>
-                    <x:String>All Clubs</x:String>
-                    <x:String>Favourited Clubs</x:String>
-                </Picker.Items>
-                <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                    Margin="5,0"
+                    ItemsSource="{Binding ClubTypePickList}"
+                    SelectedItem="{Binding SelectedClubType}">
             </Picker>
-            <ListView>
+            <Label Text ="{Binding Label}"/>
+            <Image x:Name="BannerImage"
+                   Aspect="AspectFill"
+                   HorizontalOptions="FillAndExpand"
+                   Grid.Row="0" Grid.RowSpan="2">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer 
+                        NumberOfTapsRequired="1"
+                        Command="{Binding Button1Command}"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+                        <ListView>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ImageCell Height="30" 

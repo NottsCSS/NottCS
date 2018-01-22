@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -8,7 +7,6 @@ using Xamarin.Forms;
 using Newtonsoft.Json;
 
 using NottCS.Validations;
-using NottCS.Views;
 using NottCS.Services.Navigation;
 
 namespace NottCS.ViewModels
@@ -74,9 +72,9 @@ namespace NottCS.ViewModels
         /// </summary>
         private void AddValidationRules()
         {
-            LoginParameters.Username.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Username cannot be empty" });
-            LoginParameters.Username.Validations.Add(new AlphaNumericRule<string>() { ValidationMessage = "Only OWA is accepted" });
-            LoginParameters.Password.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Password cannot be empty" });
+            LoginParameters.Username.Validations.Add(new StringNotEmptyRule() { ValidationMessage = "Username cannot be empty" });
+            LoginParameters.Username.Validations.Add(new StringAlphaNumericRule() { ValidationMessage = "Only OWA is accepted" });
+            LoginParameters.Password.Validations.Add(new StringNotEmptyRule() { ValidationMessage = "Password cannot be empty" });
         }
         /// <summary>
         /// <para>Validates all the user input fields to make sure everything is valid</para>

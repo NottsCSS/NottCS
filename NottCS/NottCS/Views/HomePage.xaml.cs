@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using NottCS.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,8 +14,10 @@ namespace NottCS.Views
 	{
 		public HomePage ()
 		{
+		    BindingContext = new HomeViewModel();
 			InitializeComponent ();
             //AddImage(Test, "NottCS.Images.Icons.icon2.png");
+            AddImage(BannerImage, "NottCS.Images.Icons.icon2.png");
         }
         private void AddImage(Image imageContainer, string imageLocation)
         {
