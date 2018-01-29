@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.SettingPage"
+             Title="{Binding Title}"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+             d:DataContext="{d:DesignInstance viewModels:SettingViewModel}">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Button Text = "Change Password"
+                    FontSize="Small"
+                    FontFamily="Times New Roman" 
+                    HorizontalOptions="FillAndExpand"/>
+                <Button Text = "Notifications"
+                    FontSize="Small"
+                    FontFamily="Times New Roman" 
+                    HorizontalOptions="FillAndExpand"/>
+                <Button Text = "Rate Us"
+                    FontSize="Small"
+                    FontFamily="Times New Roman" 
+                    HorizontalOptions="FillAndExpand"/>
+                <Button Text = "About"
+                    FontSize="Small"
+                    FontFamily="Times New Roman" 
+                    HorizontalOptions="FillAndExpand"/>
+                <Button Text = "Report an issue"
+                    FontSize="Small"
+                    FontFamily="Times New Roman" 
+                    HorizontalOptions="FillAndExpand"/>
+                <Button Text = "LOGOUT"
+                    FontSize="Medium"
+                    FontFamily="Times New Roman" 
+                    TextColor="Red"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="EndAndExpand"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
