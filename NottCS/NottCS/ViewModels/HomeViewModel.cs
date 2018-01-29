@@ -4,17 +4,16 @@ using System.Diagnostics;
 using System.Windows.Input;
 using Xamarin.Forms;
 using NottCS.Models;
-using NottCS.List;
 
 namespace NottCS.ViewModels
 {
     class HomeViewModel:BaseViewModel
     {
-        public ObservableCollection<Item> DummyLists { get; set; }
+        public ObservableCollection<ListViewModel> DummyLists { get; set; }
         public HomeViewModel()
         {
             SelectedClubType = ClubTypePickList[0];
-            DummyLists = DummyListView.DummyList;
+            DummyLists = ListViewModel.DummyList;
         }
 
 
@@ -27,14 +26,11 @@ namespace NottCS.ViewModels
             get => _label;
             set => SetProperty(ref _label, value);
         }
-
-        private int Count { get; set; } = 0;
+        public string SelectedClubType { get; set; }
         //todo: Navigation when tapped on one of the item and display image of clubs.
+        private int Count { get; set; } = 0;
         public ICommand Tapped => new Command(ChangeLabel);
         public ICommand TappedToo => new Command(ChangeLabel);
-
-        public string SelectedClubType { get; set; }
-
         private void ChangeLabel()
         {
             Label = $"Hello World {Count}";
