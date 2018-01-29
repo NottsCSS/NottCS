@@ -30,29 +30,19 @@
                     ItemsSource="{Binding ClubTypePickList}"
                     SelectedItem="{Binding SelectedClubType}">
             </Picker>
-            <Label Text ="{Binding Label}"/>
-            <Image x:Name="BannerImage"
-                   Aspect="AspectFill"
-                   HorizontalOptions="FillAndExpand"
-                   Grid.Row="0" Grid.RowSpan="2">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer 
-                        NumberOfTapsRequired="1"
-                        Command="{Binding Button1Command}"></TapGestureRecognizer>
-                </Image.GestureRecognizers>
-            </Image>
-            <ListView>
+            <ListView ItemsSource="{Binding DummyLists}"
+                      ItemTapped="{Binding Tapped}"
+                      ItemSelected="{Binding TappedToo}"
+                      Margin="3,3,0,0">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ImageCell Height="30" 
-                                   Text="{Binding Title}"
-                                   Detail="{Binding Description}"
-                                   ImageSource="{Binding ImageUrl}">
-                        </ImageCell>
+                        <ViewCell Height="30">
+                            <Image Source="{Binding ImageURL}" />
+                            <Label Text="{Binding Title}"/>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

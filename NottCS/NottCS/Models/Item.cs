@@ -4,7 +4,10 @@ using System.Text;
 
 namespace NottCS.Models
 {
-    class Item
+    public class Item
     {
+        public string Title { get; set; }
+        public string ImageURL { get; set; }
+
     }
 }
