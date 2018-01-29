@@ -9,12 +9,37 @@ namespace NottCS.ViewModels
 {
     class HomeViewModel:BaseViewModel
     {
-        public ObservableCollection<ListViewModel> DummyLists { get; set; }
-        public HomeViewModel()
+        public string ClubName { get; set; }
+        public string ImageURL { get; set; }
+        public ObservableCollection<HomeViewModel> DummyLists { get; set; }
+        public static ObservableCollection<HomeViewModel> DummyList { get; set; }
+        static HomeViewModel()
         {
-            SelectedClubType = ClubTypePickList[0];
-            DummyLists = ListViewModel.DummyList;
+            DummyList = new ObservableCollection<HomeViewModel>();
+            DummyList.Add(new HomeViewModel
+            {
+                ClubName = "I'm just a title",
+                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
+            });
+            DummyList.Add(new HomeViewModel
+            {
+
+            });
+            DummyList.Add(new HomeViewModel
+            {
+
+            });
+            DummyList.Add(new HomeViewModel
+            {
+
+            });
+            DummyList.Add(new HomeViewModel
+            {
+
+            });
+
         }
+        
 
 
         private string _label = "Hello";
@@ -36,6 +61,11 @@ namespace NottCS.ViewModels
             Label = $"Hello World {Count}";
             Count++;
             Debug.WriteLine("Button pressed");
+        }
+        public HomeViewModel()
+        {
+            SelectedClubType = ClubTypePickList[0];
+            DummyLists = DummyList;
         }
 
     }
