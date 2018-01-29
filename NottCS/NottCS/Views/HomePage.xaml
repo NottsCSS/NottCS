@@ -26,33 +26,46 @@
                    Margin="10,10"/>
             <Picker x:Name="ColumnPicker"  
                     HorizontalOptions="FillAndExpand"
-                    Margin="5,0"
-                    ItemsSource="{Binding ClubTypePickList}"
-                    SelectedItem="{Binding SelectedClubType}">
+                    Margin="5,0">
             </Picker>
-            <Label Text ="{Binding Label}"/>
-            <Image x:Name="BannerImage"
-                   Aspect="AspectFill"
-                   HorizontalOptions="FillAndExpand"
-                   Grid.Row="0" Grid.RowSpan="2">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer 
-                        NumberOfTapsRequired="1"
-                        Command="{Binding Button1Command}"></TapGestureRecognizer>
-                </Image.GestureRecognizers>
-            </Image>
-            <ListView>
+            <Label Text="{Binding Label}"/>
+            <ListView ItemsSource="{Binding DummyLists}"
+                      Margin="3,3,0,0"
+                      RowHeight="50">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ImageCell Height="30" 
-                                   Text="{Binding Title}"
-                                   Detail="{Binding Description}"
-                                   ImageSource="{Binding ImageUrl}">
-                        </ImageCell>
+                        <ViewCell>
+                            <Grid Padding="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"></RowDefinition>
+                                    <RowDefinition Height="20"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="40"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" 
+                                       Grid.Column="0" 
+                                       Text="{Binding ClubName}" 
+                                       LineBreakMode="TailTruncation" />
+                                <Image Grid.Row="0" 
+                                       Grid.RowSpan="2" 
+                                       Grid.Column="1" 
+                                       Source="{Binding ImageURL}" 
+                                       Aspect="AspectFill">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Tapped}"
+                                          NumberOfTapsRequired="1">
+                                        </TapGestureRecognizer>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                    
+                                
+                            </Grid>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
