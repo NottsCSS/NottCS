@@ -108,6 +108,7 @@ namespace NottCS.ViewModels
                 try
                 {
                     json = JsonConvert.SerializeObject(LoginParameters);
+                    await NavigationService.NavigateToAsync<AccountViewModel>(LoginParameters.Username.Value);
                 }
                 catch (Exception e)
                 {
@@ -117,7 +118,7 @@ namespace NottCS.ViewModels
                 Debug.WriteLine(json);
             }
             //Delay to simulate real code running
-            await Task.Delay(500);
+            
             //Debugging code
             Debug.WriteLine("Sign in function called");
 
