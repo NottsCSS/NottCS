@@ -9,6 +9,8 @@
              mc:Ignorable="d"
              xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
              xmlns:models="clr-namespace:NottCS.Models;assembly=NottCS"
+             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+             xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
              d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -16,6 +18,9 @@
             <x:Double x:Key="VerticalMargin">5</x:Double>
             <x:String x:Key="EventNameFontSize">Medium</x:String>
             <x:String x:Key="EventDescriptionFontSize">Small</x:String>
+            <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
+            <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
+            <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -36,6 +41,12 @@
                       RowHeight="50"
                       x:Name="SomeList"
                       >
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemTapped"
+                        Command="{Binding Tapped}" 
+                        Converter="{StaticResource TappedItemConverter}" />
+                </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -57,13 +68,13 @@
                                        Grid.Column="1" 
                                        Source="{Binding ImageURL}" 
                                        Aspect="AspectFill">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Tapped}"
-                                                              BindingContext="{Binding Source={x:Reference HomePage}, Path=BindingContext}"
-                                                              CommandParameter="{Binding Source={x:Reference Items}, Path=BindingContext}"
-                                          NumberOfTapsRequired="1">
-                                        </TapGestureRecognizer>
-                                    </Image.GestureRecognizers>
+<!--                                    <Image.GestureRecognizers>-->
+<!--                                        <TapGestureRecognizer Command="{Binding Tapped}"-->
+<!--                                                              BindingContext="{Binding Source={x:Reference HomePage}, Path=BindingContext}"-->
+<!--                                                              CommandParameter="{Binding Source={x:Reference Items}, Path=BindingContext}"-->
+<!--                                          NumberOfTapsRequired="1">-->
+<!--                                        </TapGestureRecognizer>-->
+<!--                                    </Image.GestureRecognizers>-->
                                 </Image>
                                     
                                 
