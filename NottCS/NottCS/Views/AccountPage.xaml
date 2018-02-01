@@ -14,8 +14,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="75"/>
                 <RowDefinition Height="75"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Label Text="NottCS Login"
                    FontSize="Large"
@@ -32,13 +31,22 @@
                        Grid.Row="1"
                        Grid.RowSpan="2">
             </Image>
-            <ListView Grid.Row="3" WidthRequest="500" ItemsSource="{Binding DataList}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding DataName}" Detail="{Binding DataValue}"></TextCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+            <StackLayout Grid.Row="3"
+                         WidthRequest="500">
+                <Label Text="Account Details"
+                       HorizontalOptions="Center"
+                       Style="{StaticResource TitleLabelStyle}"/>
+                <ListView ItemsSource="{Binding DataList}"
+                        WidthRequest="500"
+                        HorizontalOptions="Center">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding DataName}" 
+                                        Detail="{Binding DataValue}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
             </ListView>
+            </StackLayout>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

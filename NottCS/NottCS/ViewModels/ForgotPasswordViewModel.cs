@@ -31,12 +31,19 @@ namespace NottCS.ViewModels
         }
         #endregion
 
+        /// <summary>
+        /// Constructor for ForgotPasswordViewModel
+        /// </summary>
         public ForgotPasswordViewModel()
         {
             Title = "Forgot Password";
             ValidatableObject.Validations.Add(new StringNotEmptyRule() { ValidationMessage = "No valid OWA detected." });
         }
 
+        /// <summary>
+        /// Performs actions for user to recover password after button is pressed
+        /// </summary>
+        /// <returns></returns>
         private async Task ForgotPassword()
         {
             Debug.WriteLine("Forgot Password Button Pressed.");
@@ -55,6 +62,11 @@ namespace NottCS.ViewModels
 
         public ICommand ForgotPasswordCommand => new Command(async () => await ForgotPassword());
 
+        /// <summary>
+        /// Initializes the page
+        /// </summary>
+        /// <param name="navigationData">Data passed from the previous page</param>
+        /// <returns></returns>
         public override Task InitializeAsync(object navigationData)
         {
             if (navigationData is string s)

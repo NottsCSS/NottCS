@@ -16,6 +16,13 @@
                 <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}" />
                 <Setter Property="BarTextColor" Value="White" />
             </Style>
+            
+            <!-- Label Text Style -->
+            <Style TargetType="Label"
+                   x:Key="TitleLabelStyle">
+                <Setter Property="FontSize" Value="30"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
