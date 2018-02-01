@@ -26,16 +26,20 @@
                    Margin="10,10"/>
             <Picker x:Name="ColumnPicker"  
                     HorizontalOptions="FillAndExpand"
-                    Margin="5,0">
+                    Margin="5,0"
+                    ItemsSource="{Binding ClubTypePickList}"
+                    SelectedItem="{Binding SelectedClubType}">
             </Picker>
-            <Label Text="{Binding Label}"/>
+            <Label Text="{Binding Label1}"/>
             <ListView ItemsSource="{Binding DummyLists}"
                       Margin="3,3,0,0"
-                      RowHeight="50">
+                      RowHeight="50"
+                      x:Name="SomeList"
+                      >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Padding="5">
+                            <Grid Padding="5" x:Name="Items">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="20"></RowDefinition>
                                     <RowDefinition Height="20"></RowDefinition>
@@ -55,6 +59,8 @@
                                        Aspect="AspectFill">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Tapped}"
+                                                              BindingContext="{Binding Source={x:Reference HomePage}, Path=BindingContext}"
+                                                              CommandParameter="{Binding Source={x:Reference Items}, Path=BindingContext}"
                                           NumberOfTapsRequired="1">
                                         </TapGestureRecognizer>
                                     </Image.GestureRecognizers>

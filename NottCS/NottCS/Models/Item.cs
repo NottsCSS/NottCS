@@ -8,8 +8,8 @@ namespace NottCS.Models
 {
     public class Item
     {
-        
-
+        public string ClubName { get; set; }
+        public string ImageURL { get; set; }
         
     }
 }

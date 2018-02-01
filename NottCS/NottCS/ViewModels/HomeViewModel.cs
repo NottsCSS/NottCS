@@ -9,44 +9,22 @@ namespace NottCS.ViewModels
 {
     class HomeViewModel:BaseViewModel
     {
-        public string ClubName { get; set; }
-        public string ImageURL { get; set; }
-        public ObservableCollection<HomeViewModel> DummyLists { get; set; }
-        public static ObservableCollection<HomeViewModel> DummyList { get; set; }
-        static HomeViewModel()
+        public ObservableCollection<Item> DummyLists { get; set; } = new ObservableCollection<Item>()
         {
-            DummyList = new ObservableCollection<HomeViewModel>();
-            DummyList.Add(new HomeViewModel
-            {
-                ClubName = "I'm just a title",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            });
-            DummyList.Add(new HomeViewModel
-            {
-
-            });
-            DummyList.Add(new HomeViewModel
-            {
-
-            });
-            DummyList.Add(new HomeViewModel
-            {
-
-            });
-            DummyList.Add(new HomeViewModel
-            {
-
-            });
-
-        }
+            new Item(){
+            ClubName = "I'm just a title",
+            ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"},
+            new Item(),
+            new Item(),
+            new Item()
+        };
         
-
 
         private string _label = "Hello";
 
         public List<string> ClubTypePickList { get; set; } = new List<string> { "My Clubs Only", "All Clubs", "Favourite Clubs" };
 
-        public string Label
+        public string Label1
         {
             get => _label;
             set => SetProperty(ref _label, value);
@@ -58,14 +36,14 @@ namespace NottCS.ViewModels
         public ICommand TappedToo => new Command(ChangeLabel);
         private void ChangeLabel()
         {
-            Label = $"Hello World {Count}";
+            var a = $"Hello World {Count}";
+            Label1 = a;
             Count++;
             Debug.WriteLine("Button pressed");
         }
         public HomeViewModel()
         {
             SelectedClubType = ClubTypePickList[0];
-            DummyLists = DummyList;
         }
 
     }
