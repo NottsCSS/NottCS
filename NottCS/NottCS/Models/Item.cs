@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
+using NottCS.ViewModels;
 
 namespace NottCS.Models
 {
     public class Item
     {
-        public string Name { get; set; } = "defaultName";
-        public ImageSource IconImageSource { get; set; } = new UriImageSource(){Uri = new Uri("https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png") };
+        public string ClubName { get; set; }
+        public string ImageURL { get; set; }
+        
     }
 }

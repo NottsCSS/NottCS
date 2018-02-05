@@ -2,14 +2,15 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NottCS.Views.HomePage"
-             x:Name="Home"
+             x:Name="HomePage"
              Title="{Binding Title}"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
              xmlns:models="clr-namespace:NottCS.Models;assembly=NottCS"
-             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+             xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
              d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -17,6 +18,9 @@
             <x:Double x:Key="VerticalMargin">5</x:Double>
             <x:String x:Key="EventNameFontSize">Medium</x:String>
             <x:String x:Key="EventDescriptionFontSize">Small</x:String>
+            <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
+            <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
+            <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -31,33 +35,54 @@
                     ItemsSource="{Binding ClubTypePickList}"
                     SelectedItem="{Binding SelectedClubType}">
             </Picker>
-            <Label Text ="{Binding Label}"/>
-            <Image x:Name="BannerImage"
-                   Aspect="AspectFill"
-                   HorizontalOptions="FillAndExpand"
-                   Grid.Row="0" Grid.RowSpan="2">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer 
-                        NumberOfTapsRequired="1"
-                        Command="{Binding Button1Command}"></TapGestureRecognizer>
-                </Image.GestureRecognizers>
-            </Image>
-            <flv:FlowListView FlowColumnCount="1" SeparatorVisibility="None" HasUnevenRows="false"
-                              FlowItemsSource="{Binding ItemList}" >
-
-                <flv:FlowListView.FlowColumnTemplate>
+            <Label Text="{Binding Label1}"/>
+            <ListView ItemsSource="{Binding DummyLists}"
+                      Margin="3,3,0,0"
+                      RowHeight="50"
+                      x:Name="SomeList"
+                      >
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemTapped"
+                        Command="{Binding Tapped}" 
+                        Converter="{StaticResource TappedItemConverter}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout>
-                            <Label HorizontalOptions="Fill" VerticalOptions="Fill" 
-                                   XAlign="Center" YAlign="Center" Text="{Binding Name}"/>
-                            <Image Source="{Binding IconImageSource}" />
-                        </StackLayout>
+                        <ViewCell>
+                            <Grid Padding="5" x:Name="Items">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"></RowDefinition>
+                                    <RowDefinition Height="20"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="40"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" 
+                                       Grid.Column="0" 
+                                       Text="{Binding ClubName}" 
+                                       LineBreakMode="TailTruncation" />
+                                <Image Grid.Row="0" 
+                                       Grid.RowSpan="2" 
+                                       Grid.Column="1" 
+                                       Source="{Binding ImageURL}" 
+                                       Aspect="AspectFill">
+<!--                                    <Image.GestureRecognizers>-->
+<!--                                        <TapGestureRecognizer Command="{Binding Tapped}"-->
+<!--                                                              BindingContext="{Binding Source={x:Reference HomePage}, Path=BindingContext}"-->
+<!--                                                              CommandParameter="{Binding Source={x:Reference Items}, Path=BindingContext}"-->
+<!--                                          NumberOfTapsRequired="1">-->
+<!--                                        </TapGestureRecognizer>-->
+<!--                                    </Image.GestureRecognizers>-->
+                                </Image>
+                                    
+                                
+                            </Grid>
+                        </ViewCell>
                     </DataTemplate>
-                </flv:FlowListView.FlowColumnTemplate>
-
-            </flv:FlowListView>
-
-
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
