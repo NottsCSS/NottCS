@@ -11,6 +11,7 @@
              xmlns:models="clr-namespace:NottCS.Models;assembly=NottCS"
              xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
              xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -35,54 +36,79 @@
                     ItemsSource="{Binding ClubTypePickList}"
                     SelectedItem="{Binding SelectedClubType}">
             </Picker>
-            <Label Text="{Binding Label1}"/>
-            <ListView ItemsSource="{Binding DummyLists}"
-                      Margin="3,3,0,0"
-                      RowHeight="50"
-                      x:Name="SomeList"
-                      >
-                <ListView.Behaviors>
-                    <behaviors:EventToCommandBehavior 
-                        EventName="ItemTapped"
-                        Command="{Binding Tapped}" 
-                        Converter="{StaticResource TappedItemConverter}" />
-                </ListView.Behaviors>
-                <ListView.ItemTemplate>
+            <Label Text="{Binding Label}"/>
+            <flv:FlowListView FlowItemsSource="{Binding ClubList}" FlowColumnCount="2" SeparatorVisibility="None"
+                              FlowItemTappedCommand="{Binding Button1Command}" HasUnevenRows="false"
+                              RowHeight="100" FlowColumnExpand="None">
+                <flv:FlowListView.FlowColumnTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <Grid Padding="5" x:Name="Items">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="20"></RowDefinition>
-                                    <RowDefinition Height="20"></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="40"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Row="0" 
-                                       Grid.Column="0" 
-                                       Text="{Binding ClubName}" 
-                                       LineBreakMode="TailTruncation" />
-                                <Image Grid.Row="0" 
-                                       Grid.RowSpan="2" 
-                                       Grid.Column="1" 
-                                       Source="{Binding ImageURL}" 
-                                       Aspect="AspectFill">
-<!--                                    <Image.GestureRecognizers>-->
-<!--                                        <TapGestureRecognizer Command="{Binding Tapped}"-->
-<!--                                                              BindingContext="{Binding Source={x:Reference HomePage}, Path=BindingContext}"-->
-<!--                                                              CommandParameter="{Binding Source={x:Reference Items}, Path=BindingContext}"-->
-<!--                                          NumberOfTapsRequired="1">-->
-<!--                                        </TapGestureRecognizer>-->
-<!--                                    </Image.GestureRecognizers>-->
-                                </Image>
-                                    
-                                
-                            </Grid>
-                        </ViewCell>
+<!--                        <Grid Padding="5" x:Name="Items">-->
+<!--                            <Grid.RowDefinitions>-->
+<!--                                <RowDefinition Height="20"></RowDefinition>-->
+<!--                                <RowDefinition Height="20"></RowDefinition>-->
+<!--                            </Grid.RowDefinitions>-->
+<!--                            <Grid.ColumnDefinitions>-->
+<!--                                <ColumnDefinition Width="300"></ColumnDefinition>-->
+<!--                            </Grid.ColumnDefinitions>-->
+<!--                            <Label Grid.Row="0" Grid.Column="0"-->
+<!--                                       Text="{Binding ClubName}" LineBreakMode="TailTruncation" />-->
+<!--                            <Image Grid.Row="1" Grid.RowSpan="1" Grid.Column="0"-->
+<!--                                       Source="{Binding ImageURL}" Aspect="AspectFill" />-->
+<!--                        </Grid>-->
+                        <StackLayout>
+                            <Label Text="{Binding ClubName}" />
+<!--                            <Image Source="{Binding ImageURL}" />-->
+                        </StackLayout>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </flv:FlowListView.FlowColumnTemplate>
+            </flv:FlowListView>
+<!--            <ListView ItemsSource="{Binding DummyLists}"-->
+<!--                      Margin="3,3,0,0"-->
+<!--                      RowHeight="50"-->
+<!--                      x:Name="SomeList"-->
+<!--                      >-->
+<!--                <ListView.Behaviors>-->
+<!--                    <behaviors:EventToCommandBehavior -->
+<!--                        EventName="ItemTapped"-->
+<!--                        Command="{Binding Tapped}" -->
+<!--                        Converter="{StaticResource TappedItemConverter}" />-->
+<!--                </ListView.Behaviors>-->
+<!--                <ListView.ItemTemplate>-->
+<!--                    <DataTemplate>-->
+<!--                        <ViewCell>-->
+<!--                            <Grid Padding="5" x:Name="Items">-->
+<!--                                <Grid.RowDefinitions>-->
+<!--                                    <RowDefinition Height="20"></RowDefinition>-->
+<!--                                    <RowDefinition Height="20"></RowDefinition>-->
+<!--                                </Grid.RowDefinitions>-->
+<!--                                <Grid.ColumnDefinitions>-->
+<!--                                    <ColumnDefinition Width="*"></ColumnDefinition>-->
+<!--                                    <ColumnDefinition Width="40"></ColumnDefinition>-->
+<!--                                </Grid.ColumnDefinitions>-->
+<!--                                <Label Grid.Row="0" -->
+<!--                                       Grid.Column="0" -->
+<!--                                       Text="{Binding ClubName}" -->
+<!--                                       LineBreakMode="TailTruncation" />-->
+<!--                                <Image Grid.Row="0" -->
+<!--                                       Grid.RowSpan="2" -->
+<!--                                       Grid.Column="1" -->
+<!--                                       Source="{Binding ImageURL}" -->
+<!--                                       Aspect="AspectFill">-->
+<!--~1~                                    <Image.GestureRecognizers>@1@-->
+<!--~1~                                        <TapGestureRecognizer Command="{Binding Tapped}"@1@-->
+<!--~1~                                                              BindingContext="{Binding Source={x:Reference HomePage}, Path=BindingContext}"@1@-->
+<!--~1~                                                              CommandParameter="{Binding Source={x:Reference Items}, Path=BindingContext}"@1@-->
+<!--~1~                                          NumberOfTapsRequired="1">@1@-->
+<!--~1~                                        </TapGestureRecognizer>@1@-->
+<!--~1~                                    </Image.GestureRecognizers>@1@-->
+<!--                                </Image>-->
+<!--                                    -->
+<!--                                -->
+<!--                            </Grid>-->
+<!--                        </ViewCell>-->
+<!--                    </DataTemplate>-->
+<!--                </ListView.ItemTemplate>-->
+<!--            </ListView>-->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

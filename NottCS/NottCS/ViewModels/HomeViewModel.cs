@@ -12,17 +12,22 @@ namespace NottCS.ViewModels
     {
         private string _label = "Hello";
 
-        public ObservableCollection<Item> ItemList { get; set; } = new ObservableCollection<Item>
+        public ObservableCollection<Item> ClubList { get; set; } = new ObservableCollection<Item>
         {
             new Item()
             {
-                Name = "Name 1",
-                IconImageSource = new UriImageSource()
-                {
-                    Uri = new Uri("https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png")
-                }
+                ClubName = "Name 1",
+                ImageURL = "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
             },
-            new Item() {Name = "Name2"}
+            new Item() {
+                ClubName = "Name 2",
+                ImageURL = "https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg"
+            },
+            new Item()
+            {
+                ClubName = "Club name 3",
+                ImageURL = "https://beebom-redkapmedia.netdna-ssl.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg"
+            }
         };
 
         public List<string> ClubTypePickList { get; set; } = new List<string>{"My Clubs Only", "All Clubs", "Favourite Clubs"};
