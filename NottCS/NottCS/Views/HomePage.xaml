@@ -42,14 +42,16 @@
                         Command="{Binding Button1Command}"></TapGestureRecognizer>
                 </Image.GestureRecognizers>
             </Image>
-            <flv:FlowListView FlowColumnCount="3" SeparatorVisibility="None" HasUnevenRows="false"
+            <flv:FlowListView FlowColumnCount="1" SeparatorVisibility="None" HasUnevenRows="false"
                               FlowItemsSource="{Binding ItemList}" >
 
                 <flv:FlowListView.FlowColumnTemplate>
                     <DataTemplate>
-                        <Label HorizontalOptions="Fill" VerticalOptions="Fill" 
-                               XAlign="Center" YAlign="Center" Text="{Binding Name}"/>
-                        <Image Source="{Binding IconImageSource}" />
+                        <StackLayout>
+                            <Label HorizontalOptions="Fill" VerticalOptions="Fill" 
+                                   XAlign="Center" YAlign="Center" Text="{Binding Name}"/>
+                            <Image Source="{Binding IconImageSource}" />
+                        </StackLayout>
                     </DataTemplate>
                 </flv:FlowListView.FlowColumnTemplate>
 
