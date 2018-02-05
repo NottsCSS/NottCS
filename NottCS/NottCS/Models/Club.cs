@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NottCS.Models
 {
-    internal class Club
+    internal abstract class Club
     {
         public string Id { get; set; }
         public string Name { get; set; }
