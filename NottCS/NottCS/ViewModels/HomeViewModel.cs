@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
+using NottCS.Models;
 using Xamarin.Forms;
 
 namespace NottCS.ViewModels
@@ -8,6 +11,19 @@ namespace NottCS.ViewModels
     public class HomeViewModel : BaseViewModel
     {
         private string _label = "Hello";
+
+        public ObservableCollection<Item> ItemList { get; set; } = new ObservableCollection<Item>
+        {
+            new Item()
+            {
+                Name = "Name 1",
+                IconImageSource = new UriImageSource()
+                {
+                    Uri = new Uri("https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png")
+                }
+            },
+            new Item() {Name = "Name2"}
+        };
 
         public List<string> ClubTypePickList { get; set; } = new List<string>{"My Clubs Only", "All Clubs", "Favourite Clubs"};
 

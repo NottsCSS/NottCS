@@ -9,6 +9,7 @@
              mc:Ignorable="d"
              xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
              xmlns:models="clr-namespace:NottCS.Models;assembly=NottCS"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -41,17 +42,19 @@
                         Command="{Binding Button1Command}"></TapGestureRecognizer>
                 </Image.GestureRecognizers>
             </Image>
-                        <ListView>
-                <ListView.ItemTemplate>
+            <flv:FlowListView FlowColumnCount="3" SeparatorVisibility="None" HasUnevenRows="false"
+                              FlowItemsSource="{Binding ItemList}" >
+
+                <flv:FlowListView.FlowColumnTemplate>
                     <DataTemplate>
-                        <ImageCell Height="30" 
-                                   Text="{Binding Title}"
-                                   Detail="{Binding Description}"
-                                   ImageSource="{Binding ImageUrl}">
-                        </ImageCell>
+                        <Label HorizontalOptions="Fill" VerticalOptions="Fill" 
+                               XAlign="Center" YAlign="Center" Text="{Binding Name}"/>
+                        <Image Source="{Binding IconImageSource}" />
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </flv:FlowListView.FlowColumnTemplate>
+
+            </flv:FlowListView>
+
 
         </StackLayout>
     </ContentPage.Content>
