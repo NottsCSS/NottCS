@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using NottCS.Models;
@@ -18,7 +15,7 @@ namespace NottCS.Services.REST
         public static async Task<bool> CreateClub(Club club)
         {
             var requestUri = UriGenerator(ServiceType.CreateClub);
-            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Post, requestUri);
+            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Post, requestUri, club);
             var httpResponse = await Client.SendAsync(httpRequest);
 
             return httpResponse.IsSuccessStatusCode;

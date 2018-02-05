@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NottCS.Models
+﻿namespace NottCS.Models
 {
     internal class ClubMember
     {

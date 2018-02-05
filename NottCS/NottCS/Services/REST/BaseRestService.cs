@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace NottCS.Services.REST
@@ -15,10 +12,15 @@ namespace NottCS.Services.REST
         //TODO: Setup client with proper headers
         protected static readonly HttpClient Client = new HttpClient();
 
+        /// <summary>
+        /// Available service
+        /// </summary>
         protected enum ServiceType
         {
             GetUserByUsername, CreateUser, UpdateUserByUsername, DeleteUserByUsername,
-            CreateClub, DeleteClubById, GetClubById, UpdateClubById
+            CreateClub, DeleteClubById, GetClubById, UpdateClubById,
+            CreateClubMember, DeleteClubMemberById, GetClubMemberById, UpdateClubMemberById,
+
         }
 
         /// <summary>
@@ -88,8 +90,30 @@ namespace NottCS.Services.REST
                     break;
                 }
                 case ServiceType.UpdateClubById:
+                {
                     returnUri = BaseAddress + "/club/updateClubById" + identifier;
                     break;
+                }
+                case ServiceType.CreateClubMember:
+                {
+                    returnUri = BaseAddress + "/clubMember/createClubMember";
+                    break;
+                }
+                case ServiceType.DeleteClubMemberById:
+                {
+                    returnUri = BaseAddress + "/clubMember/deleteClubMemberById/" + identifier;
+                    break;
+                }
+                case ServiceType.GetClubMemberById:
+                {
+                    returnUri = BaseAddress + "/clubMember/getClubMemberById/" + identifier;
+                    break;
+                }
+                case ServiceType.UpdateClubMemberById:
+                {
+                    returnUri = BaseAddress + "/clubMember/updateClubMemberById/" + identifier;
+                    break;
+                }
                 default:
                 {
                     returnUri = BaseAddress + "/apiNotFound";
