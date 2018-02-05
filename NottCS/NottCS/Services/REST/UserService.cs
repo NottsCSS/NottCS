@@ -20,7 +20,7 @@ namespace NottCS.Services.REST
         public static async Task<User> GetUserByUsername(string username)
         {
             var requestUri = UriGenerator(ServiceType.GetUserByUsername, username);
-            var httpRequest = new HttpRequestMessage(HttpMethod.Get, requestUri);
+            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
             var httpResponse = await Client.SendAsync(httpRequest);
             var jObject = JObject.Parse(await httpResponse.Content.ReadAsStringAsync());
 
@@ -32,13 +32,10 @@ namespace NottCS.Services.REST
         /// </summary>
         /// <param name="user">User data to be created</param>
         /// <returns></returns>
-        public async Task<bool> CreateUser(User user)
+        public static async Task<bool> CreateUser(User user)
         {
             var requestUri = UriGenerator(ServiceType.CreateUser);
-            var httpRequest = new HttpRequestMessage(HttpMethod.Post, requestUri)
-            {
-                Content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json")
-            };
+            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Post, requestUri, user);
             var httpResponse = await Client.SendAsync(httpRequest);
 
             return httpResponse.IsSuccessStatusCode;
@@ -50,13 +47,10 @@ namespace NottCS.Services.REST
         /// <param name="username">Username of the user to be modified</param>
         /// <param name="user">User data to be modified</param>
         /// <returns></returns>
-        public async Task<bool> UpdateUserByUsername(string username, User user)
+        public static async Task<bool> UpdateUserByUsername(string username, User user)
         {
             var requestUri = UriGenerator(ServiceType.UpdateUserByUsername, username);
-            var httpRequest = new HttpRequestMessage(HttpMethod.Post, requestUri)
-            {
-                Content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json")
-            };
+            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Post, requestUri, user);
             var httpResponse = await Client.SendAsync(httpRequest);
 
             return httpResponse.IsSuccessStatusCode;
@@ -67,10 +61,10 @@ namespace NottCS.Services.REST
         /// </summary>
         /// <param name="username">Username of the user to be deleted</param>
         /// <returns></returns>
-        public async Task<bool> DeleteUserByUsername(string username)
+        public static async Task<bool> DeleteUserByUsername(string username)
         {
             var requestUri = UriGenerator(ServiceType.DeleteUserByUsername, username);
-            var httpRequest = new HttpRequestMessage(HttpMethod.Delete, requestUri);
+            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Delete, requestUri);
             var httpResponse = await Client.SendAsync(httpRequest);
 
             return httpResponse.IsSuccessStatusCode;

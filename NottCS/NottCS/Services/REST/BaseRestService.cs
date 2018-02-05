@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace NottCS.Services.REST
 {
@@ -16,7 +17,26 @@ namespace NottCS.Services.REST
 
         protected enum ServiceType
         {
-            GetUserByUsername, CreateUser, UpdateUserByUsername, DeleteUserByUsername
+            GetUserByUsername, CreateUser, UpdateUserByUsername, DeleteUserByUsername,
+            CreateClub, DeleteClubById, GetClubById, UpdateClubById
+        }
+
+        /// <summary>
+        /// Generates the proper HttpRequestMessage with body serialized into JSON
+        /// </summary>
+        /// <param name="httpMethod">Request Method</param>
+        /// <param name="requestUri">Request Uri</param>
+        /// <param name="requestBody">Request body to be serialized</param>
+        /// <returns></returns>
+        protected static HttpRequestMessage HttpRequestMessageGenerator(HttpMethod httpMethod, string requestUri, object requestBody = null)
+        {
+            //TODO: Check if the function generates proper HttpRequestMessage
+            var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+            var httpRequest = new HttpRequestMessage(httpMethod, requestUri)
+            {
+                Content = content
+            };
+            return httpRequest;
         }
 
         /// <summary>
@@ -52,6 +72,24 @@ namespace NottCS.Services.REST
                     returnUri = BaseAddress + "/user/updateUserByUsername/" + identifier;
                     break;
                 }
+                case ServiceType.CreateClub:
+                {
+                    returnUri = BaseAddress + "/club/createClub";
+                    break;
+                }
+                case ServiceType.DeleteClubById:
+                {
+                    returnUri = BaseAddress + "/club/deleteClubById/" + identifier;
+                    break;
+                }
+                case ServiceType.GetClubById:
+                {
+                    returnUri = BaseAddress + "/club/getClubById/" + identifier;
+                    break;
+                }
+                case ServiceType.UpdateClubById:
+                    returnUri = BaseAddress + "/club/updateClubById" + identifier;
+                    break;
                 default:
                 {
                     returnUri = BaseAddress + "/apiNotFound";
