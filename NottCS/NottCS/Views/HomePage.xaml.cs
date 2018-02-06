@@ -19,7 +19,7 @@ namespace NottCS.Views
         }
         private void AddImage(Image imageContainer, string imageLocation)
         {
-            var assembly = typeof(NottCS.Views.LoginPage);
+            var assembly = typeof(NottCS.Views.HomePage);
             if (imageContainer != null)
             {
                 imageContainer.Source = ImageSource.FromResource(imageLocation, assembly);

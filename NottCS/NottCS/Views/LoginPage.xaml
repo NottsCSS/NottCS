@@ -58,7 +58,7 @@
                            Text ="{Binding LoginParameters.Password.Value}"
                            Margin = "30,0,30,0"/>
                         <Label Margin = "30,0,0,0"
-                           IsVisible="{Binding IsValidUser, Converter={StaticResource InverseBoolConverter}}"
+                           IsVisible="{Binding IsValidPassword, Converter={StaticResource InverseBoolConverter}}"
                            TextColor = "Red"
                            FontSize = "Small"
                            Text = "{Binding LoginParameters.Password.Errors, Converter = {StaticResource StringListToStringConverter}}" />

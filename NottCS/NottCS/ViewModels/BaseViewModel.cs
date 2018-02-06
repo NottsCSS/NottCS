@@ -33,12 +33,12 @@ namespace NottCS.ViewModels
         /// <typeparam name="T">generic type parameter, can be auto deduced from backingStore</typeparam>
         /// <param name="backingStore">private backing field of the property</param>
         /// <param name="value">value from set method of property</param>
-        /// <param name="propertyName">unused for now</param>
-        /// <param name="onChanged">unused for now</param>
+        /// <param name="onChanged">function to be called when the property changes</param>
+        /// <param name="propertyName">default is good</param>
         /// <returns></returns>
         protected bool SetProperty<T>(ref T backingStore, T value,
-            [CallerMemberName]string propertyName = "",
-            Action onChanged = null)
+            Action onChanged = null,
+                [CallerMemberName]string propertyName = "")
         {
             if (EqualityComparer<T>.Default.Equals(backingStore, value))
                 return false;
