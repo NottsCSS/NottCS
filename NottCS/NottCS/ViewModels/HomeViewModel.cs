@@ -18,22 +18,20 @@ namespace NottCS.ViewModels
             new Item(),
             new Item()
         };
-        
-
+        public string PageTitle1 { get; set; }
+        public string PageTitle2 { get; set; }
+        public string PageTitle3 { get; set; }
         private string _label = "Hello";
-
-        public List<string> ClubTypePickList { get; set; } = new List<string> { "My Clubs Only", "All Clubs", "Favourite Clubs" };
-
         public string Label1
         {
             get => _label;
             set => SetProperty(ref _label, value);
         }
+        public List<string> ClubTypePickList { get; set; } = new List<string> { "My Clubs Only", "All Clubs", "Favourite Clubs" };
         public string SelectedClubType { get; set; }
         //todo: Navigation when tapped on one of the item and display image of clubs.
         private int Count { get; set; } = 0;
         public ICommand Tapped => new Command(ChangeLabel);
-        public ICommand TappedToo => new Command(ChangeLabel);
         private void ChangeLabel()
         {
             var a = $"Hello World {Count}";
@@ -44,6 +42,9 @@ namespace NottCS.ViewModels
         public HomeViewModel()
         {
             SelectedClubType = ClubTypePickList[0];
+            PageTitle1 = "News Feed";
+            PageTitle2 = "Clubs & Society";
+            PageTitle3 = "Profile";
         }
 
     }
