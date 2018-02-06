@@ -6,13 +6,16 @@
              >
     <ContentPage.Content>
         <StackLayout>
-            <flv:FlowListView x:Name="flowListView" FlowColumnCount="2" SeparatorVisibility="None" RowHeight="100"
+            <flv:FlowListView x:Name="flowListView" FlowColumnCount="2" SeparatorVisibility="None" RowHeight="150"
                               FlowUseAbsoluteLayoutInternally="false" FlowColumnExpand="None"
                               FlowItemsSource="{Binding DummyListCollection}" FlowItemTappedCommand="{Binding ItemTappedCommand}">
                 <flv:FlowListView.FlowColumnTemplate>
                     <DataTemplate>
-                        <Label HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                               XAlign="Center" YAlign="Center" Text="{Binding Name}" LineBreakMode="CharacterWrap"/>
+                        <StackLayout>
+                            <Label HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                   XAlign="Center" YAlign="Center" Text="{Binding Name}" LineBreakMode="CharacterWrap"/>
+                            <Image Source="{Binding ImageURI}" />
+                        </StackLayout>
                     </DataTemplate>
                 </flv:FlowListView.FlowColumnTemplate>
             </flv:FlowListView>

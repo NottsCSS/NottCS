@@ -15,10 +15,10 @@ namespace NottCS.ViewModels
         public ObservableCollection<Dummy> DummyListCollection { get; set; } = new ObservableCollection<Dummy>
         {
             new Dummy() {Name = "some name1"},
-            new Dummy() {Name = "some name 2"},
-            new Dummy() {Name = "some Name 3"},
-            new Dummy() {Name = "sasd name 4"},
-            new Dummy() {Name = "CYKA NAME 5"}
+            new Dummy() {Name = "some name 2", ImageURI = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3Qx5GWpzEnfTx7YQWX4rEjENki6qHoic0uyknmY5W20ph81cYJw"},
+            new Dummy() {Name = "some Name 3", ImageURI = "http://www.pvhc.net/img101/qtmfkuqpyfoygqdwgjbi.png"},
+            new Dummy() {Name = "sasd name 4", ImageURI = "https://healthycities.zendesk.com/hc/en-us/article_attachments/209680088/Thumbs_up_icon_-_500px.png"},
+            new Dummy() {Name = "CYKA NAME 5", ImageURI = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm_ZxLftOALRdaTuw0-Ja0Gt2Vg3v_uJZeFWtib1nQQAEKFV-4"}
         };
 
         public ObservableCollection<Item> ClubList { get; set; } = new ObservableCollection<Item>
