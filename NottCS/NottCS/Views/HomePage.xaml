@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NottCS.Views.HomePage"
-             x:Name="HomePage"
              Title="{Binding Title}"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,6 +12,7 @@
              xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
              xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
+  <!--Pages can be added as references or inline-->
     <ContentPage.Resources>
         <ResourceDictionary>
             <x:Double x:Key="HorizontalMargin">5</x:Double>
@@ -24,41 +24,51 @@
             <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-
-    <ContentPage.Content>
+    <ContentPage Title="{Binding PageTitle1}">
         <StackLayout>
-            <Label Text="Home"
-                   FontSize="Large"
-                   Margin="10,10"/>
-            <Picker x:Name="ColumnPicker"  
-                    HorizontalOptions="FillAndExpand"
-                    Margin="5,0"
-                    ItemsSource="{Binding ClubTypePickList}"
-                    SelectedItem="{Binding SelectedClubType}">
-            </Picker>
-            <Label Text="{Binding Label}"/>
-            <flv:FlowListView FlowColumnCount="2" SeparatorVisibility="None"
-                              FlowItemTappedCommand="{Binding Button1Command}" HasUnevenRows="false"
-                              RowHeight="100" FlowColumnExpand="None" FlowItemsSource="{Binding ClubList}">
-                <flv:FlowListView.FlowColumnTemplate>
+            <Label Text="{Binding Label1}"/>
+            <ListView ItemsSource="{Binding DummyLists}"
+                      Margin="3,3,0,0"
+                      RowHeight="50"
+                      x:Name="SomeList"
+                      >
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemTapped"
+                        Command="{Binding Tapped}" 
+                        Converter="{StaticResource TappedItemConverter}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
                     <DataTemplate>
-<!--                        <Grid Padding="5" x:Name="Items">-->
-<!--                            <Grid.RowDefinitions>-->
-<!--                                <RowDefinition Height="20"></RowDefinition>-->
-<!--                                <RowDefinition Height="20"></RowDefinition>-->
-<!--                            </Grid.RowDefinitions>-->
-<!--                            <Grid.ColumnDefinitions>-->
-<!--                                <ColumnDefinition Width="300"></ColumnDefinition>-->
-<!--                            </Grid.ColumnDefinitions>-->
-<!--                            <Label Grid.Row="0" Grid.Column="0"-->
-<!--                                       Text="{Binding ClubName}" LineBreakMode="TailTruncation" />-->
-<!--                            <Image Grid.Row="1" Grid.RowSpan="1" Grid.Column="0"-->
-<!--                                       Source="{Binding ImageURL}" Aspect="AspectFill" />-->
-<!--                        </Grid>-->
-                        <StackLayout>
-                            <Label Text="{Binding ClubName}" />
-<!--                            <Image Source="{Binding ImageURL}" />-->
-                        </StackLayout>
+                        <ViewCell>
+                            <Grid Padding="5" x:Name="Items">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"></RowDefinition>
+                                    <RowDefinition Height="20"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="1" 
+                                       Grid.Row="0"
+                                       Text="{Binding ClubName}" 
+                                       LineBreakMode="TailTruncation" />
+                                <Image Grid.Column="0" 
+                                       Grid.Row="0"
+                                       Grid.RowSpan="2"
+                                       Source="{Binding ImageURL}" 
+                                       Aspect="AspectFill">
+                                    <!--<Image.GestureRecognizers>-->
+                                    <!--<TapGestureRecognizer Command="{Binding Tapped}"-->
+                                    <!--BindingContext="{Binding Source={x:Reference HomePage}, Path=BindingContext}"-->
+                                    <!--CommandParameter="{Binding Source={x:Reference Items}, Path=BindingContext}"-->
+                                    <!--NumberOfTapsRequired="1">-->
+                                    <!--</TapGestureRecognizer>-->
+                                    <!--</Image.GestureRecognizers>-->
+                                </Image>
+                            </Grid>
+                        </ViewCell>
                     </DataTemplate>
                 </flv:FlowListView.FlowColumnTemplate>
             </flv:FlowListView>
@@ -110,5 +120,21 @@
 <!--                </ListView.ItemTemplate>-->
 <!--            </ListView>-->
         </StackLayout>
-    </ContentPage.Content>
-</ContentPage>
+    </ContentPage>
+    <ContentPage Title="{Binding PageTitle2}">
+        <StackLayout>
+            <Picker x:Name="ColumnPicker"  
+                    HorizontalOptions="FillAndExpand"
+                    Margin="5,0"
+                    ItemsSource="{Binding ClubTypePickList}"
+                    SelectedItem="{Binding SelectedClubType}">
+            </Picker>
+            
+        </StackLayout>
+
+    </ContentPage>
+    <ContentPage Title="{Binding PageTitle3}">
+      
+      
+    </ContentPage>
+</TabbedPage>
