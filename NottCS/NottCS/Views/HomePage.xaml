@@ -37,9 +37,9 @@
                     SelectedItem="{Binding SelectedClubType}">
             </Picker>
             <Label Text="{Binding Label}"/>
-            <flv:FlowListView FlowItemsSource="{Binding ClubList}" FlowColumnCount="2" SeparatorVisibility="None"
+            <flv:FlowListView FlowColumnCount="2" SeparatorVisibility="None"
                               FlowItemTappedCommand="{Binding Button1Command}" HasUnevenRows="false"
-                              RowHeight="100" FlowColumnExpand="None">
+                              RowHeight="100" FlowColumnExpand="None" FlowItemsSource="{Binding ClubList}">
                 <flv:FlowListView.FlowColumnTemplate>
                     <DataTemplate>
 <!--                        <Grid Padding="5" x:Name="Items">-->

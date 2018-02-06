@@ -10,6 +10,7 @@ namespace NottCS.Models
     {
         public string ClubName { get; set; }
         public string ImageURL { get; set; }
-        
+        public string Name { get; set; } = "default name";
+
     }
 }
