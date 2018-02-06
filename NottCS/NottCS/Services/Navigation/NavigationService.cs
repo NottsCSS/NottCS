@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using NottCS.ViewModels;
 using Xamarin.Forms;
 
 namespace NottCS.Services.Navigation
 {
-    static class NavigationService
+    public static class NavigationService
     {
-        public static async Task NavigateToAsync<TViewModel>(object parameter = null) where TViewModel : BaseViewModel, new()
+        internal static async Task NavigateToAsync<TViewModel>(object parameter = null) where TViewModel : BaseViewModel, new()
         {
             if (Application.Current.MainPage is NavigationPage navigationPage)
             {

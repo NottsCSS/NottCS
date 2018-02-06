@@ -10,6 +10,7 @@
              xmlns:models="clr-namespace:NottCS.Models;assembly=NottCS"
              xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
              xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
   <!--Pages can be added as references or inline-->
     <ContentPage.Resources>
@@ -69,8 +70,55 @@
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </flv:FlowListView.FlowColumnTemplate>
+            </flv:FlowListView>
+<!--            <ListView ItemsSource="{Binding DummyLists}"-->
+<!--                      Margin="3,3,0,0"-->
+<!--                      RowHeight="50"-->
+<!--                      x:Name="SomeList"-->
+<!--                      >-->
+<!--                <ListView.Behaviors>-->
+<!--                    <behaviors:EventToCommandBehavior -->
+<!--                        EventName="ItemTapped"-->
+<!--                        Command="{Binding Tapped}" -->
+<!--                        Converter="{StaticResource TappedItemConverter}" />-->
+<!--                </ListView.Behaviors>-->
+<!--                <ListView.ItemTemplate>-->
+<!--                    <DataTemplate>-->
+<!--                        <ViewCell>-->
+<!--                            <Grid Padding="5" x:Name="Items">-->
+<!--                                <Grid.RowDefinitions>-->
+<!--                                    <RowDefinition Height="20"></RowDefinition>-->
+<!--                                    <RowDefinition Height="20"></RowDefinition>-->
+<!--                                </Grid.RowDefinitions>-->
+<!--                                <Grid.ColumnDefinitions>-->
+<!--                                    <ColumnDefinition Width="*"></ColumnDefinition>-->
+<!--                                    <ColumnDefinition Width="40"></ColumnDefinition>-->
+<!--                                </Grid.ColumnDefinitions>-->
+<!--                                <Label Grid.Row="0" -->
+<!--                                       Grid.Column="0" -->
+<!--                                       Text="{Binding ClubName}" -->
+<!--                                       LineBreakMode="TailTruncation" />-->
+<!--                                <Image Grid.Row="0" -->
+<!--                                       Grid.RowSpan="2" -->
+<!--                                       Grid.Column="1" -->
+<!--                                       Source="{Binding ImageURL}" -->
+<!--                                       Aspect="AspectFill">-->
+<!--~1~                                    <Image.GestureRecognizers>@1@-->
+<!--~1~                                        <TapGestureRecognizer Command="{Binding Tapped}"@1@-->
+<!--~1~                                                              BindingContext="{Binding Source={x:Reference HomePage}, Path=BindingContext}"@1@-->
+<!--~1~                                                              CommandParameter="{Binding Source={x:Reference Items}, Path=BindingContext}"@1@-->
+<!--~1~                                          NumberOfTapsRequired="1">@1@-->
+<!--~1~                                        </TapGestureRecognizer>@1@-->
+<!--~1~                                    </Image.GestureRecognizers>@1@-->
+<!--                                </Image>-->
+<!--                                    -->
+<!--                                -->
+<!--                            </Grid>-->
+<!--                        </ViewCell>-->
+<!--                    </DataTemplate>-->
+<!--                </ListView.ItemTemplate>-->
+<!--            </ListView>-->
         </StackLayout>
     </ContentPage>
     <ContentPage Title="{Binding PageTitle2}">
