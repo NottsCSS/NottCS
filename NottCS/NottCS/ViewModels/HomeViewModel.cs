@@ -2,66 +2,48 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
-using System.Threading.Tasks;
 using Xamarin.Forms;
+using NottCS.Models;
 
 namespace NottCS.ViewModels
 {
     class HomeViewModel:BaseViewModel
     {
+        public ObservableCollection<Item> DummyLists { get; set; } = new ObservableCollection<Item>()
+        {
+            new Item(){
+            ClubName = "I'm just a title",
+            ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"},
+            new Item(),
+            new Item(),
+            new Item()
+        };
+        
+
         private string _label = "Hello";
-        private int Count { get; set; } = 0;
-        public string ClubName { get; set; }
-        public string ImageURL { get; set; }
-        public string SelectedClubType { get; set; }
-        public string Label
+
+        public List<string> ClubTypePickList { get; set; } = new List<string> { "My Clubs Only", "All Clubs", "Favourite Clubs" };
+
+        public string Label1
         {
             get => _label;
             set => SetProperty(ref _label, value);
         }
-        public ObservableCollection<HomeViewModel> DummyLists { get; set; }
-        public static ObservableCollection<HomeViewModel> DummyList { get; set; }
-        static HomeViewModel()
-        {
-            DummyList = new ObservableCollection<HomeViewModel>();
-            DummyList.Add(new HomeViewModel
-            {
-                ClubName = "I'm just a title",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            });
-            DummyList.Add(new HomeViewModel
-            {
-
-            });
-            DummyList.Add(new HomeViewModel
-            {
-
-            });
-            DummyList.Add(new HomeViewModel
-            {
-
-            });
-            DummyList.Add(new HomeViewModel
-            {
-
-            });
-
-        }
-        public List<string> ClubTypePickList { get; set; } = new List<string> { "My Clubs Only", "All Clubs", "Favourite Clubs" };
-        
+        public string SelectedClubType { get; set; }
         //todo: Navigation when tapped on one of the item and display image of clubs.
-        public ICommand Tapped => new Command(() => ChangeLabel());
-        public void ChangeLabel()
+        private int Count { get; set; } = 0;
+        public ICommand Tapped => new Command(ChangeLabel);
+        public ICommand TappedToo => new Command(ChangeLabel);
+        private void ChangeLabel()
         {
-            Label = $"Hello World {Count}";
+            var a = $"Hello World {Count}";
+            Label1 = a;
             Count++;
-            Debug.WriteLine(Label);
             Debug.WriteLine("Button pressed");
         }
         public HomeViewModel()
         {
             SelectedClubType = ClubTypePickList[0];
-            DummyLists = DummyList;
         }
 
     }
