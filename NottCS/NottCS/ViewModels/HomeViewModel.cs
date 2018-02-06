@@ -23,7 +23,7 @@ namespace NottCS.ViewModels
         public string PageTitle2 { get; set; }
         public string PageTitle3 { get; set; }
         private string _label = "Hello";
-        public string Label1
+        public string Label
         {
             get => _label;
             set => SetProperty(ref _label, value);
