@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -20,6 +22,7 @@ namespace NottCS.Services.REST
             GetUserByUsername, CreateUser, UpdateUserByUsername, DeleteUserByUsername,
             CreateClub, DeleteClubById, GetClubById, UpdateClubById,
             CreateClubMember, DeleteClubMemberById, GetClubMemberById, UpdateClubMemberById,
+            CreateEvent, DeleteEventById, GetEventById, UpdateEventById,
 
         }
 
@@ -50,6 +53,21 @@ namespace NottCS.Services.REST
         protected static string UriGenerator(ServiceType service, string identifier = null)
         {
             var returnUri = "";
+
+            #region IdentifierValidator
+
+            //Gives warning if identifier is invalid
+            var createRequestList = new List<ServiceType>()
+            {
+                ServiceType.CreateClub, ServiceType.CreateClubMember, ServiceType.CreateEvent, ServiceType.CreateUser
+            };
+
+            if (!createRequestList.Contains(service) && identifier == null)
+            {
+                Debug.WriteLine("[BaseRestService] WARNING : No valid identifier for UriGenerator");
+            }
+
+            #endregion
 
             //TODO: Update the Uri when the documentation from the backend is ready
             switch (service)
@@ -112,6 +130,26 @@ namespace NottCS.Services.REST
                 case ServiceType.UpdateClubMemberById:
                 {
                     returnUri = BaseAddress + "/clubMember/updateClubMemberById/" + identifier;
+                    break;
+                }
+                case ServiceType.CreateEvent:
+                {
+                    returnUri = BaseAddress + "/event/createEvent";
+                    break;
+                }
+                case ServiceType.DeleteEventById:
+                {
+                    returnUri = BaseAddress + "/event/deleteEventById/" + identifier;
+                    break;
+                }
+                case ServiceType.GetEventById:
+                {
+                    returnUri = BaseAddress + "/event/getEventById/" + identifier;
+                    break;
+                }
+                case ServiceType.UpdateEventById:
+                {
+                    returnUri = BaseAddress + "/event/updateEventById/" + identifier;
                     break;
                 }
                 default:
