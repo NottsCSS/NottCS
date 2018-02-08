@@ -88,14 +88,14 @@ namespace NottCS.ViewModels
         }
         private void AddValidationRules()
         {
-            RegistrationParameters.Name.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Name cannot be empty" });
-            RegistrationParameters.OWA.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "OWA Username cannot be empty" });
-            RegistrationParameters.OWA.Validations.Add(new AlphaNumericRule<string>() { ValidationMessage = "A valid OWA Username is required" });
-            RegistrationParameters.Password.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Password cannot be empty" });
-            RegistrationParameters.StudentID.Validations.Add(new DigitsRule<string>() { ValidationMessage = "A valid student ID is required" });
-            RegistrationParameters.StudentID.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Student ID cannot be empty" });
-            RegistrationParameters.LibraryNumber.Validations.Add(new DigitsRule<string>() { ValidationMessage = "A valid library number is required" });
-            RegistrationParameters.LibraryNumber.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Library number cannot be empty" });
+            RegistrationParameters.Name.Validations.Add(new StringNotEmptyRule() { ValidationMessage = "Name cannot be empty" });
+            RegistrationParameters.OWA.Validations.Add(new StringNotEmptyRule() { ValidationMessage = "OWA Username cannot be empty" });
+            RegistrationParameters.OWA.Validations.Add(new StringAlphaNumericRule() { ValidationMessage = "A valid OWA Username is required" });
+            RegistrationParameters.Password.Validations.Add(new StringNotEmptyRule() { ValidationMessage = "Password cannot be empty" });
+            RegistrationParameters.StudentID.Validations.Add(new StringDigitsRule() { ValidationMessage = "A valid student ID is required" });
+            RegistrationParameters.StudentID.Validations.Add(new StringNotEmptyRule() { ValidationMessage = "Student ID cannot be empty" });
+            RegistrationParameters.LibraryNumber.Validations.Add(new StringDigitsRule() { ValidationMessage = "A valid library number is required" });
+            RegistrationParameters.LibraryNumber.Validations.Add(new StringNotEmptyRule() { ValidationMessage = "Library number cannot be empty" });
         }
 
         private void AddCoursesToList()

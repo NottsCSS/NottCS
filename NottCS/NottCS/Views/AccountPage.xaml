@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.AccountPage"
+             Title="{Binding Title}"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+             d:DataContext="{d:DesignInstance viewModels:AccountViewModel}">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="75"/>
+                <RowDefinition Height="75"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Label Text="NottCS Login"
+                   FontSize="Large"
+                   VerticalOptions="Start" 
+                   HorizontalOptions="CenterAndExpand" />
+            <Image x:Name="BannerImage"
+                       Aspect="AspectFill"
+                       HorizontalOptions="FillAndExpand"
+                       Grid.Row="0" Grid.RowSpan="2"/>
+            <Image x:Name = "IconOne" 
+                       Margin="10,20"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Fill"
+                       Grid.Row="1"
+                       Grid.RowSpan="2">
+            </Image>
+            <StackLayout Grid.Row="3"
+                         WidthRequest="500">
+                <Label Text="Account Details"
+                       HorizontalOptions="Center"
+                       Style="{StaticResource TitleLabelStyle}"/>
+                <ListView ItemsSource="{Binding DataList}"
+                        WidthRequest="500"
+                        HorizontalOptions="Center">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding DataName}" 
+                                        Detail="{Binding DataValue}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+            </ListView>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

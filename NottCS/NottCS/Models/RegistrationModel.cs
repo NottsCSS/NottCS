@@ -2,7 +2,7 @@
 
 namespace NottCS.Models
 {
-    class RegistrationModel
+    internal class RegistrationModel
     {
         public RegistrationModel()
         {
