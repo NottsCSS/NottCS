@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NottCS.Views.HomePage"
-             Title="{Binding Title}"
+             x:Class="NottCS.Views.SettingsPage"
+             Title ="{Binding Title}"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
@@ -10,23 +10,18 @@
              xmlns:models="clr-namespace:NottCS.Models;assembly=NottCS"
              xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
              xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
-             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
-             d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
-  <!--Pages can be added as references or inline-->
+             d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <x:Double x:Key="HorizontalMargin">5</x:Double>
             <x:Double x:Key="VerticalMargin">5</x:Double>
-            <x:String x:Key="EventNameFontSize">Medium</x:String>
-            <x:String x:Key="EventDescriptionFontSize">Small</x:String>
             <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
             <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
             <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <ContentPage Title="{Binding PageTitle1}">
+    <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding Label}"/>
             <ListView ItemsSource="{Binding DummyLists}"
                       Margin="3,3,0,0"
                       RowHeight="50"
@@ -34,52 +29,30 @@
                 <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior 
                         EventName="ItemTapped"
-                        Command="{Binding Tapped}" 
+                        Command="{Binding AboutCommand}" 
                         Converter="{StaticResource TappedItemConverter}" />
                 </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Padding="5" x:Name="Items">
+                            <Grid Padding="5" x:Name="About">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="20"></RowDefinition>
                                     <RowDefinition Height="20"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="40"></ColumnDefinition>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="40"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Column="1" 
-                                       Grid.Row="0"
-                                       Text="{Binding ClubName}" 
+                                <Label Grid.Row="0" 
+                                       Grid.Column="0" 
+                                       Text="{Binding Name}" 
                                        LineBreakMode="TailTruncation" />
-                                <Image Grid.Column="0" 
-                                       Grid.Row="0"
-                                       Grid.RowSpan="2"
-                                       Source="{Binding ImageURL}" 
-                                       Aspect="AspectFill">
-                                </Image>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </StackLayout>
-    </ContentPage>
-    <ContentPage Title="{Binding PageTitle2}">
-        <StackLayout>
-            <Picker x:Name="ColumnPicker"  
-                    HorizontalOptions="FillAndExpand"
-                    Margin="5,0"
-                    ItemsSource="{Binding ClubTypePickList}"
-                    SelectedItem="{Binding SelectedClubType}">
-            </Picker>
-            
-        </StackLayout>
-
-    </ContentPage>
-    <ContentPage Title="{Binding PageTitle3}">
-
-
-    </ContentPage>
-</TabbedPage>
+    </ContentPage.Content>
+</ContentPage>
