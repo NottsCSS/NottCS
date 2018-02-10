@@ -24,6 +24,8 @@
             <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
+    
+
     <ContentPage Title="{Binding PageTitle1}">
         <StackLayout>
             <Label Text="{Binding Label}"/>
@@ -40,7 +42,9 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Padding="5" x:Name="Items">
+                            <Grid Padding="5" 
+                                  x:Name="Items" 
+                                  Margin="1,1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="20"></RowDefinition>
                                     <RowDefinition Height="20"></RowDefinition>
@@ -66,18 +70,58 @@
             </ListView>
         </StackLayout>
     </ContentPage>
+
+
     <ContentPage Title="{Binding PageTitle2}">
         <StackLayout>
-            <Picker x:Name="ColumnPicker"  
+            <Label Text="{Binding Label1}"/>
+            <Picker x:Name="ClubList"  
                     HorizontalOptions="FillAndExpand"
                     Margin="5,0"
                     ItemsSource="{Binding ClubTypePickList}"
                     SelectedItem="{Binding SelectedClubType}">
             </Picker>
+            <flv:FlowListView x:Name="FlowListView" 
+                              FlowColumnCount="3" 
+                              SeparatorVisibility="Default" 
+                              RowHeight="100"
+                              FlowUseAbsoluteLayoutInternally="True" 
+                              FlowColumnExpand="None"
+                              FlowItemsSource="{Binding ClubList}" 
+                              FlowItemTappedCommand="{Binding ItemTappedCommand}"
+                              HasUnevenRows="False"
+                              Margin="5,10">
+                <flv:FlowListView.FlowColumnTemplate>
+                    <DataTemplate>
+                        <Frame OutlineColor="Black"
+                               Padding="0"
+                               Margin="2,2">
+                            <StackLayout>
+                                <Image Source="{Binding ImageURL}" 
+                                       Aspect="AspectFit"
+                                       HorizontalOptions="CenterAndExpand"
+                                       VerticalOptions="StartAndExpand"/>
+                                <Label HorizontalOptions="FillAndExpand" 
+                                       VerticalOptions="FillAndExpand" 
+                                       HorizontalTextAlignment="Center" 
+                                       VerticalTextAlignment="End" 
+                                       Text="{Binding ClubName}" 
+                                       LineBreakMode="WordWrap"/>
+
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </flv:FlowListView.FlowColumnTemplate>
+            </flv:FlowListView>
+         
             
         </StackLayout>
 
     </ContentPage>
+    
+    
+    
+
     <ContentPage Title="{Binding PageTitle3}">
 
 
