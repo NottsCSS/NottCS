@@ -86,7 +86,7 @@
 
     </ContentPage>
     <ContentPage Title="{Binding PageTitle3}">
-      
-      
+
+
     </ContentPage>
 </TabbedPage>
