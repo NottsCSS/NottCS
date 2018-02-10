@@ -9,7 +9,7 @@ using System;
 
 namespace NottCS.ViewModels
 {
-    class SettingsViewModel : BaseViewModel
+    internal class SettingsViewModel : BaseViewModel
     {
 
         public class UserDataObject
