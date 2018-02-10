@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.WhyNottCSExistsPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Why NottCS Exists"
+                   FontSize="Large"
+                   FontAttributes="Bold"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Center"/>
+            <ScrollView Margin="5,0">
+                <StackLayout>
+                    <Label LineBreakMode="WordWrap">
+                        Founded in 2017, Computer Science Society of The University of Nottingham Malaysia Campus is proud to release their first ever cross-platform application.
+                    </Label>
+                    <Label LineBreakMode="WordWrap">
+                        NottCS mission is to simplify the process of signing up event. A majority of the students dislike email spam from clubs.
+                    </Label>
+                    <Label LineBreakMode="WordWrap">
+                        We want to connect all students into a single application to bring all events together. 
+                    </Label>
+                </StackLayout>
+            </ScrollView>
+           
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

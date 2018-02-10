@@ -24,7 +24,7 @@
         <StackLayout>
             <ListView ItemsSource="{Binding DummyLists}"
                       Margin="3,3,0,0"
-                      RowHeight="50"
+                      RowHeight="40"
                       x:Name="SomeList">
                 <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior 
