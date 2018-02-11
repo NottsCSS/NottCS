@@ -21,10 +21,19 @@ namespace NottCS.Services.REST
         {
             var requestUri = UriGenerator(ServiceType.GetUserByUsername, username);
             var httpRequest = HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
-            var httpResponse = await Client.SendAsync(httpRequest);
-            var jObject = JObject.Parse(await httpResponse.Content.ReadAsStringAsync());
-
-            return jObject.ToObject<User>();
+            var requestTask = Client.SendAsync(httpRequest);
+            try
+            {
+                var response = await requestTask;
+                var user = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
+                return user;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                //TODO: Return error
+                return new User() {Username = username};
+            }
         }
 
         /// <summary>

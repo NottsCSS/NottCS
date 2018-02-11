@@ -48,13 +48,12 @@ namespace NottCS.ViewModels
         }
 
         /// <summary>
-        /// Sets the data of the page
+        /// Sets the data for the page
         /// </summary>
-        /// <param name="navigationData">Navigation Data</param>
-        private void SetPageData(object navigationData)
+        /// <param name="username">Username for the account data</param>
+        private async Task SetPageDataAsync(string username)
         {
-            //LoginUser = UserService.GetUserByUsername(username).GetAwaiter().GetResult();
-            LoginUser = new User() { Username = "kecy6cyt", Name = "Cheow Yeu Tyng", LibraryNumber = "2001434962", Password = "123", StudentId = "18816756", Course = "Electrical & Electronics Engineering" };
+            LoginUser = await UserService.GetUserByUsername(username);
             DataList = new List<UserDataObject>()
             {
                 new UserDataObject(){DataName = "Name", DataValue = LoginUser.Name},
@@ -74,7 +73,7 @@ namespace NottCS.ViewModels
         {
             if (navigationData is string username)
             {
-                SetPageData(navigationData);
+                SetPageDataAsync(username).GetAwaiter();
             }
             return base.InitializeAsync(navigationData);
         }

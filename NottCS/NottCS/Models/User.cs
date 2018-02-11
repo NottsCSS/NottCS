@@ -12,5 +12,14 @@ namespace NottCS.Models
         public string LibraryNumber { get; set; }
         public string StudentId { get; set; }
         public string Course { get; set; }
+
+        public User()
+        {
+            Username = "null";
+            Name = "null";
+            LibraryNumber = "null";
+            StudentId = "null";
+            Course = "null";
+        }
     }
 }

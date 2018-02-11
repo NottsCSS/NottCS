@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
@@ -12,7 +13,12 @@ namespace NottCS.Services.REST
         private const string BaseAddress = "https://apis.nottcs.com/";
 
         //TODO: Setup client with proper headers
-        protected static readonly HttpClient Client = new HttpClient();
+        protected static readonly HttpClient Client = new HttpClient()
+        {
+            Timeout = new TimeSpan(0, 0, 5)
+        };
+
+        protected const int TimeoutPeriod = 1000;
 
         /// <summary>
         /// Available service
@@ -23,7 +29,6 @@ namespace NottCS.Services.REST
             CreateClub, DeleteClubById, GetClubById, UpdateClubById,
             CreateClubMember, DeleteClubMemberById, GetClubMemberById, UpdateClubMemberById,
             CreateEvent, DeleteEventById, GetEventById, UpdateEventById,
-
         }
 
         /// <summary>
@@ -35,6 +40,15 @@ namespace NottCS.Services.REST
         /// <returns></returns>
         protected static HttpRequestMessage HttpRequestMessageGenerator(HttpMethod httpMethod, string requestUri, object requestBody = null)
         {
+            #region ObjectValidator
+
+            if (httpMethod == HttpMethod.Post && requestBody == null)
+            {
+                Debug.WriteLine("[BaseRestService] WARNING : No valid request body");
+            }
+
+            #endregion
+
             //TODO: Check if the function generates proper HttpRequestMessage
             var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
             var httpRequest = new HttpRequestMessage(httpMethod, requestUri)
@@ -52,7 +66,7 @@ namespace NottCS.Services.REST
         /// <returns></returns>
         protected static string UriGenerator(ServiceType service, string identifier = null)
         {
-            var returnUri = "";
+            string returnUri;
 
             #region IdentifierValidator
 
