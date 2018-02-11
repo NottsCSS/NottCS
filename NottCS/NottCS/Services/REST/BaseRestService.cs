@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
+using NottCS.Models;
 
 namespace NottCS.Services.REST
 {
@@ -174,6 +176,116 @@ namespace NottCS.Services.REST
             }
 
             return returnUri;
+        }
+
+        private static string UriGenerator<T>(HttpMethod httpMethod, string identifier = null)
+        {
+            var returnUri = "";
+
+            //TODO: Write a Uri generator logic based on the REST endpoint
+
+            return returnUri;
+        }
+
+        /// <summary>
+        /// Sends a DELETE request to the server
+        /// </summary>
+        /// <typeparam name="T">Type of delete object</typeparam>
+        /// <param name="identifier">Identifier for server to lookup object</param>
+        /// <returns>Operation status success</returns>
+        public static async Task<bool> RequestDeleteAsync<T>(string identifier)
+        {
+            var requestUri = UriGenerator<T>(HttpMethod.Delete, identifier);
+            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Delete, requestUri);
+            var requestTask = Client.SendAsync(httpRequest);
+
+            try
+            {
+                var httpResponse = await requestTask;
+                return httpResponse.IsSuccessStatusCode;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Sends a GET request to the server 
+        /// </summary>
+        /// <typeparam name="T">Type of request object</typeparam>
+        /// <param name="identifier">Identifier for the server to lookup</param>
+        /// <returns>Requested Object</returns>
+        public static async Task<T> RequestGetAsync<T>(string identifier) where T : new()
+        {
+            var requestUri = UriGenerator<T>(HttpMethod.Get, identifier);
+            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
+            var requestTask = Client.SendAsync(httpRequest);
+            try
+            {
+                var httpResponse = await requestTask;
+                if (httpResponse.IsSuccessStatusCode)
+                {
+                    var result = JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync());
+                    return result;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+
+            return new T();
+        }
+
+        /// <summary>
+        /// Sends a POST request to server to create object
+        /// </summary>
+        /// <typeparam name="T">Type of object to create</typeparam>
+        /// <param name="objectData">Data of the object to create</param>
+        /// <returns>Operation status success</returns>
+        public static async Task<bool> RequestPostAsync<T>(T objectData)
+        {
+            var requestUri = UriGenerator<T>(HttpMethod.Post);
+            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Post, requestUri, objectData);
+            var task = Client.SendAsync(httpRequest);
+
+            try
+            {
+                var httpResponse = await task;
+                return httpResponse.IsSuccessStatusCode;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Sends a POST request to the server to update existing data
+        /// </summary>
+        /// <typeparam name="T">Type of object to update</typeparam>
+        /// <param name="identifier">Identifier for th server to lookup the object</param>
+        /// <param name="objectData">Data to update</param>
+        /// <returns>Operation success</returns>
+        public static async Task<bool> RequestUpdateAsync<T>(string identifier, T objectData)
+        {
+            var requestUri = UriGenerator<T>(HttpMethod.Post, identifier);
+            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Post, requestUri, objectData);
+            var requestTask = Client.SendAsync(httpRequest);
+
+            try
+            {
+                var httpResponse = await requestTask;
+                return httpResponse.IsSuccessStatusCode;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return false;
+            }
         }
     }
 }
