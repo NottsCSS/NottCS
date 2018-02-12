@@ -28,15 +28,14 @@
 
     <ContentPage Title="{Binding PageTitle1}">
         <StackLayout>
-            <Label Text="{Binding Label}"/>
-            <ListView ItemsSource="{Binding DummyLists}"
+            <ListView ItemsSource="{Binding EventLists}"
                       Margin="3,3,0,0"
                       RowHeight="50"
                       x:Name="SomeList">
                 <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior 
                         EventName="ItemTapped"
-                        Command="{Binding Tapped}" 
+                        Command="{Binding TappedCommand}" 
                         Converter="{StaticResource TappedItemConverter}" />
                 </ListView.Behaviors>
                 <ListView.ItemTemplate>
@@ -97,7 +96,7 @@
                                Margin="2,2">
                             <Image Source="{Binding ImageURL}" 
                                    Aspect="AspectFill"
-                                   HorizontalOptions="CenterAndExpand"
+                                   HorizontalOptions="FillAndExpand"
                                    VerticalOptions="StartAndExpand"/>
                             <Label FontSize="Small"
                                    HorizontalOptions="FillAndExpand" 

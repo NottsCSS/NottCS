@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NottCS.ViewModels
 {
-    class EventViewModel
+    class EventViewModel : BaseViewModel
     {
     }
 }

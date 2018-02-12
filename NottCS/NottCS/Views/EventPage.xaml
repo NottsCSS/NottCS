@@ -17,15 +17,6 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Button Grid.Row="0"
-                    Text="Back"
-                    Font="8"
-                    WidthRequest="50"
-                    HeightRequest="50"
-                    Margin="2,0,2,0"
-                    HorizontalOptions="Start" 
-                    VerticalOptions="FillAndExpand">
-                </Button>
                 <ScrollView Grid.Row="1"
                          HorizontalOptions="Start">
                     <StackLayout>
