@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using NottCS.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace NottCS.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class EventRegSuccessPage : ContentPage
+	public partial class EventRegistrationSuccessPage : ContentPage
 	{
-		public EventRegSuccessPage ()
+		public EventRegistrationSuccessPage()
 		{
 			InitializeComponent ();
             AddImage(SuccessIcon, "NottCS.Images.Icons.okfixed.png");
+		    BindingContext = new EventRegistrationSuccessViewModel();
             //AddImage(Back, "NottCS.Images.Icons.back.png");
         }
 

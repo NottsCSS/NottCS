@@ -5,12 +5,15 @@ using System.Diagnostics;
 using System.Windows.Input;
 using NottCS.Models;
 using Xamarin.Forms;
+using System.Threading.Tasks;
+using NottCS.Services.Navigation;
+using NottCS.Views;
 
 namespace NottCS.ViewModels
 {
     public class HomeViewModel : BaseViewModel
     {
-        public ObservableCollection<Item> DummyLists { get; set; } = new ObservableCollection<Item>()
+        public ObservableCollection<Item> EventLists { get; set; } = new ObservableCollection<Item>()
         {
             new Item()
             {
@@ -142,7 +145,6 @@ namespace NottCS.ViewModels
         public string PageTitle3 { get; set; }
         private ObservableCollection<Item> _clubList;
         private string _label = "Hello";
-        private string _label1 = "Hello";
         private string _selectedClubType;
         private int Count { get; set; } = 0;
         private int Count1 { get; set; } = 0;
@@ -151,13 +153,6 @@ namespace NottCS.ViewModels
             get => _label;
             set => SetProperty(ref _label, value);
         }
-
-        public string Label1
-        {
-            get => _label1;
-            set => SetProperty(ref _label1, value);
-        }
-
         public List<string> ClubTypePickList { get; set; } =
             new List<string> {"My Clubs Only", "All Clubs", "Favourite Clubs"};
 
@@ -183,24 +178,40 @@ namespace NottCS.ViewModels
             }
         }
         //todo: Navigation when tapped on one of the item and display image of clubs.
-        public ICommand ItemTappedCommand => new Command(ItemTapped);
-        public ICommand Tapped => new Command(ChangeLabel);
-        private void ItemTapped()
+        public ICommand ItemTappedCommand => new Command(async () => await ItemTapped());
+        public ICommand TappedCommand => new Command(async () => await Tapped());
+        private async Task ItemTapped()
         {
-            Debug.WriteLine("Item Tapped");
+            try
+            {
+                await NavigationService.NavigateToAsync<ClubRegistrationViewModel>(new ClubRegistrationPage());
+                Debug.WriteLine("Item Tapped");
+            }
+            catch (Exception e)
+            {
+
+                Debug.WriteLine(e.Message);
+            }
+            
         }
 
-        private void ChangeLabel()
+        private async Task Tapped()
         {
-            Label = $"Hello World {Count}";
-            Count++;
-            Debug.WriteLine("Button pressed");
+            //Label = $"Hello World {Count}";
+            //Count++;
+            try
+            {
+                await NavigationService.NavigateToAsync<EventViewModel>(new EventPage());
+                Debug.WriteLine("Button pressed");
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
         }
 
         private void ChangeLabel1(object e)
         {
-            Label1 = $"Hello World {Count1}";
-            Count1++;
             Debug.WriteLine("Picker Changed");
             string picked = e.ToString();
             Debug.WriteLine(picked);
@@ -214,6 +225,16 @@ namespace NottCS.ViewModels
             PageTitle1 = "News Feed";
             PageTitle2 = "Clubs & Society";
             PageTitle3 = "Profile";
+        }
+        public override Task InitializeAsync(object navigationData)
+        {
+            if (navigationData is string s)
+            {
+                Debug.WriteLine(s);
+                Debug.WriteLine(navigationData);
+            }
+            Debug.WriteLine(navigationData);
+            return base.InitializeAsync(navigationData);
         }
     }
 }

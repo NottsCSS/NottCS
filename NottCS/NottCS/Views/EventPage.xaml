@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NottCS.Views.EventPage">
+             x:Class="NottCS.Views.EventPage"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+             xmlns:models="clr-namespace:NottCS.Models;assembly=NottCS"
+             d:DataContext="{d:DesignInstance viewModels:EventViewModel}">
     <ContentPage.Content>
         <Grid>
             <Grid>
@@ -11,15 +17,6 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Button Grid.Row="0"
-                    Text="Back"
-                    Font="8"
-                    WidthRequest="50"
-                    HeightRequest="50"
-                    Margin="2,0,2,0"
-                    HorizontalOptions="Start" 
-                    VerticalOptions="FillAndExpand">
-                </Button>
                 <ScrollView Grid.Row="1"
                          HorizontalOptions="Start">
                     <StackLayout>

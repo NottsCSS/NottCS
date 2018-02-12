@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using NottCS.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,6 +15,7 @@ namespace NottCS.Views
 		public ClubRegistrationPage ()
 		{
 			InitializeComponent ();
+            BindingContext=new ClubRegistrationViewModel();
             AddImage(PlaceHolder, "NottCS.Images.example-background.jpg");
             AddImage(Logo1, "NottCS.Images.Icons.icon2.png");
         }
