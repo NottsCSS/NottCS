@@ -7,29 +7,45 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
-             xmlns:models="clr-namespace:NottCS.Models;assembly=NottCS"
              xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
              xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
              d:DataContext="{d:DesignInstance viewModels:AboutViewModel}">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <x:Double x:Key="HorizontalMargin">5</x:Double>
-            <x:Double x:Key="VerticalMargin">5</x:Double>
-            <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
-            <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
             <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <ListView ItemsSource="{Binding DummyLists}"
-                      Margin="3,3,0,0"
-                      RowHeight="40"
+        <StackLayout BackgroundColor="White">
+            <Image x:Name = "NottCsLogo" 
+                   HorizontalOptions="Center"
+                   VerticalOptions="Start"
+                   HeightRequest="100"
+                   WidthRequest="100">
+            </Image>
+            <Label Text ="Version: 1.0.0"
+                   FontSize="10"
+                   TextColor="Black"
+                   HorizontalOptions="CenterAndExpand">
+            </Label>
+            <Label Text ="Computer Science Society"
+                   FontSize="9"
+                   TextColor="Gray"
+                   HorizontalOptions="CenterAndExpand">
+            </Label>
+            <Label Text ="Copyright © 2018"
+                   FontSize="9"
+                   TextColor="Gray"
+                   HorizontalOptions="CenterAndExpand">
+            </Label>
+            <ListView ItemsSource="{Binding AboutLists}"
+                      Margin="3,0"
+                      RowHeight="20"
                       x:Name="SomeList">
                 <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior 
                         EventName="ItemTapped"
-                        Command="{Binding Tapped}" 
+                        Command="{Binding WhyNottCsCommand}" 
                         Converter="{StaticResource TappedItemConverter}" />
                 </ListView.Behaviors>
                 <ListView.ItemTemplate>
@@ -38,16 +54,13 @@
                             <Grid Padding="5" x:Name="About">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="20"></RowDefinition>
-                                    <RowDefinition Height="20"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                     <ColumnDefinition Width="40"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Row="0" 
-                                       Grid.Column="0" 
-                                       Text="{Binding Name}" 
-                                       LineBreakMode="TailTruncation" />
+                                <Label Text="{Binding Name}"
+                                       FontSize="10"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

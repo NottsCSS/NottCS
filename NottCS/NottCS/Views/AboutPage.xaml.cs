@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NottCS.ViewModels;
+﻿using NottCS.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,6 +11,15 @@ namespace NottCS.Views
 		{
 			InitializeComponent ();
             BindingContext = new AboutViewModel();
-		}
-	}
+            AddImage(NottCsLogo, "NottCS.Images.Icons.logo1.jpeg");
+        }
+	    private void AddImage(Image imageContainer, string imageLocation)
+	    {
+	        var assembly = typeof(NottCS.Views.AboutPage);
+	        if (imageContainer != null)
+	        {
+	            imageContainer.Source = ImageSource.FromResource(imageLocation, assembly);
+	        }
+	    }
+    }
 }
