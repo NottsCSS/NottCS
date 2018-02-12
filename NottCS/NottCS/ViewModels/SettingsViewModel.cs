@@ -15,6 +15,7 @@ namespace NottCS.ViewModels
         public class UserDataObject
         {
             public string Name { get; set; }
+            public string Logout { get; set; }
         }
 
         public List<UserDataObject> DummyLists { get; set; }
@@ -24,7 +25,7 @@ namespace NottCS.ViewModels
             Title = "Settings";
             SetPageData();
         }
-        public ICommand AboutCommand => new Command(async () => await About());
+        public ICommand SettingCommand => new Command(async () => await About());
 
         private async Task About()
         {
@@ -42,7 +43,10 @@ namespace NottCS.ViewModels
         {
             DummyLists = new List<UserDataObject>()
             {
-                new UserDataObject() {Name = "About Us"}
+                new UserDataObject() {Name = "Notifications"},
+                new UserDataObject() {Name = "About Us"},
+                new UserDataObject() {Name = "Report an Issue"},
+                new UserDataObject() {Logout = "Logout"}
             };
         }
     }
