@@ -40,8 +40,8 @@ namespace NottCS.Services.Navigation
 
                     if (navigationPage.CurrentPage.GetType() != page.GetType()) //prevents navigation to same page multiple times
                     {
-                        Debug.WriteLine(navigationPage.CurrentPage);
-                        Debug.WriteLine(page);
+                        Debug.WriteLine($"Previous page is: {navigationPage.CurrentPage}");
+                        Debug.WriteLine($"Now navigating to:{page}");
                         await navigationPage.PushAsync(page);
                     }
                 }
