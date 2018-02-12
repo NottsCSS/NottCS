@@ -142,7 +142,6 @@ namespace NottCS.ViewModels
         public string PageTitle3 { get; set; }
         private ObservableCollection<Item> _clubList;
         private string _label = "Hello";
-        private string _label1 = "Hello";
         private string _selectedClubType;
         private int Count { get; set; } = 0;
         private int Count1 { get; set; } = 0;
@@ -151,13 +150,6 @@ namespace NottCS.ViewModels
             get => _label;
             set => SetProperty(ref _label, value);
         }
-
-        public string Label1
-        {
-            get => _label1;
-            set => SetProperty(ref _label1, value);
-        }
-
         public List<string> ClubTypePickList { get; set; } =
             new List<string> {"My Clubs Only", "All Clubs", "Favourite Clubs"};
 
@@ -199,8 +191,6 @@ namespace NottCS.ViewModels
 
         private void ChangeLabel1(object e)
         {
-            Label1 = $"Hello World {Count1}";
-            Count1++;
             Debug.WriteLine("Picker Changed");
             string picked = e.ToString();
             Debug.WriteLine(picked);

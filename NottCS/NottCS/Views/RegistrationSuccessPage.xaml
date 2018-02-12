@@ -7,9 +7,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             xmlns:rootViewModel="clr-namespace:NottCS.ViewModels;assembly=NottCS"
              xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
-             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS">
+             xmlns:models="clr-namespace:NottCS.Models;assembly=NottCS"
+             d:DataContext="{d:DesignInstance viewModels:RegistrationSuccessViewModel}">
     <ContentPage.Content>
         <Grid>
             <Grid>

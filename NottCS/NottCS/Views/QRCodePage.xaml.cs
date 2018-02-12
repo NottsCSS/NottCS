@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using NottCS.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,6 +16,7 @@ namespace NottCS.Views
 		{
 			InitializeComponent ();
             AddImage(PlaceHolder, "NottCS.Images.example-background.jpg");
+            BindingContext = new QRCodeViewModel();
             //AddImage(Back, "NottCS.Images.Icons.back.png");
         }
 
