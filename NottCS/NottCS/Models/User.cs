@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace NottCS.Models
@@ -15,6 +16,7 @@ namespace NottCS.Models
 
         public User()
         {
+            Debug.WriteLine("Calling the default constructor for User");
             Username = "null";
             Name = "null";
             LibraryNumber = "null";
