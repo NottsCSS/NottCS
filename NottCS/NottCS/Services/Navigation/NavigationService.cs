@@ -10,6 +10,7 @@ namespace NottCS.Services.Navigation
 {
     public static class NavigationService
     {
+        private static bool _isNavigating = false;
         internal static async Task NavigateToAsync<TViewModel>(object parameter = null) where TViewModel : BaseViewModel, new()
         {
             //if mainpage is not navigation page it will not be able to push another page onto the navigation stack
@@ -38,11 +39,13 @@ namespace NottCS.Services.Navigation
                         throw new Exception($"{pageType} has binding context that is not derived from BaseViewModel");
                     }
 
-                    if (navigationPage.CurrentPage.GetType() != page.GetType()) //prevents navigation to same page multiple times
+                    if (navigationPage.CurrentPage.GetType() != page.GetType() && !_isNavigating) //prevents navigation to same page multiple times
                     {
+                        _isNavigating = true;
                         Debug.WriteLine($"Previous page is: {navigationPage.CurrentPage}");
                         Debug.WriteLine($"Now navigating to:{page}");
                         await navigationPage.PushAsync(page);
+                        _isNavigating = false;
                     }
                 }
 
