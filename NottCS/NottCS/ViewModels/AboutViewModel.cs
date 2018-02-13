@@ -22,9 +22,9 @@ namespace NottCS.ViewModels
             Title = "About";
             SetPageData();
         }
-        public List<UserDataObject> DummyLists { get; set; }
+        public List<UserDataObject> AboutLists { get; set; }
 
-        public ICommand Tapped => new Command(async () => await WhyNottCSExists());
+        public ICommand WhyNottCsCommand => new Command(async () => await WhyNottCSExists());
 
         private async Task WhyNottCSExists()
         {
@@ -41,9 +41,9 @@ namespace NottCS.ViewModels
 
         private void SetPageData()
         {
-            DummyLists = new List<UserDataObject>()
+            AboutLists = new List<UserDataObject>()
             {
-                new UserDataObject() {Name = "Why NottCS Exists"}
+                new UserDataObject() {Name = "Why NottCS Exists"},
             };
         }
     }
