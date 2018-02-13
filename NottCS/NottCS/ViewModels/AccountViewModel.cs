@@ -69,10 +69,10 @@ namespace NottCS.ViewModels
                 DataList = new List<UserDataObject>()
                 {
                     new UserDataObject(){DataName = "Name", DataValue = LoginUser.Name},
-                    new UserDataObject(){DataName = "Username", DataValue = LoginUser.Username},
+                    new UserDataObject(){DataName = "Email", DataValue = LoginUser.Email},
                     new UserDataObject(){DataName = "Student ID", DataValue = LoginUser.StudentId},
                     new UserDataObject(){DataName = "Library Number", DataValue = LoginUser.LibraryNumber},
-                    new UserDataObject(){DataName = "Studying Course", DataValue = LoginUser.Course}
+                    new UserDataObject(){DataName = "Date Joined", DataValue = LoginUser.DateJoined.ToLongDateString()}
                 };
                 return true;
             }

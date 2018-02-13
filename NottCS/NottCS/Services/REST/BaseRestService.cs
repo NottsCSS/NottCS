@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using NottCS.Models;
 
 namespace NottCS.Services.REST
 {
@@ -235,7 +236,8 @@ namespace NottCS.Services.REST
                 Debug.WriteLine(e);
             }
 
-            return Tuple.Create(false, new T());
+            //TODO: Revert back to false for Item1, true is for easy login and testing purpose only
+            return Tuple.Create(true, new T());
         }
 
         /// <summary>
