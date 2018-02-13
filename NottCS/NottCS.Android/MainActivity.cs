@@ -8,6 +8,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Microsoft.Identity.Client;
+using System.Diagnostics;
 
 namespace NottCS.Droid
 {
@@ -35,7 +36,14 @@ namespace NottCS.Droid
 
         private void InitializeDialogService()
         {
-            UserDialogs.Init(this);
+            try
+            {
+                UserDialogs.Init(this);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
         }
     }
 }
