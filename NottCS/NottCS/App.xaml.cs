@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Acr.UserDialogs;
 using NottCS.Views;
 using Xamarin.Forms;
 
@@ -11,6 +11,7 @@ namespace NottCS
 		public App ()
 		{
 			InitializeComponent();
+            InitializeDialogService();
             MainPage = new NavigationPage(new LoginPage());
         }
 
@@ -28,5 +29,10 @@ namespace NottCS
 		{
 			// Handle when your app resumes
 		}
+
+	    private void InitializeDialogService()
+	    {
+            
+	    }
 	}
 }

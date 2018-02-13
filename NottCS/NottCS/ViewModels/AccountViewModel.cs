@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Acr.UserDialogs;
 using NottCS.Services.Navigation;
 using Xamarin.Forms;
 
@@ -59,6 +60,7 @@ namespace NottCS.ViewModels
             if (!respondData.Item1)
             {
                 //TODO: Implement error notification
+                UserDialogs.Instance.Alert("We're not able to log you in. Please try again.", "Login Error", "Ok");
                 return false;
             }
             else

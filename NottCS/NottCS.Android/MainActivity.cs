@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Acr.UserDialogs;
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
@@ -14,6 +14,7 @@ namespace NottCS.Droid
     {
         protected override void OnCreate(Bundle bundle)
         {
+            InitializeDialogService();
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -21,6 +22,11 @@ namespace NottCS.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
+        }
+
+        private void InitializeDialogService()
+        {
+            UserDialogs.Init(this);
         }
     }
 }
