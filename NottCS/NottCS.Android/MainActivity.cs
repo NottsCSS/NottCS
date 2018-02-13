@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Acr.UserDialogs;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -16,6 +16,7 @@ namespace NottCS.Droid
     {
         protected override void OnCreate(Bundle bundle)
         {
+            InitializeDialogService();
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -30,6 +31,11 @@ namespace NottCS.Droid
         {
             base.OnActivityResult(requestCode, resultCode, data);
             AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
+        }
+
+        private void InitializeDialogService()
+        {
+            UserDialogs.Init(this);
         }
     }
 }

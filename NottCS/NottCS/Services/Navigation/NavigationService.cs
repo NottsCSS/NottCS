@@ -47,6 +47,15 @@ namespace NottCS.Services.Navigation
                 throw new Exception($"{pageTypeString} is not navigationPage");
             }
         }
+
+        internal static async Task GoBackAsync()
+        {
+            if (Application.Current.MainPage is NavigationPage navigationPage)
+            {
+                await navigationPage.PopAsync();
+            }
+        }
+
         private static Type GetPageTypeForViewModel(Type viewModelType)
         {
             string viewName = (viewModelType.FullName.Replace("ViewModels", "Views")).Replace("ViewModel", "Page");

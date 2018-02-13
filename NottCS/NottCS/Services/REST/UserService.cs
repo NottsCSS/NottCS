@@ -32,7 +32,7 @@ namespace NottCS.Services.REST
             {
                 Debug.WriteLine(e);
                 //TODO: Return error
-                return new User() {Username = username};
+                return new User();
             }
         }
 
