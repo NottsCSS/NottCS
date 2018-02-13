@@ -19,7 +19,7 @@ namespace NottCS.ViewModels
         {
             try
             {
-                await NavigationService.NavigateToAsync<QRCodeViewModel>(new QRCodePage());
+                await NavigationService.NavigateToAsync<QRCodeViewModel>();
                 Debug.WriteLine("Button Pressed");
             }
             catch (Exception e)
@@ -28,6 +28,14 @@ namespace NottCS.ViewModels
                 Debug.WriteLine(e.Message);
             }
 
+        }
+        public override Task InitializeAsync(object navigationData)
+        {
+            if (navigationData is Item s)
+            {
+                Debug.WriteLine($"Club name is {s.ClubName}");
+            }
+            return base.InitializeAsync(navigationData);
         }
     }
 }
