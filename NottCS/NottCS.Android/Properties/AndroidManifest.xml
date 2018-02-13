@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.NottCS" android:installLocation="preferExternal">
 	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="25" />
-	<application android:label="NottCS.Android"></application>
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <application>
-    <activity android:name="microsoft.identity.client.BrowserTabActivity">
+    <activity android:name="microsoft.identity.client.BrowserTabActivity"
+              android:label="NottCS.Android">
       <intent-filter>
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
