@@ -105,10 +105,7 @@
                     </DataTemplate>
                 </flv:FlowListView.FlowColumnTemplate>
             </flv:FlowListView>
-         
-            
         </StackLayout>
-
     </ContentPage>
     
     

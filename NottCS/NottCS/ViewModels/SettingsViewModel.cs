@@ -45,10 +45,9 @@ namespace NottCS.ViewModels
             DummyLists = new List<UserDataObject>()
             {
                 new UserDataObject() {Name = "Notifications"},
-                new UserDataObject() {Name = "About Us"},
+                new UserDataObject() {Name = "About Us",PageType = typeof(SettingsPage)},
                 new UserDataObject() {Name = "Report an Issue"},
                 new UserDataObject() {Logout = "Logout"}
-                new UserDataObject() {Name = "About Us",PageType = typeof(SettingsPage)}
             };
         }
     }
