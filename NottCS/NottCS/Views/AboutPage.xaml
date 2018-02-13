@@ -39,8 +39,8 @@
                    HorizontalOptions="CenterAndExpand">
             </Label>
             <ListView ItemsSource="{Binding AboutLists}"
-                      Margin="3,0"
-                      RowHeight="20"
+                      Margin="3,10"
+                      RowHeight="30"
                       x:Name="SomeList">
                 <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior 
@@ -60,7 +60,7 @@
                                     <ColumnDefinition Width="40"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Label Text="{Binding Name}"
-                                       FontSize="10"/>
+                                       FontSize="13"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

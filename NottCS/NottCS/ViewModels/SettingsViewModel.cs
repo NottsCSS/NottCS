@@ -11,7 +11,6 @@ namespace NottCS.ViewModels
 {
     internal class SettingsViewModel : BaseViewModel
     {
-
         public class UserDataObject
         {
             public string Name { get; set; }
@@ -29,12 +28,12 @@ namespace NottCS.ViewModels
 
         private async Task About()
         {
-            try {
+            try
+            {
                 await NavigationService.NavigateToAsync<AboutViewModel>(new AboutPage());
             }
             catch (Exception e)
             {
-
                 Debug.WriteLine(e.Message);
             }
         }
@@ -44,7 +43,7 @@ namespace NottCS.ViewModels
             DummyLists = new List<UserDataObject>()
             {
                 new UserDataObject() {Name = "Notifications"},
-                new UserDataObject() {Name = "About Us"},
+                new UserDataObject() {Name = "About"},
                 new UserDataObject() {Name = "Report an Issue"},
                 new UserDataObject() {Logout = "Logout"}
             };

@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using NottCS.ViewModels;
 using System.Diagnostics;
@@ -12,8 +13,8 @@ namespace NottCS.Views
 		{
 			InitializeComponent ();
             Debug.WriteLine("Attempting to call ViewModel");
-            BindingContext = new SettingsViewModel();
-            
-        }
-	}
+		    BindingContext = new SettingsViewModel();
+
+		}
+    }
 }

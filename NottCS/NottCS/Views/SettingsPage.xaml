@@ -24,9 +24,8 @@
                 <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior 
                         EventName="ItemTapped"
-                        Command="{Binding SettingCommand}" 
-                        Converter="{StaticResource TappedItemConverter}">
-                    </behaviors:EventToCommandBehavior>
+                        Command="{Binding SettingCommand}"
+                        Converter="{StaticResource TappedItemConverter}" />
                 </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -40,13 +39,14 @@
                                     <ColumnDefinition Width="40"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Row="0" 
-                                       Grid.Column="0" 
-                                       Text="{Binding Name}">
+                                       Grid.Column="0"
+                                       Text ="{Binding Name}">
                                 </Label>
                                 <Label  Grid.Row="0" 
-                                        Grid.Column="0" 
-                                        Text="{Binding Logout}"
-                                        TextColor="Red"/>
+                                        Grid.Column="0"
+                                        Text ="{Binding Logout}"
+                                        TextColor="Red">
+                                </Label>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
