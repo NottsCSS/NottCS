@@ -13,6 +13,7 @@ namespace NottCS.ViewModels
 {
     public class HomeViewModel : BaseViewModel
     {
+        #region Temporary EventList
         public ObservableCollection<Item> EventLists { get; set; } = new ObservableCollection<Item>()
         {
             new Item()
@@ -24,6 +25,11 @@ namespace NottCS.ViewModels
             new Item(),
             new Item()
         };
+
+
+        #endregion
+        #region Temporary ClubList
+
         public ObservableCollection<Item> ClubList
         {
             get => _clubList; 
@@ -140,19 +146,17 @@ namespace NottCS.ViewModels
             }
         };
 
+        #endregion
+
         public string PageTitle1 { get; set; }
         public string PageTitle2 { get; set; }
         public string PageTitle3 { get; set; }
         private ObservableCollection<Item> _clubList;
-        private string _label = "Hello";
         private string _selectedClubType;
-        private int Count { get; set; } = 0;
-        private int Count1 { get; set; } = 0;
-        public string Label
-        {
-            get => _label;
-            set => SetProperty(ref _label, value);
-        }
+
+
+        #region Picker
+
         public List<string> ClubTypePickList { get; set; } =
             new List<string> {"My Clubs Only", "All Clubs", "Favourite Clubs"};
 
@@ -177,31 +181,42 @@ namespace NottCS.ViewModels
                 }
             }
         }
-        //todo: Navigation when tapped on one of the item and display image of clubs.
-        public ICommand ItemTappedCommand => new Command(async () => await ItemTapped());
-        public ICommand TappedCommand => new Command(async () => await Tapped());
-        private async Task ItemTapped()
+        private void ChangeLabel1(object e)
+        {
+            Debug.WriteLine("Picker Changed");
+            string picked = e.ToString();
+            Debug.WriteLine(picked);
+        }
+
+        #endregion
+        #region ListViewNavigation
+
+        public ICommand ItemTappedCommand => new Command(async (object p) => await ItemTapped(p));
+        private async Task ItemTapped(object p)
         {
             try
             {
-                await NavigationService.NavigateToAsync<ClubRegistrationViewModel>(new ClubRegistrationPage());
+                await NavigationService.NavigateToAsync<ClubRegistrationViewModel>(p);
                 Debug.WriteLine("Item Tapped");
+                
             }
             catch (Exception e)
             {
-
                 Debug.WriteLine(e.Message);
             }
             
         }
 
-        private async Task Tapped()
+        #endregion
+        #region FlowListViewNavigation
+        public ICommand TappedCommand => new Command(async (object p) => await Tapped(p));
+        private async Task Tapped(object p)
         {
             //Label = $"Hello World {Count}";
             //Count++;
             try
             {
-                await NavigationService.NavigateToAsync<EventViewModel>(new EventPage());
+                await NavigationService.NavigateToAsync<EventViewModel>(p);
                 Debug.WriteLine("Button pressed");
             }
             catch (Exception e)
@@ -209,14 +224,8 @@ namespace NottCS.ViewModels
                 Debug.WriteLine(e.Message);
             }
         }
-
-        private void ChangeLabel1(object e)
-        {
-            Debug.WriteLine("Picker Changed");
-            string picked = e.ToString();
-            Debug.WriteLine(picked);
-        }
-        
+        #endregion
+        #region HomeViewModel Constructor
 
         public HomeViewModel()
         {
@@ -226,15 +235,17 @@ namespace NottCS.ViewModels
             PageTitle2 = "Clubs & Society";
             PageTitle3 = "Profile";
         }
-        public override Task InitializeAsync(object navigationData)
-        {
-            if (navigationData is string s)
-            {
-                Debug.WriteLine(s);
-                Debug.WriteLine(navigationData);
-            }
-            Debug.WriteLine(navigationData);
-            return base.InitializeAsync(navigationData);
-        }
+
+        #endregion
+        //public override Task InitializeAsync(object navigationData)
+        //{
+        //    if (navigationData is string s)
+        //    {
+        //        Debug.WriteLine(s);
+        //        Debug.WriteLine(navigationData);
+        //    }
+        //    Debug.WriteLine(navigationData);
+        //    return base.InitializeAsync(navigationData);
+        //}
     }
 }
