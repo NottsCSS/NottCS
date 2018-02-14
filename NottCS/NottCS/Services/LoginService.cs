@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
+using NottCS.Services.REST;
 
 namespace NottCS.Services
 {
@@ -14,7 +15,8 @@ namespace NottCS.Services
             try
             {
                 AuthenticationResult ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
-                return $"Welcome {ar.User.Name}";
+                BaseRestService.SetupClient(ar.AccessToken);
+                return ar.AccessToken;
             }
             catch (MsalException ex)
             {

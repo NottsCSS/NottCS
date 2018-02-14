@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -12,7 +13,7 @@ namespace NottCS.Services.REST
     internal class BaseRestService
     {
         //TODO: Update the Uri when the domain name is available
-        private const string BaseAddress = "https://apis.nottcs.com/";
+        private const string BaseAddress = "https://testing-endpoints.herokuapp.com/";
 
         //TODO: Setup client with proper headers
         protected static readonly HttpClient Client = new HttpClient()
@@ -31,6 +32,17 @@ namespace NottCS.Services.REST
             CreateClub, DeleteClubById, GetClubById, UpdateClubById,
             CreateClubMember, DeleteClubMemberById, GetClubMemberById, UpdateClubMemberById,
             CreateEvent, DeleteEventById, GetEventById, UpdateEventById,
+        }
+
+        /// <summary>
+        /// Setups the Client with authorization header
+        /// </summary>
+        /// <param name="accessToken"></param>
+        public static void SetupClient(string accessToken)
+        {
+            Client.BaseAddress = new Uri(BaseAddress);
+            Client.DefaultRequestHeaders.Clear();
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         }
 
         /// <summary>
@@ -180,7 +192,7 @@ namespace NottCS.Services.REST
 
         private static string UriGenerator<T>(HttpMethod httpMethod, string identifier = null)
         {
-            var returnUri = "";
+            var returnUri = BaseAddress + "/azuread-user/me/";
 
             //TODO: Write a Uri generator logic based on the REST endpoint
 
@@ -224,10 +236,12 @@ namespace NottCS.Services.REST
             try
             {
                 var requestTask = Client.SendAsync(httpRequest);
-                var httpResponse = await requestTask;
+                //Debug.WriteLine(JsonConvert.SerializeObject(requestTask));
+                var httpResponse = requestTask.GetAwaiter().GetResult();
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     var result = JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync());
+                    Debug.WriteLine($"{JsonConvert.SerializeObject(result)}");
                     return Tuple.Create(true, result);
                 }
             }
@@ -237,7 +251,7 @@ namespace NottCS.Services.REST
             }
 
             //TODO: Revert back to false for Item1, true is for easy login and testing purpose only
-            return Tuple.Create(true, new T());
+            return Tuple.Create(false, new T());
         }
 
         /// <summary>
