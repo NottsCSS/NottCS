@@ -16,6 +16,7 @@ namespace NottCS.Services
             {
                 AuthenticationResult ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
                 BaseRestService.SetupClient(ar.AccessToken);
+                Debug.WriteLine($"Access Token : {ar.AccessToken}");
                 return ar.AccessToken;
             }
             catch (MsalException ex)

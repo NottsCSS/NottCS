@@ -65,10 +65,18 @@ namespace NottCS.Services.REST
 
             //TODO: Check if the function generates proper HttpRequestMessage
             var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
-            var httpRequest = new HttpRequestMessage(httpMethod, requestUri)
+            HttpRequestMessage httpRequest;
+            if (httpMethod == HttpMethod.Get)
             {
-                Content = content
-            };
+                httpRequest = new HttpRequestMessage(httpMethod, requestUri);
+            }
+            else
+            {
+                httpRequest = new HttpRequestMessage(httpMethod, requestUri)
+                {
+                    Content = content
+                };
+            }
             return httpRequest;
         }
 
