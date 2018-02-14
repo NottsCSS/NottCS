@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Acr.UserDialogs;
+using NottCS.Services.Navigation;
 using Xamarin.Forms;
 
 namespace NottCS.ViewModels
@@ -48,21 +50,32 @@ namespace NottCS.ViewModels
         }
 
         /// <summary>
-        /// Sets the data of the page
+        /// Sets the data for the page
         /// </summary>
-        /// <param name="navigationData">Navigation Data</param>
-        private void SetPageData(object navigationData)
+        /// <param name="username">Username for the account data</param>
+        private async Task<bool> SetPageDataAsync(string username)
         {
-            //LoginUser = UserService.GetUserByUsername(username).GetAwaiter().GetResult();
-            LoginUser = new User() { Username = "kecy6cyt", Name = "Cheow Yeu Tyng", LibraryNumber = "2001434962", Password = "123", StudentId = "18816756", Course = "Electrical & Electronics Engineering" };
-            DataList = new List<UserDataObject>()
+            var respondData = await BaseRestService.RequestGetAsync<User>(username);
+
+            if (!respondData.Item1)
             {
-                new UserDataObject(){DataName = "Name", DataValue = LoginUser.Name},
-                new UserDataObject(){DataName = "Username", DataValue = LoginUser.Username},
-                new UserDataObject(){DataName = "Student ID", DataValue = LoginUser.StudentId},
-                new UserDataObject(){DataName = "Library Number", DataValue = LoginUser.LibraryNumber},
-                new UserDataObject(){DataName = "Studying Course", DataValue = LoginUser.Course}
-            };
+                //TODO: Implement error notification
+                UserDialogs.Instance.Alert("We're not able to log you in. Please try again.", "Login Error", "Ok");
+                return false;
+            }
+            else
+            {
+                LoginUser = respondData.Item2;
+                DataList = new List<UserDataObject>()
+                {
+                    new UserDataObject(){DataName = "Name", DataValue = LoginUser.Name},
+                    new UserDataObject(){DataName = "Email", DataValue = LoginUser.Email},
+                    new UserDataObject(){DataName = "Student ID", DataValue = LoginUser.StudentId},
+                    new UserDataObject(){DataName = "Library Number", DataValue = LoginUser.LibraryNumber},
+                    new UserDataObject(){DataName = "Date Joined", DataValue = LoginUser.DateJoined.ToLongDateString()}
+                };
+                return true;
+            }
         }
 
         /// <summary>
@@ -74,9 +87,14 @@ namespace NottCS.ViewModels
         {
             if (navigationData is string username)
             {
-                SetPageData(navigationData);
+                var isSuccess = SetPageDataAsync(username).GetAwaiter().GetResult();
+                if (isSuccess)
+                {
+                    return base.InitializeAsync(navigationData);
+                }
             }
-            return base.InitializeAsync(navigationData);
+
+            return null;
         }
     }
 }

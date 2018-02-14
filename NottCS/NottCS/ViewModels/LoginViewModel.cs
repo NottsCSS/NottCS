@@ -5,7 +5,7 @@ using System.Windows.Input;
 using NottCS.Models;
 using Xamarin.Forms;
 using Newtonsoft.Json;
-
+using NottCS.Services;
 using NottCS.Validations;
 using NottCS.Services.Navigation;
 
@@ -20,6 +20,9 @@ namespace NottCS.ViewModels
 
         private bool _isValidUser = true;
         private bool _isValidPassword = true;
+
+        private string _loginMessage = "Some Login Message";
+
         //Public Properties
         public Color RegisterTextColor
         {
@@ -41,6 +44,12 @@ namespace NottCS.ViewModels
         {
             get => _isValidPassword;
             set => SetProperty(ref _isValidPassword, value);
+        }
+
+        public string LoginMessage
+        {
+            get => _loginMessage;
+            set => SetProperty(ref _loginMessage, value);
         }
 
         #endregion
@@ -100,6 +109,8 @@ namespace NottCS.ViewModels
 
             bool isValid = Validate();
             //TODO: Implement login service under services, and then call the service from here
+            LoginMessage = await LoginService.Authenticate();
+
 
             
             if (isValid)
