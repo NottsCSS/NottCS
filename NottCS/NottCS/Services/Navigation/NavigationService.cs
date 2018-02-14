@@ -25,7 +25,8 @@ namespace NottCS.Services.Navigation
 
         internal static async Task NavigateToAsync(Type viewModelType, object navigationParameter = null)
         {
-            //if mainpage is not navigation page it will not be able to push another page onto the navigation stack
+            if (viewModelType == null || !viewModelType.IsSubclassOf(typeof(BaseViewModel)))
+                throw new Exception("passed viewmodel type does not inherit BaseViewModel");
             if (Application.Current.MainPage is NavigationPage navigationPage)
             {
                 Page page = null;
