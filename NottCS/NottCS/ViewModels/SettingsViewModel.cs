@@ -15,28 +15,31 @@ namespace NottCS.ViewModels
         public class UserDataObject
         {
             public string Name { get; set; }
-            public Type PageType { get; set; }
+            public Type ViewModelType { get; set; }
             public string Logout { get; set; }
         }
 
         public List<UserDataObject> DummyLists { get; set; }
         public SettingsViewModel()
         {
-            Debug.WriteLine("Constructor is called");
             Title = "Settings";
             SetPageData();
         }
-        public ICommand SettingCommand => new Command(async () => await About());
+        public ICommand SettingCommand => new Command(async (object param) => await About(param));
 
-        private async Task About()
+        private async Task About(object param)
         {
-            try {
-                await NavigationService.NavigateToAsync<AboutViewModel>();
-            }
-            catch (Exception e)
+            if (param is UserDataObject tappedUserDataObject)
             {
+                try
+                {
+                    await NavigationService.NavigateToAsync(tappedUserDataObject.ViewModelType);
+                }
+                catch (Exception e)
+                {
 
-                Debug.WriteLine(e.Message);
+                    Debug.WriteLine(e.Message);
+                }
             }
         }
 
@@ -45,7 +48,7 @@ namespace NottCS.ViewModels
             DummyLists = new List<UserDataObject>()
             {
                 new UserDataObject() {Name = "Notifications"},
-                new UserDataObject() {Name = "About Us",PageType = typeof(SettingsPage)},
+                new UserDataObject() {Name = "About Us", ViewModelType = typeof(AboutViewModel)},
                 new UserDataObject() {Name = "Report an Issue"},
                 new UserDataObject() {Logout = "Logout"}
             };

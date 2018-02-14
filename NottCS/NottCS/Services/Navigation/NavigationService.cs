@@ -11,13 +11,25 @@ namespace NottCS.Services.Navigation
     public static class NavigationService
     {
         private static bool _isNavigating = false;
-        internal static async Task NavigateToAsync<TViewModel>(object parameter = null) where TViewModel : BaseViewModel, new()
+        /// <summary>
+        /// Navigates using viewmodel, preferred way of navigation due to type checks during compile time
+        /// Calls InitializeAsync method with the passed parameter during navigation, override that method to use the parameter
+        /// </summary>
+        /// <typeparam name="TViewModel"></typeparam>
+        /// <param name="navigationParameter">parameter to be passed during navigation</param>
+        /// <returns></returns>
+        internal static async Task NavigateToAsync<TViewModel>(object navigationParameter = null) where TViewModel : BaseViewModel, new()
         {
-            //if mainpage is not navigation page it will not be able to push another page onto the navigation stack
+            await NavigateToAsync(typeof(TViewModel), navigationParameter);
+        }
+
+        internal static async Task NavigateToAsync(Type viewModelType, object navigationParameter = null)
+        {
+            if (viewModelType == null || !viewModelType.IsSubclassOf(typeof(BaseViewModel)))
+                throw new Exception("passed viewmodel type does not inherit BaseViewModel");
             if (Application.Current.MainPage is NavigationPage navigationPage)
             {
                 Page page = null;
-                Type viewModelType = typeof(TViewModel);
                 try
                 {
                     page = CreatePage(viewModelType);
@@ -31,7 +43,7 @@ namespace NottCS.Services.Navigation
                 {
                     if (page.BindingContext is BaseViewModel viewModel)
                     {
-                        await viewModel.InitializeAsync(parameter);
+                        await viewModel.InitializeAsync(navigationParameter);
                     }
                     else
                     {
@@ -56,6 +68,7 @@ namespace NottCS.Services.Navigation
                 String pageTypeString = pageType.ToString();
                 throw new Exception($"{pageTypeString} is not navigationPage");
             }
+
         }
 
         internal static async Task GoBackAsync()
