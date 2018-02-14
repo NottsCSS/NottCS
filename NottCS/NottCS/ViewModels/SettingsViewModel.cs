@@ -15,6 +15,7 @@ namespace NottCS.ViewModels
         public class UserDataObject
         {
             public string Name { get; set; }
+            public Type PageType { get; set; }
             public string Logout { get; set; }
         }
 
@@ -30,7 +31,7 @@ namespace NottCS.ViewModels
         private async Task About()
         {
             try {
-                await NavigationService.NavigateToAsync<AboutViewModel>(new AboutPage());
+                await NavigationService.NavigateToAsync<AboutViewModel>();
             }
             catch (Exception e)
             {
@@ -44,7 +45,7 @@ namespace NottCS.ViewModels
             DummyLists = new List<UserDataObject>()
             {
                 new UserDataObject() {Name = "Notifications"},
-                new UserDataObject() {Name = "About Us"},
+                new UserDataObject() {Name = "About Us",PageType = typeof(SettingsPage)},
                 new UserDataObject() {Name = "Report an Issue"},
                 new UserDataObject() {Logout = "Logout"}
             };
