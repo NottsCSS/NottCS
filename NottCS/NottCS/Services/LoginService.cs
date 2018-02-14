@@ -22,7 +22,7 @@ namespace NottCS.Services
                     await App.ClientApplication.AcquireTokenSilentAsync(App.Scopes, App.ClientApplication.Users.FirstOrDefault());
                 RefreshUserData(ar.AccessToken);
 //                AuthenticationResult ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
-//                BaseRestService.SetupClient(ar.AccessToken);
+                BaseRestService.SetupClient(ar.AccessToken);
                 return ar.AccessToken;
             }
             catch (MsalException ex)
@@ -30,6 +30,7 @@ namespace NottCS.Services
                 if (ex.ErrorCode == "user_interaction_required")
                 {
                     AuthenticationResult ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
+                    BaseRestService.SetupClient(ar.AccessToken);
                     return ar.AccessToken;
                 }
                 else
