@@ -45,48 +45,10 @@
                             HorizontalOptions="Center"
                             WidthRequest="500">
                     <StackLayout>
-                        <Entry Placeholder="Username (OWA)"
-                           Text ="{Binding LoginParameters.Username.Value}"
-                           Margin = "30,0,30,0" />
-                        <Label Margin = "30,0,0,0"
-                           IsVisible="{Binding IsValidUser, Converter={StaticResource InverseBoolConverter}}"
-                           TextColor = "Red"
-                           FontSize = "Small"
-                           Text = "{Binding LoginParameters.Username.Errors, Converter = {StaticResource StringListToStringConverter}}" />
-                        <Entry Placeholder="Password"
-                           IsPassword="True"
-                           Text ="{Binding LoginParameters.Password.Value}"
-                           Margin = "30,0,30,0"/>
-                        <Label Margin = "30,0,0,0"
-                           IsVisible="{Binding IsValidPassword, Converter={StaticResource InverseBoolConverter}}"
-                           TextColor = "Red"
-                           FontSize = "Small"
-                           Text = "{Binding LoginParameters.Password.Errors, Converter = {StaticResource StringListToStringConverter}}" />
                         <Button Text = "LOGIN" Command = "{Binding SignInCommand}" 
                             Margin="50,0,50,0" />
                         <Label Text="{Binding LoginMessage}" />
-                        <Label  Margin = "50,0,0,0"
-                            Text = "REGISTER ACCOUNT"
-                            FontSize="Micro"
-                            TextColor="{Binding RegisterTextColor}">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding RegisterCommand}"
-                                          NumberOfTapsRequired="1">
-                                </TapGestureRecognizer>
-                            </Label.GestureRecognizers>
-                        </Label>
-                        <Label Margin = "50,10,0,0"
-                           Text = "FORGOT PASSWORD?"
-                           FontSize="Micro"
-                           TextColor="{Binding ForgotPasswordTextColor}">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}"
-                                                  NumberOfTapsRequired="1">
-                                </TapGestureRecognizer>
-                            </Label.GestureRecognizers>
-                        </Label>
                         <ActivityIndicator Color="Green" IsRunning="{Binding IsBusy}" />
-
                     </StackLayout>
                 </ScrollView>
             </Grid>
