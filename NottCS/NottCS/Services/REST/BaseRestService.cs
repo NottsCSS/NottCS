@@ -13,26 +13,20 @@ namespace NottCS.Services.REST
     internal class BaseRestService
     {
         //TODO: Update the Uri when the domain name is available
+        /// <summary>
+        /// Base address where the API endpoints are stored
+        /// </summary>
         private const string BaseAddress = "https://testing-endpoints.herokuapp.com/";
 
         //TODO: Setup client with proper headers
-        protected static readonly HttpClient Client = new HttpClient()
+        /// <summary>
+        /// Client with setup. To add Bearer Authorization, intitialize client with SetupClient(string accessToken)
+        /// </summary>
+        private static readonly HttpClient Client = new HttpClient()
         {
+            BaseAddress = new Uri(BaseAddress),
             Timeout = new TimeSpan(0, 0, 5)
         };
-
-        protected const int TimeoutPeriod = 1000;
-
-        /// <summary>
-        /// Available service
-        /// </summary>
-        protected enum ServiceType
-        {
-            GetUserByUsername, CreateUser, UpdateUserByUsername, DeleteUserByUsername,
-            CreateClub, DeleteClubById, GetClubById, UpdateClubById,
-            CreateClubMember, DeleteClubMemberById, GetClubMemberById, UpdateClubMemberById,
-            CreateEvent, DeleteEventById, GetEventById, UpdateEventById,
-        }
 
         /// <summary>
         /// Setups the Client with authorization header
@@ -40,7 +34,6 @@ namespace NottCS.Services.REST
         /// <param name="accessToken"></param>
         public static void SetupClient(string accessToken)
         {
-            Client.BaseAddress = new Uri(BaseAddress);
             Client.DefaultRequestHeaders.Clear();
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         }
@@ -52,7 +45,7 @@ namespace NottCS.Services.REST
         /// <param name="requestUri">Request Uri</param>
         /// <param name="requestBody">Request body to be serialized</param>
         /// <returns></returns>
-        protected static HttpRequestMessage HttpRequestMessageGenerator(HttpMethod httpMethod, string requestUri, object requestBody = null)
+        private static HttpRequestMessage HttpRequestMessageGenerator(HttpMethod httpMethod, string requestUri, object requestBody = null)
         {
             #region ObjectValidator
 
@@ -73,123 +66,12 @@ namespace NottCS.Services.REST
         }
 
         /// <summary>
-        /// Generates appropriate type of REST Uri for requests
+        /// Generates proper request Uri based on the method
         /// </summary>
-        /// <param name="service">Request Type</param>
-        /// <param name="identifier">Identifier for search query, usually the primary key</param>
+        /// <typeparam name="T">Type of modal class requested</typeparam>
+        /// <param name="httpMethod">Request HttpMethod</param>
+        /// <param name="identifier">Identifier for the server to lookup data</param>
         /// <returns></returns>
-        protected static string UriGenerator(ServiceType service, string identifier = null)
-        {
-            string returnUri;
-
-            #region IdentifierValidator
-
-            //Gives warning if identifier is invalid
-            var createRequestList = new List<ServiceType>()
-            {
-                ServiceType.CreateClub, ServiceType.CreateClubMember, ServiceType.CreateEvent, ServiceType.CreateUser
-            };
-
-            if (!createRequestList.Contains(service) && identifier == null)
-            {
-                Debug.WriteLine("[BaseRestService] WARNING : No valid identifier for UriGenerator");
-            }
-
-            #endregion
-
-            //TODO: Update the Uri when the documentation from the backend is ready
-            switch (service)
-            {
-                case ServiceType.CreateUser:
-                {
-                    returnUri = BaseAddress + "/user/createUser";
-                    break;
-                }
-                case ServiceType.DeleteUserByUsername:
-                {
-                    returnUri = BaseAddress + "/user/deleteUserByUsername/" + identifier;
-                    break;
-                }
-                case ServiceType.GetUserByUsername:
-                {
-                    returnUri = BaseAddress + "/user/getUserByUsername/" + identifier;
-                    break;
-                }
-                case ServiceType.UpdateUserByUsername:
-                {
-                    returnUri = BaseAddress + "/user/updateUserByUsername/" + identifier;
-                    break;
-                }
-                case ServiceType.CreateClub:
-                {
-                    returnUri = BaseAddress + "/club/createClub";
-                    break;
-                }
-                case ServiceType.DeleteClubById:
-                {
-                    returnUri = BaseAddress + "/club/deleteClubById/" + identifier;
-                    break;
-                }
-                case ServiceType.GetClubById:
-                {
-                    returnUri = BaseAddress + "/club/getClubById/" + identifier;
-                    break;
-                }
-                case ServiceType.UpdateClubById:
-                {
-                    returnUri = BaseAddress + "/club/updateClubById" + identifier;
-                    break;
-                }
-                case ServiceType.CreateClubMember:
-                {
-                    returnUri = BaseAddress + "/clubMember/createClubMember";
-                    break;
-                }
-                case ServiceType.DeleteClubMemberById:
-                {
-                    returnUri = BaseAddress + "/clubMember/deleteClubMemberById/" + identifier;
-                    break;
-                }
-                case ServiceType.GetClubMemberById:
-                {
-                    returnUri = BaseAddress + "/clubMember/getClubMemberById/" + identifier;
-                    break;
-                }
-                case ServiceType.UpdateClubMemberById:
-                {
-                    returnUri = BaseAddress + "/clubMember/updateClubMemberById/" + identifier;
-                    break;
-                }
-                case ServiceType.CreateEvent:
-                {
-                    returnUri = BaseAddress + "/event/createEvent";
-                    break;
-                }
-                case ServiceType.DeleteEventById:
-                {
-                    returnUri = BaseAddress + "/event/deleteEventById/" + identifier;
-                    break;
-                }
-                case ServiceType.GetEventById:
-                {
-                    returnUri = BaseAddress + "/event/getEventById/" + identifier;
-                    break;
-                }
-                case ServiceType.UpdateEventById:
-                {
-                    returnUri = BaseAddress + "/event/updateEventById/" + identifier;
-                    break;
-                }
-                default:
-                {
-                    returnUri = BaseAddress + "/apiNotFound";
-                    break;
-                }
-            }
-
-            return returnUri;
-        }
-
         private static string UriGenerator<T>(HttpMethod httpMethod, string identifier = null)
         {
             var returnUri = BaseAddress + "/azuread-user/me/";
