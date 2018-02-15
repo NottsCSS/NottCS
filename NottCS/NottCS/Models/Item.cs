@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
+using NottCS.ViewModels;
 
 namespace NottCS.Models
 {
-    class Item
+    public class Item
     {
+        public string ClubName { get; set; }
+        public string ImageURL { get; set; }
+        public string Name { get; set; } = "default name";
+
     }
 }

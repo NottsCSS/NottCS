@@ -10,12 +10,26 @@ namespace NottCS.Services.Navigation
 {
     public static class NavigationService
     {
-        internal static async Task NavigateToAsync<TViewModel>(object parameter = null) where TViewModel : BaseViewModel, new()
+        private static bool _isNavigating = false;
+        /// <summary>
+        /// Navigates using viewmodel, preferred way of navigation due to type checks during compile time
+        /// Calls InitializeAsync method with the passed parameter during navigation, override that method to use the parameter
+        /// </summary>
+        /// <typeparam name="TViewModel"></typeparam>
+        /// <param name="navigationParameter">parameter to be passed during navigation</param>
+        /// <returns></returns>
+        internal static async Task NavigateToAsync<TViewModel>(object navigationParameter = null) where TViewModel : BaseViewModel, new()
         {
+            await NavigateToAsync(typeof(TViewModel), navigationParameter);
+        }
+
+        internal static async Task NavigateToAsync(Type viewModelType, object navigationParameter = null)
+        {
+            if (viewModelType == null || !viewModelType.IsSubclassOf(typeof(BaseViewModel)))
+                throw new Exception("passed viewmodel type does not inherit BaseViewModel");
             if (Application.Current.MainPage is NavigationPage navigationPage)
             {
                 Page page = null;
-                Type viewModelType = typeof(TViewModel);
                 try
                 {
                     page = CreatePage(viewModelType);
@@ -29,14 +43,22 @@ namespace NottCS.Services.Navigation
                 {
                     if (page.BindingContext is BaseViewModel viewModel)
                     {
-                        await viewModel.InitializeAsync(parameter);
+                        await viewModel.InitializeAsync(navigationParameter);
                     }
                     else
                     {
                         Type pageType = page.GetType();
                         throw new Exception($"{pageType} has binding context that is not derived from BaseViewModel");
                     }
-                    await navigationPage.PushAsync(page);
+
+                    if (navigationPage.CurrentPage.GetType() != page.GetType() && !_isNavigating) //prevents navigation to same page multiple times
+                    {
+                        _isNavigating = true;
+                        Debug.WriteLine($"Previous page is: {navigationPage.CurrentPage}");
+                        Debug.WriteLine($"Now navigating to:{page}");
+                        await navigationPage.PushAsync(page);
+                        _isNavigating = false;
+                    }
                 }
 
             }
@@ -46,6 +68,7 @@ namespace NottCS.Services.Navigation
                 String pageTypeString = pageType.ToString();
                 throw new Exception($"{pageTypeString} is not navigationPage");
             }
+
         }
 
         internal static async Task GoBackAsync()

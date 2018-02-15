@@ -9,15 +9,13 @@ using Xamarin.Forms.Xaml;
 
 namespace NottCS.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class HomePage : ContentPage
-	{
-		public HomePage ()
-		{
-		    BindingContext = new HomeViewModel();
-			InitializeComponent ();
-            //AddImage(Test, "NottCS.Images.Icons.icon2.png");
-            AddImage(BannerImage, "NottCS.Images.Icons.icon2.png");
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class HomePage : TabbedPage
+    {
+        public HomePage ()
+        {
+            InitializeComponent();
+            BindingContext = new HomeViewModel();
         }
         private void AddImage(Image imageContainer, string imageLocation)
         {
