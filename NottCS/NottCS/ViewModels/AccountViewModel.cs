@@ -91,18 +91,13 @@ namespace NottCS.ViewModels
             {
                 var username = navigationData as string;
                 var isSuccess = SetPageDataAsync(username).GetAwaiter().GetResult();
-                if (isSuccess)
-                {
-                    return base.InitializeAsync(navigationData);
-                }
-
-                return null;
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
-                throw;
             }
+
+            return base.InitializeAsync(navigationData);
 
             //Debug.WriteLine("Initializing Account Page...");
             //if (navigationData is string username)

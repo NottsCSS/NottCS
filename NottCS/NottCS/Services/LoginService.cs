@@ -15,38 +15,42 @@ namespace NottCS.Services
     {
         public static async Task<string> Authenticate()
         {
+            AuthenticationResult ar;
             try
             {
-
-                AuthenticationResult ar =
-                    await App.ClientApplication.AcquireTokenSilentAsync(App.Scopes, App.ClientApplication.Users.FirstOrDefault());
+                ar = await App.ClientApplication.AcquireTokenSilentAsync(App.Scopes,
+                    App.ClientApplication.Users.FirstOrDefault());
                 RefreshUserData(ar.AccessToken);
-//                AuthenticationResult ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
-                BaseRestService.SetupClient(ar.AccessToken);
-                Debug.WriteLine($"Access Token : {ar.AccessToken}");
                 return ar.AccessToken;
             }
             catch (MsalException ex)
             {
                 if (ex.ErrorCode == "user_interaction_required")
                 {
-                    AuthenticationResult ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
-                    BaseRestService.SetupClient(ar.AccessToken);
+                    ar = await InternalAuthenticate();
                     return ar.AccessToken;
                 }
                 else
                 {
-                    // Here, we catch all other MsalExceptions
-                    string message = ex.Message;
-                    if (ex.InnerException != null)
-                    {
-                        message += "Inner Exception : " + ex.InnerException.Message;
-                    }
-                    return message;
+                    Debug.WriteLine($"Unhandled MsalException: {ex.Message}");
+                    return ex.Message;
                 }
-                
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Unknown  Exception occured: {ex.Message}");
+                ar = await InternalAuthenticate();
+                return ar.AccessToken;
             }
 
+        }
+
+        private static async Task<AuthenticationResult> InternalAuthenticate()
+        {
+            AuthenticationResult ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
+            BaseRestService.SetupClient(ar.AccessToken);
+            Debug.WriteLine($"time limit: {ar.ExpiresOn}");
+            return ar;
         }
 
         private static async void RefreshUserData(string token)
@@ -57,6 +61,7 @@ namespace NottCS.Services
             message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
             HttpResponseMessage response = await client.SendAsync(message);
             string responseString = await response.Content.ReadAsStringAsync();
+            Debug.WriteLine("Refresh data response: ");
             Debug.WriteLine(response.IsSuccessStatusCode
                 ? responseString
                 : $"Something went wrong with the API call {responseString}");

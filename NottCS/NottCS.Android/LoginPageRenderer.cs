@@ -16,8 +16,6 @@ namespace NottCS.Droid
 
         public LoginPageRenderer(Context context) : base(context)
         {
-            App.ClientApplication.RedirectUri = "msal81a5b712-2ec4-4d3f-9324-211f60d0a0c9://auth";
-            App.UiParent = new UIParent(context as Activity);
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<Page> e)
