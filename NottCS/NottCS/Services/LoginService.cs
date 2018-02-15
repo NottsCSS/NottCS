@@ -20,19 +20,31 @@ namespace NottCS.Services
             {
                 ar = await App.ClientApplication.AcquireTokenSilentAsync(App.Scopes,
                     App.ClientApplication.Users.FirstOrDefault());
-                RefreshUserData(ar.AccessToken);
+//                RefreshUserData(ar.AccessToken);
+                App.MicrosoftAuthenticationResult = ar;
                 return ar.AccessToken;
             }
             catch (MsalException ex)
             {
                 if (ex.ErrorCode == "user_interaction_required")
                 {
+                    Debug.WriteLine(ex.ErrorCode);
                     ar = await InternalAuthenticate();
+//                    ar = InternalAuthenticate().Result;
+                    return ar.AccessToken;
+                }
+                else if (ex.ErrorCode == "user_null")
+                {
+                    Debug.WriteLine(ex.ErrorCode);
+                    ar = await InternalAuthenticate();
+                    Debug.WriteLine(ar.User.Name);
+                    //                    ar = InternalAuthenticate().Result;
                     return ar.AccessToken;
                 }
                 else
                 {
-                    Debug.WriteLine($"Unhandled MsalException: {ex.Message}");
+                    Debug.WriteLine($"Unknown MsalException: {ex.Message}");
+                    Debug.WriteLine($"Error code: {ex.ErrorCode}");
                     return ex.Message;
                 }
             }
@@ -45,14 +57,25 @@ namespace NottCS.Services
 
         }
 
+        public static Task SignOut()
+        {
+            foreach (var user in App.ClientApplication.Users)
+            {
+                App.ClientApplication.Remove(user);
+            }
+
+            return Task.FromResult(false);
+        }
+
         private static async Task<AuthenticationResult> InternalAuthenticate()
         {
             AuthenticationResult ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
             BaseRestService.SetupClient(ar.AccessToken);
             Debug.WriteLine($"time limit: {ar.ExpiresOn}");
+            App.MicrosoftAuthenticationResult = ar;
             return ar;
         }
-
+        
         private static async void RefreshUserData(string token)
         {
             //get data from API
