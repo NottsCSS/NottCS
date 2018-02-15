@@ -3,6 +3,7 @@ using NottCS.Services.REST;
 using NottCS.Validations;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
@@ -85,16 +86,35 @@ namespace NottCS.ViewModels
         /// <returns></returns>
         public override Task InitializeAsync(object navigationData)
         {
-            if (navigationData is string username)
+
+            try
             {
+                var username = navigationData as string;
                 var isSuccess = SetPageDataAsync(username).GetAwaiter().GetResult();
                 if (isSuccess)
                 {
                     return base.InitializeAsync(navigationData);
                 }
+
+                return null;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                throw;
             }
 
-            return null;
+            //Debug.WriteLine("Initializing Account Page...");
+            //if (navigationData is string username)
+            //{
+            //    Debug.WriteLine("Stage 2...");
+            //    var isSuccess = SetPageDataAsync(username).GetAwaiter().GetResult();
+            //    if (isSuccess)
+            //    {
+            //        Debug.WriteLine("Stage 3...");
+            //        return base.InitializeAsync(navigationData);
+            //    }
+            //}
         }
     }
 }

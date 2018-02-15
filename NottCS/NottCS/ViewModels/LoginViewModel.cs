@@ -107,12 +107,16 @@ namespace NottCS.ViewModels
         {
             IsBusy = true;
 
-            bool isValid = Validate();
+            //bool isValid = Validate();
             //TODO: Implement login service under services, and then call the service from here
             LoginMessage = await LoginService.Authenticate();
 
+            if (!string.IsNullOrEmpty(LoginMessage))
+            {
+                await NavigationService.NavigateToAsync<AccountViewModel>();
+            }
 
-            
+            /*
             if (isValid)
             {
                 string json = "";
@@ -128,6 +132,7 @@ namespace NottCS.ViewModels
                 }
                 Debug.WriteLine(json);
             }
+            */
             //Delay to simulate real code running
             
             //Debugging code
