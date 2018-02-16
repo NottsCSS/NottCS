@@ -15,12 +15,19 @@
             <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness"
+                    iOS="10, 20, 10, 0"
+                    Android="0, 0"
+                    WinPhone="0, 0" />
+    </ContentPage.Padding>
     <ContentPage.Content>
         <StackLayout>
             <ListView ItemsSource="{Binding DummyLists}"
                       Margin="3,3,0,0"
-                      RowHeight="40"
-                      x:Name="SomeList">
+                      RowHeight="30"
+                      x:Name="SomeList"
+                      SeparatorVisibility="None">
                 <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior 
                         EventName="ItemTapped"
@@ -39,7 +46,6 @@
                                     <ColumnDefinition Width="40"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Row="0" 
-                                       Grid.Column="0"
                                        Text ="{Binding Name}">
                                 </Label>
                                 <Label  Grid.Row="0" 

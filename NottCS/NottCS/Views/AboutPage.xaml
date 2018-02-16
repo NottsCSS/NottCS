@@ -16,56 +16,43 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout BackgroundColor="White">
-            <Image x:Name = "NottCsLogo" 
+        <ScrollView Margin="5,0">
+            <StackLayout BackgroundColor="White">
+                <Image x:Name = "NottCsLogo" 
                    HorizontalOptions="Center"
                    VerticalOptions="Start"
                    HeightRequest="100"
                    WidthRequest="100">
-            </Image>
-            <Label Text ="Version: 1.0.0"
-                   FontSize="10"
-                   TextColor="Black"
-                   HorizontalOptions="CenterAndExpand">
-            </Label>
-            <Label Text ="Computer Science Society"
-                   FontSize="9"
-                   TextColor="Gray"
-                   HorizontalOptions="CenterAndExpand">
-            </Label>
-            <Label Text ="Copyright © 2018"
-                   FontSize="9"
-                   TextColor="Gray"
-                   HorizontalOptions="CenterAndExpand">
-            </Label>
-            <ListView ItemsSource="{Binding AboutLists}"
-                      Margin="3,10"
-                      RowHeight="30"
-                      x:Name="SomeList">
-                <ListView.Behaviors>
-                    <behaviors:EventToCommandBehavior 
-                        EventName="ItemTapped"
-                        Command="{Binding WhyNottCsCommand}" 
-                        Converter="{StaticResource TappedItemConverter}" />
-                </ListView.Behaviors>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid Padding="5" x:Name="About">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="20"></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="40"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Label Text="{Binding Name}"
-                                       FontSize="13"/>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+                </Image>
+                <Label 
+                    Text ="Version: 1.0.0"
+                    FontSize="10"
+                    TextColor="Black"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="StartAndExpand">
+                </Label>
+                <Label 
+                    Text ="Computer Science Society"
+                    FontSize="9"
+                    TextColor="Gray"
+                    HorizontalOptions="CenterAndExpand">
+                </Label>
+                <Label 
+                    Text ="Copyright © 2018"
+                    FontSize="9"
+                    TextColor="Gray"
+                    HorizontalOptions="CenterAndExpand">
+                </Label>
+                <Label LineBreakMode="WordWrap">
+                       Founded in 2017, Computer Science Society of The University of Nottingham Malaysia Campus is proud to release their first ever cross-platform application.
+                </Label>
+                <Label LineBreakMode="WordWrap">
+                       NottCS mission is to simplify the process of signing up event. A majority of the students dislike email spam from clubs.
+                </Label>
+                <Label LineBreakMode="WordWrap">
+                       We want to connect all students into a single application to bring all events together.
+                </Label>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
