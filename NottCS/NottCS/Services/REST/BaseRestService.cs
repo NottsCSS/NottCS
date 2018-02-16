@@ -25,7 +25,7 @@ namespace NottCS.Services.REST
         private static readonly HttpClient Client = new HttpClient()
         {
             BaseAddress = new Uri(BaseAddress),
-            Timeout = new TimeSpan(0, 0, 5)
+            Timeout = new TimeSpan(0, 0, 10)
         };
 
         /// <summary>
@@ -34,6 +34,7 @@ namespace NottCS.Services.REST
         /// <param name="accessToken"></param>
         public static void SetupClient(string accessToken)
         {
+            Debug.WriteLine("HttpClient is setting up...");
             Client.DefaultRequestHeaders.Clear();
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         }
@@ -108,7 +109,7 @@ namespace NottCS.Services.REST
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e);
+                Debug.WriteLine($"Expected exception {e.Message} at {e.TargetSite}");
                 return false;
             }
         }
@@ -119,19 +120,39 @@ namespace NottCS.Services.REST
         /// <typeparam name="T">Type of request object</typeparam>
         /// <param name="identifier">Identifier for the server to lookup</param>
         /// <returns>Requested Object</returns>
-        public static async Task<Tuple<bool, T>> RequestGetAsync<T>(string identifier) where T : new()
+        public static async Task<Tuple<bool, T>> RequestGetAsync<T>(string identifier = null) where T : new()
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             var requestUri = UriGenerator<T>(HttpMethod.Get, identifier);
+
+            Debug.WriteLine($"[GET] Generate Uri took {stopwatch.ElapsedMilliseconds} ms");
+            stopwatch.Restart();
+
             var httpRequest = HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
+
+            Debug.WriteLine($"[GET] Generate HttpRequestMessage took {stopwatch.ElapsedMilliseconds} ms");
+            stopwatch.Restart();
+
             try
             {
                 var requestTask = Client.SendAsync(httpRequest);
+
+                Debug.WriteLine($"[GET] Generate requestTask took {stopwatch.ElapsedMilliseconds} ms");
+                stopwatch.Restart();
+
                 //Debug.WriteLine(JsonConvert.SerializeObject(requestTask));
                 var httpResponse = requestTask.GetAwaiter().GetResult();
+
+                Debug.WriteLine($"[GET] Get response from server took {stopwatch.ElapsedMilliseconds} ms");
+                stopwatch.Restart();
+
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     var result = JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync());
                     Debug.WriteLine($"{JsonConvert.SerializeObject(result)}");
+
                     return Tuple.Create(true, result);
                 }
             }

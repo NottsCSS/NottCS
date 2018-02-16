@@ -8,13 +8,14 @@ using Newtonsoft.Json;
 using NottCS.Services;
 using NottCS.Validations;
 using NottCS.Services.Navigation;
+using NottCS.Services.REST;
 
 namespace NottCS.ViewModels
 {
     internal class LoginViewModel : BaseViewModel
     {
 
-        private string _loginMessage = "Some Login Message";
+        private string _loginMessage = "";
         
         public string LoginMessage
         {
@@ -39,18 +40,35 @@ namespace NottCS.ViewModels
         public ICommand SignOutCommand => new Command(async () => await SignOutAsync());
         private async Task SignInAsync()
         {
+            var stopwatch = new Stopwatch();
             IsBusy = true;
 
-            LoginMessage = await LoginService.Authenticate();
+            await LoginService.Authenticate();
             var a = App.MicrosoftAuthenticationResult.User.DisplayableId;
             Debug.WriteLine($"DisplayableID: {a}");
             Debug.WriteLine($"Identifier: {App.MicrosoftAuthenticationResult.User.Identifier}");
             Debug.WriteLine($"Identity Provider: {App.MicrosoftAuthenticationResult.User.IdentityProvider}");
             Debug.WriteLine($"Name: {App.MicrosoftAuthenticationResult.User.Name}");
 
-            if (!string.IsNullOrEmpty(LoginMessage))
+            Debug.WriteLine($"Authentication took {stopwatch.ElapsedMilliseconds} ms");
+            stopwatch.Restart();
+
+            var getUserTask = Task.Run(() => BaseRestService.RequestGetAsync<User>());
+            var getUserTaskResult = await getUserTask;
+
+            Debug.WriteLine($"User request took {stopwatch.ElapsedMilliseconds} ms");
+            stopwatch.Restart();
+
+            if (getUserTaskResult.Item1)
             {
-                await NavigationService.NavigateToAsync<AccountViewModel>(a);
+                await NavigationService.NavigateToAsync<AccountViewModel>(getUserTaskResult.Item2);
+                Debug.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds} ms");
+                stopwatch.Stop();
+            }
+            else
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Alert("Unable to log you in to the server. Please try again",
+                    "Login Error", "Ok");
             }
 
             //Debugging code

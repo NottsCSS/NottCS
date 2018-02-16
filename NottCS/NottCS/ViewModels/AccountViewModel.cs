@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
+using Newtonsoft.Json;
 using NottCS.Services.Navigation;
 using Xamarin.Forms;
 
@@ -54,29 +55,18 @@ namespace NottCS.ViewModels
         /// Sets the data for the page
         /// </summary>
         /// <param name="username">Username for the account data</param>
-        private async Task<bool> SetPageDataAsync(string username)
+        private void SetPageDataAsync(User userData)
         {
-            var respondData = await BaseRestService.RequestGetAsync<User>(username);
-
-            if (!respondData.Item1)
+            LoginUser = userData;
+            Debug.WriteLine(JsonConvert.SerializeObject(LoginUser));
+            DataList = new List<UserDataObject>()
             {
-                //TODO: Implement error notification
-                UserDialogs.Instance.Alert("We're not able to log you in. Please try again.", "Login Error", "Ok");
-                return false;
-            }
-            else
-            {
-                LoginUser = respondData.Item2;
-                DataList = new List<UserDataObject>()
-                {
-                    new UserDataObject(){DataName = "Name", DataValue = LoginUser.Name},
-                    new UserDataObject(){DataName = "Email", DataValue = LoginUser.Email},
-                    new UserDataObject(){DataName = "Student ID", DataValue = LoginUser.StudentId},
-                    new UserDataObject(){DataName = "Library Number", DataValue = LoginUser.LibraryNumber},
-                    new UserDataObject(){DataName = "Date Joined", DataValue = LoginUser.DateJoined.ToLongDateString()}
-                };
-                return true;
-            }
+                new UserDataObject(){DataName = "Name", DataValue = LoginUser.Name},
+                new UserDataObject(){DataName = "Email", DataValue = LoginUser.Email},
+                new UserDataObject(){DataName = "Student ID", DataValue = LoginUser.StudentId},
+                new UserDataObject(){DataName = "Library Number", DataValue = LoginUser.LibraryNumber},
+                new UserDataObject(){DataName = "Date Joined", DataValue = LoginUser.DateJoined.ToLongDateString()}
+            };
         }
 
         /// <summary>
@@ -89,8 +79,8 @@ namespace NottCS.ViewModels
 
             try
             {
-                var username = navigationData as string;
-                var isSuccess = SetPageDataAsync(username).GetAwaiter().GetResult();
+                var userData = navigationData as User;
+                Task.Run(() => SetPageDataAsync(userData));
             }
             catch (Exception e)
             {
