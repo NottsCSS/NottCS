@@ -57,28 +57,16 @@ namespace NottCS.ViewModels
         /// <param name="username">Username for the account data</param>
         private void SetPageDataAsync(User userData)
         {
-            var respondData = await BaseRestService.RequestGetAsync<User>(username);
-            Debug.WriteLine(respondData.Item1);
-            Debug.WriteLine(respondData.Item2.Name);
-            if (!respondData.Item1)
+            LoginUser = userData;
+            Debug.WriteLine(JsonConvert.SerializeObject(LoginUser));
+            DataList = new List<UserDataObject>()
             {
-                //TODO: Implement error notification
-                UserDialogs.Instance.Alert("We're not able to log you in. Please try again.", "Login Error", "Ok");
-                return false;
-            }
-            else
-            {
-                LoginUser = respondData.Item2;
-                DataList = new List<UserDataObject>()
-                {
-                    new UserDataObject(){DataName = "Name", DataValue = LoginUser.Name},
-                    new UserDataObject(){DataName = "Email", DataValue = LoginUser.Email},
-                    new UserDataObject(){DataName = "Student ID", DataValue = LoginUser.StudentId},
-                    new UserDataObject(){DataName = "Library Number", DataValue = LoginUser.LibraryNumber},
-                    new UserDataObject(){DataName = "Date Joined", DataValue = LoginUser.DateJoined.ToLongDateString()}
-                };
-                return true;
-            }
+                new UserDataObject(){DataName = "Name", DataValue = LoginUser.Name},
+                new UserDataObject(){DataName = "Email", DataValue = LoginUser.Email},
+                new UserDataObject(){DataName = "Student ID", DataValue = LoginUser.StudentId},
+                new UserDataObject(){DataName = "Library Number", DataValue = LoginUser.LibraryNumber},
+                new UserDataObject(){DataName = "Date Joined", DataValue = LoginUser.DateJoined.ToLongDateString()}
+            };
         }
 
         /// <summary>
@@ -86,23 +74,21 @@ namespace NottCS.ViewModels
         /// </summary>
         /// <param name="navigationData">Data passed from the previous page</param>
         /// <returns></returns>
-        public override async Task InitializeAsync(object navigationData)
+        public override Task InitializeAsync(object navigationData)
         {
-            if (navigationData is string username)
+
+            try
             {
-                try
-                {
-                    var isSuccess = await SetPageDataAsync(username);
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e);
-                }
+                var userData = navigationData as User;
+                Task.Run(() => SetPageDataAsync(userData));
             }
-            else
+            catch (Exception e)
             {
-                Debug.WriteLine("passed navigation data is not string");
+                Debug.WriteLine(e);
             }
+
+            return base.InitializeAsync(navigationData);
+
             //Debug.WriteLine("Initializing Account Page...");
             //if (navigationData is string username)
             //{
