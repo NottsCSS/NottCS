@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
+using Newtonsoft.Json;
 using NottCS.Services.Navigation;
 using Xamarin.Forms;
 
@@ -54,7 +55,7 @@ namespace NottCS.ViewModels
         /// Sets the data for the page
         /// </summary>
         /// <param name="username">Username for the account data</param>
-        private async Task<bool> SetPageDataAsync(string username)
+        private void SetPageDataAsync(User userData)
         {
             var respondData = await BaseRestService.RequestGetAsync<User>(username);
             Debug.WriteLine(respondData.Item1);

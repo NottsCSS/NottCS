@@ -24,6 +24,7 @@ namespace NottCS.Services
                 BaseRestService.SetupClient(ar.AccessToken);
 
                 App.MicrosoftAuthenticationResult = ar;
+                BaseRestService.SetupClient(ar.AccessToken);
                 return ar.AccessToken;
             }
             catch (MsalException ex)
@@ -32,7 +33,8 @@ namespace NottCS.Services
                 {
                     Debug.WriteLine(ex.ErrorCode);
                     ar = await InternalAuthenticate();
-//                    ar = InternalAuthenticate().Result;
+                    //                    ar = InternalAuthenticate().Result;
+                    BaseRestService.SetupClient(ar.AccessToken);
                     return ar.AccessToken;
                 }
                 else if (ex.ErrorCode == "user_null")
@@ -41,6 +43,7 @@ namespace NottCS.Services
                     ar = await InternalAuthenticate();
                     Debug.WriteLine(ar.User.Name);
                     //                    ar = InternalAuthenticate().Result;
+                    BaseRestService.SetupClient(ar.AccessToken);
                     return ar.AccessToken;
                 }
                 else
@@ -54,6 +57,7 @@ namespace NottCS.Services
             {
                 Debug.WriteLine($"Unknown  Exception occured: {ex.Message}");
                 ar = await InternalAuthenticate();
+                BaseRestService.SetupClient(ar.AccessToken);
                 return ar.AccessToken;
             }
 
