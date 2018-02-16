@@ -25,48 +25,51 @@ namespace NottCS.Services.Navigation
 
         internal static async Task NavigateToAsync(Type viewModelType, object navigationParameter = null)
         {
-            if (viewModelType == null || !viewModelType.IsSubclassOf(typeof(BaseViewModel)))
-                throw new Exception("passed viewmodel type does not inherit BaseViewModel");
-            if (Application.Current.MainPage is NavigationPage navigationPage)
+            if (!_isNavigating) //prevents simultaneous navigations
             {
+
+                _isNavigating = true;
+                if (viewModelType == null || !viewModelType.IsSubclassOf(typeof(BaseViewModel)))
+                {
+                    Debug.WriteLine("passed viewmodel type does not inherit BaseViewModel");
+                    _isNavigating = false;
+                    return;
+                }
+
                 Page page = null;
                 try
                 {
-                    page = CreatePage(viewModelType);
+                    page = await CreatePage(viewModelType);
                 }
                 catch (Exception e)
                 {
                     Debug.WriteLine(e.Message);
+                    Debug.WriteLine(e.TargetSite);
                 }
-
-                if (page != null)
+                if (Application.Current.MainPage is NavigationPage navigationPage && page!=null )
                 {
-                    if (page.BindingContext is BaseViewModel viewModel)
-                    {
-                        await viewModel.InitializeAsync(navigationParameter);
-                    }
-                    else
-                    {
-                        Type pageType = page.GetType();
-                        throw new Exception($"{pageType} has binding context that is not derived from BaseViewModel");
-                    }
-
-                    if (navigationPage.CurrentPage.GetType() != page.GetType() && !_isNavigating) //prevents navigation to same page multiple times
-                    {
-                        _isNavigating = true;
-                        Debug.WriteLine($"Previous page is: {navigationPage.CurrentPage}");
-                        Debug.WriteLine($"Now navigating to:{page}");
-                        await navigationPage.PushAsync(page);
-                        _isNavigating = false;
-                    }
+                        if (page.BindingContext is BaseViewModel viewModel)
+                        {
+                            await viewModel.InitializeAsync(navigationParameter);
+                            Debug.WriteLine($"Previous page is: {navigationPage.CurrentPage}");
+                            Debug.WriteLine($"Now navigating to:{page}");
+                            await navigationPage.PushAsync(page);
+                        }
+                        else
+                        {
+                            Type pageType = page.GetType();
+                            Debug.WriteLine($"{pageType} has binding context that is not derived from BaseViewModel");
+                            _isNavigating = false;
+                            return;
+                        }
+                }
+                else
+                {
+                    Type pageType = Application.Current.MainPage.GetType();
+                    Debug.WriteLine($"{pageType} is not navigationPage");
                 }
 
-            }
-            else
-            {
-                Type pageType = Application.Current.MainPage.GetType();
-                String pageTypeString = pageType.ToString();
-                throw new Exception($"{pageTypeString} is not navigationPage");
+                _isNavigating = false;
             }
 
         }
@@ -87,7 +90,7 @@ namespace NottCS.Services.Navigation
             Type viewType = Type.GetType(viewAssemblyName);
             return viewType;
         }
-        private static Page CreatePage(Type viewModelType)
+        private static Task<Page> CreatePage(Type viewModelType)
         {
             Type pageType = GetPageTypeForViewModel(viewModelType);
             if (pageType == null)
@@ -95,7 +98,7 @@ namespace NottCS.Services.Navigation
                 throw new Exception($"Cannot locate page type for {viewModelType}");
             }
             Page page = Activator.CreateInstance(pageType) as Page;
-            return page;
+            return Task.FromResult(page);
         }
     }
 }

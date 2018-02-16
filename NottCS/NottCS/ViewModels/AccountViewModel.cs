@@ -57,7 +57,8 @@ namespace NottCS.ViewModels
         private async Task<bool> SetPageDataAsync(string username)
         {
             var respondData = await BaseRestService.RequestGetAsync<User>(username);
-
+            Debug.WriteLine(respondData.Item1);
+            Debug.WriteLine(respondData.Item2.Name);
             if (!respondData.Item1)
             {
                 //TODO: Implement error notification
@@ -84,21 +85,23 @@ namespace NottCS.ViewModels
         /// </summary>
         /// <param name="navigationData">Data passed from the previous page</param>
         /// <returns></returns>
-        public override Task InitializeAsync(object navigationData)
+        public override async Task InitializeAsync(object navigationData)
         {
-
-            try
+            if (navigationData is string username)
             {
-                var username = navigationData as string;
-                var isSuccess = SetPageDataAsync(username).GetAwaiter().GetResult();
+                try
+                {
+                    var isSuccess = await SetPageDataAsync(username);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
+                }
             }
-            catch (Exception e)
+            else
             {
-                Debug.WriteLine(e);
+                Debug.WriteLine("passed navigation data is not string");
             }
-
-            return base.InitializeAsync(navigationData);
-
             //Debug.WriteLine("Initializing Account Page...");
             //if (navigationData is string username)
             //{

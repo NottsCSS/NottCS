@@ -20,7 +20,9 @@ namespace NottCS.Services
             {
                 ar = await App.ClientApplication.AcquireTokenSilentAsync(App.Scopes,
                     App.ClientApplication.Users.FirstOrDefault());
-//                RefreshUserData(ar.AccessToken);
+                //                RefreshUserData(ar.AccessToken);
+                BaseRestService.SetupClient(ar.AccessToken);
+
                 App.MicrosoftAuthenticationResult = ar;
                 return ar.AccessToken;
             }
