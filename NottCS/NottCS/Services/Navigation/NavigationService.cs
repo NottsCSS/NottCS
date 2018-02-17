@@ -27,8 +27,13 @@ namespace NottCS.Services.Navigation
         {
             if (!_isNavigating) //prevents simultaneous navigations
             {
-
                 _isNavigating = true;
+
+                Page page = null;
+                var createPageTask = CreatePage(viewModelType);
+                var initializeViewModelAsyncTask = Task.Run(async () =>
+                    await InitializeBaseViewModel(viewModelType, navigationParameter));
+
                 if (viewModelType == null || !viewModelType.IsSubclassOf(typeof(BaseViewModel)))
                 {
                     Debug.WriteLine("passed viewmodel type does not inherit BaseViewModel");
@@ -36,32 +41,41 @@ namespace NottCS.Services.Navigation
                     return;
                 }
 
-                Page page = null;
                 try
                 {
-                    page = await CreatePage(viewModelType);
+                    page = await createPageTask;
                 }
                 catch (Exception e)
                 {
                     Debug.WriteLine(e.Message);
                     Debug.WriteLine(e.TargetSite);
                 }
-                if (Application.Current.MainPage is NavigationPage navigationPage && page!=null )
+                if (Application.Current.MainPage is NavigationPage navigationPage)
                 {
-                        if (page.BindingContext is BaseViewModel viewModel)
+                    if (page?.BindingContext is BaseViewModel viewModel)
+                    {
+                        Task pushPageTask = navigationPage.PushAsync(page);
+                        try
                         {
-                            await viewModel.InitializeAsync(navigationParameter);
-                            Debug.WriteLine($"Previous page is: {navigationPage.CurrentPage}");
-                            Debug.WriteLine($"Now navigating to:{page}");
-                            await navigationPage.PushAsync(page);
+                            page.BindingContext = await initializeViewModelAsyncTask;
                         }
-                        else
+                        catch (Exception e)
                         {
-                            Type pageType = page.GetType();
-                            Debug.WriteLine($"{pageType} has binding context that is not derived from BaseViewModel");
-                            _isNavigating = false;
-                            return;
+                            Debug.WriteLine(e.Message);
+                            Debug.WriteLine(e.TargetSite);
                         }
+
+                        Debug.WriteLine($"Previous page is: {navigationPage.CurrentPage}");
+                        Debug.WriteLine($"Now navigating to:{page}");
+                        await pushPageTask;
+                    }
+                    else
+                    {
+                        Type pageType = page.GetType();
+                        Debug.WriteLine($"{pageType} has binding context that is not derived from BaseViewModel");
+                        _isNavigating = false;
+                        return;
+                    }
                 }
                 else
                 {
@@ -97,8 +111,56 @@ namespace NottCS.Services.Navigation
             {
                 throw new Exception($"Cannot locate page type for {viewModelType}");
             }
-            Page page = Activator.CreateInstance(pageType) as Page;
-            return Task.FromResult(page);
+
+            Page page = null;
+            try
+            {
+
+                page = Activator.CreateInstance(pageType) as Page;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Exception thrown at CreatePage {e}");
+                Debug.WriteLine($"{e.Message}");
+            }
+            if (page == null)
+            {
+                Debug.WriteLine($"Page not created");
+                return null;
+            }
+            else
+            {
+                Debug.WriteLine($"{page} successfully created");
+                return Task.FromResult(page);
+            }
+        }
+
+        private static async Task<BaseViewModel> InitializeBaseViewModel(Type viewModelType, object navigationParameter)
+        {
+            BaseViewModel viewModel = Activator.CreateInstance(viewModelType) as BaseViewModel;
+            if (viewModel != null)
+            {
+                Debug.WriteLine($"{viewModel} successfully created");
+                await viewModel.InitializeAsync(navigationParameter);
+                return viewModel;
+            }
+            else
+            {
+                Debug.WriteLine("viewModel not created");
+                return null;
+            }
+        }
+
+        private static Task InitializeAsyncTask(Page page, object navigationData)
+        {
+            if (page.BindingContext is BaseViewModel viewModel)
+            {
+                return viewModel.InitializeAsync(navigationData);
+            }
+            else
+            {
+                return Task.FromResult(false);
+            }
         }
     }
 }
