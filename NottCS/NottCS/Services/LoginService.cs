@@ -13,7 +13,7 @@ namespace NottCS.Services
 {
     public static class LoginService
     {
-        public static async Task<bool> AuthenticateWithCacheAsync()
+        public static async Task<bool> MicrosoftAuthenticateWithCacheAsync()
         {
             try
             {
@@ -59,7 +59,7 @@ namespace NottCS.Services
             return true;
 
         }
-        [Obsolete("Authenticate is deprecated, use AuthenticateWIthUIAsync or AuthenticateWithCacheAsync instead")]
+        [Obsolete("Authenticate is deprecated, use MicrosoftAuthenticateWIthUIAsync or MicrosoftAuthenticateWithCacheAsync instead")]
         public static async Task Authenticate()
         {
             try
@@ -76,12 +76,12 @@ namespace NottCS.Services
                 if (ex.ErrorCode == "user_interaction_required")
                 {
                     Debug.WriteLine(ex.ErrorCode);
-                    await AuthenticateWithUIAsync();
+                    await MicrosoftAuthenticateWithUIAsync();
                 }
                 else if (ex.ErrorCode == "user_null")
                 {
                     Debug.WriteLine(ex.ErrorCode);
-                    await AuthenticateWithUIAsync();
+                    await MicrosoftAuthenticateWithUIAsync();
                 }
                 else
                 {
@@ -92,7 +92,7 @@ namespace NottCS.Services
             catch (Exception ex)
             {
                 Debug.WriteLine($"Unknown  Exception occured: {ex.Message}");
-                await AuthenticateWithUIAsync();
+                await MicrosoftAuthenticateWithUIAsync();
             }
 
         }
@@ -107,7 +107,7 @@ namespace NottCS.Services
             return Task.FromResult(false);
         }
 
-        public static async Task AuthenticateWithUIAsync()
+        public static async Task MicrosoftAuthenticateWithUIAsync()
         {
             AuthenticationResult ar = null;
             try
@@ -151,6 +151,11 @@ namespace NottCS.Services
             await Task.Run(()=>BaseRestService.SetupClient(ar.AccessToken));
             Debug.WriteLine($"time limit: {ar.ExpiresOn}");
             App.MicrosoftAuthenticationResult = ar;
+        }
+
+        public static Task BackendAuthenticateAsync()
+        {
+            return Task.FromResult(false);
         }
     }
 }

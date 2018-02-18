@@ -16,7 +16,7 @@ namespace NottCS.Services.Navigation
 
         internal static async Task InitializeAsync()
         {
-            bool canAuthenticate = await LoginService.AuthenticateWithCacheAsync();
+            bool canAuthenticate = await LoginService.MicrosoftAuthenticateWithCacheAsync();
             if (canAuthenticate)
             {
                 var userData = await BaseRestService.RequestGetAsync<User>();
