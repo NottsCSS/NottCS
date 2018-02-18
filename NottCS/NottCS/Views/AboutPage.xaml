@@ -7,65 +7,93 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
-             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
-             xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
              d:DataContext="{d:DesignInstance viewModels:AboutViewModel}">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout BackgroundColor="White">
-            <Image x:Name = "NottCsLogo" 
+        <ScrollView Margin="5,0">
+            <StackLayout BackgroundColor="White">
+                <Image x:Name = "NottCsLogo" 
                    HorizontalOptions="Center"
-                   VerticalOptions="Start"
                    HeightRequest="100"
                    WidthRequest="100">
-            </Image>
-            <Label Text ="Version: 1.0.0"
-                   FontSize="10"
-                   TextColor="Black"
-                   HorizontalOptions="CenterAndExpand">
-            </Label>
-            <Label Text ="Computer Science Society"
-                   FontSize="9"
-                   TextColor="Gray"
-                   HorizontalOptions="CenterAndExpand">
-            </Label>
-            <Label Text ="Copyright © 2018"
-                   FontSize="9"
-                   TextColor="Gray"
-                   HorizontalOptions="CenterAndExpand">
-            </Label>
-            <ListView ItemsSource="{Binding AboutLists}"
-                      Margin="3,0"
-                      RowHeight="20"
-                      x:Name="SomeList">
-                <ListView.Behaviors>
-                    <behaviors:EventToCommandBehavior 
-                        EventName="ItemTapped"
-                        Command="{Binding WhyNottCsCommand}" 
-                        Converter="{StaticResource TappedItemConverter}" />
-                </ListView.Behaviors>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid Padding="5" x:Name="About">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="20"></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="40"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Label Text="{Binding Name}"
-                                       FontSize="10"/>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+                </Image>
+                <Label 
+                    Text ="Version: 1.0.0"
+                    FontSize="10"
+                    TextColor="Black"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="StartAndExpand">
+                </Label>
+                <Label 
+                    Text ="Computer Science Society"
+                    FontSize="9"
+                    TextColor="Gray"
+                    HorizontalOptions="CenterAndExpand">
+                </Label>
+                <Label 
+                    Text ="Copyright © 2018"
+                    FontSize="9"
+                    TextColor="Gray"
+                    HorizontalOptions="CenterAndExpand">
+                </Label>
+                <Label
+                    Text="Why NottCS Exists?"
+                    FontSize="15"
+                    HorizontalOptions="Start"
+                    Margin="0,5"
+                    FontAttributes="Bold">
+                </Label>
+                <Label LineBreakMode="WordWrap" 
+                       FontSize="9">
+                    Founded in 2017, Computer Science Society of The University of Nottingham Malaysia Campus is proud to release their first ever cross-platform application.
+                </Label>
+                <Label LineBreakMode="WordWrap"
+                       FontSize="9">
+                    NottCS mission is to bring all the clubs and societies under a single application and connect students in this platform. 
+                </Label>
+                <Label LineBreakMode="WordWrap"
+                       FontSize="9">
+                    We also want to reduce the email spam and ease the signing up of events/activities held by the clubs and societies.
+                </Label>
+                <Label
+                    Text="NottCS Features"
+                    FontSize="15"
+                    HorizontalOptions="Start"
+                    Margin="0,5"
+                    FontAttributes="Bold">
+                </Label>
+                <Label LineBreakMode="WordWrap"
+                       FontSize="9">
+                    One of the main features in NottCS is that, students can register to any clubs and societies with a click of a button.
+                </Label>
+                <Label LineBreakMode ="TailTruncation"
+                       FontSize="9">
+                    Students just have to pay the registeration fees and get the QR code scan and you successfully join it.
+                </Label>
+                <Label LineBreakMode="WordWrap"
+                       FontSize="9">
+                    To further simplify the process of signing up events/activities, students can just sign up to their respective events. 
+                </Label>
+                <Label LineBreakMode="TailTruncation"
+                       FontSize="9">
+                    All they need to do is just go to their selected events and click sign up. No registeration form is needed to fill in.
+                </Label>
+                <Label LineBreakMode="WordWrap"
+                       FontSize="9">
+                    With NottCS, a special feature called Admin Panel is just what the committees of the clubs needs.
+                </Label>
+                <Label LineBreakMode="TailTruncation"
+                       FontSize="9">
+                    Admin Panel enables committees to post their attracting and fun activities/events without spamming students inbox. 
+                </Label>
+                <Label LineBreakMode="WordWrap"
+                       FontSize="9">
+                    Moreover, Admin Panel has the privileges to setup an QR code for students to scan it for SCPD points at the end of their activities/events.
+                </Label>
+                <Label LineBreakMode="TailTruncation"
+                       FontSize="9">
+                    This will remove the scanning student ID process and saves both parties time.
+                </Label>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

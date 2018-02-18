@@ -64,6 +64,7 @@
                            Text = "{Binding LoginParameters.Password.Errors, Converter = {StaticResource StringListToStringConverter}}" />
                         <Button Text = "LOGIN" Command = "{Binding SignInCommand}" 
                             Margin="50,0,50,0" />
+                        <Label Text="{Binding LoginMessage}" />
                         <Label  Margin = "50,0,0,0"
                             Text = "REGISTER ACCOUNT"
                             FontSize="Micro"

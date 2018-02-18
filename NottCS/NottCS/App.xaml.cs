@@ -1,5 +1,6 @@
 ﻿using System;
-
+using Acr.UserDialogs;
+using Microsoft.Identity.Client;
 using NottCS.Views;
 using Xamarin.Forms;
 
@@ -7,11 +8,15 @@ namespace NottCS
 {
 	public partial class App : Application
 	{
-
-		public App ()
+	    public static PublicClientApplication ClientApplication { get; private set; }
+	    public static readonly string[] Scopes = { "User.Read" };
+	    public static UIParent UiParent = null;
+        public App ()
 		{
 			InitializeComponent();
-            MainPage = new NavigationPage(new AccountPage());
+            InitializeDialogService();
+		    ClientApplication = new PublicClientApplication("81a5b712-2ec4-4d3f-9324-211f60d0a0c9");
+            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart ()
@@ -28,5 +33,10 @@ namespace NottCS
 		{
 			// Handle when your app resumes
 		}
+
+	    private void InitializeDialogService()
+	    {
+            
+	    }
 	}
 }
