@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Threading.Tasks;
+using NottCS.Models;
+using NottCS.Services.REST;
 using NottCS.ViewModels;
 using Xamarin.Forms;
 
@@ -10,7 +12,24 @@ namespace NottCS.Services.Navigation
 {
     public static class NavigationService
     {
-        private static bool _isNavigating = false;
+        private static bool _isNavigating;
+
+        internal static async Task InitializeAsync()
+        {
+            bool canAuthenticate = await LoginService.AuthenticateWithCacheAsync();
+            if (canAuthenticate)
+            {
+                var userData = await BaseRestService.RequestGetAsync<User>();
+                if (userData.Item1)
+                {
+                    await NavigateToAsync<AccountViewModel>(userData.Item2);
+                }
+            }
+            else
+            {
+                await NavigateToAsync<LoginViewModel>();
+            }
+        }
         /// <summary>
         /// Navigates using viewmodel, preferred way of navigation due to type checks during compile time
         /// Calls InitializeAsync method with the passed parameter during navigation, override that method to use the parameter
@@ -37,10 +56,11 @@ namespace NottCS.Services.Navigation
                 if (viewModelType == null || !viewModelType.IsSubclassOf(typeof(BaseViewModel)))
                 {
                     Debug.WriteLine("passed viewmodel type does not inherit BaseViewModel");
+                    Debug.WriteLine("Terminating navigation...");
                     _isNavigating = false;
                     return;
                 }
-
+                //Creating page
                 try
                 {
                     page = await createPageTask;
@@ -50,37 +70,39 @@ namespace NottCS.Services.Navigation
                     Debug.WriteLine(e.Message);
                     Debug.WriteLine(e.TargetSite);
                 }
+
+                if (page == null)
+                {
+                    Debug.WriteLine("Page unable to be created.");
+                    Debug.WriteLine("Terminating navigation...");
+                    _isNavigating = false;
+                    return;
+                }
                 if (Application.Current.MainPage is NavigationPage navigationPage)
                 {
-                    if (page?.BindingContext is BaseViewModel viewModel)
-                    {
-                        Task pushPageTask = navigationPage.PushAsync(page);
-                        try
-                        {
-                            page.BindingContext = await initializeViewModelAsyncTask;
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.WriteLine(e.Message);
-                            Debug.WriteLine(e.TargetSite);
-                        }
 
-                        Debug.WriteLine($"Previous page is: {navigationPage.CurrentPage}");
-                        Debug.WriteLine($"Now navigating to:{page}");
-                        await pushPageTask;
-                    }
-                    else
+                    Task pushPageTask = navigationPage.PushAsync(page);
+                    Task initializeAsyncTask = null;
+                    if (page.BindingContext is BaseViewModel viewModel)
                     {
-                        Type pageType = page.GetType();
-                        Debug.WriteLine($"{pageType} has binding context that is not derived from BaseViewModel");
-                        _isNavigating = false;
-                        return;
-                    }
+                        initializeAsyncTask = viewModel.InitializeAsync(navigationParameter);
+                    };
+
+                    Debug.WriteLine($"Previous page is: {navigationPage.CurrentPage}");
+                    Debug.WriteLine($"Now navigating to:{page}");
+                    await pushPageTask;
+                    if (initializeAsyncTask != null) await initializeAsyncTask;
                 }
                 else
                 {
-                    Type pageType = Application.Current.MainPage.GetType();
-                    Debug.WriteLine($"{pageType} is not navigationPage");
+                    Debug.WriteLine($"MainPage is not Navigation page, now replacing it with new page");
+                    Task initializeAsyncTask = null;
+                    if (page.BindingContext is BaseViewModel viewModel)
+                    {
+                        initializeAsyncTask = viewModel.InitializeAsync(navigationParameter);
+                    };
+                    Application.Current.MainPage = new NavigationPage(page);
+                    if (initializeAsyncTask != null) await initializeAsyncTask;
                 }
 
                 _isNavigating = false;
@@ -137,8 +159,7 @@ namespace NottCS.Services.Navigation
 
         private static async Task<BaseViewModel> InitializeBaseViewModel(Type viewModelType, object navigationParameter)
         {
-            BaseViewModel viewModel = Activator.CreateInstance(viewModelType) as BaseViewModel;
-            if (viewModel != null)
+            if (Activator.CreateInstance(viewModelType) is BaseViewModel viewModel)
             {
                 Debug.WriteLine($"{viewModel} successfully created");
                 await viewModel.InitializeAsync(navigationParameter);
@@ -151,16 +172,5 @@ namespace NottCS.Services.Navigation
             }
         }
 
-        private static Task InitializeAsyncTask(Page page, object navigationData)
-        {
-            if (page.BindingContext is BaseViewModel viewModel)
-            {
-                return viewModel.InitializeAsync(navigationData);
-            }
-            else
-            {
-                return Task.FromResult(false);
-            }
-        }
     }
 }

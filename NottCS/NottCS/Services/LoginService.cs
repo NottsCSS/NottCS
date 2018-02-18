@@ -13,14 +13,59 @@ namespace NottCS.Services
 {
     public static class LoginService
     {
-        public static async Task Authenticate()
+        public static async Task<bool> AuthenticateWithCacheAsync()
         {
-            AuthenticationResult ar = null;
             try
             {
-                ar = await App.ClientApplication.AcquireTokenSilentAsync(App.Scopes,
+                AuthenticationResult ar = await App.ClientApplication.AcquireTokenSilentAsync(App.Scopes,
                     App.ClientApplication.Users.FirstOrDefault());
                 //                RefreshUserData(ar.AccessToken);
+                BaseRestService.SetupClient(ar.AccessToken);
+                App.MicrosoftAuthenticationResult = ar;
+                BaseRestService.SetupClient(ar.AccessToken);
+            }
+            catch (MsalException ex)
+            {
+                if (ex.ErrorCode == "user_interaction_required")
+                {
+                    Debug.WriteLine(ex.ErrorCode);
+                    Debug.WriteLine("Something wrong with refresh token. Login required.");
+                    return false;
+                }
+                else if (ex.ErrorCode == "user_null")
+                {
+                    Debug.WriteLine(ex.ErrorCode);
+                    Debug.WriteLine("No users found on local cache. Login required.");
+                    return false;
+                }
+                else
+                {
+                    Debug.WriteLine($"Unknown MsalException: {ex.Message}");
+                    Debug.WriteLine($"Error code: {ex.ErrorCode}");
+                    Debug.WriteLine($"Target site: {ex.TargetSite}");
+                    Debug.WriteLine($"Please report this error to developers");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Unknown generic exception occured: {ex.GetType()}");
+                Debug.WriteLine($"Message: {ex.Message}");
+                Debug.WriteLine($"Target site: {ex.TargetSite}");
+                Debug.WriteLine($"Please report this error to developers");
+                return false;
+            }
+
+            return true;
+
+        }
+        [Obsolete("Authenticate is deprecated, use AuthenticateWIthUIAsync or AuthenticateWithCacheAsync instead")]
+        public static async Task Authenticate()
+        {
+            try
+            {
+                AuthenticationResult ar = await App.ClientApplication.AcquireTokenSilentAsync(App.Scopes,
+                    App.ClientApplication.Users.FirstOrDefault());
                 BaseRestService.SetupClient(ar.AccessToken);
 
                 App.MicrosoftAuthenticationResult = ar;
@@ -31,16 +76,12 @@ namespace NottCS.Services
                 if (ex.ErrorCode == "user_interaction_required")
                 {
                     Debug.WriteLine(ex.ErrorCode);
-                    ar = await InternalAuthenticate();
-                    //                    ar = InternalAuthenticate().Result;
-                    BaseRestService.SetupClient(ar?.AccessToken);
+                    await AuthenticateWithUIAsync();
                 }
                 else if (ex.ErrorCode == "user_null")
                 {
                     Debug.WriteLine(ex.ErrorCode);
-                    ar = await InternalAuthenticate();
-                    
-                    //                    ar = InternalAuthenticate().Result;
+                    await AuthenticateWithUIAsync();
                 }
                 else
                 {
@@ -51,7 +92,7 @@ namespace NottCS.Services
             catch (Exception ex)
             {
                 Debug.WriteLine($"Unknown  Exception occured: {ex.Message}");
-                ar = await InternalAuthenticate();
+                await AuthenticateWithUIAsync();
             }
 
         }
@@ -66,7 +107,7 @@ namespace NottCS.Services
             return Task.FromResult(false);
         }
 
-        private static async Task<AuthenticationResult> InternalAuthenticate()
+        public static async Task AuthenticateWithUIAsync()
         {
             AuthenticationResult ar = null;
             try
@@ -76,7 +117,7 @@ namespace NottCS.Services
             }
             catch (MsalException ex)
             {
-                //TODO: check appropriate error codes and do appropriate stuff
+                //TODO: check appropriate error codes and do appropriate stuff, currently it only prints to Debug output
 
                 if (ex.ErrorCode == "access_denied")
                 {
@@ -86,39 +127,30 @@ namespace NottCS.Services
                 {
                     Debug.WriteLine("Authentication UI closed");
                 }
-                Debug.WriteLine(ar);
-                Debug.WriteLine($"Unknown MsalException occured with error code: {ex.ErrorCode}");
-                Debug.WriteLine(ex);
-//                Debug.WriteLine(ex.Message);
-                Debug.WriteLine($"Site: {ex.TargetSite}");
+                else
+                {
+                    Debug.WriteLine($"Unknown MsalException: {ex.Message}");
+                    Debug.WriteLine($"Error code: {ex.ErrorCode}");
+                    Debug.WriteLine($"Target site: {ex.TargetSite}");
+                    Debug.WriteLine($"Please report this error to developers");
+                }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Unknown exception {ex}");
-                Debug.WriteLine($"{ex.TargetSite}");
+                Debug.WriteLine($"Unknown generic exception occured: {ex.GetType()}");
+                Debug.WriteLine($"Message: {ex.Message}");
+                Debug.WriteLine($"Target site: {ex.TargetSite}");
+                Debug.WriteLine($"Please report this error to developers");
             }
 
-            if (ar == null) return null;
-
-//            BaseRestService.SetupClient(ar.AccessToken);
+            if (ar == null)
+            {
+                Debug.WriteLine("Null authentication result.");
+                return;
+            }
             await Task.Run(()=>BaseRestService.SetupClient(ar.AccessToken));
             Debug.WriteLine($"time limit: {ar.ExpiresOn}");
             App.MicrosoftAuthenticationResult = ar;
-            return ar;
-        }
-        
-        private static async void RefreshUserData(string token)
-        {
-            //get data from API
-            HttpClient client = new HttpClient();
-            HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/me");
-            message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
-            HttpResponseMessage response = await client.SendAsync(message);
-            string responseString = await response.Content.ReadAsStringAsync();
-            Debug.WriteLine("Refresh data response: ");
-            Debug.WriteLine(response.IsSuccessStatusCode
-                ? responseString
-                : $"Something went wrong with the API call {responseString}");
         }
     }
 }

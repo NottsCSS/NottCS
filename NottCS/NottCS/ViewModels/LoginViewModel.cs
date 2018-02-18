@@ -43,7 +43,7 @@ namespace NottCS.ViewModels
             var stopwatch = new Stopwatch();
             IsBusy = true;
 
-            await LoginService.Authenticate();
+            await LoginService.AuthenticateWithUIAsync();
             string a = App.MicrosoftAuthenticationResult?.User.DisplayableId;
             Debug.WriteLine($"DisplayableID: {a}");
             Debug.WriteLine($"Identifier: {App.MicrosoftAuthenticationResult?.User.Identifier}");
