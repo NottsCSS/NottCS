@@ -22,7 +22,6 @@ namespace NottCS.Services
                 //                RefreshUserData(ar.AccessToken);
                 BaseRestService.SetupClient(ar.AccessToken);
                 App.MicrosoftAuthenticationResult = ar;
-                BaseRestService.SetupClient(ar.AccessToken);
             }
             catch (MsalException ex)
             {
