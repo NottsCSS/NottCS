@@ -44,11 +44,11 @@ namespace NottCS.ViewModels
             IsBusy = true;
 
             await LoginService.Authenticate();
-            var a = App.MicrosoftAuthenticationResult.User.DisplayableId;
+            string a = App.MicrosoftAuthenticationResult?.User.DisplayableId;
             Debug.WriteLine($"DisplayableID: {a}");
-            Debug.WriteLine($"Identifier: {App.MicrosoftAuthenticationResult.User.Identifier}");
-            Debug.WriteLine($"Identity Provider: {App.MicrosoftAuthenticationResult.User.IdentityProvider}");
-            Debug.WriteLine($"Name: {App.MicrosoftAuthenticationResult.User.Name}");
+            Debug.WriteLine($"Identifier: {App.MicrosoftAuthenticationResult?.User.Identifier}");
+            Debug.WriteLine($"Identity Provider: {App.MicrosoftAuthenticationResult?.User.IdentityProvider}");
+            Debug.WriteLine($"Name: {App.MicrosoftAuthenticationResult?.User.Name}");
 
             Debug.WriteLine($"Authentication took {stopwatch.ElapsedMilliseconds} ms");
             stopwatch.Restart();

@@ -13,9 +13,9 @@ namespace NottCS.Services
 {
     public static class LoginService
     {
-        public static async Task<string> Authenticate()
+        public static async Task Authenticate()
         {
-            AuthenticationResult ar;
+            AuthenticationResult ar = null;
             try
             {
                 ar = await App.ClientApplication.AcquireTokenSilentAsync(App.Scopes,
@@ -25,7 +25,6 @@ namespace NottCS.Services
 
                 App.MicrosoftAuthenticationResult = ar;
                 BaseRestService.SetupClient(ar.AccessToken);
-                return ar.AccessToken;
             }
             catch (MsalException ex)
             {
@@ -34,31 +33,25 @@ namespace NottCS.Services
                     Debug.WriteLine(ex.ErrorCode);
                     ar = await InternalAuthenticate();
                     //                    ar = InternalAuthenticate().Result;
-                    BaseRestService.SetupClient(ar.AccessToken);
-                    return ar.AccessToken;
+                    BaseRestService.SetupClient(ar?.AccessToken);
                 }
                 else if (ex.ErrorCode == "user_null")
                 {
                     Debug.WriteLine(ex.ErrorCode);
                     ar = await InternalAuthenticate();
-                    Debug.WriteLine(ar.User.Name);
+                    
                     //                    ar = InternalAuthenticate().Result;
-                    BaseRestService.SetupClient(ar.AccessToken);
-                    return ar.AccessToken;
                 }
                 else
                 {
                     Debug.WriteLine($"Unknown MsalException: {ex.Message}");
                     Debug.WriteLine($"Error code: {ex.ErrorCode}");
-                    return ex.Message;
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Unknown  Exception occured: {ex.Message}");
                 ar = await InternalAuthenticate();
-                BaseRestService.SetupClient(ar.AccessToken);
-                return ar.AccessToken;
             }
 
         }
@@ -75,8 +68,40 @@ namespace NottCS.Services
 
         private static async Task<AuthenticationResult> InternalAuthenticate()
         {
-            AuthenticationResult ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
-            BaseRestService.SetupClient(ar.AccessToken);
+            AuthenticationResult ar = null;
+            try
+            {
+                ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
+                Debug.WriteLine(ar);
+            }
+            catch (MsalException ex)
+            {
+                //TODO: check appropriate error codes and do appropriate stuff
+
+                if (ex.ErrorCode == "access_denied")
+                {
+                    Debug.WriteLine("Authentication cancelled");
+                }
+                else if (ex.ErrorCode == "authentication_ui_failed")
+                {
+                    Debug.WriteLine("Authentication UI closed");
+                }
+                Debug.WriteLine(ar);
+                Debug.WriteLine($"Unknown MsalException occured with error code: {ex.ErrorCode}");
+                Debug.WriteLine(ex);
+//                Debug.WriteLine(ex.Message);
+                Debug.WriteLine($"Site: {ex.TargetSite}");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Unknown exception {ex}");
+                Debug.WriteLine($"{ex.TargetSite}");
+            }
+
+            if (ar == null) return null;
+
+//            BaseRestService.SetupClient(ar.AccessToken);
+            await Task.Run(()=>BaseRestService.SetupClient(ar.AccessToken));
             Debug.WriteLine($"time limit: {ar.ExpiresOn}");
             App.MicrosoftAuthenticationResult = ar;
             return ar;
