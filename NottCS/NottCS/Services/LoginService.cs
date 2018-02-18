@@ -25,16 +25,10 @@ namespace NottCS.Services
             }
             catch (MsalException ex)
             {
-                if (ex.ErrorCode == "user_interaction_required")
+                if (ex.ErrorCode == MsalUiRequiredException.UserNullError)
                 {
                     Debug.WriteLine(ex.ErrorCode);
-                    Debug.WriteLine("Something wrong with refresh token. Login required.");
-                    return false;
-                }
-                else if (ex.ErrorCode == "user_null")
-                {
-                    Debug.WriteLine(ex.ErrorCode);
-                    Debug.WriteLine("No users found on local cache. Login required.");
+                    Debug.WriteLine("Null user was passed (no user found on local cache). Login required.");
                     return false;
                 }
                 else
@@ -42,7 +36,6 @@ namespace NottCS.Services
                     Debug.WriteLine($"Unknown MsalException: {ex.Message}");
                     Debug.WriteLine($"Error code: {ex.ErrorCode}");
                     Debug.WriteLine($"Target site: {ex.TargetSite}");
-                    Debug.WriteLine($"Please report this error to developers");
                     return false;
                 }
             }
