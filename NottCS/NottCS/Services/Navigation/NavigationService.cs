@@ -50,8 +50,6 @@ namespace NottCS.Services.Navigation
 
                 Page page = null;
                 var createPageTask = CreatePage(viewModelType);
-                var initializeViewModelAsyncTask = Task.Run(async () =>
-                    await InitializeBaseViewModel(viewModelType, navigationParameter));
 
                 if (viewModelType == null || !viewModelType.IsSubclassOf(typeof(BaseViewModel)))
                 {
@@ -156,21 +154,6 @@ namespace NottCS.Services.Navigation
                 return Task.FromResult(page);
             }
         }
-
-        private static async Task<BaseViewModel> InitializeBaseViewModel(Type viewModelType, object navigationParameter)
-        {
-            if (Activator.CreateInstance(viewModelType) is BaseViewModel viewModel)
-            {
-                Debug.WriteLine($"{viewModel} successfully created");
-                await viewModel.InitializeAsync(navigationParameter);
-                return viewModel;
-            }
-            else
-            {
-                Debug.WriteLine("viewModel not created");
-                return null;
-            }
-        }
-
+        
     }
 }
