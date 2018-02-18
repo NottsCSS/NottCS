@@ -29,7 +29,7 @@ namespace NottCS
                 Debug.WriteLine($"Init navigation took {stopwatch.ElapsedMilliseconds}ms");
 		    }
             stopwatch.Stop();
-            //            MainPage = new NavigationPage(new LoginPage());
+            MainPage = new ContentPage();
         }
 
 	    private static Task InitNavigation()
@@ -43,8 +43,13 @@ namespace NottCS
 
 		    if (Device.RuntimePlatform != Device.UWP)
 		    {
-		        await InitNavigation();
-		    }
+		        Stopwatch stopwatch = new Stopwatch();
+		        stopwatch.Start();
+                await InitNavigation();
+		        Debug.WriteLine($"Init navigation took {stopwatch.ElapsedMilliseconds}ms");
+                stopwatch.Stop();
+
+            }
 
         }
 
