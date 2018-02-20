@@ -53,7 +53,7 @@ namespace NottCS.ViewModels
             Debug.WriteLine($"Authentication took {stopwatch.ElapsedMilliseconds} ms");
             stopwatch.Restart();
 
-            var getUserTask = Task.Run(() => BaseRestService.RequestGetAsync<User>());
+            var getUserTask = Task.Run(() => RestService.RequestGetAsync<User>());
             var getUserTaskResult = await getUserTask;
 
             Debug.WriteLine($"User request took {stopwatch.ElapsedMilliseconds} ms");

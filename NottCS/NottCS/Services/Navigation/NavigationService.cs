@@ -20,7 +20,7 @@ namespace NottCS.Services.Navigation
             Debug.WriteLine($"Can authenticate with cached data: {canAuthenticate}");
             if (canAuthenticate)
             {
-                var userData = await BaseRestService.RequestGetAsync<User>();
+                var userData = await RestService.RequestGetAsync<User>();
                 if (userData.Item1)
                 {
 

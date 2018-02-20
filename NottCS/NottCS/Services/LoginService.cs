@@ -20,7 +20,7 @@ namespace NottCS.Services
                 AuthenticationResult ar = await App.ClientApplication.AcquireTokenSilentAsync(App.Scopes,
                     App.ClientApplication.Users.FirstOrDefault());
                 //                RefreshUserData(ar.AccessToken);
-                BaseRestService.SetupClient(ar.AccessToken);
+                RestService.SetupClient(ar.AccessToken);
                 App.MicrosoftAuthenticationResult = ar;
                 Debug.WriteLine($"{ar.User.Name} successfully authenticated with microsoft server");
             }
@@ -69,6 +69,7 @@ namespace NottCS.Services
             foreach (var user in App.ClientApplication.Users)
             {
                 App.ClientApplication.Remove(user);
+                RestService.ResetClient();
             }
 
             return Task.FromResult(false);
@@ -115,7 +116,7 @@ namespace NottCS.Services
                 Debug.WriteLine("Null authentication result.");
                 return;
             }
-            BaseRestService.SetupClient(ar.AccessToken);
+            RestService.SetupClient(ar.AccessToken);
             Debug.WriteLine($"time limit: {ar.ExpiresOn}");
             App.MicrosoftAuthenticationResult = ar;
             Debug.WriteLine($"{ar.User.Name} successfully authenticated with microsoft server");
