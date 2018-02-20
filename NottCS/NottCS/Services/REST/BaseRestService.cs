@@ -34,9 +34,17 @@ namespace NottCS.Services.REST
         /// <param name="accessToken"></param>
         public static void SetupClient(string accessToken)
         {
-            Debug.WriteLine("HttpClient is setting up...");
+            DebugService.WriteLine("HttpClient is setting up...");
             Client.DefaultRequestHeaders.Clear();
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        }
+
+        /// <summary>
+        /// Resets the authorization header
+        /// </summary>
+        public static void ResetClient()
+        {
+            Client.DefaultRequestHeaders.Clear();
         }
 
         /// <summary>
@@ -52,7 +60,7 @@ namespace NottCS.Services.REST
 
             if (httpMethod == HttpMethod.Post && requestBody == null)
             {
-                Debug.WriteLine("[BaseRestService] WARNING : No valid request body");
+                DebugService.WriteLine("[BaseRestService] WARNING : No valid request body");
             }
 
             #endregion
@@ -109,7 +117,7 @@ namespace NottCS.Services.REST
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"Expected exception {e.Message} at {e.TargetSite}");
+                DebugService.WriteLine($"Expected exception {e.Message} at {e.TargetSite}");
                 return false;
             }
         }
@@ -127,38 +135,38 @@ namespace NottCS.Services.REST
 
             var requestUri = UriGenerator<T>(HttpMethod.Get, identifier);
 
-            Debug.WriteLine($"[GET] Generate Uri took {stopwatch.ElapsedMilliseconds} ms");
+            DebugService.WriteLine($"[GET] Generate Uri took {stopwatch.ElapsedMilliseconds} ms");
             stopwatch.Restart();
 
             var httpRequest = HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
 
-            Debug.WriteLine($"[GET] Generate HttpRequestMessage took {stopwatch.ElapsedMilliseconds} ms");
+            DebugService.WriteLine($"[GET] Generate HttpRequestMessage took {stopwatch.ElapsedMilliseconds} ms");
             stopwatch.Restart();
 
             try
             {
                 var requestTask = Client.SendAsync(httpRequest);
 
-                Debug.WriteLine($"[GET] Generate requestTask took {stopwatch.ElapsedMilliseconds} ms");
+                DebugService.WriteLine($"[GET] Generate requestTask took {stopwatch.ElapsedMilliseconds} ms");
                 stopwatch.Restart();
 
-                //Debug.WriteLine(JsonConvert.SerializeObject(requestTask));
+                //DebugService.WriteLine(JsonConvert.SerializeObject(requestTask));
                 var httpResponse = requestTask.GetAwaiter().GetResult();
 
-                Debug.WriteLine($"[GET] Get response from server took {stopwatch.ElapsedMilliseconds} ms");
+                DebugService.WriteLine($"[GET] Get response from server took {stopwatch.ElapsedMilliseconds} ms");
                 stopwatch.Restart();
 
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     var result = JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync());
-                    Debug.WriteLine($"{JsonConvert.SerializeObject(result)}");
+                    DebugService.WriteLine($"{JsonConvert.SerializeObject(result)}");
 
                     return Tuple.Create(true, result);
                 }
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e);
+                DebugService.WriteLine(e);
             }
 
             //TODO: Revert back to false for Item1, true is for easy login and testing purpose only
@@ -184,7 +192,7 @@ namespace NottCS.Services.REST
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e);
+                DebugService.WriteLine(e);
                 return false;
             }
         }
@@ -209,7 +217,7 @@ namespace NottCS.Services.REST
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e);
+                DebugService.WriteLine(e);
                 return false;
             }
         }
