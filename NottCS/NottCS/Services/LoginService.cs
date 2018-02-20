@@ -63,43 +63,6 @@ namespace NottCS.Services
             return true;
 
         }
-        [Obsolete("Authenticate is deprecated, use MicrosoftAuthenticateWIthUIAsync or MicrosoftAuthenticateWithCacheAsync instead")]
-        public static async Task Authenticate()
-        {
-            try
-            {
-                AuthenticationResult ar = await App.ClientApplication.AcquireTokenSilentAsync(App.Scopes,
-                    App.ClientApplication.Users.FirstOrDefault());
-                BaseRestService.SetupClient(ar.AccessToken);
-
-                App.MicrosoftAuthenticationResult = ar;
-                BaseRestService.SetupClient(ar.AccessToken);
-            }
-            catch (MsalException ex)
-            {
-                if (ex.ErrorCode == "user_interaction_required")
-                {
-                    Debug.WriteLine(ex.ErrorCode);
-                    await MicrosoftAuthenticateWithUIAsync();
-                }
-                else if (ex.ErrorCode == "user_null")
-                {
-                    Debug.WriteLine(ex.ErrorCode);
-                    await MicrosoftAuthenticateWithUIAsync();
-                }
-                else
-                {
-                    Debug.WriteLine($"Unknown MsalException: {ex.Message}");
-                    Debug.WriteLine($"Error code: {ex.ErrorCode}");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Unknown  Exception occured: {ex.Message}");
-                await MicrosoftAuthenticateWithUIAsync();
-            }
-
-        }
 
         public static Task SignOut()
         {
