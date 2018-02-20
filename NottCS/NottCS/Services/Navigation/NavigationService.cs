@@ -23,12 +23,19 @@ namespace NottCS.Services.Navigation
                 var userData = await BaseRestService.RequestGetAsync<User>();
                 if (userData.Item1)
                 {
+
+                    Stopwatch stopwatch = new Stopwatch();
+                    stopwatch.Start();
                     await NavigateToAsync<AccountViewModel>(userData.Item2);
+                    Debug.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
                 }
             }
             else
             {
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
                 await NavigateToAsync<LoginViewModel>();
+                Debug.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
             }
         }
         /// <summary>

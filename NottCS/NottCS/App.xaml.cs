@@ -21,14 +21,6 @@ namespace NottCS
             InitializeDialogService();
 		    ClientApplication = new PublicClientApplication("81a5b712-2ec4-4d3f-9324-211f60d0a0c9");
 		    ClientApplication.RedirectUri = "msal81a5b712-2ec4-4d3f-9324-211f60d0a0c9://auth";
-		    Stopwatch stopwatch = new Stopwatch();
-            if (Device.RuntimePlatform == Device.UWP)
-		    {
-                stopwatch.Start();
-		        InitNavigation();
-                Debug.WriteLine($"Init navigation took {stopwatch.ElapsedMilliseconds}ms");
-		    }
-            stopwatch.Stop();
             MainPage = new ContentPage();
         }
 
@@ -40,16 +32,11 @@ namespace NottCS
         protected override async void OnStart ()
 		{
             // Handle when your app starts
-
-		    if (Device.RuntimePlatform != Device.UWP)
-		    {
-		        Stopwatch stopwatch = new Stopwatch();
-		        stopwatch.Start();
-                await InitNavigation();
-		        Debug.WriteLine($"Init navigation took {stopwatch.ElapsedMilliseconds}ms");
-                stopwatch.Stop();
-
-            }
+		    Stopwatch stopwatch = new Stopwatch();
+		    stopwatch.Start();
+            await InitNavigation();
+		    Debug.WriteLine($"Init navigation took {stopwatch.ElapsedMilliseconds}ms");
+            stopwatch.Stop();
 
         }
 

@@ -22,8 +22,9 @@ namespace NottCS.Services
                 //                RefreshUserData(ar.AccessToken);
                 BaseRestService.SetupClient(ar.AccessToken);
                 App.MicrosoftAuthenticationResult = ar;
+                Debug.WriteLine($"{ar.User.Name} successfully authenticated with microsoft server");
             }
-            catch (MsalException ex)
+            catch (MsalUiRequiredException ex)
             {
                 if (ex.ErrorCode == MsalUiRequiredException.UserNullError)
                 {
@@ -33,11 +34,22 @@ namespace NottCS.Services
                 }
                 else
                 {
-                    Debug.WriteLine($"Unknown MsalException: {ex.Message}");
+                    Debug.WriteLine($"MsalUiRequiredException: {ex.Message}");
                     Debug.WriteLine($"Error code: {ex.ErrorCode}");
                     Debug.WriteLine($"Target site: {ex.TargetSite}");
                     return false;
                 }
+            }
+            catch (MsalServiceException ex)
+            {
+                Debug.WriteLine($"MsalServiceException thrown");
+                Debug.WriteLine($"Error code: {ex.ErrorCode}");
+            }
+
+            catch (MsalException ex)
+            {
+                Debug.WriteLine($"Other MsalException thrown");
+                Debug.WriteLine($"Error code: {ex.ErrorCode}");
             }
             catch (Exception ex)
             {
@@ -140,9 +152,10 @@ namespace NottCS.Services
                 Debug.WriteLine("Null authentication result.");
                 return;
             }
-            await Task.Run(()=>BaseRestService.SetupClient(ar.AccessToken));
+            BaseRestService.SetupClient(ar.AccessToken);
             Debug.WriteLine($"time limit: {ar.ExpiresOn}");
             App.MicrosoftAuthenticationResult = ar;
+            Debug.WriteLine($"{ar.User.Name} successfully authenticated with microsoft server");
         }
 
         public static Task BackendAuthenticateAsync()
