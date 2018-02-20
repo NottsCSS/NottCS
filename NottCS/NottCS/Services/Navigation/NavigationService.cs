@@ -14,25 +14,46 @@ namespace NottCS.Services.Navigation
     {
         private static bool _isNavigating;
 
+        /// <summary>
+        /// Used to determine the correct first page on app startup
+        /// Handles all authentication on app startup
+        /// </summary>
+        /// <returns></returns>
         internal static async Task InitializeAsync()
         {
             bool canAuthenticate = await LoginService.MicrosoftAuthenticateWithCacheAsync();
             Debug.WriteLine($"Can authenticate with cached data: {canAuthenticate}");
+            Stopwatch stopwatch = new Stopwatch();
+
             if (canAuthenticate)
             {
                 var userData = await RestService.RequestGetAsync<User>();
-                if (userData.Item1)
+                if (userData.Item1) //first item represents whether the request is successful
                 {
-
-                    Stopwatch stopwatch = new Stopwatch();
+                    //if either studentId or librarynumber is not filled that means is new user
+                    if (String.IsNullOrEmpty(userData.Item2.StudentId) ||
+                        String.IsNullOrEmpty(userData.Item2.LibraryNumber))
+                    {
+                        stopwatch.Start();
+                        await NavigateToAsync<RegistrationViewModel>(userData.Item2);
+                        Debug.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
+                    }
+                    else
+                    {
+                        stopwatch.Start();
+                        await NavigateToAsync<AccountViewModel>(userData.Item2);
+                        Debug.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
+                    }
+                }
+                else
+                {
                     stopwatch.Start();
-                    await NavigateToAsync<AccountViewModel>(userData.Item2);
+                    await NavigateToAsync<LoginViewModel>();
                     Debug.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
                 }
             }
             else
             {
-                Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();
                 await NavigateToAsync<LoginViewModel>();
                 Debug.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");

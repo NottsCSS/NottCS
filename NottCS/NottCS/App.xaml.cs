@@ -6,6 +6,7 @@ using Microsoft.Identity.Client;
 using NottCS.Services.Navigation;
 using NottCS.Views;
 using Xamarin.Forms;
+using NottCS.Models;
 
 namespace NottCS
 {
@@ -14,7 +15,8 @@ namespace NottCS
 	    public static PublicClientApplication ClientApplication { get; private set; }
 	    public static readonly string[] Scopes = { "User.Read" };
 	    public static UIParent UiParent = null;
-	    public static AuthenticationResult MicrosoftAuthenticationResult = null;
+	    public static User currentUser = null;
+        public static AuthenticationResult MicrosoftAuthenticationResult = null;
         public App ()
 		{
 			InitializeComponent();
