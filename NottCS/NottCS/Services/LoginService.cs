@@ -23,6 +23,7 @@ namespace NottCS.Services
                 RestService.SetupClient(ar.AccessToken);
                 App.MicrosoftAuthenticationResult = ar;
                 Debug.WriteLine($"{ar.User.Name} successfully authenticated with microsoft server");
+                Debug.WriteLine(ar.AccessToken);
             }
             catch (MsalUiRequiredException ex)
             {
@@ -120,6 +121,8 @@ namespace NottCS.Services
             Debug.WriteLine($"time limit: {ar.ExpiresOn}");
             App.MicrosoftAuthenticationResult = ar;
             Debug.WriteLine($"{ar.User.Name} successfully authenticated with microsoft server");
+            Debug.WriteLine(ar.AccessToken);
+
         }
 
         public static Task BackendAuthenticateAsync()

@@ -133,6 +133,77 @@ namespace NottCS.Services.REST
                 return false;
             }
         }
+
+        public static async Task<Tuple<bool, T>> RequestPutAsync<T>(T data, HttpClient client = null) where T : new()
+        {
+            if (client == null)
+            {
+                client = Client;
+            }
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            var requestUri = UriGenerator<T>(HttpMethod.Put);
+
+            DebugService.WriteLine($"[PUT] Generate Uri took {stopwatch.ElapsedMilliseconds} ms");
+            stopwatch.Restart();
+
+            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Put, requestUri, data);
+
+            DebugService.WriteLine($"[PUT] Generate HttpRequestMessage took {stopwatch.ElapsedMilliseconds} ms");
+            stopwatch.Restart();
+
+            try
+            {
+                var requestTask = client.SendAsync(httpRequest);
+
+                DebugService.WriteLine($"[PUT] Generate requestTask took {stopwatch.ElapsedMilliseconds} ms");
+                stopwatch.Restart();
+
+                //DebugService.WriteLine(JsonConvert.SerializeObject(requestTask));
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    httpResponse = await requestTask;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.GetType());
+                    Debug.WriteLine(e.Message);
+                }
+
+                DebugService.WriteLine($"[PUT] Get response from server took {stopwatch.ElapsedMilliseconds} ms");
+                stopwatch.Restart();
+                if (httpResponse == null)
+                {
+                    Debug.WriteLine("Null http response?");
+                    return Tuple.Create(false, new T());
+                }
+
+                var readContentTask = Task.Run(async() => await httpResponse.Content.ReadAsStringAsync());
+
+                if (httpResponse.IsSuccessStatusCode)
+                {
+                    var result = JsonConvert.DeserializeObject<T>(await readContentTask);
+                    DebugService.WriteLine($"{JsonConvert.SerializeObject(result)}");
+
+                    return Tuple.Create(true, result);
+                }
+                else
+                {
+                    Debug.WriteLine($"Status code: {httpResponse.StatusCode}");
+                    Debug.WriteLine($"Message: {await readContentTask}");
+                }
+            }
+            catch (Exception e)
+            {
+                DebugService.WriteLine(e);
+            }
+
+            //TODO: Revert back to false for Item1, true is for easy login and testing purpose only
+            return Tuple.Create(false, new T());
+
+        }
     }
 }
 
