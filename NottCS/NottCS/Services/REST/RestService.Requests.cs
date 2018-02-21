@@ -119,7 +119,7 @@ namespace NottCS.Services.REST
         public static async Task<bool> RequestUpdateAsync<T>(string identifier, T objectData)
         {
             var requestUri = UriGenerator<T>(HttpMethod.Post, identifier);
-            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Post, requestUri, objectData);
+            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Put, requestUri, objectData);
 
             try
             {

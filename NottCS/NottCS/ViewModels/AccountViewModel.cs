@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
 using Newtonsoft.Json;
+using NottCS.Services;
 using NottCS.Services.Navigation;
 using Xamarin.Forms;
 
@@ -54,7 +55,7 @@ namespace NottCS.ViewModels
         /// <summary>
         /// Sets the data for the page
         /// </summary>
-        /// <param name="username">Username for the account data</param>
+        /// <param name="userData">Username for the account data</param>
         private void SetPageDataAsync(User userData)
         {
             LoginUser = userData;
