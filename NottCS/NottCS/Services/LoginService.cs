@@ -23,6 +23,7 @@ namespace NottCS.Services
                 RestService.SetupClient(ar.AccessToken);
                 App.MicrosoftAuthenticationResult = ar;
                 Debug.WriteLine($"{ar.User.Name} successfully authenticated with microsoft server");
+                Debug.WriteLine($"Token expires on: {ar.ExpiresOn}");
                 Debug.WriteLine(ar.AccessToken);
             }
             catch (MsalUiRequiredException ex)
