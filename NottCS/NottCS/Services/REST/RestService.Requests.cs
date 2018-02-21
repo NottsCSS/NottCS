@@ -191,8 +191,8 @@ namespace NottCS.Services.REST
                 }
                 else
                 {
-                    Debug.WriteLine($"Status code: {httpResponse.StatusCode}");
-                    Debug.WriteLine($"Message: {await readContentTask}");
+                    Debug.WriteLine($"[PUT]Status code: {httpResponse.StatusCode}");
+                    Debug.WriteLine($"[PUT]Message: {await readContentTask}");
                 }
             }
             catch (Exception e)
