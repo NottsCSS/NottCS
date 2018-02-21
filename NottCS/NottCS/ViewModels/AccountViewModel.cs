@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Acr.UserDialogs;
 using Newtonsoft.Json;
 using NottCS.Services;
@@ -52,6 +53,8 @@ namespace NottCS.ViewModels
             Title = "Account Page";
         }
 
+        public string AccessToken { get; } = App.MicrosoftAuthenticationResult.AccessToken;
+
         /// <summary>
         /// Sets the data for the page
         /// </summary>
@@ -70,6 +73,12 @@ namespace NottCS.ViewModels
             };
         }
 
+        public ICommand SignOutCommand => new Command(SignOut);
+
+        private static void SignOut()
+        {
+            LoginService.SignOut();
+        }
         /// <summary>
         /// Initializes the page
         /// </summary>
