@@ -1,36 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace NottCS.Services.REST
 {
-    internal partial class RestService
+    internal static partial class RestService
     {
         /// <summary>
         /// Sends a DELETE request to the server
         /// </summary>
         /// <typeparam name="T">Type of delete object</typeparam>
         /// <param name="identifier">Identifier for server to lookup object</param>
+        /// <param name="optionalClient">Optional client for other client request</param>
         /// <returns>Operation status success</returns>
-        public static async Task<bool> RequestDeleteAsync<T>(string identifier)
+        public static async Task<string> RequestDeleteAsync<T>(string identifier, HttpClient optionalClient = null)
         {
+            var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Delete, identifier);
             var httpRequest = HttpRequestMessageGenerator(HttpMethod.Delete, requestUri);
 
             try
             {
-                var requestTask = Client.SendAsync(httpRequest);
+                var requestTask = client.SendAsync(httpRequest);
                 var httpResponse = await requestTask;
-                return httpResponse.IsSuccessStatusCode;
+                return (httpResponse.IsSuccessStatusCode) ? "OK" : "Something went wrong";
             }
             catch (Exception e)
             {
                 DebugService.WriteLine($"Expected exception {e.Message} at {e.TargetSite}");
-                return false;
+                return "Something went wrong";
             }
         }
 
@@ -39,41 +39,26 @@ namespace NottCS.Services.REST
         /// </summary>
         /// <typeparam name="T">Type of request object</typeparam>
         /// <param name="identifier">Identifier for the server to lookup</param>
+        /// <param name="optionalClient">Optional client for other client request</param>
         /// <returns>Requested Object</returns>
-        public static async Task<Tuple<bool, T>> RequestGetAsync<T>(string identifier = null) where T : new()
+        public static async Task<Tuple<string, T>> RequestGetAsync<T>(string identifier = null, HttpClient optionalClient = null) where T : new()
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
+            var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Get, identifier);
-
-            DebugService.WriteLine($"[GET] Generate Uri took {stopwatch.ElapsedMilliseconds} ms");
-            stopwatch.Restart();
 
             var httpRequest = HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
 
-            DebugService.WriteLine($"[GET] Generate HttpRequestMessage took {stopwatch.ElapsedMilliseconds} ms");
-            stopwatch.Restart();
-
             try
             {
-                var requestTask = Client.SendAsync(httpRequest);
-
-                DebugService.WriteLine($"[GET] Generate requestTask took {stopwatch.ElapsedMilliseconds} ms");
-                stopwatch.Restart();
-
-                //DebugService.WriteLine(JsonConvert.SerializeObject(requestTask));
+                var requestTask = client.SendAsync(httpRequest);
                 var httpResponse = requestTask.GetAwaiter().GetResult();
-
-                DebugService.WriteLine($"[GET] Get response from server took {stopwatch.ElapsedMilliseconds} ms");
-                stopwatch.Restart();
 
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     var result = JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync());
                     DebugService.WriteLine($"{JsonConvert.SerializeObject(result)}");
 
-                    return Tuple.Create(true, result);
+                    return Tuple.Create("OK", result);
                 }
             }
             catch (Exception e)
@@ -82,7 +67,7 @@ namespace NottCS.Services.REST
             }
 
             //TODO: Revert back to false for Item1, true is for easy login and testing purpose only
-            return Tuple.Create(false, new T());
+            return Tuple.Create("Something went wrong", new T());
         }
 
         /// <summary>
@@ -90,22 +75,24 @@ namespace NottCS.Services.REST
         /// </summary>
         /// <typeparam name="T">Type of object to create</typeparam>
         /// <param name="objectData">Data of the object to create</param>
+        /// <param name="optionalClient">Optional client for other client request</param>
         /// <returns>Operation status success</returns>
-        public static async Task<bool> RequestPostAsync<T>(T objectData)
+        public static async Task<string> RequestPostAsync<T>(T objectData, HttpClient optionalClient = null)
         {
+            var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Post);
             var httpRequest = HttpRequestMessageGenerator(HttpMethod.Post, requestUri, objectData);
 
             try
             {
-                var requestTask = Client.SendAsync(httpRequest);
+                var requestTask = client.SendAsync(httpRequest);
                 var httpResponse = await requestTask;
-                return httpResponse.IsSuccessStatusCode;
+                return (httpResponse.IsSuccessStatusCode) ? "OK" : "Something went wrong";
             }
             catch (Exception e)
             {
                 DebugService.WriteLine(e);
-                return false;
+                return "Something went wrong";
             }
         }
 
@@ -115,22 +102,24 @@ namespace NottCS.Services.REST
         /// <typeparam name="T">Type of object to update</typeparam>
         /// <param name="identifier">Identifier for th server to lookup the object</param>
         /// <param name="objectData">Data to update</param>
+        /// <param name="optionalClient">Optional client for other client request</param>
         /// <returns>Operation success</returns>
-        public static async Task<bool> RequestUpdateAsync<T>(string identifier, T objectData)
+        public static async Task<string> RequestUpdateAsync<T>(string identifier, T objectData, HttpClient optionalClient = null)
         {
+            var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Post, identifier);
             var httpRequest = HttpRequestMessageGenerator(HttpMethod.Put, requestUri, objectData);
 
             try
             {
-                var requestTask = Client.SendAsync(httpRequest);
+                var requestTask = client.SendAsync(httpRequest);
                 var httpResponse = await requestTask;
-                return httpResponse.IsSuccessStatusCode;
+                return (httpResponse.IsSuccessStatusCode) ? "OK" : "Something went wrong";
             }
             catch (Exception e)
             {
                 DebugService.WriteLine(e);
-                return false;
+                return "Something went wrong";
             }
         }
 

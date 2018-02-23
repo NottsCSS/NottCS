@@ -28,7 +28,7 @@ namespace NottCS.Services.Navigation
             if (canAuthenticate)
             {
                 var userData = await RestService.RequestGetAsync<User>();
-                if (userData.Item1) //first item represents whether the request is successful
+                if (userData.Item1 == "OK") //first item represents whether the request is successful
                 {
                     //if either studentId or librarynumber is not filled that means is new user
                     if (String.IsNullOrEmpty(userData.Item2.StudentId) ||

@@ -59,7 +59,7 @@ namespace NottCS.ViewModels
             Debug.WriteLine($"User request took {stopwatch.ElapsedMilliseconds} ms");
             stopwatch.Restart();
 
-            if (getUserTaskResult.Item1)
+            if (getUserTaskResult.Item1 == "OK")
             {
                 await NavigationService.NavigateToAsync<AccountViewModel>(getUserTaskResult.Item2);
                 Debug.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds} ms");
@@ -67,8 +67,7 @@ namespace NottCS.ViewModels
             }
             else
             {
-                Acr.UserDialogs.UserDialogs.Instance.Alert("Unable to log you in to the server. Please try again",
-                    "Login Error", "Ok");
+                Acr.UserDialogs.UserDialogs.Instance.Alert(getUserTaskResult.Item1, "Login Error", "Ok");
             }
 
             //Debugging code
