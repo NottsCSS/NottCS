@@ -247,5 +247,17 @@ namespace NottCS.ViewModels
         //    Debug.WriteLine(navigationData);
         //    return base.InitializeAsync(navigationData);
         //}
+        #region Disable ItemSelectedCommand
+        public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
+        public void DisableItemSelected()
+        {
+        }
+        #endregion
+        #region Disable ItemSelectedCommand1
+        public ICommand DisableItemSelectedCommand1 => new Command(DisableItemSelected1);
+        public void DisableItemSelected1()
+        {
+        }
+        #endregion
     }
 }

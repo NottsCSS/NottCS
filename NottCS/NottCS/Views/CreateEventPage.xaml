@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.CreateEventPage"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+             xmlns:models="clr-namespace:NottCS.Models;assembly=NottCS"
+             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+             xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             d:DataContext="{d:DesignInstance viewModels:CreateEventViewModel}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
+            <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
+            <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackLayout Grid.Row="0"
+                             Grid.Column="0"
+                             Grid.ColumnSpan="2">
+                    <Label Text="Create Event"
+                           VerticalOptions="StartAndExpand" 
+                           HorizontalOptions="StartAndExpand"
+                           FontSize="Medium"/>
+                    <Label Text="Please enter event details."
+                           VerticalOptions="StartAndExpand"
+                           HorizontalOptions="StartAndExpand"
+                           FontSize="Small"/>
+                </StackLayout>
+
+                <ListView ItemsSource="{Binding ListOfTextBox}"
+                          Grid.Row="1"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="2"
+                          Margin="3,3,0,0"
+                          RowHeight="50"
+                          x:Name="SomeList">
+                    <ListView.Behaviors>
+                        <behaviors:EventToCommandBehavior 
+                            EventName="ItemSelected"
+                            Source="{x:Reference SomeList}"
+                            Command="{Binding DisableItemSelectedCommand, Mode=TwoWay}" 
+                            Converter="{StaticResource SelectedItemConverter}" />
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell Height="150">
+                                <Grid Padding="1" 
+                                      x:Name="Items" 
+                                      Margin="2,2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="40"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Editor FontSize="Medium"
+                                            Grid.Column="0"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Text="Add text box"
+                        Command="{Binding CreateTextBoxCommand}"
+                        FontSize="Small"
+                        HorizontalOptions="StartAndExpand"
+                        MinimumHeightRequest="40"
+                        Grid.Row="2"
+                        Grid.Column="0"/>
+                <Button Text="Create Event"
+                        Command="{Binding CreateEventCommand}"
+                        FontSize="Small"
+                        HorizontalOptions="StartAndExpand"
+                        MinimumHeightRequest="40"
+                        Grid.Row="2"
+                        Grid.Column="1"/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
