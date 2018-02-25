@@ -257,6 +257,7 @@ namespace NottCS.ViewModels
         public ICommand DisableItemSelectedCommand1 => new Command(DisableItemSelected1);
         public void DisableItemSelected1()
         {
+            Debug.WriteLine("Tapped");
         }
         #endregion
     }
