@@ -29,7 +29,7 @@ namespace NottCS.ViewModels
 
         #endregion
         #region Temporary ClubList
-
+        private ObservableCollection<Item> _clubList;
         public ObservableCollection<Item> ClubList
         {
             get => _clubList; 
@@ -151,7 +151,7 @@ namespace NottCS.ViewModels
         public string PageTitle1 { get; set; }
         public string PageTitle2 { get; set; }
         public string PageTitle3 { get; set; }
-        private ObservableCollection<Item> _clubList;
+        
         private string _selectedClubType;
 
 
@@ -253,12 +253,6 @@ namespace NottCS.ViewModels
         {
         }
         #endregion
-        #region Disable ItemSelectedCommand1
-        public ICommand DisableItemSelectedCommand1 => new Command(DisableItemSelected1);
-        public void DisableItemSelected1()
-        {
-            Debug.WriteLine("Tapped");
-        }
-        #endregion
+        
     }
 }

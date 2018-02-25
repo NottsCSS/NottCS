@@ -44,13 +44,12 @@
                            HorizontalOptions="StartAndExpand"
                            FontSize="Small"/>
                 </StackLayout>
-
                 <ListView ItemsSource="{Binding ListOfTextBox}"
                           Grid.Row="1"
                           Grid.Column="0"
                           Grid.ColumnSpan="2"
                           Margin="3,3,0,0"
-                          RowHeight="50"
+                          RowHeight="60"
                           x:Name="SomeList">
                     <ListView.Behaviors>
                         <behaviors:EventToCommandBehavior 
@@ -62,6 +61,12 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell Height="150">
+                                <ViewCell.ContextActions>
+                                    <MenuItem Text="Delete"
+                                              IsDestructive="True"
+                                              Command="{Binding Path=BindingContext.DeleteCellsCommand, Source={x:Reference Name=SomeList}}"
+                                              CommandParameter="{Binding .}"/>
+                                </ViewCell.ContextActions>
                                 <Grid Padding="1" 
                                       x:Name="Items" 
                                       Margin="2,2">
