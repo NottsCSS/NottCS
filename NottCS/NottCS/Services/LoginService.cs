@@ -22,43 +22,43 @@ namespace NottCS.Services
                 //                RefreshUserData(ar.AccessToken);
                 RestService.SetupClient(ar.AccessToken);
                 App.MicrosoftAuthenticationResult = ar;
-                Debug.WriteLine($"{ar.User.Name} successfully authenticated with microsoft server");
-                Debug.WriteLine($"Token expires on: {ar.ExpiresOn}");
-                Debug.WriteLine(ar.AccessToken);
+                DebugService.WriteLine($"{ar.User.Name} successfully authenticated with microsoft server");
+                DebugService.WriteLine($"Token expires on: {ar.ExpiresOn}");
+                DebugService.WriteLine(ar.AccessToken);
             }
             catch (MsalUiRequiredException ex)
             {
                 if (ex.ErrorCode == MsalUiRequiredException.UserNullError)
                 {
-                    Debug.WriteLine(ex.ErrorCode);
-                    Debug.WriteLine("Null user was passed (no user found on local cache). Login required.");
+                    DebugService.WriteLine(ex.ErrorCode);
+                    DebugService.WriteLine("Null user was passed (no user found on local cache). Login required.");
                     return false;
                 }
                 else
                 {
-                    Debug.WriteLine($"MsalUiRequiredException: {ex.Message}");
-                    Debug.WriteLine($"Error code: {ex.ErrorCode}");
-                    Debug.WriteLine($"Target site: {ex.TargetSite}");
+                    DebugService.WriteLine($"MsalUiRequiredException: {ex.Message}");
+                    DebugService.WriteLine($"Error code: {ex.ErrorCode}");
+                    DebugService.WriteLine($"Target site: {ex.TargetSite}");
                     return false;
                 }
             }
             catch (MsalServiceException ex)
             {
-                Debug.WriteLine($"MsalServiceException thrown");
-                Debug.WriteLine($"Error code: {ex.ErrorCode}");
+                DebugService.WriteLine($"MsalServiceException thrown");
+                DebugService.WriteLine($"Error code: {ex.ErrorCode}");
             }
 
             catch (MsalException ex)
             {
-                Debug.WriteLine($"Other MsalException thrown");
-                Debug.WriteLine($"Error code: {ex.ErrorCode}");
+                DebugService.WriteLine($"Other MsalException thrown");
+                DebugService.WriteLine($"Error code: {ex.ErrorCode}");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Unknown generic exception occured: {ex.GetType()}");
-                Debug.WriteLine($"Message: {ex.Message}");
-                Debug.WriteLine($"Target site: {ex.TargetSite}");
-                Debug.WriteLine($"Please report this error to developers");
+                DebugService.WriteLine($"Unknown generic exception occured: {ex.GetType()}");
+                DebugService.WriteLine($"Message: {ex.Message}");
+                DebugService.WriteLine($"Target site: {ex.TargetSite}");
+                DebugService.WriteLine($"Please report this error to developers");
                 return false;
             }
 
@@ -83,7 +83,7 @@ namespace NottCS.Services
             try
             {
                 ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
-                Debug.WriteLine(ar);
+                DebugService.WriteLine(ar);
             }
             catch (MsalException ex)
             {
@@ -91,38 +91,38 @@ namespace NottCS.Services
 
                 if (ex.ErrorCode == "access_denied")
                 {
-                    Debug.WriteLine("Authentication cancelled");
+                    DebugService.WriteLine("Authentication cancelled");
                 }
                 else if (ex.ErrorCode == "authentication_ui_failed")
                 {
-                    Debug.WriteLine("Authentication UI closed");
+                    DebugService.WriteLine("Authentication UI closed");
                 }
                 else
                 {
-                    Debug.WriteLine($"Unknown MsalException: {ex.Message}");
-                    Debug.WriteLine($"Error code: {ex.ErrorCode}");
-                    Debug.WriteLine($"Target site: {ex.TargetSite}");
-                    Debug.WriteLine($"Please report this error to developers");
+                    DebugService.WriteLine($"Unknown MsalException: {ex.Message}");
+                    DebugService.WriteLine($"Error code: {ex.ErrorCode}");
+                    DebugService.WriteLine($"Target site: {ex.TargetSite}");
+                    DebugService.WriteLine($"Please report this error to developers");
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Unknown generic exception occured: {ex.GetType()}");
-                Debug.WriteLine($"Message: {ex.Message}");
-                Debug.WriteLine($"Target site: {ex.TargetSite}");
-                Debug.WriteLine($"Please report this error to developers");
+                DebugService.WriteLine($"Unknown generic exception occured: {ex.GetType()}");
+                DebugService.WriteLine($"Message: {ex.Message}");
+                DebugService.WriteLine($"Target site: {ex.TargetSite}");
+                DebugService.WriteLine($"Please report this error to developers");
             }
 
             if (ar == null)
             {
-                Debug.WriteLine("Null authentication result.");
+                DebugService.WriteLine("Null authentication result.");
                 return;
             }
             RestService.SetupClient(ar.AccessToken);
-            Debug.WriteLine($"time limit: {ar.ExpiresOn}");
+            DebugService.WriteLine($"time limit: {ar.ExpiresOn}");
             App.MicrosoftAuthenticationResult = ar;
-            Debug.WriteLine($"{ar.User.Name} successfully authenticated with microsoft server");
-            Debug.WriteLine(ar.AccessToken);
+            DebugService.WriteLine($"{ar.User.Name} successfully authenticated with microsoft server");
+            DebugService.WriteLine(ar.AccessToken);
 
         }
 

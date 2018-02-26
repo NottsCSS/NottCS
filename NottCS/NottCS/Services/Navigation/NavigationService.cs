@@ -22,7 +22,7 @@ namespace NottCS.Services.Navigation
         internal static async Task InitializeAsync()
         {
             bool canAuthenticate = await LoginService.MicrosoftAuthenticateWithCacheAsync();
-            Debug.WriteLine($"Can authenticate with cached data: {canAuthenticate}");
+            DebugService.WriteLine($"Can authenticate with cached data: {canAuthenticate}");
             Stopwatch stopwatch = new Stopwatch();
 
             if (canAuthenticate)
@@ -36,27 +36,27 @@ namespace NottCS.Services.Navigation
                     {
                         stopwatch.Start();
                         await NavigateToAsync<RegistrationViewModel>(userData.Item2);
-                        Debug.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
+                        DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
                     }
                     else
                     {
                         stopwatch.Start();
                         await NavigateToAsync<AccountViewModel>(userData.Item2);
-                        Debug.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
+                        DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
                     }
                 }
                 else
                 {
                     stopwatch.Start();
                     await NavigateToAsync<LoginViewModel>();
-                    Debug.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
+                    DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
                 }
             }
             else
             {
                 stopwatch.Start();
                 await NavigateToAsync<LoginViewModel>();
-                Debug.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
+                DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
             }
         }
         /// <summary>
@@ -82,8 +82,8 @@ namespace NottCS.Services.Navigation
 
                 if (viewModelType == null || !viewModelType.IsSubclassOf(typeof(BaseViewModel)))
                 {
-                    Debug.WriteLine("passed viewmodel type does not inherit BaseViewModel");
-                    Debug.WriteLine("Terminating navigation...");
+                    DebugService.WriteLine("passed viewmodel type does not inherit BaseViewModel");
+                    DebugService.WriteLine("Terminating navigation...");
                     _isNavigating = false;
                     return;
                 }
@@ -94,14 +94,14 @@ namespace NottCS.Services.Navigation
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(e.Message);
-                    Debug.WriteLine(e.TargetSite);
+                    DebugService.WriteLine(e.Message);
+                    DebugService.WriteLine(e.TargetSite);
                 }
 
                 if (page == null)
                 {
-                    Debug.WriteLine("Page unable to be created.");
-                    Debug.WriteLine("Terminating navigation...");
+                    DebugService.WriteLine("Page unable to be created.");
+                    DebugService.WriteLine("Terminating navigation...");
                     _isNavigating = false;
                     return;
                 }
@@ -115,14 +115,14 @@ namespace NottCS.Services.Navigation
                         initializeAsyncTask = viewModel.InitializeAsync(navigationParameter);
                     };
 
-                    Debug.WriteLine($"Previous page is: {navigationPage.CurrentPage}");
-                    Debug.WriteLine($"Now navigating to:{page}");
+                    DebugService.WriteLine($"Previous page is: {navigationPage.CurrentPage}");
+                    DebugService.WriteLine($"Now navigating to:{page}");
                     await pushPageTask;
                     if (initializeAsyncTask != null) await initializeAsyncTask;
                 }
                 else
                 {
-                    Debug.WriteLine($"MainPage is not Navigation page, now replacing it with new page");
+                    DebugService.WriteLine($"MainPage is not Navigation page, now replacing it with new page");
                     Task initializeAsyncTask = null;
                     if (page.BindingContext is BaseViewModel viewModel)
                     {
@@ -169,17 +169,17 @@ namespace NottCS.Services.Navigation
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"Exception thrown at CreatePage {e}");
-                Debug.WriteLine($"{e.Message}");
+                DebugService.WriteLine($"Exception thrown at CreatePage {e}");
+                DebugService.WriteLine($"{e.Message}");
             }
             if (page == null)
             {
-                Debug.WriteLine($"Page not created");
+                DebugService.WriteLine($"Page not created");
                 return null;
             }
             else
             {
-                Debug.WriteLine($"{page} successfully created");
+                DebugService.WriteLine($"{page} successfully created");
                 return Task.FromResult(page);
             }
         }
