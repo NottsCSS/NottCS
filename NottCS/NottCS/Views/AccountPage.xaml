@@ -45,7 +45,10 @@
                                         Detail="{Binding DataValue}"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-            </ListView>
+                </ListView>
+                <Label Text="Access token: " />
+                <Entry Text="{Binding AccessToken}"/>
+                <Button Text="Sign Out"  Command="{Binding SignOutCommand}" />
             </StackLayout>
         </Grid>
     </ContentPage.Content>

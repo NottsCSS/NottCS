@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace NottCS.Models
 {
-    internal class User
+    public class User
     {
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
