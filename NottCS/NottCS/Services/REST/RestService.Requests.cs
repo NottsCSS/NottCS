@@ -107,7 +107,7 @@ namespace NottCS.Services.REST
         public static async Task<string> RequestUpdateAsync<T>(string identifier, T objectData, HttpClient optionalClient = null)
         {
             var client = optionalClient ?? Client;
-            var requestUri = UriGenerator<T>(HttpMethod.Post, identifier);
+            var requestUri = UriGenerator<T>(HttpMethod.Put, identifier);
             var httpRequest = HttpRequestMessageGenerator(HttpMethod.Put, requestUri, objectData);
 
             try
