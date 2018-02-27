@@ -3,9 +3,13 @@ using NottCS.Services.REST;
 using NottCS.Validations;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Acr.UserDialogs;
+using Newtonsoft.Json;
+using NottCS.Services;
 using NottCS.Services.Navigation;
 using Xamarin.Forms;
 
@@ -49,35 +53,32 @@ namespace NottCS.ViewModels
             Title = "Account Page";
         }
 
+        public string AccessToken { get; } = App.MicrosoftAuthenticationResult.AccessToken;
+
         /// <summary>
         /// Sets the data for the page
         /// </summary>
-        /// <param name="username">Username for the account data</param>
-        private async Task<bool> SetPageDataAsync(string username)
+        /// <param name="userData">Username for the account data</param>
+        private void SetPageDataAsync(User userData)
         {
-            var respondData = await BaseRestService.RequestGetAsync<User>(username);
-
-            if (!respondData.Item1)
+            LoginUser = userData;
+            Debug.WriteLine(JsonConvert.SerializeObject(LoginUser));
+            DataList = new List<UserDataObject>()
             {
-                //TODO: Implement error notification
-                UserDialogs.Instance.Alert("We're not able to log you in. Please try again.", "Login Error", "Ok");
-                return false;
-            }
-            else
-            {
-                LoginUser = respondData.Item2;
-                DataList = new List<UserDataObject>()
-                {
-                    new UserDataObject(){DataName = "Name", DataValue = LoginUser.Name},
-                    new UserDataObject(){DataName = "Email", DataValue = LoginUser.Email},
-                    new UserDataObject(){DataName = "Student ID", DataValue = LoginUser.StudentId},
-                    new UserDataObject(){DataName = "Library Number", DataValue = LoginUser.LibraryNumber},
-                    new UserDataObject(){DataName = "Date Joined", DataValue = LoginUser.DateJoined.ToLongDateString()}
-                };
-                return true;
-            }
+                new UserDataObject(){DataName = "Name", DataValue = LoginUser.Name},
+                new UserDataObject(){DataName = "Email", DataValue = LoginUser.Email},
+                new UserDataObject(){DataName = "Student ID", DataValue = LoginUser.StudentId},
+                new UserDataObject(){DataName = "Library Number", DataValue = LoginUser.LibraryNumber},
+                new UserDataObject(){DataName = "Date Joined", DataValue = LoginUser.DateJoined.ToLongDateString()}
+            };
         }
 
+        public ICommand SignOutCommand => new Command(SignOut);
+
+        private static void SignOut()
+        {
+            LoginService.SignOut();
+        }
         /// <summary>
         /// Initializes the page
         /// </summary>
@@ -85,16 +86,30 @@ namespace NottCS.ViewModels
         /// <returns></returns>
         public override Task InitializeAsync(object navigationData)
         {
-            if (navigationData is string username)
+
+            try
             {
-                var isSuccess = SetPageDataAsync(username).GetAwaiter().GetResult();
-                if (isSuccess)
-                {
-                    return base.InitializeAsync(navigationData);
-                }
+                var userData = navigationData as User;
+                Task.Run(() => SetPageDataAsync(userData));
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
             }
 
-            return null;
+            return base.InitializeAsync(navigationData);
+
+            //Debug.WriteLine("Initializing Account Page...");
+            //if (navigationData is string username)
+            //{
+            //    Debug.WriteLine("Stage 2...");
+            //    var isSuccess = SetPageDataAsync(username).GetAwaiter().GetResult();
+            //    if (isSuccess)
+            //    {
+            //        Debug.WriteLine("Stage 3...");
+            //        return base.InitializeAsync(navigationData);
+            //    }
+            //}
         }
     }
 }

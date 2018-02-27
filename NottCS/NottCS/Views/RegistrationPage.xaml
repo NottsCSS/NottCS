@@ -1,8 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NottCS.Views.RegistrationPage"
-             Title ="{Binding Title}"
+             Title="{Binding Title}"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
@@ -16,82 +17,136 @@
             <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
             <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter" />
             <converters:TextChangedEventArgsToString x:Key="TextChangedConverter" />
-            <Style TargetType ="Entry">
-                <Setter Property="Margin" Value="10"/>
-                <Setter Property="WidthRequest" Value="500"/>
-                <Setter Property="HorizontalOptions" Value="Start"/>
+            <Style TargetType="Entry">
+                <Setter Property="Margin" Value="10" />
+                <Setter Property="WidthRequest" Value="500" />
+                <Setter Property="HorizontalOptions" Value="Start" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout HorizontalOptions="Center">
-            <Label FontSize="Large" Margin="10">REGISTRATION</Label>
+        <StackLayout>
             <ScrollView>
-                <StackLayout>
-                    <Entry x:Name="NameEntry" Placeholder="Name" Text="{Binding RegistrationParameters.Name.Value}"/>
-                    <Label x:Name="NameErrorMessage"  
-                           IsVisible="{Binding IsValidName, Converter={StaticResource InverseBoolConverter}}"
-                           TextColor = "Red"
-                           FontSize = "Small"
-                           Text="{Binding RegistrationParameters.Name.Errors, Converter={StaticResource StringListToStringConverter}}" />
-                    <Entry x:Name="OWAEntry" Placeholder="OWA Username" Text="{Binding RegistrationParameters.OWA.Value}"/>
-                    <Label x:Name="OWAErrorMessage" 
-                           IsVisible="{Binding IsValidOWA, Converter={StaticResource InverseBoolConverter}}"
-                           TextColor = "Red"
-                           FontSize = "Small"
-                           Text="{Binding RegistrationParameters.OWA.Errors, Converter={StaticResource StringListToStringConverter}}" />
-                    <Entry x:Name="Password" Placeholder="Password" IsPassword="True" Text="{Binding RegistrationParameters.Password.Value}"/>
-                    <Label x:Name="PasswordErrorMessage"
-                           IsVisible="{Binding IsValidPassword, Converter={StaticResource InverseBoolConverter}}"
-                           TextColor = "Red"
-                           FontSize = "Small"
-                           Text="{Binding RegistrationParameters.Password.Errors, Converter={StaticResource StringListToStringConverter}}" />
-                    <Entry x:Name="StudentIDEntry" Placeholder="Student ID" Text="{Binding RegistrationParameters.StudentID.Value}"/>
-                    <Label x:Name="StudentIDErrorMessage"
-                           IsVisible="{Binding IsValidStudentID, Converter={StaticResource InverseBoolConverter}}"
-                           TextColor = "Red"
-                           FontSize = "Small"
-                           Text="{Binding RegistrationParameters.StudentID.Errors, Converter={StaticResource StringListToStringConverter}}" />
-                    <Entry x:Name="LibraryNumberEntry" Placeholder="Library Number" Text="{Binding RegistrationParameters.LibraryNumber.Value}" />
-                    <Label x:Name="LibraryNumberErrorMessage"
-                           IsVisible="{Binding IsValidLibraryNumber, Converter={StaticResource InverseBoolConverter}}"
-                           TextColor = "Red"
-                           FontSize = "Small"
-                           Text="{Binding RegistrationParameters.LibraryNumber.Errors, Converter={StaticResource StringListToStringConverter}}" />
-                    <Entry x:Name="CourseEntry" Placeholder="Course" Text="{Binding RegistrationParameters.Course.Value}">
-                        <Entry.Behaviors>
-                            <behaviors:EventToCommandBehavior 
-                                Command="{Binding TextChangedCommand}" 
-                                EventName="TextChanged" 
-                                Converter="{StaticResource TextChangedConverter}"/>
-                        </Entry.Behaviors>
-                    </Entry>
-<!--                    TODO: format the suggestions properly-->
-                    <ListView x:Name="CourseSuggestions"
-                              ItemsSource="{Binding Suggestions}"
-                              CachingStrategy="RecycleElement"
-                              HeightRequest="100"
-                              WidthRequest="500">
-                        <ListView.Behaviors>
-                            <behaviors:EventToCommandBehavior 
-                                Command="{Binding ItemSelectedCommand}" 
-                                EventName="ItemSelected" 
-                                Converter="{StaticResource SelectedItemConverter}"/>
-                        </ListView.Behaviors> 
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <StackLayout>
-                                        <Label Text="{Binding .}" />
-                                    </StackLayout>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackLayout>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Name: " Grid.Row="0" Grid.Column="0" />
+                    <Label Text="{Binding CurrentUser.Name}" Grid.Row="0" Grid.Column="1" />
+
+                    <Label Text="Email: " Grid.Row="1" Grid.Column="0" />
+                    <Label Text="{Binding CurrentUser.Email}" Grid.Row="1" Grid.Column="1" />
+
+                    <Label Text="Date Joined: " Grid.Row="2" Grid.Column="0" />
+                    <Label Text="{Binding CurrentUser.DateJoined}" Grid.Row="2" Grid.Column="1" />
+
+
+                    <Label Text="Student ID: " Grid.Row="3" Grid.Column="0" />
+                    <StackLayout Grid.Row="3" Grid.Column="1">
+                        <Entry Text="{Binding StudentID.Value}" />
+                        <Label IsVisible="{Binding IsValidStudentID, Converter={StaticResource InverseBoolConverter}}"
+                           TextColor="Red"
+                           FontSize="Small"
+                           Text="{Binding StudentID.Errors, Converter={StaticResource StringListToStringConverter}}" />
+                    </StackLayout>
+
+                    <Label Text="Library Number: " Grid.Row="4" Grid.Column="0" />
+                    <StackLayout Grid.Row="4" Grid.Column="1">
+                        <Entry Text="{Binding LibraryNumber.Value}"/>
+                        <Label IsVisible="{Binding IsValidStudentID, Converter={StaticResource InverseBoolConverter}}"
+                           TextColor="Red"
+                           FontSize="Small"
+                           Text="{Binding LibraryNumber.Errors, Converter={StaticResource StringListToStringConverter}}" />
+                    </StackLayout>
+
+                </Grid>
             </ScrollView>
-            <Button x:Name="RegisterButton" Text="REGISTER" WidthRequest="300" HeightRequest="50" HorizontalOptions="Start" Margin="10" Command="{Binding RegisterCommand}"/>
+            <Button Text="REGISTER" WidthRequest="300" HeightRequest="50"
+                    HorizontalOptions="Start" Margin="10" Command="{Binding RegisterCommand}" />
             <ActivityIndicator Color="Green" IsRunning="{Binding IsBusy}" />
+
         </StackLayout>
+
+
+        <!--            <Button x:Name="RegisterButton" Text="REGISTER" WidthRequest="300" HeightRequest="50" HorizontalOptions="Start" Margin="10" Command="{Binding RegisterCommand}"/>-->
+        <!--            <ActivityIndicator Color="Green" IsRunning="{Binding IsBusy}" />-->
+        <!--        <StackLayout HorizontalOptions="Center">-->
+        <!--            <Label FontSize="Large" Margin="10">REGISTRATION</Label>-->
+        <!--            <ScrollView>-->
+        <!--                <StackLayout>-->
+        <!--                    <Entry x:Name="NameEntry" Placeholder="Name" Text="{Binding RegistrationParameters.Name.Value}"/>-->
+        <!--                    <Label x:Name="NameErrorMessage"  -->
+        <!--                           IsVisible="{Binding IsValidName, Converter={StaticResource InverseBoolConverter}}"-->
+        <!--                           TextColor = "Red"-->
+        <!--                           FontSize = "Small"-->
+        <!--                           Text="{Binding RegistrationParameters.Name.Errors, Converter={StaticResource StringListToStringConverter}}" />-->
+        <!--                    <Entry x:Name="OWAEntry" Placeholder="OWA Username" Text="{Binding RegistrationParameters.OWA.Value}"/>-->
+        <!--                    <Label x:Name="OWAErrorMessage" -->
+        <!--                           IsVisible="{Binding IsValidOWA, Converter={StaticResource InverseBoolConverter}}"-->
+        <!--                           TextColor = "Red"-->
+        <!--                           FontSize = "Small"-->
+        <!--                           Text="{Binding RegistrationParameters.OWA.Errors, Converter={StaticResource StringListToStringConverter}}" />-->
+        <!--                    <Entry x:Name="Password" Placeholder="Password" IsPassword="True" Text="{Binding RegistrationParameters.Password.Value}"/>-->
+        <!--                    <Label x:Name="PasswordErrorMessage"-->
+        <!--                           IsVisible="{Binding IsValidPassword, Converter={StaticResource InverseBoolConverter}}"-->
+        <!--                           TextColor = "Red"-->
+        <!--                           FontSize = "Small"-->
+        <!--                           Text="{Binding RegistrationParameters.Password.Errors, Converter={StaticResource StringListToStringConverter}}" />-->
+        <!--                    <Entry x:Name="StudentIDEntry" Placeholder="Student ID" Text="{Binding RegistrationParameters.StudentID.Value}"/>-->
+        <!--                    <Label x:Name="StudentIDErrorMessage"-->
+        <!--                           IsVisible="{Binding IsValidStudentID, Converter={StaticResource InverseBoolConverter}}"-->
+        <!--                           TextColor = "Red"-->
+        <!--                           FontSize = "Small"-->
+        <!--                           Text="{Binding RegistrationParameters.StudentID.Errors, Converter={StaticResource StringListToStringConverter}}" />-->
+        <!--                    <Entry x:Name="LibraryNumberEntry" Placeholder="Library Number" Text="{Binding RegistrationParameters.LibraryNumber.Value}" />-->
+        <!--                    <Label x:Name="LibraryNumberErrorMessage"-->
+        <!--                           IsVisible="{Binding IsValidLibraryNumber, Converter={StaticResource InverseBoolConverter}}"-->
+        <!--                           TextColor = "Red"-->
+        <!--                           FontSize = "Small"-->
+        <!--                           Text="{Binding RegistrationParameters.LibraryNumber.Errors, Converter={StaticResource StringListToStringConverter}}" />-->
+        <!--                    <Entry x:Name="CourseEntry" Placeholder="Course" Text="{Binding RegistrationParameters.Course.Value}">-->
+        <!--                        <Entry.Behaviors>-->
+        <!--                            <behaviors:EventToCommandBehavior -->
+        <!--                                Command="{Binding TextChangedCommand}" -->
+        <!--                                EventName="TextChanged" -->
+        <!--                                Converter="{StaticResource TextChangedConverter}"/>-->
+        <!--                        </Entry.Behaviors>-->
+        <!--                    </Entry>-->
+        <!--~1~                    TODO: format the suggestions properly@1@-->
+        <!--                    <ListView x:Name="CourseSuggestions"-->
+        <!--                              ItemsSource="{Binding Suggestions}"-->
+        <!--                              CachingStrategy="RecycleElement"-->
+        <!--                              HeightRequest="100"-->
+        <!--                              WidthRequest="500">-->
+        <!--                        <ListView.Behaviors>-->
+        <!--                            <behaviors:EventToCommandBehavior -->
+        <!--                                Command="{Binding ItemSelectedCommand}" -->
+        <!--                                EventName="ItemSelected" -->
+        <!--                                Converter="{StaticResource SelectedItemConverter}"/>-->
+        <!--                        </ListView.Behaviors> -->
+        <!--                        <ListView.ItemTemplate>-->
+        <!--                            <DataTemplate>-->
+        <!--                                <ViewCell>-->
+        <!--                                    <StackLayout>-->
+        <!--                                        <Label Text="{Binding .}" />-->
+        <!--                                    </StackLayout>-->
+        <!--                                </ViewCell>-->
+        <!--                            </DataTemplate>-->
+        <!--                        </ListView.ItemTemplate>-->
+        <!--                    </ListView>-->
+        <!--                </StackLayout>-->
+        <!--            </ScrollView>-->
+        <!--            <Button x:Name="RegisterButton" Text="REGISTER" WidthRequest="300" HeightRequest="50" HorizontalOptions="Start" Margin="10" Command="{Binding RegisterCommand}"/>-->
+        <!--            <ActivityIndicator Color="Green" IsRunning="{Binding IsBusy}" />-->
+        <!--        </StackLayout>-->
     </ContentPage.Content>
 </ContentPage>
