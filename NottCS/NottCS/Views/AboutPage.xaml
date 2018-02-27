@@ -65,7 +65,7 @@
                        FontSize="9">
                     One of the main features in NottCS is that, students can register to any clubs and societies with a click of a button.
                 </Label>
-                <Label LineBreakMode ="TailTruncation"
+                <Label LineBreakMode ="WordWrap"
                        FontSize="9">
                     Students just have to pay the registeration fees and get the QR code scan and you successfully join it.
                 </Label>
@@ -73,7 +73,7 @@
                        FontSize="9">
                     To further simplify the process of signing up events/activities, students can just sign up to their respective events. 
                 </Label>
-                <Label LineBreakMode="TailTruncation"
+                <Label LineBreakMode="WordWrap"
                        FontSize="9">
                     All they need to do is just go to their selected events and click sign up. No registeration form is needed to fill in.
                 </Label>
@@ -81,7 +81,7 @@
                        FontSize="9">
                     With NottCS, a special feature called Admin Panel is just what the committees of the clubs needs.
                 </Label>
-                <Label LineBreakMode="TailTruncation"
+                <Label LineBreakMode="WordWrap"
                        FontSize="9">
                     Admin Panel enables committees to post their attracting and fun activities/events without spamming students inbox. 
                 </Label>
@@ -89,7 +89,7 @@
                        FontSize="9">
                     Moreover, Admin Panel has the privileges to setup an QR code for students to scan it for SCPD points at the end of their activities/events.
                 </Label>
-                <Label LineBreakMode="TailTruncation"
+                <Label LineBreakMode="WordWrap"
                        FontSize="9">
                     This will remove the scanning student ID process and saves both parties time.
                 </Label>
