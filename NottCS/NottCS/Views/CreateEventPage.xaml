@@ -74,8 +74,9 @@
                                         <ColumnDefinition Width="*"></ColumnDefinition>
                                         <ColumnDefinition Width="40"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <Editor FontSize="Medium"
-                                            Grid.Column="0"/>
+                                    <Entry FontSize="Medium"
+                                           Grid.Column="0"
+                                           Text ="{Binding Name, Mode=TwoWay}"/>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>

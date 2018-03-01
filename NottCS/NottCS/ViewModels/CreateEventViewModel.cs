@@ -6,6 +6,7 @@ using System.Windows.Input;
 using NottCS.Models;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using NottCS.Services;
 using NottCS.Services.Navigation;
 using NottCS.Views;
 
@@ -43,7 +44,10 @@ namespace NottCS.ViewModels
 
         public void DoNothingForNow()
         {
-
+            foreach (var item in ListOfTextBox)
+            {
+                DebugService.WriteLine(item.Name);
+            }
         }
         
 
