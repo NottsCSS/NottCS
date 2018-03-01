@@ -22,7 +22,7 @@ namespace NottCS.ViewModels
             try
             {
                 ListOfTextBox.Add(new Item());
-                Debug.WriteLine("Test");
+                Debug.WriteLine("New text box added");
             }
             catch (Exception e)
             {
@@ -30,7 +30,7 @@ namespace NottCS.ViewModels
             }
         }
 
-        public void DeleteTextBox()
+        private void DeleteTextBox()
         {
             if (ListOfTextBox.Count > 3)
             {

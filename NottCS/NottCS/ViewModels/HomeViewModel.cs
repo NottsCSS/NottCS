@@ -253,6 +253,11 @@ namespace NottCS.ViewModels
         {
         }
         #endregion
-        
+        #region Disable ItemSelectedCommand1
+        public ICommand DisableItemSelectedCommand1 => new Command(DisableItemSelected1);
+        public void DisableItemSelected1()
+        {
+        }
+        #endregion
     }
 }
