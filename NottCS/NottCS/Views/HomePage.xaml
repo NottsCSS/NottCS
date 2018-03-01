@@ -33,6 +33,11 @@
                         EventName="ItemTapped"
                         Command="{Binding TappedCommand}" 
                         Converter="{StaticResource TappedItemConverter}" />
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemSelected"
+                        Source="{x:Reference SomeList}"
+                        Command="{Binding DisableItemSelectedCommand, Mode=TwoWay}" 
+                        Converter="{StaticResource SelectedItemConverter}" />
                 </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -85,6 +90,13 @@
                               FlowItemTappedCommand="{Binding ItemTappedCommand}"
                               HasUnevenRows="False"
                               Margin="5,10">
+                <flv:FlowListView.Behaviors>
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemSelected"
+                        Source="{x:Reference FlowListView}"
+                        Command="{Binding DisableItemSelectedCommand1, Mode=TwoWay}" 
+                        Converter="{StaticResource SelectedItemConverter}" />
+                </flv:FlowListView.Behaviors>
                 <flv:FlowListView.FlowColumnTemplate>
                     <DataTemplate>
                         <Frame OutlineColor="Black"

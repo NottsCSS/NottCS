@@ -14,7 +14,13 @@ namespace NottCS.Behaviors
         public static readonly BindableProperty CommandProperty = BindableProperty.Create("Command", typeof(ICommand), typeof(EventToCommandBehavior));
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create("CommandParameter", typeof(object), typeof(EventToCommandBehavior));
         public static readonly BindableProperty InputConverterProperty = BindableProperty.Create("Converter", typeof(IValueConverter), typeof(EventToCommandBehavior));
+        public static readonly BindableProperty SourceProperty = BindableProperty.Create("Source", typeof(object), typeof(EventToCommandBehavior), null);
 
+        public object Source
+        {
+            get => GetValue(SourceProperty);
+            set => SetValue(SourceProperty, value);
+        }
         public string EventName
         {
             get => (string)GetValue(EventNameProperty);
@@ -102,7 +108,7 @@ namespace NottCS.Behaviors
             }
             else if (Converter != null)
             {
-                resolvedParameter = Converter.Convert(eventArgs, typeof(object), null, null);
+                resolvedParameter = Converter.Convert(eventArgs, typeof(object), Source, null);
             }
             else
             {

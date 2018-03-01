@@ -25,9 +25,9 @@ namespace NottCS.ViewModels
             Title = "Settings";
             SetPageData();
         }
-        public ICommand SettingCommand => new Command(async (object param) => await About(param));
+        public ICommand SettingCommand => new Command(async (object param) => await Setting(param));
 
-        private async Task About(object param)
+        private async Task Setting(object param)
         {
             if (param is UserDataObject tappedUserDataObject)
             {
@@ -47,8 +47,8 @@ namespace NottCS.ViewModels
         {
             DummyLists = new List<UserDataObject>()
             {
-                new UserDataObject() {Name = "Notifications"},
-                new UserDataObject() {Name = "About Us", ViewModelType = typeof(AboutViewModel)},
+                new UserDataObject() {Name = "Notifications", ViewModelType = typeof(NotificationsViewModel)},
+                new UserDataObject() {Name = "About", ViewModelType = typeof(AboutViewModel)},
                 new UserDataObject() {Name = "Report an Issue"},
                 new UserDataObject() {Logout = "Logout"}
             };
