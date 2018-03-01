@@ -7,6 +7,7 @@ using NottCS.Services.Navigation;
 using NottCS.Views;
 using Xamarin.Forms;
 using NottCS.Models;
+using NottCS.Services;
 
 namespace NottCS
 {
@@ -27,7 +28,7 @@ namespace NottCS
 
 	    private static Task InitNavigation()
 	    {
-	        return NavigationService.InitializeAsync();
+	        return StartupService.InitializeAsync();
 	    }
 
         protected override async void OnStart ()

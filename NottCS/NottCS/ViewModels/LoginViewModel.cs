@@ -41,9 +41,13 @@ namespace NottCS.ViewModels
         private async Task SignInAsync()
         {
             var stopwatch = new Stopwatch();
+            stopwatch.Start();
             IsBusy = true;
-
-            await LoginService.MicrosoftAuthenticateWithUIAsync();
+            bool canSignInWithCache = await LoginService.MicrosoftAuthenticateWithCacheAsync();
+            if (!canSignInWithCache)
+            {
+                await LoginService.MicrosoftAuthenticateWithUIAsync();
+            }
             string a = App.MicrosoftAuthenticationResult?.User.DisplayableId;
             Debug.WriteLine($"DisplayableID: {a}");
             Debug.WriteLine($"Identifier: {App.MicrosoftAuthenticationResult?.User.Identifier}");

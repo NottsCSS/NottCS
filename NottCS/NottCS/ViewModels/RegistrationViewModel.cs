@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Newtonsoft.Json;
 using NottCS.Models;
+using NottCS.Services;
 using NottCS.Services.Navigation;
 using NottCS.Services.REST;
 using Xamarin.Forms;
@@ -125,12 +126,12 @@ namespace NottCS.ViewModels
                 }
                 catch(Exception e)
                 {
-                    Debug.WriteLine(e.Message);
+                    DebugService.WriteLine(e.Message);
                 }
 
                 if (userData == null)
                 {
-                    Debug.WriteLine("Unable to get result from put request");
+                    DebugService.WriteLine("Unable to get result from put request");
                     IsBusy = false;
                     return;
                 }
@@ -142,7 +143,7 @@ namespace NottCS.ViewModels
                 }
                 else
                 {
-                    Debug.WriteLine("Request unsuccessful. Please try again");
+                    DebugService.WriteLine("Request unsuccessful. Please try again");
                 }
 
             }
@@ -151,7 +152,7 @@ namespace NottCS.ViewModels
 //        private void ItemSelected(object param)
 //        {
 //            if (!(param is string s)) return;
-//            Debug.WriteLine($"{s} is selected");
+//            DebugService.WriteLine($"{s} is selected");
 //            RegistrationParameters.Course.Value = s;
 //        }
 //

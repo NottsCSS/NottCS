@@ -19,46 +19,7 @@ namespace NottCS.Services.Navigation
         /// Handles all authentication on app startup
         /// </summary>
         /// <returns></returns>
-        internal static async Task InitializeAsync()
-        {
-            bool canAuthenticate = await LoginService.MicrosoftAuthenticateWithCacheAsync();
-            DebugService.WriteLine($"Can authenticate with cached data: {canAuthenticate}");
-            Stopwatch stopwatch = new Stopwatch();
-
-            if (canAuthenticate)
-            {
-                var userData = await RestService.RequestGetAsync<User>();
-                if (userData.Item1 == "OK") //first item represents whether the request is successful
-                {
-                    //if either studentId or librarynumber is not filled that means is new user
-                    if (String.IsNullOrEmpty(userData.Item2.StudentId) ||
-                        String.IsNullOrEmpty(userData.Item2.LibraryNumber))
-                    {
-                        stopwatch.Start();
-                        await NavigateToAsync<RegistrationViewModel>(userData.Item2);
-                        DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
-                    }
-                    else
-                    {
-                        stopwatch.Start();
-                        await NavigateToAsync<AccountViewModel>(userData.Item2);
-                        DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
-                    }
-                }
-                else
-                {
-                    stopwatch.Start();
-                    await NavigateToAsync<LoginViewModel>();
-                    DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
-                }
-            }
-            else
-            {
-                stopwatch.Start();
-                await NavigateToAsync<LoginViewModel>();
-                DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
-            }
-        }
+        
         /// <summary>
         /// Navigates using viewmodel, preferred way of navigation due to type checks during compile time
         /// Calls InitializeAsync method with the passed parameter during navigation, override that method to use the parameter
