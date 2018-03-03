@@ -153,7 +153,8 @@ namespace NottCS.ViewModels
         public string PageTitle3 { get; set; }
         
         private string _selectedClubType;
-
+        public bool IsUWP { get; set; }
+        public bool IsNotUWP { get; set; }
 
         #region Picker
 
@@ -234,6 +235,8 @@ namespace NottCS.ViewModels
             PageTitle1 = "News Feed";
             PageTitle2 = "Clubs & Society";
             PageTitle3 = "Profile";
+            IsUWP = Device.RuntimePlatform == Device.UWP;
+            IsNotUWP = Device.RuntimePlatform != Device.UWP;
         }
 
         #endregion
@@ -253,6 +256,5 @@ namespace NottCS.ViewModels
         {
         }
         #endregion
-        
     }
 }

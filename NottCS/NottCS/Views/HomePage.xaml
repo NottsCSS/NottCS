@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NottCS.Views.HomePage"
-             Title="{Binding Title}"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
-             xmlns:models="clr-namespace:NottCS.Models;assembly=NottCS"
-             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
-             xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
-             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
-             d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="NottCS.Views.HomePage"
+            Title="{Binding Title}"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            mc:Ignorable="d"
+            xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+            xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+            xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
+            xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+            xmlns:gv="clr-namespace:Plugin.GridViewControl.Common;assembly=Plugin.GridViewControl"
+            d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
   <!--Pages can be added as references or inline-->
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -89,14 +89,8 @@
                               FlowItemsSource="{Binding ClubList}" 
                               FlowItemTappedCommand="{Binding ItemTappedCommand}"
                               HasUnevenRows="False"
-                              Margin="5,10">
-                <flv:FlowListView.Behaviors>
-                    <behaviors:EventToCommandBehavior 
-                        EventName="ItemSelected"
-                        Source="{x:Reference FlowListView}"
-                        Command="{Binding DisableItemSelectedCommand1, Mode=TwoWay}" 
-                        Converter="{StaticResource SelectedItemConverter}" />
-                </flv:FlowListView.Behaviors>
+                              Margin="5,10"
+                              IsVisible="{Binding IsNotUWP}">
                 <flv:FlowListView.FlowColumnTemplate>
                     <DataTemplate>
                         <Frame OutlineColor="Black"
@@ -117,13 +111,52 @@
                     </DataTemplate>
                 </flv:FlowListView.FlowColumnTemplate>
             </flv:FlowListView>
+
+            <gv:GridView x:Name="GridView" 
+                         SeparatorVisibility="Default" 
+                         RowHeight="100"
+                         HasUnevenRows="False"
+                         Margin="5,10"
+                         ItemsSource="{Binding ClubList}"
+                         IsVisible="{Binding IsUWP}">
+                <gv:GridView.Behaviors>
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemTapped"
+                        Command="{Binding ItemTappedCommand}" 
+                        Converter="{StaticResource TappedItemConverter}" />
+                </gv:GridView.Behaviors>
+                <gv:GridView.ItemTemplate>
+                    <DataTemplate>
+                        <gv:GridViewXamlCell>
+                            <Grid Margin="2"
+                                  Padding="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Image Source="{Binding ImageURL}" 
+                                       Aspect="AspectFit"
+                                       HeightRequest="50"
+                                       WidthRequest="50"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                                <Label Grid.Row="1" 
+                                       Text="{Binding ClubName}" 
+                                       FontSize="12"
+                                       HorizontalTextAlignment="Center"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Grid>
+                        </gv:GridViewXamlCell>
+                    </DataTemplate>
+                </gv:GridView.ItemTemplate>
+            </gv:GridView>
         </StackLayout>
     </ContentPage>
-    
-    
+
+
 
     <ContentPage Title="{Binding PageTitle3}">
-
 
     </ContentPage>
 </TabbedPage>
