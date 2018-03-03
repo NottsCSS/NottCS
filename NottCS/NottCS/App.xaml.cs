@@ -35,7 +35,7 @@ namespace NottCS
             // Handle when your app starts
 		    Stopwatch stopwatch = new Stopwatch();
 		    stopwatch.Start();
-            await InitNavigation();
+            //await InitNavigation();
 		    Debug.WriteLine($"Init navigation took {stopwatch.ElapsedMilliseconds}ms");
             stopwatch.Stop();
 
