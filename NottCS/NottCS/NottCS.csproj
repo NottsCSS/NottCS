@@ -56,6 +56,8 @@
     <PackageReference Include="Xam.Plugins.Settings" Version="3.2.0.130-beta" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.77107" />
     <PackageReference Include="ZXing.Net" Version="0.16.2" />
+    <PackageReference Include="ZXing.Net.Mobile" Version="2.3.2" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.3.2" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\ClubRegistrationPage.xaml.cs">
