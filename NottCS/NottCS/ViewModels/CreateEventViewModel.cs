@@ -46,7 +46,7 @@ namespace NottCS.ViewModels
         {
             foreach (var item in ListOfTextBox)
             {
-                DebugService.WriteLine(item.Name);
+                DebugService.WriteLine(item.Entry);
             }
         }
         
@@ -60,7 +60,7 @@ namespace NottCS.ViewModels
         }
         
 
-
+        public int ButtonHeight { get; set; }
         #region Disable ItemSelectedCommand
         public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
         public void DisableItemSelected()
@@ -77,6 +77,20 @@ namespace NottCS.ViewModels
 
         public CreateEventViewModel()
         {
+            switch (Device.RuntimePlatform)
+            {
+                case Device.iOS:
+                {
+                    ButtonHeight = 60;
+                }
+                    break;
+                default:
+                {
+                    ButtonHeight = 40;
+                }
+                    break;
+            }
+                 
             ListOfTextBox =new ObservableCollection<Item>()
             {
                 new Item(),

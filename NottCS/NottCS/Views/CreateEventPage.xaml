@@ -26,7 +26,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="{Binding ButtonHeight}"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -76,7 +76,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Entry FontSize="Medium"
                                            Grid.Column="0"
-                                           Text ="{Binding Name, Mode=TwoWay}"/>
+                                           Text ="{Binding Entry, Mode=TwoWay}"/>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
@@ -85,17 +85,33 @@
                 <Button Text="Add text box"
                         Command="{Binding CreateTextBoxCommand}"
                         FontSize="Small"
-                        HorizontalOptions="StartAndExpand"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="StartAndExpand"
                         MinimumHeightRequest="40"
                         Grid.Row="2"
-                        Grid.Column="0"/>
+                        Grid.Column="0">
+                    <Button.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="0,20,0,0" />
+                            <On Platform="Android, WinPhone, UWP" Value="2,2" />
+                        </OnPlatform>
+                    </Button.Margin>
+                </Button>
                 <Button Text="Create Event"
                         Command="{Binding CreateEventCommand}"
                         FontSize="Small"
-                        HorizontalOptions="StartAndExpand"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="StartAndExpand"
                         MinimumHeightRequest="40"
                         Grid.Row="2"
-                        Grid.Column="1"/>
+                        Grid.Column="1">
+                    <Button.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="0,20,0,0" />
+                            <On Platform="Android, WinPhone, UWP" Value="2,2" />
+                        </OnPlatform>
+                    </Button.Margin>
+                </Button>
             </Grid>
         </Grid>
     </ContentPage.Content>
