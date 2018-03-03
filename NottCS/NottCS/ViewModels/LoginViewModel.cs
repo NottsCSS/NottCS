@@ -14,9 +14,15 @@ namespace NottCS.ViewModels
 {
     internal class LoginViewModel : BaseViewModel
     {
+        public string AccessToken
+        {
+            get => _accessToken;
+            set => SetProperty(ref _accessToken, value);
+        }
 
         private string _loginMessage = "";
-        
+        private string _accessToken;
+
         public string LoginMessage
         {
             get => _loginMessage;
@@ -49,6 +55,7 @@ namespace NottCS.ViewModels
                 await LoginService.MicrosoftAuthenticateWithUIAsync();
             }
             string a = App.MicrosoftAuthenticationResult?.User.DisplayableId;
+            AccessToken = App.MicrosoftAuthenticationResult?.AccessToken;
             Debug.WriteLine($"DisplayableID: {a}");
             Debug.WriteLine($"Identifier: {App.MicrosoftAuthenticationResult?.User.Identifier}");
             Debug.WriteLine($"Identity Provider: {App.MicrosoftAuthenticationResult?.User.IdentityProvider}");

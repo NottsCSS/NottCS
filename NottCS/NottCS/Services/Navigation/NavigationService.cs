@@ -144,6 +144,10 @@ namespace NottCS.Services.Navigation
                 return Task.FromResult(page);
             }
         }
-        
+
+        internal static void ClearNavigation()
+        {
+            Application.Current.MainPage = new ContentPage();
+        }
     }
 }

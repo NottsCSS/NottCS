@@ -50,6 +50,8 @@
                         <Button Text = "LOGOUT" Command = "{Binding SignOutCommand}" 
                                 Margin="50,0,50,0" />
                         <Label Text="{Binding LoginMessage}" />
+                        <Label Text="Access Token" />
+                        <Entry Text="{Binding AccessToken}"></Entry>
                         <ActivityIndicator Color="Green" IsRunning="{Binding IsBusy}" />
                     </StackLayout>
                 </ScrollView>

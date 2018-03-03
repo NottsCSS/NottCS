@@ -6,6 +6,7 @@ using System.Windows.Input;
 using NottCS.Models;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using NottCS.Services;
 using NottCS.Services.Navigation;
 using NottCS.Views;
 
@@ -13,20 +14,21 @@ namespace NottCS.ViewModels
 {
     class CreateEventViewModel : BaseViewModel
     {
-        public ICommand CreateTextBoxCommand => new Command(async() => await CreateTextBox());
+        public ICommand CreateTextBoxCommand => new Command(CreateTextBox);
         public ICommand DeleteCellsCommand { get; set;}
 
         public ICommand CreateEventCommand => new Command(DoNothingForNow);
-        public async Task CreateTextBox()
+
+        private void CreateTextBox()
         {
             try
             {
                 ListOfTextBox.Add(new Item());
-                Debug.WriteLine("Test");
+                DebugService.WriteLine("Test");
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                DebugService.WriteLine(e);
             }
         }
 

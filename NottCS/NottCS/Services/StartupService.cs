@@ -25,19 +25,20 @@ namespace NottCS.Services
                 if (userData.Item1 == "OK") //first item represents whether the request is successful
                 {
                     //if either studentId or librarynumber is not filled that means is new user
-                    if (String.IsNullOrEmpty(userData.Item2.StudentId) ||
-                        String.IsNullOrEmpty(userData.Item2.LibraryNumber))
-                    {
-                        stopwatch.Start();
-                        await NavigationService.NavigateToAsync<RegistrationViewModel>(userData.Item2);
-                        DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
-                    }
-                    else
-                    {
-                        stopwatch.Start();
-                        await NavigationService.NavigateToAsync<AccountViewModel>(userData.Item2);
-                        DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
-                    }
+//                    if (String.IsNullOrEmpty(userData.Item2.StudentId) ||
+//                        String.IsNullOrEmpty(userData.Item2.LibraryNumber))
+//                    {
+//                        stopwatch.Start();
+//                        await NavigationService.NavigateToAsync<RegistrationViewModel>(userData.Item2);
+//                        DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
+//                    }
+//                    else
+//                    {
+//                        stopwatch.Start();
+//                        await NavigationService.NavigateToAsync<AccountViewModel>(userData.Item2);
+//                        DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
+//                    }
+                    await NavigationService.NavigateToAsync<AccountViewModel>(userData.Item2);
                 }
                 else
                 {
