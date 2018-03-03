@@ -65,8 +65,6 @@ namespace NottCS.Services.REST
             {
                 DebugService.WriteLine(e);
             }
-
-            //TODO: Revert back to false for Item1, true is for easy login and testing purpose only
             return Tuple.Create("Something went wrong", new T());
         }
 
