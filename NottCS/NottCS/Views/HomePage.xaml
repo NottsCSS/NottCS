@@ -128,18 +128,24 @@
                 <gv:GridView.ItemTemplate>
                     <DataTemplate>
                         <gv:GridViewXamlCell>
-                            <Grid Padding="0">
+                            <Grid Margin="2"
+                                  Padding="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
                                 <Image Source="{Binding ImageURL}" 
-                                       Aspect="AspectFill"
-                                       HorizontalOptions="FillAndExpand"
-                                       VerticalOptions="StartAndExpand"/>
-                                <Label FontSize="Small"
-                                       HorizontalOptions="FillAndExpand" 
-                                       VerticalOptions="FillAndExpand" 
-                                       HorizontalTextAlignment="Center" 
-                                       VerticalTextAlignment="End" 
+                                       Aspect="AspectFit"
+                                       HeightRequest="50"
+                                       WidthRequest="50"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                                <Label Grid.Row="1" 
                                        Text="{Binding ClubName}" 
-                                       LineBreakMode="WordWrap"/>
+                                       FontSize="12"
+                                       HorizontalTextAlignment="Center"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
                             </Grid>
                         </gv:GridViewXamlCell>
                     </DataTemplate>
