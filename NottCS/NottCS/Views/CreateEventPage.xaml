@@ -69,14 +69,22 @@
                                 </ViewCell.ContextActions>
                                 <Grid Padding="1" 
                                       x:Name="Items" 
-                                      Margin="2,2">
+                                      Margin="1">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
                                         <ColumnDefinition Width="40"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                     <Entry FontSize="Medium"
                                            Grid.Column="0"
+                                           Margin="0"
                                            Text ="{Binding Entry, Mode=TwoWay}"/>
+                                    <Button Text="X"
+                                            TextColor="Black"
+                                            FontSize="Large"
+                                            Grid.Column="1"
+                                            IsVisible="{Binding Path=BindingContext.IsUWP, Source={x:Reference Name=SomeList}}"
+                                            Command="{Binding Path=BindingContext.DeleteCellsCommand, Source={x:Reference Name=SomeList}}">
+                                    </Button>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>

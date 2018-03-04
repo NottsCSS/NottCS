@@ -15,9 +15,8 @@ namespace NottCS.ViewModels
     class CreateEventViewModel : BaseViewModel
     {
         public ICommand CreateTextBoxCommand => new Command(async() => await CreateTextBox());
-        public ICommand DeleteCellsCommand { get; set;}
-
-        public ICommand CreateEventCommand => new Command(DoNothingForNow);
+        public ICommand DeleteCellsCommand =>new Command(async(object p)=> await DeleteTextBox(p));
+        
         public async Task CreateTextBox()
         {
             try
@@ -31,11 +30,12 @@ namespace NottCS.ViewModels
             }
         }
 
-        private void DeleteTextBox()
+        private async Task DeleteTextBox(object p)
         {
             if (ListOfTextBox.Count > 3)
             {
-                ListOfTextBox.RemoveAt(ListOfTextBox.Count - 1);
+                Debug.WriteLine((Item)p);
+                ListOfTextBox.Remove((Item)p);
                 Debug.WriteLine(ListOfTextBox.Count);
                 Debug.WriteLine("Delete command activated");
             }
@@ -49,8 +49,23 @@ namespace NottCS.ViewModels
                 DebugService.WriteLine(item.Entry);
             }
         }
-        
 
+        #region CreateEventNavigation
+        public ICommand CreateEventCommand => new Command(async () => await Navigate());
+        private async Task Navigate()
+        {
+            try
+            {
+                DoNothingForNow();
+                await NavigationService.NavigateToAsync<CreateEventConfirmationViewModel>(ListOfTextBox);
+                Debug.WriteLine("Button pressed");
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
+        #endregion
 
         private ObservableCollection<Item> _listOfTextBox;
         public ObservableCollection<Item> ListOfTextBox
@@ -61,6 +76,7 @@ namespace NottCS.ViewModels
         
 
         public int ButtonHeight { get; set; }
+        public bool IsUWP { get; set; }
         #region Disable ItemSelectedCommand
         public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
         public void DisableItemSelected()
@@ -90,14 +106,13 @@ namespace NottCS.ViewModels
                 }
                     break;
             }
-                 
+            IsUWP = Device.RuntimePlatform == Device.UWP;
             ListOfTextBox =new ObservableCollection<Item>()
             {
                 new Item(),
                 new Item(),
                 new Item()
             };
-            DeleteCellsCommand = new Command(DeleteTextBox);
         }
 
         #endregion
