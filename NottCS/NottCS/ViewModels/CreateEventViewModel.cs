@@ -34,7 +34,7 @@ namespace NottCS.ViewModels
         {
             if (ListOfTextBox.Count > 3)
             {
-                Debug.WriteLine((Item)p);
+                Debug.WriteLine(p);
                 ListOfTextBox.Remove((Item)p);
                 Debug.WriteLine(ListOfTextBox.Count);
                 Debug.WriteLine("Delete command activated");

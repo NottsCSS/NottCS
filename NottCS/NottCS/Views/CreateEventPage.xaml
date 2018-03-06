@@ -83,7 +83,8 @@
                                             FontSize="Large"
                                             Grid.Column="1"
                                             IsVisible="{Binding Path=BindingContext.IsUWP, Source={x:Reference Name=SomeList}}"
-                                            Command="{Binding Path=BindingContext.DeleteCellsCommand, Source={x:Reference Name=SomeList}}">
+                                            Command="{Binding Path=BindingContext.DeleteCellsCommand, Source={x:Reference Name=SomeList}}"
+                                            CommandParameter="{Binding .}">
                                     </Button>
                                 </Grid>
                             </ViewCell>
