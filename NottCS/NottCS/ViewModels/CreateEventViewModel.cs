@@ -14,10 +14,10 @@ namespace NottCS.ViewModels
 {
     class CreateEventViewModel : BaseViewModel
     {
-        public ICommand CreateTextBoxCommand => new Command(async() => await CreateTextBox());
-        public ICommand DeleteCellsCommand =>new Command(async(object p)=> await DeleteTextBox(p));
+        public ICommand CreateTextBoxCommand => new Command(CreateTextBox);
+        public ICommand DeleteCellsCommand =>new Command(DeleteTextBox);
         
-        public async Task CreateTextBox()
+        private void CreateTextBox()
         {
             try
             {
@@ -30,7 +30,7 @@ namespace NottCS.ViewModels
             }
         }
 
-        private async Task DeleteTextBox(object p)
+        private void DeleteTextBox(object p)
         {
             if (ListOfTextBox.Count > 3)
             {
@@ -76,6 +76,7 @@ namespace NottCS.ViewModels
         
 
         public int ButtonHeight { get; set; }
+        public int Padding { get; set; }
         public bool IsUWP { get; set; }
         #region Disable ItemSelectedCommand
         public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
@@ -98,11 +99,19 @@ namespace NottCS.ViewModels
                 case Device.iOS:
                 {
                     ButtonHeight = 60;
-                }
+                    Padding = 5;
                     break;
+                }
+                case Device.UWP:
+                {
+                    ButtonHeight = 40;
+                    Padding = -5;
+                    break;
+                }
                 default:
                 {
                     ButtonHeight = 40;
+                    Padding = 5;
                 }
                     break;
             }

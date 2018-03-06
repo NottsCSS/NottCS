@@ -67,18 +67,21 @@
                                               Command="{Binding Path=BindingContext.DeleteCellsCommand, Source={x:Reference Name=SomeList}}"
                                               CommandParameter="{Binding .}"/>
                                 </ViewCell.ContextActions>
-                                <Grid Padding="1" 
-                                      x:Name="Items" 
-                                      Margin="1">
+                                <Grid x:Name="Items" 
+                                      Margin="1"
+                                      Padding="{Binding Path=BindingContext.Padding, Source={x:Reference Name=SomeList}}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
-                                        <ColumnDefinition Width="40"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                     <Entry FontSize="Medium"
                                            Grid.Column="0"
                                            Margin="0"
-                                           Text ="{Binding Entry, Mode=TwoWay}"/>
-                                    <Button Text="X"
+                                           Text ="{Binding Entry, Mode=TwoWay}"
+                                           Placeholder="Your Text Here"
+                                           />
+                                    <Button Text=""
+                                            FontFamily="Segoe MDL2 Assets"
                                             TextColor="Black"
                                             FontSize="Large"
                                             Grid.Column="1"
