@@ -28,6 +28,7 @@
                                HorizontalOptions="CenterAndExpand"
                                HorizontalTextAlignment="Center"/>
                         <Button Text = "SAVE QR CODE"
+                                Command="{Binding Command1}"
                                 FontSize="Large"
                             Margin="5,10,5,0" />
                     </StackLayout>

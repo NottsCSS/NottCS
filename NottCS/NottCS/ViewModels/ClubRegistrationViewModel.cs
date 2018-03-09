@@ -19,7 +19,7 @@ namespace NottCS.ViewModels
         {
             try
             {
-                await NavigationService.NavigateToAsync<QRCodeViewModel>();
+                await NavigationService.NavigateToAsync(typeof(QRCodeViewModel));
                 Debug.WriteLine("Button Pressed");
             }
             catch (Exception e)

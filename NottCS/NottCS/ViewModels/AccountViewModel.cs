@@ -28,6 +28,12 @@ namespace NottCS.ViewModels
         }
 
         public ICommand SignOutCommand => new Command(async () => await SignOut());
+        public ICommand TestCommand => new Command(async () => await Test());
+
+        private async Task Test()
+        {
+            await NavigationService.NavigateToAsync<ClubRegistrationViewModel>();
+        }
 
         /// <summary>
         ///     Sets the data for the page

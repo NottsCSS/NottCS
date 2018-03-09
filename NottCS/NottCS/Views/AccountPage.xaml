@@ -49,6 +49,8 @@
                 <Label Text="Access token: " />
                 <Entry Text="{Binding AccessToken}"/>
                 <Button Text="Sign Out"  Command="{Binding SignOutCommand}" />
+                <Button Text="Test"  Command="{Binding TestCommand}" />
+
             </StackLayout>
         </Grid>
     </ContentPage.Content>

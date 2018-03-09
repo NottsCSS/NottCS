@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using NottCS.Models;
 using NottCS.Services.REST;
 using NottCS.ViewModels;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 namespace NottCS.Services.Navigation
 {
@@ -37,8 +39,8 @@ namespace NottCS.Services.Navigation
             if (!_isNavigating) //prevents simultaneous navigations
             {
                 _isNavigating = true;
-
                 Page page = null;
+                Page previousPage = null;
                 var createPageTask = CreatePage(viewModelType);
 
                 if (viewModelType == null || !viewModelType.IsSubclassOf(typeof(BaseViewModel)))
@@ -68,15 +70,16 @@ namespace NottCS.Services.Navigation
                 }
                 if (Application.Current.MainPage is NavigationPage navigationPage)
                 {
-
-                    Task pushPageTask = navigationPage.PushAsync(page);
+            
+                    previousPage = navigationPage.CurrentPage;
+                    Task pushPageTask = navigationPage.Navigation.PushAsync(page);
                     Task initializeAsyncTask = null;
                     if (page.BindingContext is BaseViewModel viewModel)
                     {
                         initializeAsyncTask = viewModel.InitializeAsync(navigationParameter);
                     };
 
-                    DebugService.WriteLine($"Previous page is: {navigationPage.CurrentPage}");
+                    DebugService.WriteLine($"Previous page is: {previousPage}");
                     DebugService.WriteLine($"Now navigating to:{page}");
                     await pushPageTask;
                     if (initializeAsyncTask != null) await initializeAsyncTask;
@@ -148,6 +151,23 @@ namespace NottCS.Services.Navigation
         internal static void ClearNavigation()
         {
             Application.Current.MainPage = new ContentPage();
+        }
+
+        internal static async Task BackUntilAsync<TViewModel>() where TViewModel : BaseViewModel, new()
+        {
+            Type pageType = GetPageTypeForViewModel(typeof(TViewModel));
+            var stack = Application.Current.MainPage.Navigation.NavigationStack;
+            
+            foreach (var page in stack)
+            {
+                if (pageType != page.GetType()) continue;
+                while (stack.Last() != page)
+                {
+                    await Application.Current.MainPage.Navigation.PopAsync();
+                }
+                return;
+            }
+            throw new Exception("Page of type: {pageType} not found on navigation stack");
         }
     }
 }
