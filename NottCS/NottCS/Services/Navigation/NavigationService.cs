@@ -40,7 +40,6 @@ namespace NottCS.Services.Navigation
             {
                 _isNavigating = true;
                 Page page = null;
-                Page previousPage = null;
                 var createPageTask = CreatePage(viewModelType);
 
                 if (viewModelType == null || !viewModelType.IsSubclassOf(typeof(BaseViewModel)))
@@ -71,7 +70,7 @@ namespace NottCS.Services.Navigation
                 if (Application.Current.MainPage is NavigationPage navigationPage)
                 {
             
-                    previousPage = navigationPage.CurrentPage;
+                    var previousPage = navigationPage.CurrentPage;
                     Task pushPageTask = navigationPage.Navigation.PushAsync(page);
                     Task initializeAsyncTask = null;
                     if (page.BindingContext is BaseViewModel viewModel)
