@@ -12,44 +12,32 @@
         <Grid>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="15"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-                <ScrollView Grid.Row="1"
-                         HorizontalOptions="Start">
-                    <StackLayout>
-                        <Label Text="EVENT NAME OR CLUB NAME"
+                <StackLayout Grid.Row="0"
+                             HorizontalOptions="Start">
+                    <Label Text="EVENT NAME OR CLUB NAME"
                            FontSize="Micro"
                            Margin="5,0"
                            HorizontalOptions="Start"/>
-                    </StackLayout>
-                </ScrollView>
-
-                <ScrollView Grid.Row="2"
-                        HorizontalOptions="Center">
-                    <StackLayout>
-                        <Image x:Name="EmailContent"
+                    <Image x:Name="EmailContent"
                            Margin="0,0"
                            WidthRequest="500"
                            HeightRequest="270"
                            VerticalOptions="StartAndExpand"
                            HorizontalOptions="Center"/>
-                    </StackLayout>
-                </ScrollView>
+                </StackLayout>
 
-                <ScrollView Grid.Row="3"
-                        HorizontalOptions="Center"
-                        Margin="0,0">
-                    <StackLayout>
-                        <Button Text = "SIGN UP"
-                        FontSize="Small"
-                        HorizontalOptions="CenterAndExpand"
-                        VerticalOptions="EndAndExpand"
-                        Margin="5,10,5,0" />
-                    </StackLayout>
-                </ScrollView>
+                <StackLayout Grid.Row="1"
+                             HorizontalOptions="Center"
+                             Margin="0,0">
+                    <Button Text = "SIGN UP"
+                            FontSize="Small"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="EndAndExpand"
+                            Margin="5,10,5,0"/>
+                </StackLayout>
             </Grid>
         </Grid>
     </ContentPage.Content>

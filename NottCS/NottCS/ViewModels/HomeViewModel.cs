@@ -15,6 +15,52 @@ namespace NottCS.ViewModels
 {
     public class HomeViewModel : BaseViewModel
     {
+        public string PageTitle1 { get; set; }
+        public string PageTitle2 { get; set; }
+        public string PageTitle3 { get; set; }
+        private string _selectedClubType;
+        public bool IsUWP { get; set; }
+        public bool IsNotUWP { get; set; }
+        #region HomeViewModel Constructor
+
+        public HomeViewModel()
+        {
+            _clubList = new ObservableCollection<Item>();
+            SelectedClubType = ClubTypePickList[0];
+            PageTitle1 = "News Feed";
+            PageTitle2 = "Clubs & Society";
+            PageTitle3 = "Profile";
+            IsUWP = Device.RuntimePlatform == Device.UWP;
+            IsNotUWP = Device.RuntimePlatform != Device.UWP;
+        }
+
+        #endregion
+        #region Event List
+        #region ListViewNavigation
+
+        public ICommand ItemTappedCommand => new Command(async (object p) => await ItemTapped(p));
+        private async Task ItemTapped(object p)
+        {
+            try
+            {
+                await NavigationService.NavigateToAsync<ClubRegistrationViewModel>(p);
+                DebugService.WriteLine("Item Tapped");
+
+            }
+            catch (Exception e)
+            {
+                DebugService.WriteLine(e.Message);
+            }
+
+        }
+
+        #endregion
+        #region Disable ItemSelectedCommand
+        public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
+        public void DisableItemSelected()
+        {
+        }
+        #endregion
         #region Temporary EventList
         public ObservableCollection<Item> EventLists { get; set; } = new ObservableCollection<Item>()
         {
@@ -30,12 +76,66 @@ namespace NottCS.ViewModels
 
 
         #endregion
+        #endregion
+        #region Club List
+
+        #region Picker
+
+        public List<string> ClubTypePickList { get; set; } =
+            new List<string> { "My Clubs Only", "All Clubs", "Favourite Clubs" };
+
+        public string SelectedClubType
+        {
+            get => _selectedClubType;
+            set
+            {
+                ChangeLabel1(value);
+                _selectedClubType = value;
+                switch (value)
+                {
+                    case "My Clubs Only":
+                        ClubList = MyClubList;
+                        break;
+                    case "All Clubs":
+                        ClubList = AllClubList;
+                        break;
+                    case "Favourite Clubs":
+                        ClubList = FavouriteClubList;
+                        break;
+                }
+            }
+        }
+        private void ChangeLabel1(object e)
+        {
+            DebugService.WriteLine("Picker Changed");
+            string picked = e.ToString();
+            DebugService.WriteLine(picked);
+        }
+
+        #endregion
+        #region FlowListViewNavigation
+        public ICommand TappedCommand => new Command(async (object p) => await Tapped(p));
+        private async Task Tapped(object p)
+        {
+            //Label = $"Hello World {Count}";
+            //Count++;
+            try
+            {
+                await NavigationService.NavigateToAsync<EventViewModel>(p);
+                DebugService.WriteLine("Button pressed");
+            }
+            catch (Exception e)
+            {
+                DebugService.WriteLine(e.Message);
+            }
+        }
+        #endregion
         #region Temporary ClubList
         private ObservableCollection<Item> _clubList;
         public ObservableCollection<Item> ClubList
         {
-            get => _clubList; 
-            set => SetProperty(ref _clubList, value); 
+            get => _clubList;
+            set => SetProperty(ref _clubList, value);
         }
 
         public ObservableCollection<Item> FavouriteClubList { get; set; } = new ObservableCollection<Item>()
@@ -149,106 +249,7 @@ namespace NottCS.ViewModels
         };
 
         #endregion
-
-        public string PageTitle1 { get; set; }
-        public string PageTitle2 { get; set; }
-        public string PageTitle3 { get; set; }
-        
-        private string _selectedClubType;
-        public bool IsUWP { get; set; }
-        public bool IsNotUWP { get; set; }
-
-        #region Picker
-
-        public List<string> ClubTypePickList { get; set; } =
-            new List<string> {"My Clubs Only", "All Clubs", "Favourite Clubs"};
-
-        public string SelectedClubType
-        {
-            get => _selectedClubType;
-            set
-            {
-                ChangeLabel1(value);
-                _selectedClubType = value;
-                switch (value)
-                {
-                    case "My Clubs Only":
-                        ClubList = MyClubList;
-                        break;
-                    case "All Clubs":
-                        ClubList = AllClubList;
-                        break;
-                    case "Favourite Clubs":
-                        ClubList = FavouriteClubList;
-                        break;
-                }
-            }
-        }
-        private void ChangeLabel1(object e)
-        {
-            DebugService.WriteLine("Picker Changed");
-            string picked = e.ToString();
-            DebugService.WriteLine(picked);
-        }
-
         #endregion
-        #region ListViewNavigation
-
-        public ICommand ItemTappedCommand => new Command(async (object p) => await ItemTapped(p));
-        private async Task ItemTapped(object p)
-        {
-            try
-            {
-                await NavigationService.NavigateToAsync<ClubRegistrationViewModel>(p);
-                DebugService.WriteLine("Item Tapped");
-                
-            }
-            catch (Exception e)
-            {
-                DebugService.WriteLine(e.Message);
-            }
-            
-        }
-
-        #endregion
-        #region FlowListViewNavigation
-        public ICommand TappedCommand => new Command(async (object p) => await Tapped(p));
-        private async Task Tapped(object p)
-        {
-            //Label = $"Hello World {Count}";
-            //Count++;
-            try
-            {
-                await NavigationService.NavigateToAsync<EventViewModel>(p);
-                DebugService.WriteLine("Button pressed");
-            }
-            catch (Exception e)
-            {
-                DebugService.WriteLine(e.Message);
-            }
-        }
-        #endregion
-        #region Disable ItemSelectedCommand
-        public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
-        public void DisableItemSelected()
-        {
-        }
-        #endregion
-        #region HomeViewModel Constructor
-
-        public HomeViewModel()
-        {
-            _clubList = new ObservableCollection<Item>();
-            SelectedClubType = ClubTypePickList[0];
-            PageTitle1 = "News Feed";
-            PageTitle2 = "Clubs & Society";
-            PageTitle3 = "Profile";
-            IsUWP = Device.RuntimePlatform == Device.UWP;
-            IsNotUWP = Device.RuntimePlatform != Device.UWP;
-        }
-
-        #endregion
-
         #region Profile
         #region ViewModalAdditionalClass
 
@@ -306,6 +307,7 @@ namespace NottCS.ViewModels
         }
 
         #endregion
+
         /// <summary>
         /// Initializes the page
         /// </summary>
