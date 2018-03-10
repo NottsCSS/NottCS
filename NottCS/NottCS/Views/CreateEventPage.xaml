@@ -48,8 +48,8 @@
                           Grid.Row="1"
                           Grid.Column="0"
                           Grid.ColumnSpan="2"
-                          Margin="3,0"
-                          RowHeight="80"
+                          Margin="3,3,0,0"
+                          RowHeight="60"
                           x:Name="SomeList">
                     <ListView.Behaviors>
                         <behaviors:EventToCommandBehavior 
@@ -67,24 +67,27 @@
                                               Command="{Binding Path=BindingContext.DeleteCellsCommand, Source={x:Reference Name=SomeList}}"
                                               CommandParameter="{Binding .}"/>
                                 </ViewCell.ContextActions>
-                                <Grid Padding="1" 
-                                      x:Name="Items" 
-                                      Margin="1">
+                                <Grid x:Name="Items" 
+                                      Margin="1"
+                                      Padding="{Binding Path=BindingContext.Padding, Source={x:Reference Name=SomeList}}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
-                                        <ColumnDefinition Width="40"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                     <Entry FontSize="Medium"
                                            Grid.Column="0"
-                                           Margin="0,3,0,3"
+                                           Margin="0"
                                            Text ="{Binding Entry, Mode=TwoWay}"
-                                           Placeholder="Please write something here."/>
-                                    <Button Text="X"
+                                           Placeholder="Your Text Here"
+                                           />
+                                    <Button Text=""
+                                            FontFamily="Segoe MDL2 Assets"
                                             TextColor="Black"
                                             FontSize="Large"
                                             Grid.Column="1"
                                             IsVisible="{Binding Path=BindingContext.IsUWP, Source={x:Reference Name=SomeList}}"
-                                            Command="{Binding Path=BindingContext.DeleteCellsCommand, Source={x:Reference Name=SomeList}}">
+                                            Command="{Binding Path=BindingContext.DeleteCellsCommand, Source={x:Reference Name=SomeList}}"
+                                            CommandParameter="{Binding .}">
                                     </Button>
                                 </Grid>
                             </ViewCell>
@@ -101,7 +104,7 @@
                         Grid.Column="0">
                     <Button.Margin>
                         <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="iOS" Value="0" />
+                            <On Platform="iOS" Value="0,20,0,0" />
                             <On Platform="Android, WinPhone, UWP" Value="2,2" />
                         </OnPlatform>
                     </Button.Margin>
@@ -116,7 +119,7 @@
                         Grid.Column="1">
                     <Button.Margin>
                         <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="iOS" Value="0" />
+                            <On Platform="iOS" Value="0,20,0,0" />
                             <On Platform="Android, WinPhone, UWP" Value="2,2" />
                         </OnPlatform>
                     </Button.Margin>

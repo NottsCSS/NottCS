@@ -21,6 +21,8 @@ namespace NottCS.Services.Navigation
         /// <returns></returns>
         internal static async Task InitializeAsync()
         {
+            var loadingDialog = Acr.UserDialogs.UserDialogs.Instance.Loading("Beep beep bop... 😅");
+            loadingDialog.Show();
             bool canAuthenticate = await LoginService.MicrosoftAuthenticateWithCacheAsync();
             DebugService.WriteLine($"Can authenticate with cached data: {canAuthenticate}");
             Stopwatch stopwatch = new Stopwatch();
@@ -58,6 +60,7 @@ namespace NottCS.Services.Navigation
                 await NavigateToAsync<LoginViewModel>();
                 DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
             }
+            loadingDialog.Hide();
         }
         /// <summary>
         /// Navigates using viewmodel, preferred way of navigation due to type checks during compile time
