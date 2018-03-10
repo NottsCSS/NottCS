@@ -48,8 +48,8 @@
                           Grid.Row="1"
                           Grid.Column="0"
                           Grid.ColumnSpan="2"
-                          Margin="3,3,0,0"
-                          RowHeight="60"
+                          Margin="3,0"
+                          RowHeight="80"
                           x:Name="SomeList">
                     <ListView.Behaviors>
                         <behaviors:EventToCommandBehavior 
@@ -76,8 +76,9 @@
                                     </Grid.ColumnDefinitions>
                                     <Entry FontSize="Medium"
                                            Grid.Column="0"
-                                           Margin="0"
-                                           Text ="{Binding Entry, Mode=TwoWay}"/>
+                                           Margin="0,3,0,3"
+                                           Text ="{Binding Entry, Mode=TwoWay}"
+                                           Placeholder="Please write something here."/>
                                     <Button Text="X"
                                             TextColor="Black"
                                             FontSize="Large"
@@ -100,7 +101,7 @@
                         Grid.Column="0">
                     <Button.Margin>
                         <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="iOS" Value="0,20,0,0" />
+                            <On Platform="iOS" Value="0" />
                             <On Platform="Android, WinPhone, UWP" Value="2,2" />
                         </OnPlatform>
                     </Button.Margin>
@@ -115,7 +116,7 @@
                         Grid.Column="1">
                     <Button.Margin>
                         <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="iOS" Value="0,20,0,0" />
+                            <On Platform="iOS" Value="0" />
                             <On Platform="Android, WinPhone, UWP" Value="2,2" />
                         </OnPlatform>
                     </Button.Margin>
