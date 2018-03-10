@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
 using System.Windows.Input;
+using NottCS.Services;
 using Xamarin.Forms;
 
 namespace NottCS.ViewModels
@@ -45,7 +46,7 @@ namespace NottCS.ViewModels
         public ICommand ItemTappedCommand => new Command(ItemTapped);
         private void ItemTapped()
         {
-            Debug.WriteLine("Item Tapped");
+            DebugService.WriteLine("Item Tapped");
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Windows.Input;
 using NottCS.Models;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using NottCS.Services;
 using NottCS.Services.Navigation;
 using NottCS.Views;
 
@@ -17,7 +18,7 @@ namespace NottCS.ViewModels
         {
             if (navigationData is Item s)
             {
-                Debug.WriteLine($"Club name is {s.ClubName}");
+                DebugService.WriteLine($"Club name is {s.ClubName}");
             }
             return base.InitializeAsync(navigationData);
         }

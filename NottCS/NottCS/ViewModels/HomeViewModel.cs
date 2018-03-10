@@ -6,8 +6,10 @@ using System.Windows.Input;
 using NottCS.Models;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using NottCS.Services;
 using NottCS.Services.Navigation;
 using NottCS.Views;
+using Newtonsoft.Json;
 
 namespace NottCS.ViewModels
 {
@@ -184,9 +186,9 @@ namespace NottCS.ViewModels
         }
         private void ChangeLabel1(object e)
         {
-            Debug.WriteLine("Picker Changed");
+            DebugService.WriteLine("Picker Changed");
             string picked = e.ToString();
-            Debug.WriteLine(picked);
+            DebugService.WriteLine(picked);
         }
 
         #endregion
@@ -198,12 +200,12 @@ namespace NottCS.ViewModels
             try
             {
                 await NavigationService.NavigateToAsync<ClubRegistrationViewModel>(p);
-                Debug.WriteLine("Item Tapped");
+                DebugService.WriteLine("Item Tapped");
                 
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
+                DebugService.WriteLine(e.Message);
             }
             
         }
@@ -218,12 +220,18 @@ namespace NottCS.ViewModels
             try
             {
                 await NavigationService.NavigateToAsync<EventViewModel>(p);
-                Debug.WriteLine("Button pressed");
+                DebugService.WriteLine("Button pressed");
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
+                DebugService.WriteLine(e.Message);
             }
+        }
+        #endregion
+        #region Disable ItemSelectedCommand
+        public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
+        public void DisableItemSelected()
+        {
         }
         #endregion
         #region HomeViewModel Constructor
@@ -240,21 +248,95 @@ namespace NottCS.ViewModels
         }
 
         #endregion
-        //public override Task InitializeAsync(object navigationData)
-        //{
-        //    if (navigationData is string s)
-        //    {
-        //        Debug.WriteLine(s);
-        //        Debug.WriteLine(navigationData);
-        //    }
-        //    Debug.WriteLine(navigationData);
-        //    return base.InitializeAsync(navigationData);
-        //}
-        #region Disable ItemSelectedCommand
-        public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
-        public void DisableItemSelected()
+
+        #region Profile
+        #region ViewModalAdditionalClass
+
+        public class UserDataObject
         {
+            public string DataName { get; set; }
+            public string DataValue { get; set; }
         }
+
         #endregion
+
+        #region PageProperties
+        private User _loginUser;
+        private List<UserDataObject> _dataList;
+
+        public User LoginUser
+        {
+            get => _loginUser;
+            set => SetProperty(ref _loginUser, value);
+        }
+
+        public List<UserDataObject> DataList
+        {
+            get => _dataList;
+            set => SetProperty(ref _dataList, value);
+        }
+
+        #endregion
+
+        public string AccessToken { get; } = App.MicrosoftAuthenticationResult.AccessToken;
+
+        /// <summary>
+        /// Sets the data for the page
+        /// </summary>
+        /// <param name="userData">Username for the account data</param>
+        private void SetPageDataAsync(User userData)
+        {
+            LoginUser = userData;
+            DebugService.WriteLine(JsonConvert.SerializeObject(LoginUser));
+            DataList = new List<UserDataObject>()
+            {
+                new UserDataObject(){DataName = "Name", DataValue = LoginUser.Name},
+                new UserDataObject(){DataName = "Email", DataValue = LoginUser.Email},
+                new UserDataObject(){DataName = "Student ID", DataValue = LoginUser.StudentId},
+                new UserDataObject(){DataName = "Library Number", DataValue = LoginUser.LibraryNumber},
+                new UserDataObject(){DataName = "Date Joined", DataValue = LoginUser.DateJoined.ToLongDateString()}
+            };
+        }
+
+        public ICommand SignOutCommand => new Command(SignOut);
+
+        private static void SignOut()
+        {
+            LoginService.SignOut();
+        }
+
+        #endregion
+        /// <summary>
+        /// Initializes the page
+        /// </summary>
+        /// <param name="navigationData">Data passed from the previous page</param>
+        /// <returns></returns>
+        public override Task InitializeAsync(object navigationData)
+        {
+
+            try
+            {
+                var userData = navigationData as User;
+                Task.Run(() => SetPageDataAsync(userData));
+            }
+            catch (Exception e)
+            {
+                DebugService.WriteLine(e);
+            }
+
+            return base.InitializeAsync(navigationData);
+
+            //DebugService.WriteLine("Initializing Account Page...");
+            //if (navigationData is string username)
+            //{
+            //    DebugService.WriteLine("Stage 2...");
+            //    var isSuccess = SetPageDataAsync(username).GetAwaiter().GetResult();
+            //    if (isSuccess)
+            //    {
+            //        DebugService.WriteLine("Stage 3...");
+            //        return base.InitializeAsync(navigationData);
+            //    }
+            //}
+        }
     }
 }

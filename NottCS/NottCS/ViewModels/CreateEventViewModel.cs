@@ -22,7 +22,7 @@ namespace NottCS.ViewModels
             try
             {
                 ListOfTextBox.Add(new Item());
-                Debug.WriteLine("New text box added");
+                DebugService.WriteLine("New text box added");
             }
             catch (Exception e)
             {
@@ -34,10 +34,10 @@ namespace NottCS.ViewModels
         {
             if (ListOfTextBox.Count > 3)
             {
-                Debug.WriteLine(p);
+                DebugService.WriteLine(p);
                 ListOfTextBox.Remove((Item)p);
-                Debug.WriteLine(ListOfTextBox.Count);
-                Debug.WriteLine("Delete command activated");
+                DebugService.WriteLine(ListOfTextBox.Count);
+                DebugService.WriteLine("Delete command activated");
             }
             
         }
@@ -58,11 +58,11 @@ namespace NottCS.ViewModels
             {
                 DoNothingForNow();
                 await NavigationService.NavigateToAsync<CreateEventConfirmationViewModel>(ListOfTextBox);
-                Debug.WriteLine("Button pressed");
+                DebugService.WriteLine("Button pressed");
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
+                DebugService.WriteLine(e.Message);
             }
         }
         #endregion

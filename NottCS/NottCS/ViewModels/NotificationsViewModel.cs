@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NottCS.Services.Navigation;
 using System;
+using NottCS.Services;
 
 namespace NottCS.ViewModels
 {
@@ -15,7 +16,7 @@ namespace NottCS.ViewModels
 
         public NotificationsViewModel()
         {
-            Debug.WriteLine("Constructor is called");
+            DebugService.WriteLine("Constructor is called");
             Title = "Notifications";
             SetPageData();
         }

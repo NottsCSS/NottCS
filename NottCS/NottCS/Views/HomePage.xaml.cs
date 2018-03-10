@@ -16,6 +16,8 @@ namespace NottCS.Views
         {
             InitializeComponent();
             BindingContext = new HomeViewModel();
+            //AddImage(IconOne, "NottCS.Images.Icons.icon2.png");
+            //AddImage(BannerImage, "NottCS.Images.example-background.jpg");
         }
         private void AddImage(Image imageContainer, string imageLocation)
         {

@@ -157,6 +157,49 @@
 
 
     <ContentPage Title="{Binding PageTitle3}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <!--<RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="2*"/>-->
+            </Grid.RowDefinitions>
+            
+            <!--<Image x:Name="BannerImage"
+                   Aspect="AspectFill"
+                   HorizontalOptions="FillAndExpand"
+                   Grid.Row="0" Grid.RowSpan="2"/>
+            <Image x:Name = "IconOne" 
+                   Margin="10,20,10,0"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Fill"
+                   Grid.Row="1"
+                   Grid.RowSpan="2">
+            </Image>-->
+            <StackLayout WidthRequest="500">
+                <Label Text="NottCS Login"
+                       FontSize="Large"
+                       VerticalOptions="Start" 
+                       HorizontalOptions="CenterAndExpand" />
+                <Label Text="Account Details"
+                       HorizontalOptions="Center"
+                       FontSize="Small"
+                       Style="{StaticResource TitleLabelStyle}"/>
+                <ListView ItemsSource="{Binding DataList}"
+                          WidthRequest="500"
+                          HorizontalOptions="Center">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding DataName}" 
+                                      Detail="{Binding DataValue}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Label Text="Access token: " />
+                <Entry Text="{Binding AccessToken}"/>
+                <Button Text="Sign Out"  Command="{Binding SignOutCommand}" />
+            </StackLayout>
+        </Grid>
 
     </ContentPage>
 </TabbedPage>

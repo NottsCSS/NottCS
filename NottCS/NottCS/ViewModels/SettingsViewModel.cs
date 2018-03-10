@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using NottCS.Views;
 using NottCS.Services.Navigation;
 using System;
+using NottCS.Services;
 
 namespace NottCS.ViewModels
 {
@@ -38,7 +39,7 @@ namespace NottCS.ViewModels
                 catch (Exception e)
                 {
 
-                    Debug.WriteLine(e.Message);
+                    DebugService.WriteLine(e.Message);
                 }
             }
         }

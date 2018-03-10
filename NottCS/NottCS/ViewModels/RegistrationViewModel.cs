@@ -142,7 +142,7 @@ namespace NottCS.ViewModels
 //        private void ItemSelected(object param)
 //        {
 //            if (!(param is string s)) return;
-//            Debug.WriteLine($"{s} is selected");
+//            DebugService.WriteLine($"{s} is selected");
 //            RegistrationParameters.Course.Value = s;
 //        }
 //

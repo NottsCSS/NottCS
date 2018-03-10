@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using NottCS.Services;
 
 namespace NottCS.ViewModels
 {
@@ -6,7 +7,7 @@ namespace NottCS.ViewModels
     {
         public AboutViewModel()
         {
-            Debug.WriteLine("Constructor is called");
+            DebugService.WriteLine("Constructor is called");
             Title = "About";
         }
     }
