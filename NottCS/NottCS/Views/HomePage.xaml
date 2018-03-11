@@ -13,13 +13,13 @@
              xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
   <!--Pages can be added as references or inline-->
-    <ContentPage.Resources>
+    <TabbedPage.Resources>
         <ResourceDictionary>
             <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
             <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
             <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
         </ResourceDictionary>
-    </ContentPage.Resources>
+    </TabbedPage.Resources>
     
 
     <ContentPage Title="{Binding PageTitle1}">
