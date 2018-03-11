@@ -27,10 +27,11 @@
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ClubRegistrationViewModel.cs" />
+    <Compile Include="ViewModels\ClubViewModel.cs" />
     <Compile Include="ViewModels\CreateEventConfirmationViewModel.cs" />
     <Compile Include="ViewModels\CreateEventViewModel.cs" />
     <Compile Include="ViewModels\EventRegistrationSuccessViewModel.cs" />
-    <Compile Include="ViewModels\EventViewModel.cs" />
+    <Compile Include="ViewModels\EventRegistrationViewModel.cs" />
     <Compile Include="ViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -66,6 +67,9 @@
     <Compile Update="Views\ClubRegistrationPage.xaml.cs">
       <DependentUpon>ClubRegistrationPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\EventRegistrationPage.xaml.cs">
+      <DependentUpon>EventRegistrationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\EventRegistrationSuccessPage.xaml.cs">
       <DependentUpon>EventRegistrationSuccessPage.xaml</DependentUpon>
     </Compile>
@@ -86,6 +90,9 @@
     <EmbeddedResource Update="Views\AccountPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\ClubPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\ClubRegistrationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -95,7 +102,7 @@
     <EmbeddedResource Update="Views\CreateEventPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\EventPage.xaml">
+    <EmbeddedResource Update="Views\EventRegistrationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\EventRegistrationSuccessPage.xaml">

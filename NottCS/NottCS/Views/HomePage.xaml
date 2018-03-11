@@ -55,7 +55,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="1" 
                                        Grid.Row="0"
-                                       Text="{Binding ClubName}" 
+                                       Text="{Binding EventName}" 
                                        LineBreakMode="TailTruncation" />
                                 <Image Grid.Column="0" 
                                        Grid.Row="0"

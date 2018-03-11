@@ -12,7 +12,7 @@ using NottCS.Views;
 
 namespace NottCS.ViewModels
 {
-    class EventViewModel : BaseViewModel
+    class EventRegistrationViewModel : BaseViewModel
     {
         public override Task InitializeAsync(object navigationData)
         {

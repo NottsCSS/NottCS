@@ -25,11 +25,11 @@ namespace NottCS.ViewModels
 
         public HomeViewModel()
         {
-            _clubList = new ObservableCollection<Item>();
-            SelectedClubType = ClubTypePickList[0];
             PageTitle1 = "News Feed";
             PageTitle2 = "Clubs & Society";
             PageTitle3 = "Profile";
+            _clubList = new ObservableCollection<Item>();
+            SelectedClubType = ClubTypePickList[0];
             IsUWP = Device.RuntimePlatform == Device.UWP;
             IsNotUWP = Device.RuntimePlatform != Device.UWP;
         }
@@ -37,23 +37,21 @@ namespace NottCS.ViewModels
         #endregion
         #region Event List
         #region ListViewNavigation
-
-        public ICommand ItemTappedCommand => new Command(async (object p) => await ItemTapped(p));
-        private async Task ItemTapped(object p)
+        public ICommand TappedCommand => new Command(async (object p) => await Tapped(p));
+        private async Task Tapped(object p)
         {
+            //Label = $"Hello World {Count}";
+            //Count++;
             try
             {
-                await NavigationService.NavigateToAsync<ClubRegistrationViewModel>(p);
-                DebugService.WriteLine("Item Tapped");
-
+                await NavigationService.NavigateToAsync<EventRegistrationViewModel>(p);
+                DebugService.WriteLine("Button pressed");
             }
             catch (Exception e)
             {
                 DebugService.WriteLine(e.Message);
             }
-
         }
-
         #endregion
         #region Disable ItemSelectedCommand
         public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
@@ -66,7 +64,7 @@ namespace NottCS.ViewModels
         {
             new Item()
             {
-                ClubName = "I'm just a title",
+                EventName = "I'm just a title",
                 ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
             },
             new Item(),
@@ -114,20 +112,20 @@ namespace NottCS.ViewModels
 
         #endregion
         #region FlowListViewNavigation
-        public ICommand TappedCommand => new Command(async (object p) => await Tapped(p));
-        private async Task Tapped(object p)
+        public ICommand ItemTappedCommand => new Command(async (object p) => await ItemTapped(p));
+        private async Task ItemTapped(object p)
         {
-            //Label = $"Hello World {Count}";
-            //Count++;
             try
             {
-                await NavigationService.NavigateToAsync<EventViewModel>(p);
-                DebugService.WriteLine("Button pressed");
+                await NavigationService.NavigateToAsync<ClubRegistrationViewModel>(p);
+                DebugService.WriteLine("Item Tapped");
+
             }
             catch (Exception e)
             {
                 DebugService.WriteLine(e.Message);
             }
+
         }
         #endregion
         #region Temporary ClubList
