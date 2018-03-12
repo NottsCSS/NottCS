@@ -6,7 +6,7 @@ namespace NottCS.Validations
 {
     internal class StringAlphaNumericRule : IValidationRule<string>
     {
-        public string ValidationMessage { get; set; }
+        public string ValidationMessage { get;} = "must contain only alphanumeric characters";
 
         public bool Check(string value)
         {

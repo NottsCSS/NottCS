@@ -15,7 +15,7 @@ namespace NottCS.ViewModels
 
         private async Task func1()
         {
-            await NavigationService.BackUntil<AccountPage>();
+            await NavigationService.BackUntilAsync<AccountViewModel>();
         }
     }
 }

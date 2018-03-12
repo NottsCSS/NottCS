@@ -54,16 +54,16 @@ namespace NottCS.ViewModels
         {
             Validations =
             {
-                new StringNotEmptyRule() {ValidationMessage = "Student ID cannot be empty"},
-                new StringDigitsRule() {ValidationMessage = "A valid student ID is required"}
+                new StringNotEmptyRule(),
+                new StringNumericRule()
             }
         };
         public ValidatableObject<string> LibraryNumber { get; set; } = new ValidatableObject<string>()
         {
             Validations =
             {
-                new StringNotEmptyRule() {ValidationMessage = "Library number cannot be empty"},
-                new StringDigitsRule() {ValidationMessage = "A valid library number is required"}
+                new StringNotEmptyRule(),
+                new StringNumericRule() 
             }
         };
 

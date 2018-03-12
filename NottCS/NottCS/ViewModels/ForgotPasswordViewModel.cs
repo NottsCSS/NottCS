@@ -37,7 +37,7 @@ namespace NottCS.ViewModels
         public ForgotPasswordViewModel()
         {
             Title = "Forgot Password";
-            ValidatableObject.Validations.Add(new StringNotEmptyRule() { ValidationMessage = "No valid OWA detected." });
+            ValidatableObject.Validations.Add(new StringNotEmptyRule());
         }
 
         /// <summary>
