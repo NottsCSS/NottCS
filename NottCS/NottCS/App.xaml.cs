@@ -28,7 +28,7 @@ namespace NottCS
 		        };
 //		    MainPage = new NavigationPage(new ClubPage());
 		    MainPage = new ContentPage();
-        }
+		}
 
 	    private static Task InitNavigation()
 	    {
