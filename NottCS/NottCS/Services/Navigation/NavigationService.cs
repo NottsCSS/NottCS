@@ -166,7 +166,7 @@ namespace NottCS.Services.Navigation
                 }
                 return;
             }
-            throw new Exception("Page of type: {pageType} not found on navigation stack");
+            throw new Exception($"Page of type: {pageType} not found on navigation stack");
         }
     }
 }

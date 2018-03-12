@@ -38,7 +38,7 @@ namespace NottCS.Services
 //                        await NavigationService.NavigateToAsync<AccountViewModel>(userData.Item2);
 //                        DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
 //                    }
-                    await NavigationService.NavigateToAsync<AccountViewModel>(userData.Item2);
+                    await NavigationService.NavigateToAsync<HomeViewModel>(userData.Item2);
                 }
                 else
                 {
