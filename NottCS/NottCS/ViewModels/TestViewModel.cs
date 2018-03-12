@@ -30,26 +30,43 @@ namespace NottCS.ViewModels
                 new StringNotEmptyRule()
             }
         };
+        public ObservableCollection<EventAdditionalParameter> ParametersList { get; } = new ObservableCollection<EventAdditionalParameter>()
+        {
+            new EventAdditionalParameter()
+            {
+                Name = "Phone manufacturer", ValidationList =
+                {
+                    new StringNotEmptyRule(),
+                    new StringAlphaNumericRule()
+                }
+            },
+            new EventAdditionalParameter()
+            {
+                Name = "Age", ValidationList =
+                {
+                    new StringNotEmptyRule(),
+                    new StringNumericRule()
+                }
+            }
+        };
         public ICommand SomeCommand => new Command(SomeFunction);
         private void SomeFunction()
         {
-            Debug.WriteLine(typeof(IValidationRule<string>));
-            var rule1 = new StringNotEmptyRule();
-            Type rule1Type = rule1.GetType();
-            Debug.WriteLine(rule1Type);
-            IValidationRule<string> rule2 = null;
-            try
+            bool isValid = true;
+            foreach (var param in ParametersList)
             {
-                rule2 = Activator.CreateInstance(rule1Type) as IValidationRule<string>;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-                Debug.WriteLine(e.TargetSite);
+                if (!param.IsValid)
+                {
+                    //TODO: Change the Debug writeline to ACR userdialog
+                    Debug.WriteLine(param.ErrorMessage);
+                    isValid = false;
+                }
             }
 
-            Debug.WriteLine($"Rule 2 is: {rule2?.GetType()}");
-
+            if (isValid)
+            {
+                //do stuff when all parameters are valid, contact server, navigate, etc.
+            }
 
         }
     }

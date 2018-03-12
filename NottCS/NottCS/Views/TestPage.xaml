@@ -11,14 +11,20 @@
              >
     <ContentPage.Content>
         <StackLayout>
-            <ListView ItemsSource="{Binding ValidationsList}"
+            <ListView ItemsSource="{Binding ParametersList}"
                       Margin="3,3,0,0"
                       RowHeight="100"
                       x:Name="SomeList">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <customControls:ValidatableEntry Validations="{Binding .}"/>
+                            <StackLayout>
+                                <customControls:LabelledValidatableEntry Validations="{Binding ValidationList}"
+                                                                         Name="{Binding Name}"
+                                                                         Value="{Binding Value}"
+                                                                         IsValid="{Binding IsValid, Mode=OneWayToSource}"
+                                                                         ErrorMessage="{Binding ErrorMessage, Mode=OneWayToSource}"/>
+                            </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

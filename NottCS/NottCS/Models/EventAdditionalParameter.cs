@@ -11,6 +11,17 @@ namespace NottCS.Models
     {
         public string Name { get; set; }
         public List<IValidationRule<string>> ValidationList { get; set; } = new List<IValidationRule<string>>();
+        public string Value { get; set; }
+        [JsonIgnore]
+        public bool IsValid { get; set; }
+        [JsonIgnore]
+        public string ErrorMessage { get; set; }
+
+        protected bool Equals(EventAdditionalParameter other)
+        {
+            return string.Equals(Name, other.Name) && Equals(ValidationList, other.ValidationList) && string.Equals(Value, other.Value) && IsValid == other.IsValid && string.Equals(ErrorMessage, other.ErrorMessage);
+        }
+
         public override bool Equals(object obj)
         {
             if (!(obj is EventAdditionalParameter model))
@@ -31,7 +42,12 @@ namespace NottCS.Models
         {
             unchecked
             {
-                return ((Name != null ? Name.GetHashCode() : 0) * 397) ^ (ValidationList != null ? ValidationList.GetHashCode() : 0);
+                var hashCode = (Name != null ? Name.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (ValidationList != null ? ValidationList.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Value != null ? Value.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ IsValid.GetHashCode();
+                hashCode = (hashCode * 397) ^ (ErrorMessage != null ? ErrorMessage.GetHashCode() : 0);
+                return hashCode;
             }
         }
     }

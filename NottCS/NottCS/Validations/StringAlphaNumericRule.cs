@@ -15,7 +15,7 @@ namespace NottCS.Validations
                 return false;
             }
             var str = value;
-            Regex r = new Regex("^[a-zA-Z0-9]*$");
+            Regex r = new Regex("^[a-zA-Z0-9 ]*$");
             return r.IsMatch(str);
         }
     }

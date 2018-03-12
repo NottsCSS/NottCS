@@ -66,7 +66,7 @@ namespace NottCSTest
                 {
                     new StringNotEmptyRule(),
                     new StringAlphaNumericRule()
-                }
+                }, Value = "Huawei"
             };
 
             string model1JSON = JsonConvert.SerializeObject(model1);
