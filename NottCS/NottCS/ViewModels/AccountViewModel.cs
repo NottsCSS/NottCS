@@ -17,6 +17,13 @@ namespace NottCS.ViewModels
 {
     internal class AccountViewModel : BaseViewModel
     {
+        /// <summary>
+        /// Constructor of AccountViewModel
+        /// </summary>
+        public AccountViewModel()
+        {
+            Title = "Account Page";
+        }
         #region ViewModalAdditionalClass
 
         public class UserDataObject
@@ -45,14 +52,6 @@ namespace NottCS.ViewModels
 
         #endregion
 
-        /// <summary>
-        /// Constructor of AccountViewModel
-        /// </summary>
-        public AccountViewModel()
-        {
-            Title = "Account Page";
-        }
-
         public string AccessToken { get; } = App.MicrosoftAuthenticationResult.AccessToken;
 
         /// <summary>
@@ -62,7 +61,7 @@ namespace NottCS.ViewModels
         private void SetPageDataAsync(User userData)
         {
             LoginUser = userData;
-            Debug.WriteLine(JsonConvert.SerializeObject(LoginUser));
+            DebugService.WriteLine(JsonConvert.SerializeObject(LoginUser));
             DataList = new List<UserDataObject>()
             {
                 new UserDataObject(){DataName = "Name", DataValue = LoginUser.Name},
@@ -94,19 +93,19 @@ namespace NottCS.ViewModels
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e);
+                DebugService.WriteLine(e);
             }
 
             return base.InitializeAsync(navigationData);
 
-            //Debug.WriteLine("Initializing Account Page...");
+            //DebugService.WriteLine("Initializing Account Page...");
             //if (navigationData is string username)
             //{
-            //    Debug.WriteLine("Stage 2...");
+            //    DebugService.WriteLine("Stage 2...");
             //    var isSuccess = SetPageDataAsync(username).GetAwaiter().GetResult();
             //    if (isSuccess)
             //    {
-            //        Debug.WriteLine("Stage 3...");
+            //        DebugService.WriteLine("Stage 3...");
             //        return base.InitializeAsync(navigationData);
             //    }
             //}

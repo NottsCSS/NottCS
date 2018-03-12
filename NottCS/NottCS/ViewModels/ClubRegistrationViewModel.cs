@@ -6,6 +6,7 @@ using System.Windows.Input;
 using NottCS.Models;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using NottCS.Services;
 using NottCS.Services.Navigation;
 using NottCS.Views;
 
@@ -20,12 +21,12 @@ namespace NottCS.ViewModels
             try
             {
                 await NavigationService.NavigateToAsync<QRCodeViewModel>();
-                Debug.WriteLine("Button Pressed");
+                DebugService.WriteLine("Button Pressed");
             }
             catch (Exception e)
             {
 
-                Debug.WriteLine(e.Message);
+                DebugService.WriteLine(e.Message);
             }
 
         }
@@ -33,7 +34,7 @@ namespace NottCS.ViewModels
         {
             if (navigationData is Item s)
             {
-                Debug.WriteLine($"Club name is {s.ClubName}");
+                DebugService.WriteLine($"Club name is {s.ClubName}");
             }
             return base.InitializeAsync(navigationData);
         }

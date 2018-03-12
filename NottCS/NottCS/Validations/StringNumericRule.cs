@@ -1,12 +1,15 @@
 ﻿using System.Text.RegularExpressions;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
+using NottCS.Services.JSONSerializer;
 
 [assembly: InternalsVisibleTo("NottCSTest")]
 namespace NottCS.Validations
 {
-    internal class StringDigitsRule : IValidationRule<string>
+    [JsonConverter(typeof(IValidationRuleConverter))]
+    internal class StringNumericRule : IValidationRule<string>
     {
-        public string ValidationMessage { get; set; }
+        public string ValidationMessage { get;} = "must contain only numbers";
 
         public bool Check(string value)
         {

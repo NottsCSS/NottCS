@@ -25,6 +25,7 @@ namespace NottCS.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
+            InitializeService();
 
             return base.FinishedLaunching(app, options);
         }
@@ -32,6 +33,14 @@ namespace NottCS.iOS
         {
             AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(url);
             return true;
+        }
+
+        /// <summary>
+        /// Initializes the service.
+        /// </summary>
+        private void InitializeService()
+        {
+            ZXing.Net.Mobile.Forms.iOS.Platform.Init();
         }
     }
 }

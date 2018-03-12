@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using NottCS.Models;
 using NottCS.Services.REST;
 using NottCS.ViewModels;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 namespace NottCS.Services.Navigation
 {
@@ -19,49 +21,7 @@ namespace NottCS.Services.Navigation
         /// Handles all authentication on app startup
         /// </summary>
         /// <returns></returns>
-        internal static async Task InitializeAsync()
-        {
-            var loadingDialog = Acr.UserDialogs.UserDialogs.Instance.Loading("Beep beep bop... 😅");
-            loadingDialog.Show();
-            bool canAuthenticate = await LoginService.MicrosoftAuthenticateWithCacheAsync();
-            DebugService.WriteLine($"Can authenticate with cached data: {canAuthenticate}");
-            Stopwatch stopwatch = new Stopwatch();
-
-            if (canAuthenticate)
-            {
-                var userData = await RestService.RequestGetAsync<User>();
-                if (userData.Item1 == "OK") //first item represents whether the request is successful
-                {
-                    //if either studentId or librarynumber is not filled that means is new user
-                    if (String.IsNullOrEmpty(userData.Item2.StudentId) ||
-                        String.IsNullOrEmpty(userData.Item2.LibraryNumber))
-                    {
-                        stopwatch.Start();
-                        await NavigateToAsync<RegistrationViewModel>(userData.Item2);
-                        DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
-                    }
-                    else
-                    {
-                        stopwatch.Start();
-                        await NavigateToAsync<AccountViewModel>(userData.Item2);
-                        DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
-                    }
-                }
-                else
-                {
-                    stopwatch.Start();
-                    await NavigateToAsync<LoginViewModel>();
-                    DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
-                }
-            }
-            else
-            {
-                stopwatch.Start();
-                await NavigateToAsync<LoginViewModel>();
-                DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
-            }
-            loadingDialog.Hide();
-        }
+        
         /// <summary>
         /// Navigates using viewmodel, preferred way of navigation due to type checks during compile time
         /// Calls InitializeAsync method with the passed parameter during navigation, override that method to use the parameter
@@ -79,7 +39,6 @@ namespace NottCS.Services.Navigation
             if (!_isNavigating) //prevents simultaneous navigations
             {
                 _isNavigating = true;
-
                 Page page = null;
                 var createPageTask = CreatePage(viewModelType);
 
@@ -110,15 +69,16 @@ namespace NottCS.Services.Navigation
                 }
                 if (Application.Current.MainPage is NavigationPage navigationPage)
                 {
-
-                    Task pushPageTask = navigationPage.PushAsync(page);
+            
+                    var previousPage = navigationPage.CurrentPage;
+                    Task pushPageTask = navigationPage.Navigation.PushAsync(page);
                     Task initializeAsyncTask = null;
                     if (page.BindingContext is BaseViewModel viewModel)
                     {
                         initializeAsyncTask = viewModel.InitializeAsync(navigationParameter);
                     };
 
-                    DebugService.WriteLine($"Previous page is: {navigationPage.CurrentPage}");
+                    DebugService.WriteLine($"Previous page is: {previousPage}");
                     DebugService.WriteLine($"Now navigating to:{page}");
                     await pushPageTask;
                     if (initializeAsyncTask != null) await initializeAsyncTask;
@@ -186,6 +146,27 @@ namespace NottCS.Services.Navigation
                 return Task.FromResult(page);
             }
         }
-        
+
+        internal static void ClearNavigation()
+        {
+            Application.Current.MainPage = new ContentPage();
+        }
+
+        internal static async Task BackUntilAsync<TViewModel>() where TViewModel : BaseViewModel, new()
+        {
+            Type pageType = GetPageTypeForViewModel(typeof(TViewModel));
+            var stack = Application.Current.MainPage.Navigation.NavigationStack;
+            
+            foreach (var page in stack)
+            {
+                if (pageType != page.GetType()) continue;
+                while (stack.Last() != page)
+                {
+                    await Application.Current.MainPage.Navigation.PopAsync();
+                }
+                return;
+            }
+            throw new Exception($"Page of type: {pageType} not found on navigation stack");
+        }
     }
 }

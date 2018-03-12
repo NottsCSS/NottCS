@@ -21,8 +21,8 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="75"/>
-                    <RowDefinition Height="75"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
@@ -35,7 +35,7 @@
                        HorizontalOptions="FillAndExpand"
                        Grid.Row="0" Grid.RowSpan="2"/>
                 <Image x:Name = "IconOne" 
-                       Margin="10,20"
+                       Margin="10,20,10,0"
                        HorizontalOptions="Center"
                        VerticalOptions="Fill"
                        Grid.Row="1"
@@ -50,6 +50,8 @@
                         <Button Text = "LOGOUT" Command = "{Binding SignOutCommand}" 
                                 Margin="50,0,50,0" />
                         <Label Text="{Binding LoginMessage}" />
+                        <Label Text="Access Token" />
+                        <Entry Text="{Binding AccessToken}"></Entry>
                         <ActivityIndicator Color="Green" IsRunning="{Binding IsBusy}" />
                     </StackLayout>
                 </ScrollView>

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Newtonsoft.Json;
 using NottCS.Models;
+using NottCS.Services;
 using NottCS.Services.Navigation;
 using NottCS.Services.REST;
 using Xamarin.Forms;
@@ -53,16 +54,16 @@ namespace NottCS.ViewModels
         {
             Validations =
             {
-                new StringNotEmptyRule() {ValidationMessage = "Student ID cannot be empty"},
-                new StringDigitsRule() {ValidationMessage = "A valid student ID is required"}
+                new StringNotEmptyRule(),
+                new StringNumericRule()
             }
         };
         public ValidatableObject<string> LibraryNumber { get; set; } = new ValidatableObject<string>()
         {
             Validations =
             {
-                new StringNotEmptyRule() {ValidationMessage = "Library number cannot be empty"},
-                new StringDigitsRule() {ValidationMessage = "A valid library number is required"}
+                new StringNotEmptyRule(),
+                new StringNumericRule() 
             }
         };
 
@@ -142,7 +143,7 @@ namespace NottCS.ViewModels
 //        private void ItemSelected(object param)
 //        {
 //            if (!(param is string s)) return;
-//            Debug.WriteLine($"{s} is selected");
+//            DebugService.WriteLine($"{s} is selected");
 //            RegistrationParameters.Course.Value = s;
 //        }
 //

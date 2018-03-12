@@ -6,7 +6,7 @@ namespace NottCS.Validations
 
     internal class StringNotEmptyRule : IValidationRule<string>
     {
-        public string ValidationMessage { get; set; }
+        public string ValidationMessage { get;} = "cannot be empty";
 
         public bool Check(string value)
         {

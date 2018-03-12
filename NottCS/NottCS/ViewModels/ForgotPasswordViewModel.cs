@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NottCS.Services;
 using NottCS.Validations;
 using Xamarin.Forms;
 
@@ -37,7 +38,7 @@ namespace NottCS.ViewModels
         public ForgotPasswordViewModel()
         {
             Title = "Forgot Password";
-            ValidatableObject.Validations.Add(new StringNotEmptyRule() { ValidationMessage = "No valid OWA detected." });
+            ValidatableObject.Validations.Add(new StringNotEmptyRule());
         }
 
         /// <summary>
@@ -46,7 +47,7 @@ namespace NottCS.ViewModels
         /// <returns></returns>
         private async Task ForgotPassword()
         {
-            Debug.WriteLine("Forgot Password Button Pressed.");
+            DebugService.WriteLine("Forgot Password Button Pressed.");
             IsBusy = true;
             IsOwaValid = ValidatableObject.Validate();
 

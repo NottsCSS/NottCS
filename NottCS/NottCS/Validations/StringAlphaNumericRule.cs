@@ -6,7 +6,7 @@ namespace NottCS.Validations
 {
     internal class StringAlphaNumericRule : IValidationRule<string>
     {
-        public string ValidationMessage { get; set; }
+        public string ValidationMessage { get;} = "must contain only alphanumeric characters";
 
         public bool Check(string value)
         {
@@ -15,7 +15,7 @@ namespace NottCS.Validations
                 return false;
             }
             var str = value;
-            Regex r = new Regex("^[a-zA-Z0-9]*$");
+            Regex r = new Regex("^[a-zA-Z0-9 ]*$");
             return r.IsMatch(str);
         }
     }

@@ -2,34 +2,54 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NottCS.Views.TestPage"
-             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:customControls="clr-namespace:NottCS.CustomControls;assembly=NottCS"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+             xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
+             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModels:TestViewModel}"
              >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
+            <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
+            <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <flv:FlowListView x:Name="FlowListView" 
-                              FlowColumnCount="2" 
-                              SeparatorVisibility="None" 
-                              RowHeight="150"
-                              FlowUseAbsoluteLayoutInternally="True" 
-                              FlowColumnExpand="None"
-                              FlowItemsSource="{Binding DummyListCollection}" 
-                              FlowItemTappedCommand="{Binding ItemTappedCommand}"
-                              HasUnevenRows="False">
-                <flv:FlowListView.FlowColumnTemplate>
+            <ListView ItemsSource="{Binding ParametersList}"
+                      Margin="3,3,0,0"
+                      RowHeight="100"
+                      x:Name="SomeList">
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemSelected"
+                        Source="{x:Reference SomeList}"
+                        Command="{Binding DisableItemSelectedCommand, Mode=TwoWay}" 
+                        Converter="{StaticResource SelectedItemConverter}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout>
-                            <Label HorizontalOptions="FillAndExpand" 
-                                   VerticalOptions="FillAndExpand" 
-                                   HorizontalTextAlignment="Center" 
-                                   VerticalTextAlignment="Center" 
-                                   Text="{Binding Name}" 
-                                   LineBreakMode="CharacterWrap"/>
-                            <Image Source="{Binding ImageURI}" />
-                        </StackLayout>
+                        <ViewCell>
+                            <StackLayout>
+                                <customControls:LabelledValidatableEntry Validations="{Binding ValidationList}"
+                                                                         Name="{Binding Name}"
+                                                                         Value="{Binding Value}"
+                                                                         IsValid="{Binding IsValid, Mode=OneWayToSource}"
+                                                                         ErrorMessage="{Binding ErrorMessage, Mode=OneWayToSource}"/>
+                            </StackLayout>
+                        </ViewCell>
                     </DataTemplate>
-                </flv:FlowListView.FlowColumnTemplate>
-            </flv:FlowListView>
-            <Label Text="SOMETHING"></Label>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Command="{Binding SomeCommand}" Text="Some Button"/>
+<!--            <customControls:ValidatableEntry Validations="{Binding Validations1List}" -->
+<!--                                             Margin="50"/>-->
+<!--            <customControls:ValidatableEntry Validations="{Binding Validations2List}" -->
+<!--                                             Margin="50"/>-->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -14,9 +14,15 @@ namespace NottCS.ViewModels
 {
     internal class LoginViewModel : BaseViewModel
     {
+        public string AccessToken
+        {
+            get => _accessToken;
+            set => SetProperty(ref _accessToken, value);
+        }
 
         private string _loginMessage = "";
-        
+        private string _accessToken;
+
         public string LoginMessage
         {
             get => _loginMessage;
@@ -41,28 +47,32 @@ namespace NottCS.ViewModels
         private async Task SignInAsync()
         {
             var stopwatch = new Stopwatch();
+            stopwatch.Start();
             IsBusy = true;
-
-            await LoginService.MicrosoftAuthenticateWithUIAsync();
+            bool canSignInWithCache = await LoginService.MicrosoftAuthenticateWithCacheAsync();
+            if (!canSignInWithCache)
+            {
+                await LoginService.MicrosoftAuthenticateWithUIAsync();
+            }
             string a = App.MicrosoftAuthenticationResult?.User.DisplayableId;
-            Debug.WriteLine($"DisplayableID: {a}");
-            Debug.WriteLine($"Identifier: {App.MicrosoftAuthenticationResult?.User.Identifier}");
-            Debug.WriteLine($"Identity Provider: {App.MicrosoftAuthenticationResult?.User.IdentityProvider}");
-            Debug.WriteLine($"Name: {App.MicrosoftAuthenticationResult?.User.Name}");
+            DebugService.WriteLine($"DisplayableID: {a}");
+            DebugService.WriteLine($"Identifier: {App.MicrosoftAuthenticationResult?.User.Identifier}");
+            DebugService.WriteLine($"Identity Provider: {App.MicrosoftAuthenticationResult?.User.IdentityProvider}");
+            DebugService.WriteLine($"Name: {App.MicrosoftAuthenticationResult?.User.Name}");
 
-            Debug.WriteLine($"Authentication took {stopwatch.ElapsedMilliseconds} ms");
+            DebugService.WriteLine($"Authentication took {stopwatch.ElapsedMilliseconds} ms");
             stopwatch.Restart();
 
             var getUserTask = Task.Run(() => RestService.RequestGetAsync<User>());
             var getUserTaskResult = await getUserTask;
 
-            Debug.WriteLine($"User request took {stopwatch.ElapsedMilliseconds} ms");
+            DebugService.WriteLine($"User request took {stopwatch.ElapsedMilliseconds} ms");
             stopwatch.Restart();
 
             if (getUserTaskResult.Item1 == "OK")
             {
-                await NavigationService.NavigateToAsync<AccountViewModel>(getUserTaskResult.Item2);
-                Debug.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds} ms");
+                await NavigationService.NavigateToAsync<HomeViewModel>(getUserTaskResult.Item2);
+                DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds} ms");
                 stopwatch.Stop();
             }
             else
@@ -71,7 +81,7 @@ namespace NottCS.ViewModels
             }
 
             //Debugging code
-            Debug.WriteLine("Sign in function called");
+            DebugService.WriteLine("Sign in function called");
 
             IsBusy = false;
         }
@@ -79,7 +89,7 @@ namespace NottCS.ViewModels
         {
             IsBusy = true;
             await LoginService.SignOut();
-            Debug.WriteLine("Sign out function called");
+            DebugService.WriteLine("Sign out function called");
             LoginMessage = "Signed out successfully";
             IsBusy = false;
         }
