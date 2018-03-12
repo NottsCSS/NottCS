@@ -18,13 +18,13 @@ namespace NottCS.Converters
 
                 if (Device.RuntimePlatform == Device.UWP)
                 {
-                    Device.BeginInvokeOnMainThread(() => ((ListView)parameter).SelectedItem = null);
+                    Device.BeginInvokeOnMainThread(() => ((ListView) parameter).SelectedItem = null);
                 }
                 else
                 {
-                    if (((ListView)parameter).SelectedItem != null)
+                    if (((ListView) parameter).SelectedItem != null)
                     {
-                        ((ListView)parameter).SelectedItem = null;
+                        ((ListView) parameter).SelectedItem = null;
                         DebugService.WriteLine("Selected item set to null");
                     }
                 }
@@ -47,6 +47,8 @@ namespace NottCS.Converters
                 }
 
             }
+
+
 
             var eventArgs = value as SelectedItemChangedEventArgs;
             return eventArgs?.SelectedItem;

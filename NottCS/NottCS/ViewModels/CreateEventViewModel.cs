@@ -15,40 +15,57 @@ namespace NottCS.ViewModels
     class CreateEventViewModel : BaseViewModel
     {
         public ICommand CreateTextBoxCommand => new Command(CreateTextBox);
-        public ICommand DeleteCellsCommand { get; set;}
-
-        public ICommand CreateEventCommand => new Command(DoNothingForNow);
-
+        public ICommand DeleteCellsCommand =>new Command(DeleteTextBox);
+        
         private void CreateTextBox()
         {
             try
             {
                 ListOfTextBox.Add(new Item());
-                DebugService.WriteLine("Test");
+                DebugService.WriteLine("New text box added");
             }
             catch (Exception e)
             {
-                DebugService.WriteLine(e);
+                Console.WriteLine(e);
             }
         }
 
-        public void DeleteTextBox()
+        private void DeleteTextBox(object p)
         {
             if (ListOfTextBox.Count > 3)
             {
-                ListOfTextBox.RemoveAt(ListOfTextBox.Count - 1);
-                Debug.WriteLine(ListOfTextBox.Count);
-                Debug.WriteLine("Delete command activated");
+                DebugService.WriteLine(p);
+                ListOfTextBox.Remove((Item)p);
+                DebugService.WriteLine(ListOfTextBox.Count);
+                DebugService.WriteLine("Delete command activated");
             }
             
         }
 
         public void DoNothingForNow()
         {
-
+            foreach (var item in ListOfTextBox)
+            {
+                DebugService.WriteLine(item.Entry);
+            }
         }
-        
 
+        #region CreateEventNavigation
+        public ICommand CreateEventCommand => new Command(async () => await Navigate());
+        private async Task Navigate()
+        {
+            try
+            {
+                DoNothingForNow();
+                await NavigationService.NavigateToAsync<CreateEventConfirmationViewModel>(ListOfTextBox);
+                DebugService.WriteLine("Button pressed");
+            }
+            catch (Exception e)
+            {
+                DebugService.WriteLine(e.Message);
+            }
+        }
+        #endregion
 
         private ObservableCollection<Item> _listOfTextBox;
         public ObservableCollection<Item> ListOfTextBox
@@ -58,7 +75,9 @@ namespace NottCS.ViewModels
         }
         
 
-
+        public int ButtonHeight { get; set; }
+        public int Padding { get; set; }
+        public bool IsUWP { get; set; }
         #region Disable ItemSelectedCommand
         public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
         public void DisableItemSelected()
@@ -75,13 +94,34 @@ namespace NottCS.ViewModels
 
         public CreateEventViewModel()
         {
+            switch (Device.RuntimePlatform)
+            {
+                case Device.iOS:
+                {
+                    ButtonHeight = 60;
+                    Padding = 5;
+                    break;
+                }
+                case Device.UWP:
+                {
+                    ButtonHeight = 40;
+                    Padding = -5;
+                    break;
+                }
+                default:
+                {
+                    ButtonHeight = 40;
+                    Padding = 5;
+                }
+                    break;
+            }
+            IsUWP = Device.RuntimePlatform == Device.UWP;
             ListOfTextBox =new ObservableCollection<Item>()
             {
                 new Item(),
                 new Item(),
                 new Item()
             };
-            DeleteCellsCommand = new Command(DeleteTextBox);
         }
 
         #endregion

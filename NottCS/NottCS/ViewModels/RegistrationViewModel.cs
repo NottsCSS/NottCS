@@ -119,33 +119,24 @@ namespace NottCS.ViewModels
             {
                 CurrentUser.StudentId = StudentID.Value;
                 CurrentUser.LibraryNumber = LibraryNumber.Value;
-                Tuple<bool, User> userData = null;
-                try
-                {
-                    userData = await RestService.RequestPutAsync(CurrentUser);
-                }
-                catch(Exception e)
-                {
-                    DebugService.WriteLine(e.Message);
-                }
 
-                if (userData == null)
+                var requestUpdate = await RestService.RequestUpdateAsync(CurrentUser);
+                if (requestUpdate == "OK")
                 {
-                    DebugService.WriteLine("Unable to get result from put request");
-                    IsBusy = false;
-                    return;
-                }
-
-                if (userData.Item1) //if request is successful
-                {
-//                    await NavigationService.NavigateToAsync<RegistrationSuccessViewModel>();
-                    await NavigationService.NavigateToAsync<AccountViewModel>(userData.Item2);
+                    var userData = await RestService.RequestGetAsync<User>();
+                    if (userData.Item1 == "OK")
+                    {
+                        await NavigationService.NavigateToAsync<AccountViewModel>(userData.Item2);
+                    }
+                    else
+                    {
+                        Acr.UserDialogs.UserDialogs.Instance.Alert(requestUpdate, "Server Error", "OK");
+                    }
                 }
                 else
                 {
-                    DebugService.WriteLine("Request unsuccessful. Please try again");
+                    Acr.UserDialogs.UserDialogs.Instance.Alert(requestUpdate, "Server Error", "OK");
                 }
-
             }
             IsBusy = false;
         }

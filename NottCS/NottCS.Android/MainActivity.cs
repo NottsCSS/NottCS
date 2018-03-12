@@ -17,7 +17,7 @@ namespace NottCS.Droid
     {
         protected override void OnCreate(Bundle bundle)
         {
-            InitializeDialogService();
+            InitializeService();
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -29,22 +29,44 @@ namespace NottCS.Droid
             App.UiParent = new UIParent(this);
         }
 
+        /// <summary>
+        /// Called when [activity result].
+        /// </summary>
+        /// <param name="requestCode">The request code.</param>
+        /// <param name="resultCode">The result code.</param>
+        /// <param name="data">The data.</param>
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
             AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
         }
 
-        private void InitializeDialogService()
+        /// <summary>
+        /// Initializes the service.
+        /// </summary>
+        private void InitializeService()
         {
             try
             {
                 UserDialogs.Init(this);
+                ZXing.Net.Mobile.Forms.Android.Platform.Init();
+
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
             }
+        }
+
+        /// <summary>
+        /// Called when [request permissions result].
+        /// </summary>
+        /// <param name="requestCode">The request code.</param>
+        /// <param name="permissions">The permissions.</param>
+        /// <param name="grantResults">The grant results.</param>
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        {
+            ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 }

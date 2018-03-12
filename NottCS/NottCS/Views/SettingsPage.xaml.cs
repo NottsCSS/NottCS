@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using NottCS.ViewModels;
 using System.Diagnostics;
+using NottCS.Services;
 
 namespace NottCS.Views
 {
@@ -12,7 +13,7 @@ namespace NottCS.Views
 		public SettingsPage ()
 		{
 			InitializeComponent ();
-            Debug.WriteLine("Attempting to call ViewModel");
+            DebugService.WriteLine("Attempting to call ViewModel");
 		    BindingContext = new SettingsViewModel();
 
 		}
