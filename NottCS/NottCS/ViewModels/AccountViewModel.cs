@@ -68,7 +68,7 @@ namespace NottCS.ViewModels
                 new UserDataObject(){DataName = "Email", DataValue = LoginUser.Email},
                 new UserDataObject(){DataName = "Student ID", DataValue = LoginUser.StudentId},
                 new UserDataObject(){DataName = "Library Number", DataValue = LoginUser.LibraryNumber},
-                new UserDataObject(){DataName = "Date Joined", DataValue = LoginUser.DateJoined.ToLongDateString()}
+                new UserDataObject(){DataName = "Date Joined", DataValue = LoginUser.YearOfStudy.ToString()}
             };
         }
 

@@ -18,8 +18,6 @@ namespace NottCS.Services
             //Loading Dialog
             var loadingDialog = Acr.UserDialogs.UserDialogs.Instance.Loading("Beep beep bop...");
             loadingDialog.Show();
-            DebugService.WriteLine("Delaying........");
-            await Task.Delay(10000);
 
             bool canAuthenticate = await LoginService.MicrosoftAuthenticateWithCacheAsync();
             DebugService.WriteLine($"Can authenticate with cached data: {canAuthenticate}");

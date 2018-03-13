@@ -25,6 +25,7 @@ namespace NottCS.ViewModels
 
         public HomeViewModel()
         {
+            Title = "NottCS";
             PageTitle1 = "News Feed";
             PageTitle2 = "Clubs & Society";
             PageTitle3 = "Profile";
@@ -293,7 +294,8 @@ namespace NottCS.ViewModels
                 new UserDataObject(){DataName = "Email", DataValue = LoginUser.Email},
                 new UserDataObject(){DataName = "Student ID", DataValue = LoginUser.StudentId},
                 new UserDataObject(){DataName = "Library Number", DataValue = LoginUser.LibraryNumber},
-                new UserDataObject(){DataName = "Date Joined", DataValue = LoginUser.DateJoined.ToLongDateString()}
+                new UserDataObject(){DataName = "Course", DataValue = LoginUser.Course},
+                new UserDataObject(){DataName = "Year of Study", DataValue = LoginUser.YearOfStudy.ToString()}
             };
         }
 
