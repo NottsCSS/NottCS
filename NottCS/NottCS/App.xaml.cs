@@ -19,6 +19,7 @@ namespace NottCS
         public static AuthenticationResult MicrosoftAuthenticationResult = null;
         public App ()
 		{
+            DebugService.WriteLine("App is starting up...");
 			InitializeComponent();
             InitializeDialogService();
 		    ClientApplication =
@@ -32,6 +33,7 @@ namespace NottCS
 
 	    private static Task InitNavigation()
 	    {
+            DebugService.WriteLine("Trying to start startup service");
 	        return StartupService.InitializeAsync();
 	    }
 
