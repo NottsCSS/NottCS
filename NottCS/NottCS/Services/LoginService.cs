@@ -7,7 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
 using Newtonsoft.Json.Linq;
+using NottCS.Services.Navigation;
 using NottCS.Services.REST;
+using NottCS.ViewModels;
 
 namespace NottCS.Services
 {
@@ -66,15 +68,16 @@ namespace NottCS.Services
 
         }
 
-        public static Task SignOut()
+        public static async Task SignOut()
         {
             foreach (var user in App.ClientApplication.Users)
             {
                 App.ClientApplication.Remove(user);
                 RestService.ResetClient();
             }
-
-            return Task.FromResult(false);
+            NavigationService.ClearNavigation();
+            await NavigationService.NavigateToAsync<LoginViewModel>();
+            
         }
 
         public static async Task MicrosoftAuthenticateWithUIAsync()

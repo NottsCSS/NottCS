@@ -14,20 +14,7 @@ namespace NottCS.ViewModels
 {
     internal class LoginViewModel : BaseViewModel
     {
-        public string AccessToken
-        {
-            get => _accessToken;
-            set => SetProperty(ref _accessToken, value);
-        }
-
-        private string _loginMessage = "";
-        private string _accessToken;
-
-        public string LoginMessage
-        {
-            get => _loginMessage;
-            set => SetProperty(ref _loginMessage, value);
-        }
+        
         
         /// <summary>
         /// Constructor to initialise values of various fields
@@ -90,7 +77,7 @@ namespace NottCS.ViewModels
             IsBusy = true;
             await LoginService.SignOut();
             DebugService.WriteLine("Sign out function called");
-            LoginMessage = "Signed out successfully";
+
             IsBusy = false;
         }
     }

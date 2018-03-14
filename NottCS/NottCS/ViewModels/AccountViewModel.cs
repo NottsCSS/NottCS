@@ -74,9 +74,9 @@ namespace NottCS.ViewModels
 
         public ICommand SignOutCommand => new Command(SignOut);
 
-        private static void SignOut()
+        private static async void SignOut()
         {
-            LoginService.SignOut();
+            await LoginService.SignOut();
         }
         /// <summary>
         /// Initializes the page
