@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Newtonsoft.Json;
+using Xunit;
 using NottCS.Validations;
 
 
@@ -54,6 +55,18 @@ namespace NottCSTest
 
             Assert.False(stringNotEmptyRule.Check(emptyString));
             Assert.False(stringNotEmptyRule.Check(nullString));
+        }
+
+        [Fact]
+        private void CharacterNumberRuleJSONTest()
+        {
+            var setting = new JsonSerializerSettings() {TypeNameHandling = TypeNameHandling.All};
+            IValidationRule<string> rule1 = new CharacterNumberRule(10);
+            string rule1JSON = JsonConvert.SerializeObject(rule1, setting);
+            var rule1Deserialised = JsonConvert.DeserializeObject(rule1JSON, setting);
+            Assert.Equal(rule1, rule1Deserialised);
+
+
         }
     }
 }

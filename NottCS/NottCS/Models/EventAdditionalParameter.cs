@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
-using NottCS.Services.JSONSerializer;
+using NottCS.Services.JSONConverters;
 using NottCS.Validations;
 
 namespace NottCS.Models
 {
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore, ItemTypeNameHandling = TypeNameHandling.All)]
     public class EventAdditionalParameter
     {
         public string Name { get; set; }

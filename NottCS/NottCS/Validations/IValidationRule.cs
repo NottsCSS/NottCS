@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
-using NottCS.Services.JSONSerializer;
+using NottCS.Services.JSONConverters;
 
 namespace NottCS.Validations
 {
-    [JsonConverter(typeof(IValidationRuleConverter))]
+    [JsonObject(ItemTypeNameHandling = TypeNameHandling.All)]
     public interface IValidationRule<T>
     {
         string ValidationMessage { get; }

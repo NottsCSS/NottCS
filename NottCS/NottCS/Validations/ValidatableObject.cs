@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
-using NottCS.Services.JSONSerializer;
+using NottCS.Services.JSONConverters;
 using NottCS.ViewModels;
 
 [assembly: InternalsVisibleTo("NottCSTest")]

@@ -52,8 +52,6 @@ namespace NottCS.ViewModels
 
         #endregion
 
-        public string AccessToken { get; } = App.MicrosoftAuthenticationResult.AccessToken;
-
         /// <summary>
         /// Sets the data for the page
         /// </summary>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace NottCS.Services.JSONSerializer
+namespace NottCS.Services.JSONConverters
 {
     internal class ValidatableObjectJsonConverter : JsonConverter
     {

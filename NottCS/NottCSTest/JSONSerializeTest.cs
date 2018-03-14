@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NottCS.Models;
-using NottCS.Services.JSONSerializer;
+using NottCS.Services.JSONConverters;
 using NottCS.Validations;
 using Xunit;
 
@@ -13,7 +14,7 @@ namespace NottCSTest
     public class JSONSerializeTest
     {
         [Fact]
-        void ValidatableObjectJSONSerializeTest()
+        private void ValidatableObjectJSONSerializeTest()
         {
             string standardString = "STANDARD STRING";
             string unicodeString = "Testing «ταБЬℓσ»: 1<2 & 4+1>3, now 20% off!";
@@ -38,27 +39,7 @@ namespace NottCSTest
         }
 
         [Fact]
-        void IValidationRuleJSONTest()
-        {
-            IValidationRule<string> rule1 = new StringNumericRule();
-            var rule1Expected = new StringNumericRule();
-
-            var rule1JSON = JsonConvert.SerializeObject(rule1);
-            var rule1JSONExpected = JsonConvert.SerializeObject(rule1Expected);
-
-            //Serialization test
-            Assert.Equal(typeof(StringNumericRule), rule1.GetType()); //same underlying type
-            Debug.WriteLine(rule1JSON);
-            Assert.Equal(rule1JSONExpected, rule1JSON); //same json
-
-            //Deserialization test
-            var rule1Deserialized = JsonConvert.DeserializeObject<IValidationRule<string>>(rule1JSON, new IValidationRuleConverter());
-            Assert.Equal(rule1.ValidationMessage, rule1Deserialized.ValidationMessage); //same validation message
-            Assert.Equal(rule1.GetType(), rule1Deserialized.GetType()); //same underlying type
-            
-        }
-        [Fact]
-        void EventAdditionalParameterJSONTest()
+        private void EventAdditionalParameterJSONTest()
         {
             var model1 = new EventAdditionalParameter()
             {
@@ -69,13 +50,56 @@ namespace NottCSTest
                 }, Value = "Huawei"
             };
 
-            string model1JSON = JsonConvert.SerializeObject(model1);
+            JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            string model1JSON = JsonConvert.SerializeObject(model1, settings);
+            var model1Deserialised = JsonConvert.DeserializeObject(model1JSON, settings);
 
-            var model1Deserialized = JsonConvert.DeserializeObject(model1JSON);
-            JObject something = model1Deserialized as JObject;
-            EventAdditionalParameter model1Deserialized2 = something?.ToObject<EventAdditionalParameter>();
-            Assert.Equal(model1, model1Deserialized2);
+            Assert.Equal(model1, model1Deserialised);
+
+//            var model1Deserialized = JsonConvert.DeserializeObject<EventAdditionalParameter>(model1JSON);
+//            JObject something = model1Deserialized as JObject;
+//            EventAdditionalParameter model1Deserialized2 = something?.ToObject<EventAdditionalParameter>();
+//            Assert.Equal(model1, model1Deserialized2);
+//            string something = "HAHA";
         }
+
+        [Fact]
+        private void EventAdditionalParameterListJSONTest()
+        {
+            var list = new List<EventAdditionalParameter>()
+            {
+                new EventAdditionalParameter()
+                {
+                    Name = "Phone manufacturer",
+                    ValidationList =
+                    {
+                        new StringNotEmptyRule(),
+                        new CharacterNumberRule(12),
+                        new StringAlphaNumericRule()
+                    },
+                    Value = "Huawei"
+                },
+                new EventAdditionalParameter()
+                {
+                    Name = "Preferred name",
+                    ValidationList =
+                    {
+                        new StringNotEmptyRule(),
+                        new CharacterNumberRule(20),
+                        new StringAlphaNumericRule()
+                    }
+                }
+            };
+
+            JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            string model1JSON = JsonConvert.SerializeObject(list, settings);
+            var model1Deserialised = JsonConvert.DeserializeObject(model1JSON, settings);
+
+            Assert.Equal(list, model1Deserialised);
+        }
+
+
+
 
     }
 }
