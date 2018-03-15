@@ -27,10 +27,6 @@ namespace NottCS.ViewModels
         /// Command wrapper for sign in function
         /// </summary>
         public ICommand SignInCommand => new Command(async () => await SignInAsync());
-        /// <summary>
-        /// Command wrapper for sign out function
-        /// </summary>
-        public ICommand SignOutCommand => new Command(async () => await SignOutAsync());
         private async Task SignInAsync()
         {
             if (!IsBusy)
