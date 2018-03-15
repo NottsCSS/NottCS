@@ -23,33 +23,29 @@
             <ListView ItemsSource="{Binding ParametersList}"
                       Margin="3,3,0,0"
                       RowHeight="100"
-                      x:Name="SomeList">
+                      x:Name="SomeList"
+                      ItemTapped="Nothing"
+                      >
                 <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior 
                         EventName="ItemSelected"
-                        Source="{x:Reference SomeList}"
-                        Command="{Binding DisableItemSelectedCommand, Mode=TwoWay}" 
+                        Source="{x:Reference SomeList}" 
+                        Command="{Binding DisableItemSelectedCommand}"
                         Converter="{StaticResource SelectedItemConverter}" />
                 </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <StackLayout>
-                                <customControls:LabelledValidatableEntry Validations="{Binding ValidationList}"
-                                                                         Name="{Binding Name}"
-                                                                         Value="{Binding Value}"
-                                                                         IsValid="{Binding IsValid, Mode=OneWayToSource}"
-                                                                         ErrorMessage="{Binding ErrorMessage, Mode=OneWayToSource}"/>
-                            </StackLayout>
+                        <ViewCell Tapped="Nothing">
+                            <customControls:LabelledValidatableEntry Validations="{Binding ValidationList}"
+                                                                     Name="{Binding Name}"
+                                                                     Value="{Binding Value}"
+                                                                     IsValid="{Binding IsValid, Mode=TwoWay}"
+                                                                     ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"/>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
             <Button Command="{Binding SomeCommand}" Text="Some Button"/>
-<!--            <customControls:ValidatableEntry Validations="{Binding Validations1List}" -->
-<!--                                             Margin="50"/>-->
-<!--            <customControls:ValidatableEntry Validations="{Binding Validations2List}" -->
-<!--                                             Margin="50"/>-->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

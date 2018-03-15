@@ -19,5 +19,9 @@ namespace NottCS.Views
 		    BindingContext = new TestViewModel();
 			InitializeComponent ();
 		}
+
+	    private void Nothing(object sender, EventArgs e)
+	    {
+	    }
 	}
 }

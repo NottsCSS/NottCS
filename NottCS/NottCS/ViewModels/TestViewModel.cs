@@ -12,7 +12,12 @@ namespace NottCS.ViewModels
 {
     public class TestViewModel : BaseViewModel
     {
-
+        #region Disable ItemSelectedCommand
+        public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
+        public void DisableItemSelected()
+        {
+        }
+        #endregion
         public ObservableCollection<List<IValidationRule<string>>> ValidationsList { get; } = new ObservableCollection<List<IValidationRule<string>>>()
         {
             new List<IValidationRule<string>>()
@@ -57,8 +62,7 @@ namespace NottCS.ViewModels
             {
                 if (!param.IsValid)
                 {
-                    //TODO: Change the Debug writeline to ACR userdialog
-                    Debug.WriteLine(param.ErrorMessage);
+                    Acr.UserDialogs.UserDialogs.Instance.Alert(param.ErrorMessage);
                     isValid = false;
                 }
             }

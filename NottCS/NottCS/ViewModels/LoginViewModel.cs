@@ -57,6 +57,7 @@ namespace NottCS.ViewModels
 
                 if (getUserTaskResult.Item1 == "OK")
                 {
+                    NavigationService.ClearNavigation();
                     await NavigationService.NavigateToAsync<HomeViewModel>(getUserTaskResult.Item2);
                     DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds} ms");
                     stopwatch.Stop();
