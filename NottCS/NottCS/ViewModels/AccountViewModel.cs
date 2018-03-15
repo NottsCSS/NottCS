@@ -52,7 +52,7 @@ namespace NottCS.ViewModels
 
         #endregion
 
-        public string AccessToken { get; } = App.MicrosoftAuthenticationResult.AccessToken;
+        //public string AccessToken { get; } = App.MicrosoftAuthenticationResult.AccessToken;
 
         /// <summary>
         /// Sets the data for the page
@@ -61,7 +61,7 @@ namespace NottCS.ViewModels
         private void SetPageDataAsync(User userData)
         {
             LoginUser = userData;
-            DebugService.WriteLine(JsonConvert.SerializeObject(LoginUser));
+            //DebugService.WriteLine(JsonConvert.SerializeObject(LoginUser));
             DataList = new List<UserDataObject>()
             {
                 new UserDataObject(){DataName = "Name", DataValue = LoginUser.Name},

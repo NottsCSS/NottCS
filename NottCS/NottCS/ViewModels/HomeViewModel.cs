@@ -102,9 +102,9 @@ namespace NottCS.ViewModels
         }
         private void ChangeLabel1(object e)
         {
-            DebugService.WriteLine("Picker Changed");
+            //DebugService.WriteLine("Picker Changed");
             string picked = e.ToString();
-            DebugService.WriteLine(picked);
+            //DebugService.WriteLine(picked);
         }
 
         #endregion
@@ -274,7 +274,7 @@ namespace NottCS.ViewModels
 
         #endregion
 
-        public string AccessToken { get; } = App.MicrosoftAuthenticationResult.AccessToken;
+        //public string AccessToken { get; } = App.MicrosoftAuthenticationResult.AccessToken;
 
         /// <summary>
         /// Sets the data for the page

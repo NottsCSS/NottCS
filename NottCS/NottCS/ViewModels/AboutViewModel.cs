@@ -7,7 +7,7 @@ namespace NottCS.ViewModels
     {
         public AboutViewModel()
         {
-            DebugService.WriteLine("Constructor is called");
+            //DebugService.WriteLine("Constructor is called");
             Title = "About";
         }
     }
