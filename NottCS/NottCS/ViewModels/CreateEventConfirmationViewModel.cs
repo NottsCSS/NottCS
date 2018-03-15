@@ -27,23 +27,10 @@ namespace NottCS.ViewModels
             set => SetProperty(ref _list, value);
         }
 
-        public int ButtonHeight { get; set; }
         #region CreateEventConfirmationViewModel Constructor
         public CreateEventConfirmationViewModel()
         {
-            switch (Device.RuntimePlatform)
-            {
-                case Device.iOS:
-                {
-                    ButtonHeight = 60;
-                }
-                    break;
-                default:
-                {
-                    ButtonHeight = 40;
-                }
-                    break;
-            }
+            Title = "Confirmation";
         }
         #endregion
         #region Disable ItemSelectedCommand

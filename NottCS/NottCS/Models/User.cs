@@ -23,8 +23,11 @@ namespace NottCS.Models
         [JsonProperty(PropertyName = "is_authenticated")]
         public bool IsAuthenticated { get; set; }
 
-        [JsonProperty(PropertyName = "date_joined")]
-        public DateTime DateJoined { get; set; }
+        [JsonProperty(PropertyName = "course")]
+        public string Course { get; set; }
+
+        [JsonProperty(PropertyName = "year_of_study")]
+        public int YearOfStudy { get; set; }
 
         public User()
         {
@@ -32,8 +35,9 @@ namespace NottCS.Models
             Email = "noemail@nottingham.edu.my";
             StudentId = "18818888";
             LibraryNumber = "2001438888";
+            Course = "Software Engineering";
+            YearOfStudy = 2;
             IsAuthenticated = false;
-            DateJoined = DateTime.Now;
         }
     }
 }

@@ -18,6 +18,18 @@
             <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
             <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
             <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
+            <Style TargetType="flv:FlowListView" x:Key="ShowFlowListViewStyle">
+                <Setter Property="IsVisible" Value="True"/>
+            </Style>
+            <Style TargetType="flv:FlowListView" x:Key="HideFlowListViewStyle">
+                <Setter Property="IsVisible" Value="False"/>
+            </Style>
+            <Style TargetType="gv:GridView" x:Key="ShowGridViewStyle">
+                <Setter Property="IsVisible" Value="True"/>
+            </Style>
+            <Style TargetType="gv:GridView" x:Key="HideGridViewStyle">
+                <Setter Property="IsVisible" Value="False"/>
+            </Style>
         </ResourceDictionary>
     </TabbedPage.Resources>
     
@@ -89,8 +101,14 @@
                               FlowItemsSource="{Binding ClubList}" 
                               FlowItemTappedCommand="{Binding ItemTappedCommand}"
                               HasUnevenRows="False"
-                              Margin="5,10"
-                              IsVisible="{Binding IsNotUWP}">
+                              Margin="5,10">
+                <flv:FlowListView.Style>
+                    <OnPlatform x:TypeArguments="Style">
+                        <On Platform="Android" Value="{StaticResource ShowFlowListViewStyle}"/>
+                        <On Platform="iOS" Value="{StaticResource ShowFlowListViewStyle}"/>
+                        <On Platform="UWP" Value="{StaticResource HideFlowListViewStyle}"/>
+                    </OnPlatform>
+                </flv:FlowListView.Style>
                 <flv:FlowListView.FlowColumnTemplate>
                     <DataTemplate>
                         <Frame OutlineColor="Black"
@@ -117,8 +135,14 @@
                          RowHeight="100"
                          HasUnevenRows="False"
                          Margin="5,10"
-                         ItemsSource="{Binding ClubList}"
-                         IsVisible="{Binding IsUWP}">
+                         ItemsSource="{Binding ClubList}">
+                <gv:GridView.Style>
+                    <OnPlatform x:TypeArguments="Style">
+                        <On Platform="Android" Value="{StaticResource HideGridViewStyle}"/>
+                        <On Platform="iOS" Value="{StaticResource HideGridViewStyle}"/>
+                        <On Platform="UWP" Value="{StaticResource ShowGridViewStyle}"/>
+                    </OnPlatform>
+                </gv:GridView.Style>
                 <gv:GridView.Behaviors>
                     <behaviors:EventToCommandBehavior 
                         EventName="ItemTapped"

@@ -19,19 +19,16 @@ namespace NottCS.ViewModels
         public string PageTitle2 { get; set; }
         public string PageTitle3 { get; set; }
         private string _selectedClubType;
-        public bool IsUWP { get; set; }
-        public bool IsNotUWP { get; set; }
         #region HomeViewModel Constructor
 
         public HomeViewModel()
         {
+            Title = "NottCS";
             PageTitle1 = "News Feed";
             PageTitle2 = "Clubs & Society";
             PageTitle3 = "Profile";
             _clubList = new ObservableCollection<Item>();
             SelectedClubType = ClubTypePickList[0];
-            IsUWP = Device.RuntimePlatform == Device.UWP;
-            IsNotUWP = Device.RuntimePlatform != Device.UWP;
         }
 
         #endregion
@@ -105,9 +102,9 @@ namespace NottCS.ViewModels
         }
         private void ChangeLabel1(object e)
         {
-            DebugService.WriteLine("Picker Changed");
+            //DebugService.WriteLine("Picker Changed");
             string picked = e.ToString();
-            DebugService.WriteLine(picked);
+            //DebugService.WriteLine(picked);
         }
 
         #endregion
@@ -277,7 +274,7 @@ namespace NottCS.ViewModels
 
         #endregion
 
-        public string AccessToken { get; } = App.MicrosoftAuthenticationResult.AccessToken;
+        //public string AccessToken { get; } = App.MicrosoftAuthenticationResult.AccessToken;
 
         /// <summary>
         /// Sets the data for the page
@@ -293,7 +290,8 @@ namespace NottCS.ViewModels
                 new UserDataObject(){DataName = "Email", DataValue = LoginUser.Email},
                 new UserDataObject(){DataName = "Student ID", DataValue = LoginUser.StudentId},
                 new UserDataObject(){DataName = "Library Number", DataValue = LoginUser.LibraryNumber},
-                new UserDataObject(){DataName = "Date Joined", DataValue = LoginUser.DateJoined.ToLongDateString()}
+                new UserDataObject(){DataName = "Course", DataValue = LoginUser.Course},
+                new UserDataObject(){DataName = "Year of Study", DataValue = LoginUser.YearOfStudy.ToString()}
             };
         }
 

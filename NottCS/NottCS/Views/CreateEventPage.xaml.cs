@@ -13,6 +13,9 @@ namespace NottCS.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CreateEventPage : ContentPage
 	{
+	    private int ButtonHeight { get; set; }
+	    private int DynamicListViewPadding { get; set; }
+
 		public CreateEventPage ()
 		{
 			InitializeComponent ();
@@ -26,5 +29,6 @@ namespace NottCS.Views
 	            imageContainer.Source = ImageSource.FromResource(imageLocation, assembly);
 	        }
 	    }
+
     }
 }
