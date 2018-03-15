@@ -74,10 +74,6 @@ namespace NottCS.ViewModels
             set => SetProperty(ref _listOfTextBox, value);
         }
         
-
-        public int ButtonHeight { get; set; }
-        public int Padding { get; set; }
-        public bool IsUWP { get; set; }
         #region Disable ItemSelectedCommand
         public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
         public void DisableItemSelected()
@@ -94,28 +90,6 @@ namespace NottCS.ViewModels
 
         public CreateEventViewModel()
         {
-            switch (Device.RuntimePlatform)
-            {
-                case Device.iOS:
-                {
-                    ButtonHeight = 60;
-                    Padding = 5;
-                    break;
-                }
-                case Device.UWP:
-                {
-                    ButtonHeight = 40;
-                    Padding = -5;
-                    break;
-                }
-                default:
-                {
-                    ButtonHeight = 40;
-                    Padding = 5;
-                }
-                    break;
-            }
-            IsUWP = Device.RuntimePlatform == Device.UWP;
             ListOfTextBox =new ObservableCollection<Item>()
             {
                 new Item(),

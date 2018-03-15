@@ -51,7 +51,7 @@ namespace NottCS.ViewModels
         }
 
         #endregion
-
+        
         /// <summary>
         /// Sets the data for the page
         /// </summary>
@@ -59,14 +59,14 @@ namespace NottCS.ViewModels
         private void SetPageDataAsync(User userData)
         {
             LoginUser = userData;
-            DebugService.WriteLine(JsonConvert.SerializeObject(LoginUser));
+            //DebugService.WriteLine(JsonConvert.SerializeObject(LoginUser));
             DataList = new List<UserDataObject>()
             {
                 new UserDataObject(){DataName = "Name", DataValue = LoginUser.Name},
                 new UserDataObject(){DataName = "Email", DataValue = LoginUser.Email},
                 new UserDataObject(){DataName = "Student ID", DataValue = LoginUser.StudentId},
                 new UserDataObject(){DataName = "Library Number", DataValue = LoginUser.LibraryNumber},
-                new UserDataObject(){DataName = "Date Joined", DataValue = LoginUser.DateJoined.ToLongDateString()}
+                new UserDataObject(){DataName = "Date Joined", DataValue = LoginUser.YearOfStudy.ToString()}
             };
         }
 

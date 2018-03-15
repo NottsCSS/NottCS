@@ -16,7 +16,7 @@ namespace NottCS.ViewModels
 
         public NotificationsViewModel()
         {
-            DebugService.WriteLine("Constructor is called");
+            //DebugService.WriteLine("Constructor is called");
             Title = "Notifications";
             SetPageData();
         }

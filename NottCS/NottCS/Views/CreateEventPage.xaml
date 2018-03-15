@@ -17,6 +17,12 @@
             <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
             <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
             <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
+            <Style TargetType="Button" x:Key="HideButtonStyle">
+                <Setter Property="IsVisible" Value="False"/>
+            </Style>
+            <Style TargetType="Button" x:Key="ShowButtonStyle">
+                <Setter Property="IsVisible" Value="True"/>
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -26,7 +32,15 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="{Binding ButtonHeight}"/>
+                    <RowDefinition>
+                        <RowDefinition.Height>
+                            <OnPlatform x:TypeArguments="GridLength">
+                                <On Platform="Android" Value="60"/>
+                                <On Platform="iOS" Value="40"/>
+                                <On Platform="UWP" Value="40"/>
+                            </OnPlatform>
+                        </RowDefinition.Height>
+                    </RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -67,9 +81,15 @@
                                               Command="{Binding Path=BindingContext.DeleteCellsCommand, Source={x:Reference Name=SomeList}}"
                                               CommandParameter="{Binding .}"/>
                                 </ViewCell.ContextActions>
-                                <Grid x:Name="Items" 
-                                      Margin="1"
-                                      Padding="{Binding Path=BindingContext.Padding, Source={x:Reference Name=SomeList}}">
+                                <Grid x:Name="DynamicListViewItem" 
+                                      Margin="1">
+                                    <Grid.Padding>
+                                        <OnPlatform x:TypeArguments="Thickness">
+                                            <On Platform="Android" Value="5"/>
+                                            <On Platform="iOS" Value="5"/>
+                                            <On Platform="UWP" Value="-5"/>
+                                        </OnPlatform>
+                                    </Grid.Padding>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
                                         <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -85,9 +105,15 @@
                                             TextColor="Black"
                                             FontSize="Large"
                                             Grid.Column="1"
-                                            IsVisible="{Binding Path=BindingContext.IsUWP, Source={x:Reference Name=SomeList}}"
                                             Command="{Binding Path=BindingContext.DeleteCellsCommand, Source={x:Reference Name=SomeList}}"
                                             CommandParameter="{Binding .}">
+                                        <Button.Style>
+                                            <OnPlatform x:TypeArguments="Style">
+                                                <On Platform="Android" Value="{StaticResource HideButtonStyle}"/>
+                                                <On Platform="iOS" Value="{StaticResource HideButtonStyle}"/>
+                                                <On Platform="UWP" Value="{StaticResource ShowButtonStyle}"/>
+                                            </OnPlatform>
+                                        </Button.Style>
                                     </Button>
                                 </Grid>
                             </ViewCell>

@@ -15,6 +15,10 @@ namespace NottCS.Services
     {
         internal static async Task InitializeAsync()
         {
+            //Loading Dialog
+            var loadingDialog = Acr.UserDialogs.UserDialogs.Instance.Loading("Beep beep bop...");
+            loadingDialog.Show();
+
             bool canAuthenticate = await LoginService.MicrosoftAuthenticateWithCacheAsync();
             DebugService.WriteLine($"Can authenticate with cached data: {canAuthenticate}");
             Stopwatch stopwatch = new Stopwatch();
@@ -53,6 +57,8 @@ namespace NottCS.Services
                 await NavigationService.NavigateToAsync<LoginViewModel>();
                 DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
             }
+
+            loadingDialog.Hide();
         }
     }
 }
