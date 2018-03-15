@@ -10,13 +10,26 @@ namespace NottCS.Models
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore, ItemTypeNameHandling = TypeNameHandling.All)]
     public class EventAdditionalParameter
     {
+        private string _errorMessage;
         public string Name { get; set; }
         public List<IValidationRule<string>> ValidationList { get; set; } = new List<IValidationRule<string>>();
         public string Value { get; set; }
         [JsonIgnore]
         public bool IsValid { get; set; }
+
         [JsonIgnore]
-        public string ErrorMessage { get; set; }
+        public string ErrorMessage
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(_errorMessage) && !IsValid)
+                {
+                    _errorMessage =  Name + " cannot be empty";
+                }
+                return _errorMessage;
+            }
+            set => _errorMessage = value;
+        }
 
         protected bool Equals(EventAdditionalParameter other)
         {
