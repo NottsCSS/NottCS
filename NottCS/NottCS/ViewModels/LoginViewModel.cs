@@ -33,52 +33,60 @@ namespace NottCS.ViewModels
         public ICommand SignOutCommand => new Command(async () => await SignOutAsync());
         private async Task SignInAsync()
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            IsBusy = true;
-            bool canSignInWithCache = await LoginService.MicrosoftAuthenticateWithCacheAsync();
-            if (!canSignInWithCache)
+            if (!IsBusy)
             {
-                await LoginService.MicrosoftAuthenticateWithUIAsync();
+                IsBusy = true;
+                Debug.WriteLine($"IsBusy: {IsBusy}");                                                                                                                                                                                       
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
+                bool canSignInWithCache = await LoginService.MicrosoftAuthenticateWithCacheAsync();
+                if (!canSignInWithCache)
+                {
+                    await LoginService.MicrosoftAuthenticateWithUIAsync();
+                }
+                string a = App.MicrosoftAuthenticationResult?.User.DisplayableId;
+                DebugService.WriteLine($"DisplayableID: {a}");
+                DebugService.WriteLine($"Identifier: {App.MicrosoftAuthenticationResult?.User.Identifier}");
+                DebugService.WriteLine($"Identity Provider: {App.MicrosoftAuthenticationResult?.User.IdentityProvider}");
+                DebugService.WriteLine($"Name: {App.MicrosoftAuthenticationResult?.User.Name}");
+
+                DebugService.WriteLine($"Authentication took {stopwatch.ElapsedMilliseconds} ms");
+                stopwatch.Restart();
+
+                var getUserTask = Task.Run(() => RestService.RequestGetAsync<User>());
+                var getUserTaskResult = await getUserTask;
+
+                DebugService.WriteLine($"User request took {stopwatch.ElapsedMilliseconds} ms");
+                stopwatch.Restart();
+
+                if (getUserTaskResult.Item1 == "OK")
+                {
+                    await NavigationService.NavigateToAsync<HomeViewModel>(getUserTaskResult.Item2);
+                    DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds} ms");
+                    stopwatch.Stop();
+                }
+                else
+                {
+                    Acr.UserDialogs.UserDialogs.Instance.Alert(getUserTaskResult.Item1, "Login Error", "Ok");
+                }
+
+                //Debugging code
+                DebugService.WriteLine("Sign in function called");
+
+                IsBusy = false;
             }
-            string a = App.MicrosoftAuthenticationResult?.User.DisplayableId;
-            DebugService.WriteLine($"DisplayableID: {a}");
-            DebugService.WriteLine($"Identifier: {App.MicrosoftAuthenticationResult?.User.Identifier}");
-            DebugService.WriteLine($"Identity Provider: {App.MicrosoftAuthenticationResult?.User.IdentityProvider}");
-            DebugService.WriteLine($"Name: {App.MicrosoftAuthenticationResult?.User.Name}");
-
-            DebugService.WriteLine($"Authentication took {stopwatch.ElapsedMilliseconds} ms");
-            stopwatch.Restart();
-
-            var getUserTask = Task.Run(() => RestService.RequestGetAsync<User>());
-            var getUserTaskResult = await getUserTask;
-
-            DebugService.WriteLine($"User request took {stopwatch.ElapsedMilliseconds} ms");
-            stopwatch.Restart();
-
-            if (getUserTaskResult.Item1 == "OK")
-            {
-                await NavigationService.NavigateToAsync<HomeViewModel>(getUserTaskResult.Item2);
-                DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds} ms");
-                stopwatch.Stop();
-            }
-            else
-            {
-                Acr.UserDialogs.UserDialogs.Instance.Alert(getUserTaskResult.Item1, "Login Error", "Ok");
-            }
-
-            //Debugging code
-            DebugService.WriteLine("Sign in function called");
-
-            IsBusy = false;
+            
         }
         private async Task SignOutAsync()
         {
-            IsBusy = true;
-            await LoginService.SignOut();
-            DebugService.WriteLine("Sign out function called");
+            if (!IsBusy)
+            {
+                IsBusy = true;
+                await LoginService.SignOut();
+                DebugService.WriteLine("Sign out function called");
 
-            IsBusy = false;
+                IsBusy = false;
+            }
         }
     }
 }

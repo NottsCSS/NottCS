@@ -117,7 +117,7 @@ namespace NottCS.ViewModels
         {
             try
             {
-                await NavigationService.NavigateToAsync<ClubRegistrationViewModel>(p);
+                await NavigationService.NavigateToAsync<ClubViewModel>(p);
                 DebugService.WriteLine("Item Tapped");
 
             }
