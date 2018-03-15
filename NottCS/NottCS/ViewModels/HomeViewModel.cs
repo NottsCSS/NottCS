@@ -19,8 +19,6 @@ namespace NottCS.ViewModels
         public string PageTitle2 { get; set; }
         public string PageTitle3 { get; set; }
         private string _selectedClubType;
-        public bool IsUWP { get; set; }
-        public bool IsNotUWP { get; set; }
         #region HomeViewModel Constructor
 
         public HomeViewModel()
@@ -31,8 +29,6 @@ namespace NottCS.ViewModels
             PageTitle3 = "Profile";
             _clubList = new ObservableCollection<Item>();
             SelectedClubType = ClubTypePickList[0];
-            IsUWP = Device.RuntimePlatform == Device.UWP;
-            IsNotUWP = Device.RuntimePlatform != Device.UWP;
         }
 
         #endregion

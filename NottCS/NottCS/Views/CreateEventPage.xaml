@@ -109,7 +109,8 @@
                                             CommandParameter="{Binding .}">
                                         <Button.Style>
                                             <OnPlatform x:TypeArguments="Style">
-                                                <On Platform="Androis, iOS" Value="{StaticResource HideButtonStyle}"/>
+                                                <On Platform="Android" Value="{StaticResource HideButtonStyle}"/>
+                                                <On Platform="iOS" Value="{StaticResource HideButtonStyle}"/>
                                                 <On Platform="UWP" Value="{StaticResource ShowButtonStyle}"/>
                                             </OnPlatform>
                                         </Button.Style>
