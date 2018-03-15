@@ -77,16 +77,5 @@ namespace NottCS.ViewModels
             }
             
         }
-        private async Task SignOutAsync()
-        {
-            if (!IsBusy)
-            {
-                IsBusy = true;
-                await LoginService.SignOut();
-                DebugService.WriteLine("Sign out function called");
-
-                IsBusy = false;
-            }
-        }
     }
 }

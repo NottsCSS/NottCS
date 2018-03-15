@@ -47,8 +47,6 @@
                     <StackLayout>
                         <Button Text = "LOGIN" Command = "{Binding SignInCommand}" 
                             Margin="50,0,50,0" />
-                        <Button Text = "LOGOUT" Command = "{Binding SignOutCommand}" 
-                                Margin="50,0,50,0" />
                         <ActivityIndicator Color="Green" IsRunning="{Binding IsBusy}" />
                     </StackLayout>
                 </ScrollView>
