@@ -13,6 +13,7 @@ namespace NottCS.Models
         public string ImageURL { get; set; }
         public string Name { get; set; } = "default name";
         public string Entry { get; set; }
-
+        public string Information { get; set; }
+        public string FilledInformation { get; set; }
     }
 }
