@@ -32,10 +32,11 @@ namespace NottCS.ViewModels
         }
 
         #endregion
+
         #region Event List
         #region ListViewNavigation
-        public ICommand TappedCommand => new Command(async (object p) => await Tapped(p));
-        private async Task Tapped(object p)
+        public ICommand EventListNavigationCommand => new Command(async (object p) => await EventListNavigation(p));
+        private async Task EventListNavigation(object p)
         {
             //Label = $"Hello World {Count}";
             //Count++;
@@ -72,6 +73,7 @@ namespace NottCS.ViewModels
 
         #endregion
         #endregion
+
         #region Club List
 
         #region Picker
@@ -108,9 +110,9 @@ namespace NottCS.ViewModels
         }
 
         #endregion
-        #region FlowListViewNavigation
-        public ICommand ItemTappedCommand => new Command(async (object p) => await ItemTapped(p));
-        private async Task ItemTapped(object p)
+        #region EventListNavigation
+        public ICommand ClubListNavigationCommand => new Command(async (object p) => await ClubListNavigation(p));
+        private async Task ClubListNavigation(object p)
         {
             try
             {
@@ -245,6 +247,7 @@ namespace NottCS.ViewModels
 
         #endregion
         #endregion
+
         #region Profile
         #region ViewModalAdditionalClass
 

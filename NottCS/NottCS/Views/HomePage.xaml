@@ -39,15 +39,15 @@
             <ListView ItemsSource="{Binding EventLists}"
                       Margin="3,3,0,0"
                       RowHeight="50"
-                      x:Name="SomeList">
+                      x:Name="EventList">
                 <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior 
                         EventName="ItemTapped"
-                        Command="{Binding TappedCommand}" 
+                        Command="{Binding EventListNavigationCommand}" 
                         Converter="{StaticResource TappedItemConverter}" />
                     <behaviors:EventToCommandBehavior 
                         EventName="ItemSelected"
-                        Source="{x:Reference SomeList}"
+                        Source="{x:Reference EventList}"
                         Command="{Binding DisableItemSelectedCommand, Mode=TwoWay}" 
                         Converter="{StaticResource SelectedItemConverter}" />
                 </ListView.Behaviors>
@@ -99,7 +99,7 @@
                               FlowUseAbsoluteLayoutInternally="True" 
                               FlowColumnExpand="None"
                               FlowItemsSource="{Binding ClubList}" 
-                              FlowItemTappedCommand="{Binding ItemTappedCommand}"
+                              FlowItemTappedCommand="{Binding ClubListNavigationCommand}"
                               HasUnevenRows="False"
                               Margin="5,10">
                 <flv:FlowListView.Style>
@@ -146,7 +146,7 @@
                 <gv:GridView.Behaviors>
                     <behaviors:EventToCommandBehavior 
                         EventName="ItemTapped"
-                        Command="{Binding ItemTappedCommand}" 
+                        Command="{Binding ClubListNavigationCommand}" 
                         Converter="{StaticResource TappedItemConverter}" />
                 </gv:GridView.Behaviors>
                 <gv:GridView.ItemTemplate>

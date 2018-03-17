@@ -27,7 +27,6 @@
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\ClubRegistrationViewModel.cs" />
     <Compile Include="ViewModels\ClubViewModel.cs" />
     <Compile Include="ViewModels\CreateEventConfirmationViewModel.cs" />
     <Compile Include="ViewModels\CreateEventViewModel.cs" />
@@ -65,9 +64,6 @@
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.3.2" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\ClubRegistrationPage.xaml.cs">
-      <DependentUpon>ClubRegistrationPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\EventRegistrationPage.xaml.cs">
       <DependentUpon>EventRegistrationPage.xaml</DependentUpon>
     </Compile>
@@ -95,9 +91,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ClubPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\ClubRegistrationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\CreateEventConfirmationPage.xaml">
