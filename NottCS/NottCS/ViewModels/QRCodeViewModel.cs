@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using NottCS.Services.Navigation;
-using NottCS.Views;
 using Xamarin.Forms;
+using ZXing.Common;
+
 
 namespace NottCS.ViewModels
 {
-    class QRCodeViewModel : BaseViewModel
+    internal class QRCodeViewModel : BaseViewModel
     {
-        public ICommand Command1 => new Command(async () => await func1());
+        //public ICommand Command1 => new Command(async () => await func1());
 
         private async Task func1()
         {
             await NavigationService.BackUntilAsync<HomeViewModel>();
         }
+
+        public EncodingOptions BarcodeOption => new EncodingOptions() { Height = 100, Width = 100, PureBarcode = true };
     }
 }
