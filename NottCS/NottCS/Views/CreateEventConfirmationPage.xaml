@@ -49,10 +49,10 @@
                           Grid.Row="1"
                           Margin="3,3,0,0"
                           RowHeight="30"
-                          x:Name="SomeList">
+                          x:Name="RequestList">
                     <ListView.Behaviors>
                         <behaviors:EventToCommandBehavior EventName="ItemSelected"
-                                                          Source="{x:Reference SomeList}"
+                                                          Source="{x:Reference RequestList}"
                                                           Command="{Binding DisableItemSelectedCommand, Mode=TwoWay}"
                                                           Converter="{StaticResource SelectedItemConverter}" />
                         </ListView.Behaviors>
@@ -69,7 +69,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
                 <Button Text="Confirm"
-                        Command="{Binding Confirmation}"
+                        Command="{Binding ConfirmationCommand}"
                         FontSize="Small"
                         HorizontalOptions="CenterAndExpand"
                         VerticalOptions="StartAndExpand"

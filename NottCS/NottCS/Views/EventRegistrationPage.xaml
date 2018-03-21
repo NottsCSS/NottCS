@@ -12,31 +12,33 @@
         <Grid>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="75"/>
                 </Grid.RowDefinitions>
                 <StackLayout Grid.Row="0"
                              HorizontalOptions="Start">
-                    <Label Text="EVENT NAME OR CLUB NAME"
-                           FontSize="Micro"
+                    <Label Text="{Binding EventName}"
+                           FontSize="Medium"
                            Margin="5,0"
-                           HorizontalOptions="Start"/>
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions ="StartAndExpand"/>
                     <Image x:Name="EmailContent"
                            Margin="0,0"
                            WidthRequest="500"
                            HeightRequest="270"
                            VerticalOptions="StartAndExpand"
-                           HorizontalOptions="Center"/>
+                           HorizontalOptions="CenterAndExpand"/>
                 </StackLayout>
-
                 <StackLayout Grid.Row="1"
                              HorizontalOptions="Center"
+                             VerticalOptions="End"
                              Margin="0,0">
                     <Button Text = "SIGN UP"
-                            FontSize="Small"
+                            FontSize="Medium"
                             HorizontalOptions="CenterAndExpand"
                             VerticalOptions="EndAndExpand"
-                            Margin="5,10,5,0"/>
+                            Margin="5,10,5,0"
+                            Command="{Binding SignupCommand}"/>
                 </StackLayout>
             </Grid>
         </Grid>

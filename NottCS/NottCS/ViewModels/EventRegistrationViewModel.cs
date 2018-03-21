@@ -14,6 +14,21 @@ namespace NottCS.ViewModels
 {
     class EventRegistrationViewModel : BaseViewModel
     {
+        public string EventName { get; set; }
+        public ICommand SignupCommand => new Command(async () => await Navigate());
+        private async Task Navigate()
+        {
+            try
+            {
+                await NavigationService.NavigateToAsync<EventRegistrationFormsViewModel>();
+                DebugService.WriteLine("Button pressed");
+            }
+            catch (Exception e)
+            {
+                DebugService.WriteLine(e.Message);
+            }
+        }
+
         public override Task InitializeAsync(object navigationData)
         {
             if (navigationData is Item s)
@@ -21,6 +36,11 @@ namespace NottCS.ViewModels
                 DebugService.WriteLine($"Club name is {s.ClubName}");
             }
             return base.InitializeAsync(navigationData);
+        }
+
+        public EventRegistrationViewModel()
+        {
+            EventName = "Some Event Name";
         }
     }
 }

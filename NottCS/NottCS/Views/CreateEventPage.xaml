@@ -64,11 +64,11 @@
                           Grid.ColumnSpan="2"
                           Margin="0,3"
                           RowHeight="60"
-                          x:Name="SomeList">
+                          x:Name="SomeListOfTextBox">
                     <ListView.Behaviors>
                         <behaviors:EventToCommandBehavior 
                             EventName="ItemSelected"
-                            Source="{x:Reference SomeList}"
+                            Source="{x:Reference SomeListOfTextBox}"
                             Command="{Binding DisableItemSelectedCommand, Mode=TwoWay}" 
                             Converter="{StaticResource SelectedItemConverter}" />
                     </ListView.Behaviors>
@@ -78,7 +78,7 @@
                                 <ViewCell.ContextActions>
                                     <MenuItem Text="Delete"
                                               IsDestructive="True"
-                                              Command="{Binding Path=BindingContext.DeleteCellsCommand, Source={x:Reference Name=SomeList}}"
+                                              Command="{Binding Path=BindingContext.DeleteCellsCommand, Source={x:Reference Name=SomeListOfTextBox}}"
                                               CommandParameter="{Binding .}"/>
                                 </ViewCell.ContextActions>
                                 <Grid x:Name="DynamicListViewItem" 
@@ -105,7 +105,7 @@
                                             TextColor="Black"
                                             FontSize="Large"
                                             Grid.Column="1"
-                                            Command="{Binding Path=BindingContext.DeleteCellsCommand, Source={x:Reference Name=SomeList}}"
+                                            Command="{Binding Path=BindingContext.DeleteCellsCommand, Source={x:Reference Name=SomeListOfTextBox}}"
                                             CommandParameter="{Binding .}">
                                         <Button.Style>
                                             <OnPlatform x:TypeArguments="Style">

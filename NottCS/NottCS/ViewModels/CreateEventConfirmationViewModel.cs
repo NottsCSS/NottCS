@@ -14,10 +14,10 @@ namespace NottCS.ViewModels
 {
     class CreateEventConfirmationViewModel:BaseViewModel
     {
-        public ICommand Confirmation=>new Command(DoNothingForNow);
+        public ICommand ConfirmationCommand => new Command(DoNothingForNow);
         public void DoNothingForNow()
         {
-
+            //todo Pass all item to server through REST Service
         }
 
         private ObservableCollection<Item> _list;

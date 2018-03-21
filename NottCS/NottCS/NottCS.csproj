@@ -27,10 +27,10 @@
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\ClubRegistrationViewModel.cs" />
     <Compile Include="ViewModels\ClubViewModel.cs" />
     <Compile Include="ViewModels\CreateEventConfirmationViewModel.cs" />
     <Compile Include="ViewModels\CreateEventViewModel.cs" />
+    <Compile Include="ViewModels\EventRegistrationFormsViewModel.cs" />
     <Compile Include="ViewModels\EventRegistrationSuccessViewModel.cs" />
     <Compile Include="ViewModels\EventRegistrationViewModel.cs" />
     <Compile Include="ViewModels\ForgotPasswordViewModel.cs" />
@@ -60,14 +60,10 @@
     <PackageReference Include="Plugin.GridViewControl" Version="1.0.7" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.2.0.130-beta" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.77107" />
-    <PackageReference Include="ZXing.Net" Version="0.16.2" />
     <PackageReference Include="ZXing.Net.Mobile" Version="2.3.2" />
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.3.2" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\ClubRegistrationPage.xaml.cs">
-      <DependentUpon>ClubRegistrationPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\EventRegistrationPage.xaml.cs">
       <DependentUpon>EventRegistrationPage.xaml</DependentUpon>
     </Compile>
@@ -97,13 +93,13 @@
     <EmbeddedResource Update="Views\ClubPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ClubRegistrationPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\CreateEventConfirmationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\CreateEventPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\EventRegistrationFormsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\EventRegistrationPage.xaml">

@@ -44,6 +44,7 @@ namespace NottCS.ViewModels
 
         public void DoNothingForNow()
         {
+            
             foreach (var item in ListOfTextBox)
             {
                 DebugService.WriteLine(item.Entry);

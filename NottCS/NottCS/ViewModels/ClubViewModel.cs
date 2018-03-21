@@ -17,11 +17,11 @@ namespace NottCS.ViewModels
     {
         public string PageTitle1 { get; set; }
         public string PageTitle2 { get; set; }
-
+        public string ClubDescription { get; set; }
         #region Event List
         #region ListViewNavigation
-        public ICommand TappedCommand => new Command(async (object p) => await Tapped(p));
-        private async Task Tapped(object p)
+        public ICommand EventListNavigationCommand => new Command(async (object p) => await EventListNavigation(p));
+        private async Task EventListNavigation(object p)
         {
             //Label = $"Hello World {Count}";
             //Count++;
@@ -76,12 +76,13 @@ namespace NottCS.ViewModels
         }
 
         #endregion
-        #region Constructor
+        #region ClubViewModel Constructor
 
         public ClubViewModel()
         {
             PageTitle1 = "Event";
             PageTitle2 = "Club's Profile";
+            ClubDescription = "Lorem ipsum dolor sit amet, consectetur  adipiscing elit, sed do eiusmod tempor incididunt  ut labore et dolore magna aliqua. Ut enim ad  minim veniam, quis nostrud exercitation ullamco  laboris nisi ut aliquip ex ea commodo consequat.";
         }
 
         #endregion
