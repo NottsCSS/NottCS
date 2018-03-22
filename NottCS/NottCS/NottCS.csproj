@@ -34,7 +34,6 @@
     <Compile Include="ViewModels\EventRegistrationFormsViewModel.cs" />
     <Compile Include="ViewModels\EventRegistrationSuccessViewModel.cs" />
     <Compile Include="ViewModels\EventRegistrationViewModel.cs" />
-    <Compile Include="ViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\NotificationsViewModel.cs" />
@@ -124,9 +123,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="Views\ForgotPasswordPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\RegistrationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

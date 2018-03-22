@@ -16,6 +16,6 @@ namespace NottCS.ViewModels
             await NavigationService.BackUntilAsync<HomeViewModel>();
         }
 
-        public EncodingOptions BarcodeOption => new EncodingOptions() { Height = 100, Width = 100, PureBarcode = true };
+        public EncodingOptions BarcodeOption => new EncodingOptions() { Height = 300, Width = 300, PureBarcode = true };
     }
 }

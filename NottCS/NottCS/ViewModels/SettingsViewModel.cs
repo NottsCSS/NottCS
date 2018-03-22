@@ -10,6 +10,7 @@ using NottCS.Services;
 
 namespace NottCS.ViewModels
 {
+    //TODO: Hardcode the list
     internal class SettingsViewModel : BaseViewModel
     {
 

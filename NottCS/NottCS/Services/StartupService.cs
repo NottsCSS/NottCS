@@ -11,6 +11,8 @@ using NottCS.Services.REST;
 
 namespace NottCS.Services
 {
+
+    //TODO: split up initialize async to allow more modular code such that loginViewModel can call to check registration
     internal static class StartupService
     {
         internal static async Task InitializeAsync()

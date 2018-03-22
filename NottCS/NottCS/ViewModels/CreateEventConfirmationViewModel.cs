@@ -17,7 +17,7 @@ namespace NottCS.ViewModels
         public ICommand ConfirmationCommand => new Command(DoNothingForNow);
         public void DoNothingForNow()
         {
-            //todo Pass all item to server through REST Service
+            //TODO: Pass all item to server through REST Service
         }
 
         private ObservableCollection<Item> _list;
