@@ -29,24 +29,7 @@ namespace NottCS.ViewModels
             Name = "HELLO", Email = "ASD@ASD.COM"
         };
         private bool _isValidCourse = true;
-
         
-        public bool IsValidStudentID
-        {
-            get => _isValidStudentID;
-            set => SetProperty(ref _isValidStudentID, value);
-        }
-        public bool IsValidLibraryNumber
-        {
-            get => _isValidLibraryNumber;
-            set => SetProperty(ref _isValidLibraryNumber, value);
-        }
-
-        public bool IsValidCourse
-        {
-            get => _isValidCourse;
-            set => SetProperty(ref _isValidLibraryNumber, value);
-        }
         #endregion
         public User CurrentUser
         {
@@ -92,23 +75,24 @@ namespace NottCS.ViewModels
 
         private bool Validate()
         {
-            IsValidStudentID = StudentID.Validate();
-            if (!IsValidStudentID)
+            _isValidStudentID = StudentID.Validate();
+            if (!_isValidStudentID)
             {
                 Acr.UserDialogs.UserDialogs.Instance.Alert($"Student ID {StudentID.Errors.First()}");
             }
-            IsValidLibraryNumber = LibraryNumber.Validate();
-            if (!IsValidLibraryNumber)
+            _isValidLibraryNumber = LibraryNumber.Validate();
+            if (!_isValidLibraryNumber)
             {
                 Acr.UserDialogs.UserDialogs.Instance.Alert($"Library Number {LibraryNumber.Errors.First()}");
             }
-            IsValidCourse = Course.Validate();
-            if (!IsValidCourse)
+            _isValidCourse = Course.Validate();
+            if (!_isValidCourse)
             {
                 Acr.UserDialogs.UserDialogs.Instance.Alert($"Course {Course.Errors.First()}");
             }
-            bool result = IsValidStudentID  && IsValidLibraryNumber && IsValidCourse;
+            bool result = _isValidStudentID  && _isValidLibraryNumber && _isValidCourse;
 
+            DebugService.WriteLine($"{_isValidStudentID} {_isValidLibraryNumber} {_isValidCourse}");
             return result;
         }
 

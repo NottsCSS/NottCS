@@ -140,7 +140,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <Content Include="settings-icon.png" />
+    <Content Include="settings_icon.png" />
     <Content Include="xamarin_logo.png" />
   </ItemGroup>
   <ItemGroup>
