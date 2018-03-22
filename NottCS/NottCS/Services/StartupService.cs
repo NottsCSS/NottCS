@@ -28,12 +28,19 @@ namespace NottCS.Services
                 var userData = await RestService.RequestGetAsync<User>();
                 if (userData.Item1 == "OK") //first item represents whether the request is successful
                 {
+                    bool isNewStudent = String.IsNullOrEmpty(userData.Item2.StudentId) ||
+                                        String.IsNullOrEmpty(userData.Item2.LibraryNumber) ||
+                                        String.IsNullOrEmpty(userData.Item2.Course);
+
+                    Debug.WriteLine($"Can Authenticate {isNewStudent}");
+
                     //if either studentId or librarynumber is not filled that means is new user
                     if (String.IsNullOrEmpty(userData.Item2.StudentId) ||
                         String.IsNullOrEmpty(userData.Item2.LibraryNumber) ||
                         String.IsNullOrEmpty(userData.Item2.Course))
                     {
                         stopwatch.Start();
+                        Debug.WriteLine("Registration required");
                         await NavigationService.NavigateToAsync<RegistrationViewModel>(userData.Item2);
                         DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
                     }
@@ -43,7 +50,7 @@ namespace NottCS.Services
                         await NavigationService.NavigateToAsync<HomeViewModel>(userData.Item2);
                         DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
                     }
-                    await NavigationService.NavigateToAsync<HomeViewModel>(userData.Item2);
+//                    await NavigationService.NavigateToAsync<HomeViewModel>(userData.Item2);
                 }
                 else
                 {
