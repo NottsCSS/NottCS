@@ -35,6 +35,12 @@ namespace NottCS.Services.REST
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         }
 
+        //TODO: DEAL WITH a
+        public static void IsValidToken()
+        {
+            var a = App.MicrosoftAuthenticationResult.ExpiresOn;
+        }
+
         /// <summary>
         /// Resets the authorization header
         /// </summary>

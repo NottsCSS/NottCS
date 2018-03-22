@@ -53,8 +53,12 @@
 
                     <Label Text="Library Number: " Grid.Row="3" Grid.Column="0" />
                     <Entry Text="{Binding LibraryNumber.Value}" Grid.Row="3" Grid.Column="1"/>
-                    <Label Text="Course: " Grid.Row="4" Grid.Column="0" />
-                    <Entry x:Name="CourseEntry" Placeholder="Course" Grid.Row="4" Grid.Column="1"
+
+                    <Label Text="Year of Study: " Grid.Row="4" Grid.Column="0" />
+                    <Picker ItemsSource="{Binding YearOfStudy}" Grid.Row="4" Grid.Column="1" Margin="10,0,0,0"/>
+                    
+                    <Label Text="Course: " Grid.Row="5" Grid.Column="0" />
+                    <Entry x:Name="CourseEntry" Placeholder="Course" Grid.Row="5" Grid.Column="1"
                            Text="{Binding Course.Value, Mode=TwoWay}">
                         <Entry.Behaviors>
                             <behaviors:EventToCommandBehavior
@@ -63,7 +67,7 @@
                         </Entry.Behaviors>
                     </Entry>
                     <!--                    TODO: format the suggestions properly-->
-                    <ListView x:Name="CourseSuggestions" Grid.Row="5" Grid.Column="1"
+                    <ListView x:Name="CourseSuggestions" Grid.Row="6" Grid.Column="1"
                               ItemsSource="{Binding Suggestions, Mode=TwoWay}"
                               CachingStrategy="RecycleElement"
                               HeightRequest="100"

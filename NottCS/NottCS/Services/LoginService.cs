@@ -14,6 +14,7 @@ using NottCS.ViewModels;
 
 namespace NottCS.Services
 {
+    //TODO: problem: calling login does not lead into registration, only can get into registration on app startup
     public static class LoginService
     {
         public static async Task<bool> MicrosoftAuthenticateWithCacheAsync()
@@ -24,6 +25,7 @@ namespace NottCS.Services
                     App.ClientApplication.Users.FirstOrDefault());
                 //                RefreshUserData(ar.AccessToken);
                 RestService.SetupClient(ar.AccessToken);
+                DebugService.WriteLine(ar.ExpiresOn);
                 App.MicrosoftAuthenticationResult = ar;
                 DebugService.WriteLine($"{ar.User.Name} successfully authenticated with microsoft server");
                 DebugService.WriteLine($"Token expires on: {ar.ExpiresOn}");

@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 
 namespace NottCS.Services.REST
 {
+    //TODO: Check validity of token and refresh it every time trying to connect to server
     internal static partial class RestService
     {
         /// <summary>

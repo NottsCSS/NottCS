@@ -80,6 +80,15 @@ namespace NottCS.ViewModels
             get => _suggestions;
             set => SetProperty(ref _suggestions, value);
         }
+
+        public ObservableCollection<string> YearOfStudy { get; set; } = new ObservableCollection<string>
+        {
+            "1",
+            "2",
+            "3",
+            "4",
+            "Other"
+        };
         
         public RegistrationViewModel()
         {
