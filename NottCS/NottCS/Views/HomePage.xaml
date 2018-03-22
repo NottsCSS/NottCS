@@ -36,7 +36,7 @@
     <TabbedPage.ToolbarItems>
         <ToolbarItem x:Name="Settings" 
                      Text="Settings"
-                     Icon="settings-icon.png"
+                     Icon="settings_icon.png"
                      Command="{Binding SettingsPageNavigationCommand}"/>
     </TabbedPage.ToolbarItems>
 
