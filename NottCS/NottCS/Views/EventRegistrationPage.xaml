@@ -12,24 +12,37 @@
         <Grid>
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="75"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <StackLayout Grid.Row="0"
-                             HorizontalOptions="Start">
+                <Label Grid.Row="0"
+                       Margin="10"
+                       HorizontalOptions="Center"
+                       FontSize="Medium"
+                       Text="{Binding EventName}"/>
+                <Image x:Name="EmailContent"
+                       Grid.Row="1"
+                       Margin="10"
+                       Aspect="AspectFit"
+                       HorizontalOptions="Center"/>
+                <Button Text="SIGN UP"
+                        Grid.Row="2"
+                        Style="{StaticResource SpanButtonStyle}"
+                        Command="{Binding SignupCommand}"/>
+                <!--StackLayout Grid.Row="0"
+                             HorizontalOptions="Center">
                     <Label Text="{Binding EventName}"
-                           FontSize="Medium"
-                           Margin="5,0"
-                           HorizontalOptions="CenterAndExpand"
-                           VerticalOptions ="StartAndExpand"/>
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           FontSize="Medium"/>
                     <Image x:Name="EmailContent"
                            Margin="0,0"
-                           WidthRequest="500"
-                           HeightRequest="270"
+                           Aspect="AspectFit"
                            VerticalOptions="StartAndExpand"
-                           HorizontalOptions="CenterAndExpand"/>
-                </StackLayout>
-                <StackLayout Grid.Row="1"
+                           HorizontalOptions="Center"/>
+                </StackLayout-->
+                <!--StackLayout Grid.Row="1"
                              HorizontalOptions="Center"
                              VerticalOptions="End"
                              Margin="0,0">
@@ -37,9 +50,9 @@
                             FontSize="Medium"
                             HorizontalOptions="CenterAndExpand"
                             VerticalOptions="EndAndExpand"
-                            Margin="5,10,5,0"
+                            Margin="10"
                             Command="{Binding SignupCommand}"/>
-                </StackLayout>
+                </StackLayout-->
             </Grid>
         </Grid>
     </ContentPage.Content>

@@ -20,20 +20,20 @@
                     Text ="Version: 1.0.0"
                     FontSize="10"
                     TextColor="Black"
-                    HorizontalOptions="CenterAndExpand"
+                    HorizontalOptions="Center"
                     VerticalOptions="StartAndExpand">
                 </Label>
                 <Label 
                     Text ="Computer Science Society"
                     FontSize="9"
                     TextColor="Gray"
-                    HorizontalOptions="CenterAndExpand">
+                    HorizontalOptions="Center">
                 </Label>
                 <Label 
                     Text ="Copyright © 2018"
                     FontSize="9"
                     TextColor="Gray"
-                    HorizontalOptions="CenterAndExpand">
+                    HorizontalOptions="Center">
                 </Label>
                 <Label
                     Text="Why NottCS Exists?"

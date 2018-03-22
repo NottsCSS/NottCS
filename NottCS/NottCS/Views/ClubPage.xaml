@@ -102,13 +102,9 @@
                                HorizontalTextAlignment="Center"/>
                     </StackLayout>
                 </ScrollView>
-                <Button Text = "SIGN UP"
-                        FontSize="Large"
-                        Grid.Row="5"
-                        HorizontalOptions="FillAndExpand"
-                        WidthRequest="500"
-                        HeightRequest="50"
-                        VerticalOptions="EndAndExpand"
+                <Button Grid.Row="5" 
+                        Text = "SIGN UP"
+                        Style="{StaticResource SpanButtonStyle}"
                         Command="{Binding SignUpCommand}"/>
             </Grid>
         </Grid>
