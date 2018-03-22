@@ -33,6 +33,12 @@
         </ResourceDictionary>
     </TabbedPage.Resources>
     
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem x:Name="Settings" 
+                     Text="Settings"
+                     Icon="settings-icon.png"
+                     Command="{Binding SettingsPageNavigationCommand}"/>
+    </TabbedPage.ToolbarItems>
 
     <ContentPage Title="{Binding PageTitle1}">
         <StackLayout>
@@ -221,7 +227,9 @@
                 </ListView>
                 <Label Text="Access token: " />
                 <Entry Text="{Binding AccessToken}"/>
-                <Button Text="Sign Out"  Command="{Binding SignOutCommand}" />
+                <Button Text="Sign Out"  
+                        Command="{Binding SignOutCommand}"
+                        Style="{StaticResource SpanButtonStyle}"/>
             </StackLayout>
         </Grid>
 

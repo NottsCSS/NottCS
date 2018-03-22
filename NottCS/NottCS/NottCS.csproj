@@ -22,6 +22,7 @@
     <None Remove="Images\Icons\logo1.jpeg" />
     <None Remove="Images\Icons\ok.png" />
     <None Remove="Images\Icons\okfixed.png" />
+    <None Remove="Images\Icons\settings-icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ViewModels\AboutViewModel.cs" />
@@ -51,6 +52,7 @@
     <EmbeddedResource Include="Images\Icons\logo1.jpeg" />
     <EmbeddedResource Include="Images\Icons\ok.png" />
     <EmbeddedResource Include="Images\Icons\okfixed.png" />
+    <EmbeddedResource Include="Images\Icons\settings-icon.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.0.1" />

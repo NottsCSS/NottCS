@@ -83,20 +83,10 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Text="Sign Up"
+                <Button Text="SIGN UP"
                         Command="{Binding SignUpCommand}"
-                        FontSize="Medium"
-                        HorizontalOptions="CenterAndExpand"
-                        VerticalOptions="StartAndExpand"
-                        MinimumHeightRequest="40"
+                        Style="{StaticResource SpanButtonStyle}"
                         Grid.Row="2">
-                    <Button.Margin>
-                        <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="iOS" Value="0,0,0,10" />
-                            <On Platform="Android" Value="2,2" />
-                            <On Platform="UWP" Value="10"/>
-                        </OnPlatform>
-                    </Button.Margin>
                 </Button>
             </Grid>
         </Grid>
