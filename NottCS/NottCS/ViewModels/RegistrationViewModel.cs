@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using NottCS.Validations;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Newtonsoft.Json;
@@ -23,7 +24,10 @@ namespace NottCS.ViewModels
         private bool _isValidStudentID = true;
         private bool _isValidLibraryNumber = true;
 
-        private User _currentUser = null;
+        private User _currentUser = new User
+        {
+            Name = "HELLO", Email = "ASD@ASD.COM"
+        };
         private bool _isValidCourse = true;
 
         
@@ -66,6 +70,10 @@ namespace NottCS.ViewModels
                 new StringNumericRule() 
             }
         };
+        public ValidatableObject<string> Course { get; set; } = new ValidatableObject<string>()
+        {
+           Validations = { new StringNotEmptyRule(), new StringAlphaNumericRule()}
+        };
 
         public ObservableCollection<string> Suggestions
         {
@@ -76,6 +84,7 @@ namespace NottCS.ViewModels
         public RegistrationViewModel()
         {
             Title = "NottCS Registration";
+            AddCoursesToList();
         }
         public ICommand RegisterCommand => new Command(async () => await Register());
         public ICommand CourseItemSelectedCommand => new Command(CourseItemSelected);
@@ -84,9 +93,21 @@ namespace NottCS.ViewModels
         private bool Validate()
         {
             IsValidStudentID = StudentID.Validate();
+            if (!IsValidStudentID)
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Alert($"Student ID {StudentID.Errors.First()}");
+            }
             IsValidLibraryNumber = LibraryNumber.Validate();
-//            IsValidCourse = Course.Validate();
-            bool result = IsValidStudentID  && IsValidLibraryNumber;
+            if (!IsValidLibraryNumber)
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Alert($"Library Number {LibraryNumber.Errors.First()}");
+            }
+            IsValidCourse = Course.Validate();
+            if (!IsValidCourse)
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Alert($"Course {Course.Errors.First()}");
+            }
+            bool result = IsValidStudentID  && IsValidLibraryNumber && IsValidCourse;
 
             return result;
         }
@@ -117,6 +138,7 @@ namespace NottCS.ViewModels
             {
                 CurrentUser.StudentId = StudentID.Value;
                 CurrentUser.LibraryNumber = LibraryNumber.Value;
+                CurrentUser.Course = Course.Value;
 
                 var requestUpdate = await RestService.RequestUpdateAsync(CurrentUser);
                 if (requestUpdate == "OK")
@@ -124,7 +146,7 @@ namespace NottCS.ViewModels
                     var userData = await RestService.RequestGetAsync<User>();
                     if (userData.Item1 == "OK")
                     {
-                        await NavigationService.NavigateToAsync<AccountViewModel>(userData.Item2);
+                        await NavigationService.NavigateToAsync<HomeViewModel>(userData.Item2);
                     }
                     else
                     {
@@ -142,13 +164,14 @@ namespace NottCS.ViewModels
         {
             if (!(param is string s)) return;
             DebugService.WriteLine($"{s} is selected");
-            RegistrationParameters.Course.Value = s;
+            Course.Value = s;
         }
 
         private void CourseTextChanged(object courseEntryParameter)
         {
+            if (!(courseEntryParameter is TextChangedEventArgs args)) return;
+            var courseEntryString = args.NewTextValue;
             Suggestions.Clear();
-            if (!(courseEntryParameter is string courseEntryString)) return;
             foreach (string course in _courseList)
             {
                 if (course.ToUpper().Contains(courseEntryString.ToUpper()) && Suggestions.Count < 5 && course!=courseEntryString)

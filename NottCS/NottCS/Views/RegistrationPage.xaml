@@ -29,11 +29,13 @@
             <ScrollView>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -46,27 +48,42 @@
                     <Label Text="Email: " Grid.Row="1" Grid.Column="0" />
                     <Label Text="{Binding CurrentUser.Email}" Grid.Row="1" Grid.Column="1" />
 
-                    <Label Text="Date Joined: " Grid.Row="2" Grid.Column="0" />
-                    <Label Text="{Binding CurrentUser.DateJoined}" Grid.Row="2" Grid.Column="1" />
+                    <Label Text="Student ID: " Grid.Row="2" Grid.Column="0" />
+                    <Entry Text="{Binding StudentID.Value}" Grid.Row="2" Grid.Column="1"/>
 
-
-                    <Label Text="Student ID: " Grid.Row="3" Grid.Column="0" />
-                    <StackLayout Grid.Row="3" Grid.Column="1">
-                        <Entry Text="{Binding StudentID.Value}" />
-                        <Label IsVisible="{Binding IsValidStudentID, Converter={StaticResource InverseBoolConverter}}"
-                           TextColor="Red"
-                           FontSize="Small"
-                           Text="{Binding StudentID.Errors, Converter={StaticResource StringListToStringConverter}}" />
-                    </StackLayout>
-
-                    <Label Text="Library Number: " Grid.Row="4" Grid.Column="0" />
-                    <StackLayout Grid.Row="4" Grid.Column="1">
-                        <Entry Text="{Binding LibraryNumber.Value}"/>
-                        <Label IsVisible="{Binding IsValidStudentID, Converter={StaticResource InverseBoolConverter}}"
-                           TextColor="Red"
-                           FontSize="Small"
-                           Text="{Binding LibraryNumber.Errors, Converter={StaticResource StringListToStringConverter}}" />
-                    </StackLayout>
+                    <Label Text="Library Number: " Grid.Row="3" Grid.Column="0" />
+                    <Entry Text="{Binding LibraryNumber.Value}" Grid.Row="3" Grid.Column="1"/>
+                    <Label Text="Course: " Grid.Row="4" Grid.Column="0" />
+                    <Entry x:Name="CourseEntry" Placeholder="Course" Grid.Row="4" Grid.Column="1"
+                           Text="{Binding Course.Value, Mode=TwoWay}">
+                        <Entry.Behaviors>
+                            <behaviors:EventToCommandBehavior
+                                Command="{Binding CourseTextChangedCommand}"
+                                EventName="TextChanged" />
+                        </Entry.Behaviors>
+                    </Entry>
+                    <!--                    TODO: format the suggestions properly-->
+                    <ListView x:Name="CourseSuggestions" Grid.Row="5" Grid.Column="1"
+                              ItemsSource="{Binding Suggestions, Mode=TwoWay}"
+                              CachingStrategy="RecycleElement"
+                              HeightRequest="100"
+                              WidthRequest="500">
+                        <ListView.Behaviors>
+                            <behaviors:EventToCommandBehavior
+                                Command="{Binding CourseItemSelectedCommand}"
+                                EventName="ItemSelected"
+                                Converter="{StaticResource SelectedItemConverter}" />
+                        </ListView.Behaviors>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout>
+                                        <Label Text="{Binding .}" />
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
 
                 </Grid>
             </ScrollView>

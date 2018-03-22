@@ -40,11 +40,6 @@ namespace NottCS.ViewModels
                 {
                     await LoginService.MicrosoftAuthenticateWithUIAsync();
                 }
-                string a = App.MicrosoftAuthenticationResult?.User.DisplayableId;
-                DebugService.WriteLine($"DisplayableID: {a}");
-                DebugService.WriteLine($"Identifier: {App.MicrosoftAuthenticationResult?.User.Identifier}");
-                DebugService.WriteLine($"Identity Provider: {App.MicrosoftAuthenticationResult?.User.IdentityProvider}");
-                DebugService.WriteLine($"Name: {App.MicrosoftAuthenticationResult?.User.Name}");
 
                 DebugService.WriteLine($"Authentication took {stopwatch.ElapsedMilliseconds} ms");
                 stopwatch.Restart();
