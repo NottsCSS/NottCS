@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NottCS.Android", "NottCS\NottCS.Android\NottCS.Android.csproj", "{C8742B74-5A2F-459B-A6C6-F6F792663D57}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3DD5D3FD-391F-4E0F-BC6F-7FF69A5FBD14} = {3DD5D3FD-391F-4E0F-BC6F-7FF69A5FBD14}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NottCS.iOS", "NottCS\NottCS.iOS\NottCS.iOS.csproj", "{BF73DABD-AA5A-48D0-8045-9EAC431934FE}"
 EndProject

@@ -120,17 +120,19 @@
                         <Frame OutlineColor="Black"
                                Padding="0"
                                Margin="2,2">
-                            <Image Source="{Binding ImageURL}" 
-                                   Aspect="AspectFill"
-                                   HorizontalOptions="FillAndExpand"
-                                   VerticalOptions="StartAndExpand"/>
-                            <Label FontSize="Small"
-                                   HorizontalOptions="FillAndExpand" 
-                                   VerticalOptions="FillAndExpand" 
-                                   HorizontalTextAlignment="Center" 
-                                   VerticalTextAlignment="End" 
-                                   Text="{Binding ClubName}" 
-                                   LineBreakMode="WordWrap"/>
+                            <StackLayout>
+                                <Image Source="{Binding ImageURL}" 
+                                       Aspect="AspectFill"
+                                       HorizontalOptions="FillAndExpand"
+                                       VerticalOptions="StartAndExpand"/>
+<!--                                <Label Text="{Binding ImageURL}" />-->
+                                <Label FontSize="Small"
+                                       HorizontalTextAlignment="Center" 
+                                       VerticalTextAlignment="End" 
+                                       Text="{Binding ClubName}" 
+                                       LineBreakMode="WordWrap"/>
+
+                            </StackLayout>
                         </Frame>
                     </DataTemplate>
                 </flv:FlowListView.FlowColumnTemplate>
