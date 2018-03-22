@@ -2,15 +2,12 @@
 
 namespace NottCS.Models
 {
-    internal class RegistrationModel
+    internal class UserRegistrationParameters
     {
-        public RegistrationModel()
+        public UserRegistrationParameters()
         {
         }
-        public ValidatableObject<string> Name { get; set; } = new ValidatableObject<string>();
-        public ValidatableObject<string> OWA { get; set; } = new ValidatableObject<string>();
         public ValidatableObject<string> StudentID { get; set; } = new ValidatableObject<string>();
-        public ValidatableObject<string> Password { get; set; } = new ValidatableObject<string>();
         public ValidatableObject<string> LibraryNumber { get; set; } = new ValidatableObject<string>();
         public ValidatableObject<string> Course { get; set; } = new ValidatableObject<string>();
 

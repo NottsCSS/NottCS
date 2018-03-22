@@ -16,15 +16,16 @@ namespace NottCS.ViewModels
 {
     internal class RegistrationViewModel : BaseViewModel
     {
-//        private readonly List<string> _courseList = new List<string>();
+        private readonly List<string> _courseList = new List<string>();
+        private ObservableCollection<string> _suggestions = new ObservableCollection<string>();
+
         #region PublicMethodsWithPrivateBackingFields
         private bool _isValidStudentID = true;
         private bool _isValidLibraryNumber = true;
 
         private User _currentUser = null;
-//        private bool _isValidCourse = true;
+        private bool _isValidCourse = true;
 
-//        private ObservableCollection<string> _suggestions = new ObservableCollection<string>();
         
         public bool IsValidStudentID
         {
@@ -37,13 +38,12 @@ namespace NottCS.ViewModels
             set => SetProperty(ref _isValidLibraryNumber, value);
         }
 
-        //        public bool IsValidCourse
-        //        {
-        //            get => _isValidCourse;
-        //            set => SetProperty(ref _isValidLibraryNumber, value);
-        //        }
+        public bool IsValidCourse
+        {
+            get => _isValidCourse;
+            set => SetProperty(ref _isValidLibraryNumber, value);
+        }
         #endregion
-
         public User CurrentUser
         {
             get => _currentUser;
@@ -67,20 +67,19 @@ namespace NottCS.ViewModels
             }
         };
 
-        //        public ObservableCollection<string> Suggestions
-        //        {
-        //            get => _suggestions;
-        //            set => SetProperty(ref _suggestions, value);
-        //        }
-
-
+        public ObservableCollection<string> Suggestions
+        {
+            get => _suggestions;
+            set => SetProperty(ref _suggestions, value);
+        }
+        
         public RegistrationViewModel()
         {
             Title = "NottCS Registration";
         }
         public ICommand RegisterCommand => new Command(async () => await Register());
-//        public ICommand ItemSelectedCommand => new Command(ItemSelected);
-//        public ICommand TextChangedCommand => new Command(CourseTextChanged);
+        public ICommand CourseItemSelectedCommand => new Command(CourseItemSelected);
+        public ICommand CourseTextChangedCommand => new Command(CourseTextChanged);
 
         private bool Validate()
         {
@@ -92,23 +91,22 @@ namespace NottCS.ViewModels
             return result;
         }
 
-        //private void AddCoursesToList()
-        //{
-        //    //TODO: get courses from database instead of hardcoding
-        //    _courseList.Add("Foundation in Engineering");
-        //    _courseList.Add("Mechanical Engineering");
-        //    _courseList.Add("Mechatronic Engineering");
-        //    _courseList.Add("Electrical and Electronic Engineering");
-        //    _courseList.Add("Chemical Engineering");
-        //    _courseList.Add("Chemical Engineering with Environmental Engineering");
-        //    _courseList.Add("Civil Engineering");
-        //    _courseList.Add("Applied Mathematics");
-        //    _courseList.Add("Computer Science");
-        //    _courseList.Add("Computer Science with Artificial Intelligence");
-        //    _courseList.Add("Computer Science and Management Studies");
-        //    _courseList.Add("Software Engineering");
-        //    _courseList.Add("Foundation in Computer Science");
-        //}
+        private void AddCoursesToList()
+        {
+            _courseList.Add("Foundation in Engineering");
+            _courseList.Add("Mechanical Engineering");
+            _courseList.Add("Mechatronic Engineering");
+            _courseList.Add("Electrical and Electronic Engineering");
+            _courseList.Add("Chemical Engineering");
+            _courseList.Add("Chemical Engineering with Environmental Engineering");
+            _courseList.Add("Civil Engineering");
+            _courseList.Add("Applied Mathematics");
+            _courseList.Add("Computer Science");
+            _courseList.Add("Computer Science with Artificial Intelligence");
+            _courseList.Add("Computer Science and Management Studies");
+            _courseList.Add("Software Engineering");
+            _courseList.Add("Foundation in Computer Science");
+        }
 
         private async Task Register()
         {
@@ -140,25 +138,25 @@ namespace NottCS.ViewModels
             }
             IsBusy = false;
         }
-//        private void ItemSelected(object param)
-//        {
-//            if (!(param is string s)) return;
-//            DebugService.WriteLine($"{s} is selected");
-//            RegistrationParameters.Course.Value = s;
-//        }
-//
-//        private void CourseTextChanged(object courseEntryParameter)
-//        {
-//            Suggestions.Clear();
-//            if (!(courseEntryParameter is string courseEntryString)) return;
-//            foreach (string course in _courseList)
-//            {
-//                if (course.ToUpper().Contains(courseEntryString.ToUpper()) && Suggestions.Count < 5 && course!=courseEntryString)
-//                {
-//                    Suggestions.Add(course);
-//                }
-//            }
-//        }
+        private void CourseItemSelected(object param)
+        {
+            if (!(param is string s)) return;
+            DebugService.WriteLine($"{s} is selected");
+            RegistrationParameters.Course.Value = s;
+        }
+
+        private void CourseTextChanged(object courseEntryParameter)
+        {
+            Suggestions.Clear();
+            if (!(courseEntryParameter is string courseEntryString)) return;
+            foreach (string course in _courseList)
+            {
+                if (course.ToUpper().Contains(courseEntryString.ToUpper()) && Suggestions.Count < 5 && course!=courseEntryString)
+                {
+                    Suggestions.Add(course);
+                }
+            }
+        }
         public override Task InitializeAsync(object navigationData)
         {
             if (navigationData is User user)

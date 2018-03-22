@@ -15,7 +15,6 @@ namespace NottCS.Services
 {
     public static class LoginService
     {
-        private static bool isBusy = false;
         public static async Task<bool> MicrosoftAuthenticateWithCacheAsync()
         {
             try
