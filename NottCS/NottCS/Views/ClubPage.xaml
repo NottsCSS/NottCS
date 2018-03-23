@@ -21,6 +21,14 @@
             <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
         </ResourceDictionary>
     </TabbedPage.Resources>
+
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem x:Name="Settings" 
+                     Text="Settings"
+                     Icon="settings_icon.png"
+                     Command="{Binding ClubNavigationCommand}"/>
+    </TabbedPage.ToolbarItems>
+
     <ContentPage Title="{Binding PageTitle1}">
         <StackLayout>
             <ListView ItemsSource="{Binding EventLists}"
