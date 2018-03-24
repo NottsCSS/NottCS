@@ -52,6 +52,12 @@ namespace NottCS.Services
             }
         }
 
+        /// <summary>
+        /// Handles exceptions and result of AcquireToken methods of MSAL
+        /// </summary>
+        /// <returns>
+        /// CanAuthenticateWithMicrosoft
+        /// </returns>
         public static async Task<bool> SignInMicrosoftAsync()
         {
             try
@@ -67,27 +73,9 @@ namespace NottCS.Services
 
                 return true;
             }
-            catch (MsalServiceException serviceException)
+            catch (MsalException msalException)
             {
-                switch (serviceException.ErrorCode)
-                {
-                    case MsalServiceException.RequestTimeout:
-                        Acr.UserDialogs.UserDialogs.Instance.Alert("Request timeout",
-                            "Microsoft Authentication Service Error", "OK");
-                        break;
-                    case MsalServiceException.ServiceNotAvailable:
-                        Acr.UserDialogs.UserDialogs.Instance.Alert("Service unavailable",
-                            "Microsoft Authentication Service Error", "OK");
-                        break;
-                    default:
-                        Acr.UserDialogs.UserDialogs.Instance.Alert("Unknown error occured",
-                            "Microsoft Authentication Service Error", "OK");
-                        break;
-                }
-            }
-            catch (MsalClientException clientException)
-            {
-                switch (clientException.ErrorCode)
+                switch (msalException.ErrorCode)
                 {
                     case MsalClientException.AuthenticationCanceledError:
                         Acr.UserDialogs.UserDialogs.Instance.Alert("Authentication cancelled",
@@ -129,9 +117,22 @@ namespace NottCS.Services
                         Acr.UserDialogs.UserDialogs.Instance.Alert("Tenant discovery failed",
                             "Microsoft Authentication Client Error", "OK");
                         break;
+                    case MsalServiceException.RequestTimeout:
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("Request timeout",
+                            "Microsoft Authentication Service Error", "OK");
+                        break;
+                    case MsalServiceException.ServiceNotAvailable:
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("Service unavailable",
+                            "Microsoft Authentication Service Error", "OK");
+                        break;
+                    case "access_denied":
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("Access denied", "Microsoft Authentication Error",
+                            "OK");
+                        break;
                     default:
                         Acr.UserDialogs.UserDialogs.Instance.Alert("Unknown error occured",
-                            "Microsoft Authentication Client Error", "OK");
+                            "Microsoft Authentication Error", "OK");
+                        DebugService.WriteLine($"{msalException}");
                         break;
                 }
             }
@@ -147,6 +148,10 @@ namespace NottCS.Services
             return false;
         }
 
+        /// <summary>
+        /// Connects to backend and handles data from backend
+        /// </summary>
+        /// <returns></returns>
         public static async Task SignInBackendAndNavigateAsync()
         {
             Stopwatch stopwatch = new Stopwatch();

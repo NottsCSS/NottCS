@@ -40,6 +40,7 @@ namespace NottCS.Services.REST
         public static void IsValidToken()
         {
             var a = App.MicrosoftAuthenticationResult.ExpiresOn;
+            //Also call LoginService.SignInMicrosoftAsync to refresh the token
         }
 
         /// <summary>
