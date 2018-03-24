@@ -156,7 +156,6 @@ namespace NottCS.Services.Navigation
         {
             Type pageType = GetPageTypeForViewModel(typeof(TViewModel));
             var stack = Application.Current.MainPage.Navigation.NavigationStack;
-            
             foreach (var page in stack)
             {
                 if (pageType != page.GetType()) continue;

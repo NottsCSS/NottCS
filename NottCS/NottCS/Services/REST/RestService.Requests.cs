@@ -48,6 +48,7 @@ namespace NottCS.Services.REST
             var requestUri = UriGenerator<T>(HttpMethod.Get, identifier);
 
             var httpRequest = HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
+            string errorMessage = null;
 
             try
             {
@@ -65,8 +66,9 @@ namespace NottCS.Services.REST
             catch (Exception e)
             {
                 DebugService.WriteLine(e);
+                errorMessage = e.Message;
             }
-            return Tuple.Create("Something went wrong", new T());
+            return Tuple.Create($"{errorMessage}", new T());
         }
 
         /// <summary>

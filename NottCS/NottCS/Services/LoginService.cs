@@ -15,62 +15,9 @@ using NottCS.ViewModels;
 namespace NottCS.Services
 {
     //TODO: problem: calling login does not lead into registration, only can get into registration on app startup
+    //TODO: check what happens when token expires, and call AcquireTokenSilentAsync with no internet connection
     public static class LoginService
     {
-        public static async Task<bool> MicrosoftAuthenticateWithCacheAsync()
-        {
-            try
-            {
-                AuthenticationResult ar = await App.ClientApplication.AcquireTokenSilentAsync(App.Scopes,
-                    App.ClientApplication.Users.FirstOrDefault());
-                //                RefreshUserData(ar.AccessToken);
-                RestService.SetupClient(ar.AccessToken);
-                DebugService.WriteLine(ar.ExpiresOn);
-                App.MicrosoftAuthenticationResult = ar;
-                DebugService.WriteLine($"{ar.User.Name} successfully authenticated with microsoft server");
-                DebugService.WriteLine($"Token expires on: {ar.ExpiresOn}");
-                DebugService.WriteLine(ar.AccessToken);
-            }
-            catch (MsalUiRequiredException ex)
-            {
-                if (ex.ErrorCode == MsalUiRequiredException.UserNullError)
-                {
-                    DebugService.WriteLine(ex.ErrorCode);
-                    DebugService.WriteLine("Null user was passed (no user found on local cache). Login required.");
-                    return false;
-                }
-                else
-                {
-                    DebugService.WriteLine($"MsalUiRequiredException: {ex.Message}");
-                    DebugService.WriteLine($"Error code: {ex.ErrorCode}");
-                    DebugService.WriteLine($"Target site: {ex.TargetSite}");
-                    return false;
-                }
-            }
-            catch (MsalServiceException ex)
-            {
-                DebugService.WriteLine($"MsalServiceException thrown");
-                DebugService.WriteLine($"Error code: {ex.ErrorCode}");
-            }
-
-            catch (MsalException ex)
-            {
-                DebugService.WriteLine($"Other MsalException thrown");
-                DebugService.WriteLine($"Error code: {ex.ErrorCode}");
-            }
-            catch (Exception ex)
-            {
-                DebugService.WriteLine($"Unknown generic exception occured: {ex.GetType()}");
-                DebugService.WriteLine($"Message: {ex.Message}");
-                DebugService.WriteLine($"Target site: {ex.TargetSite}");
-                DebugService.WriteLine($"Please report this error to developers");
-                return false;
-            }
-
-            return true;
-
-        }
-
         public static async Task SignOut()
         {
             foreach (var user in App.ClientApplication.Users)
@@ -78,55 +25,129 @@ namespace NottCS.Services
                 App.ClientApplication.Remove(user);
                 RestService.ResetClient();
             }
+
             NavigationService.ClearNavigation();
             await NavigationService.NavigateToAsync<LoginViewModel>();
-            
+
         }
 
-        public static async Task SignInMain()
+        /// <summary>
+        /// First step of MSAL sign in, determines if UI is required, exception handled later
+        /// </summary>
+        /// <returns></returns>
+        private static async Task<AuthenticationResult> InternalSignInMicrosoft()
         {
-            bool canAuthenticate = await LoginService.MicrosoftAuthenticateWithCacheAsync();
-            DebugService.WriteLine($"Can authenticate with cached data: {canAuthenticate}");
-            Stopwatch stopwatch = new Stopwatch();
-
-            if (canAuthenticate)
+            try
             {
-                var userData = await RestService.RequestGetAsync<User>();
-                if (userData.Item1 == "OK") //first item represents whether the request is successful
-                {
-                    //if either studentId or librarynumber is not filled that means is new user
-                    if (String.IsNullOrEmpty(userData.Item2.StudentId) ||
-                        String.IsNullOrEmpty(userData.Item2.LibraryNumber) ||
-                        String.IsNullOrEmpty(userData.Item2.Course))
-                    {
-                        stopwatch.Start();
-                        await NavigationService.NavigateToAsync<RegistrationViewModel>(userData.Item2);
-                        DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
-                    }
-                    else
-                    {
-                        stopwatch.Start();
-                        await NavigationService.NavigateToAsync<HomeViewModel>(userData.Item2);
-                        DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
-                    }
-                    await NavigationService.NavigateToAsync<HomeViewModel>(userData.Item2);
-                }
-                else
-                {
-                    stopwatch.Start();
-                    await NavigationService.NavigateToAsync<LoginViewModel>();
-                    DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
-                }
+                AuthenticationResult ar = await App.ClientApplication.AcquireTokenSilentAsync(App.Scopes,
+                    App.ClientApplication.Users.FirstOrDefault());
+                DebugService.WriteLine("Login using cached data successful");
+                return ar;
             }
-            else
+            catch (MsalUiRequiredException)
             {
-                stopwatch.Start();
-                await NavigationService.NavigateToAsync<LoginViewModel>();
-                DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
+                DebugService.WriteLine("UI required");
+                AuthenticationResult ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
+                return ar;
             }
         }
 
-        public static async Task SignInBackend()
+        public static async Task<bool> SignInMicrosoftAsync()
+        {
+            try
+            {
+                AuthenticationResult ar = await InternalSignInMicrosoft();
+                App.MicrosoftAuthenticationResult = ar;
+
+                RestService.SetupClient(ar.AccessToken);
+                DebugService.WriteLine("Login to microsoft successful");
+                DebugService.WriteLine($"Welcome {ar.User.Name}");
+                DebugService.WriteLine($"Token expires on: {ar.ExpiresOn}");
+                DebugService.WriteLine($"Access token: {ar.AccessToken}");
+
+                return true;
+            }
+            catch (MsalServiceException serviceException)
+            {
+                switch (serviceException.ErrorCode)
+                {
+                    case MsalServiceException.RequestTimeout:
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("Request timeout",
+                            "Microsoft Authentication Service Error", "OK");
+                        break;
+                    case MsalServiceException.ServiceNotAvailable:
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("Service unavailable",
+                            "Microsoft Authentication Service Error", "OK");
+                        break;
+                    default:
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("Unknown error occured",
+                            "Microsoft Authentication Service Error", "OK");
+                        break;
+                }
+            }
+            catch (MsalClientException clientException)
+            {
+                switch (clientException.ErrorCode)
+                {
+                    case MsalClientException.AuthenticationCanceledError:
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("Authentication cancelled",
+                            "Microsoft Authentication Client Error", "OK");
+                        break;
+                    case MsalClientException.AuthenticationUiFailedError:
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("Authentication UI failed",
+                            "Microsoft Authentication Client Error", "OK");
+                        break;
+                    case MsalClientException.DuplicateQueryParameterError:
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("Duplicate query parameter",
+                            "Microsoft Authentication Client Error", "OK");
+                        break;
+                    case MsalClientException.InvalidJwtError:
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("Invalid JSON web token",
+                            "Microsoft Authentication Client Error", "OK");
+                        break;
+                    case MsalClientException.JsonParseError:
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("JSON parse error",
+                            "Microsoft Authentication Client Error", "OK");
+                        break;
+                    case MsalClientException.MultipleTokensMatchedError:
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("Multiple tokens matched",
+                            "Microsoft Authentication Client Error", "OK");
+                        break;
+                    case MsalClientException.NetworkNotAvailableError:
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("Network not available",
+                            "Microsoft Authentication Client Error", "OK");
+                        break;
+                    case MsalClientException.NonHttpsRedirectNotSupported:
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("Https redirect not supported",
+                            "Microsoft Authentication Client Error", "OK");
+                        break;
+                    case MsalClientException.StateMismatchError:
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("State mismatch error",
+                            "Microsoft Authentication Client Error", "OK");
+                        break;
+                    case MsalClientException.TenantDiscoveryFailedError:
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("Tenant discovery failed",
+                            "Microsoft Authentication Client Error", "OK");
+                        break;
+                    default:
+                        Acr.UserDialogs.UserDialogs.Instance.Alert("Unknown error occured",
+                            "Microsoft Authentication Client Error", "OK");
+                        break;
+                }
+            }
+            catch (HttpRequestException httpException)
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Alert($"Http request error: {httpException}");
+            }
+            catch (Exception e)
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Alert($"Non-msal exception thrown by MSAL, error: {e}");
+            }
+
+            return false;
+        }
+
+        public static async Task SignInBackendAndNavigateAsync()
         {
             Stopwatch stopwatch = new Stopwatch();
 
@@ -148,68 +169,13 @@ namespace NottCS.Services
                     await NavigationService.NavigateToAsync<HomeViewModel>(userData.Item2);
                     DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
                 }
-                await NavigationService.NavigateToAsync<HomeViewModel>(userData.Item2);
             }
             else
             {
-                stopwatch.Start();
                 await NavigationService.NavigateToAsync<LoginViewModel>();
-                DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
+                Acr.UserDialogs.UserDialogs.Instance
+                    .Alert($"{userData.Item1}"); //alert user of the http request message
             }
-        }
-
-        public static async Task MicrosoftAuthenticateWithUIAsync()
-        {
-            AuthenticationResult ar = null;
-            try
-            {
-                ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
-                DebugService.WriteLine(ar);
-            }
-            catch (MsalException ex)
-            {
-                //TODO: check appropriate error codes and do appropriate stuff, currently it only prints to Debug output
-
-                if (ex.ErrorCode == "access_denied")
-                {
-                    DebugService.WriteLine("Authentication cancelled");
-                }
-                else if (ex.ErrorCode == "authentication_ui_failed")
-                {
-                    DebugService.WriteLine("Authentication UI closed");
-                }
-                else
-                {
-                    DebugService.WriteLine($"Unknown MsalException: {ex.Message}");
-                    DebugService.WriteLine($"Error code: {ex.ErrorCode}");
-                    DebugService.WriteLine($"Target site: {ex.TargetSite}");
-                    DebugService.WriteLine($"Please report this error to developers");
-                }
-            }
-            catch (Exception ex)
-            {
-                DebugService.WriteLine($"Unknown generic exception occured: {ex.GetType()}");
-                DebugService.WriteLine($"Message: {ex.Message}");
-                DebugService.WriteLine($"Target site: {ex.TargetSite}");
-                DebugService.WriteLine($"Please report this error to developers");
-            }
-
-            if (ar == null)
-            {
-                DebugService.WriteLine("Null authentication result.");
-                return;
-            }
-            RestService.SetupClient(ar.AccessToken);
-            DebugService.WriteLine($"time limit: {ar.ExpiresOn}");
-            App.MicrosoftAuthenticationResult = ar;
-            DebugService.WriteLine($"{ar.User.Name} successfully authenticated with microsoft server");
-            DebugService.WriteLine(ar.AccessToken);
-
-        }
-
-        public static Task BackendAuthenticateAsync()
-        {
-            return Task.FromResult(false);
         }
     }
 }
