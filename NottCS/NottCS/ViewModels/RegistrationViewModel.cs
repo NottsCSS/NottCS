@@ -15,7 +15,6 @@ using Xamarin.Forms;
 
 namespace NottCS.ViewModels
 {
-    //TODO: show existing parameters when reaching this page
     internal class RegistrationViewModel : BaseViewModel
     {
         private readonly List<string> _courseList = new List<string>();
