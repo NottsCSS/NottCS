@@ -18,15 +18,15 @@ namespace NottCS.ViewModels
         public async Task scanner()
         {
             var scannerPage = new ZXingScannerPage();
-            var stack = Application.Current.MainPage.Navigation;
-            await stack.PushAsync(scannerPage);
+            var nav = Application.Current.MainPage.Navigation;
+            await nav.PushAsync(scannerPage);
 
             scannerPage.OnScanResult += (result) =>
             {
                 scannerPage.IsScanning = false;
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-                    await stack.PopAsync();
+                    await nav.PopAsync();
                     Acr.UserDialogs.UserDialogs.Instance.Alert(result.Text,"Scanned Detail", "OK");
                 });
             };

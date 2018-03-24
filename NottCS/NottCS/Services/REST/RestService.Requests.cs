@@ -58,7 +58,7 @@ namespace NottCS.Services.REST
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     var result = JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync());
-                    DebugService.WriteLine($"{JsonConvert.SerializeObject(result)}");
+                    DebugService.WriteLine($"Get request JSON result: {JsonConvert.SerializeObject(result)}");
 
                     return Tuple.Create("OK", result);
                 }

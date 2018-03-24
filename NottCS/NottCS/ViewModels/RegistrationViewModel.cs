@@ -140,7 +140,6 @@ namespace NottCS.ViewModels
                     var userData = await RestService.RequestGetAsync<User>();
                     if (userData.Item1 == "OK")
                     {
-                        NavigationService.ClearNavigation();
                         await NavigationService.NavigateToAsync<HomeViewModel>(userData.Item2);
                     }
                     else

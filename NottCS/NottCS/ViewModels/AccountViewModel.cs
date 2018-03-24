@@ -74,7 +74,7 @@ namespace NottCS.ViewModels
 
         private static async void SignOut()
         {
-            await LoginService.SignOut();
+            await LoginService.SignOutAndNavigateAsync();
         }
         /// <summary>
         /// Initializes the page

@@ -18,15 +18,18 @@ namespace NottCS.Services
     //TODO: check what happens when token expires, and call AcquireTokenSilentAsync with no internet connection
     public static class LoginService
     {
-        public static async Task SignOut()
+        /// <summary>
+        /// Signs out, and then navigates to login page
+        /// </summary>
+        /// <returns></returns>
+        public static async Task SignOutAndNavigateAsync()
         {
             foreach (var user in App.ClientApplication.Users)
             {
                 App.ClientApplication.Remove(user);
                 RestService.ResetClient();
             }
-
-            NavigationService.ClearNavigation();
+            
             await NavigationService.NavigateToAsync<LoginViewModel>();
 
         }
@@ -63,14 +66,15 @@ namespace NottCS.Services
             try
             {
                 AuthenticationResult ar = await InternalSignInMicrosoft();
+                Task setupClientTask = Task.Run(() => RestService.SetupClient(ar.AccessToken));
                 App.MicrosoftAuthenticationResult = ar;
 
-                RestService.SetupClient(ar.AccessToken);
                 DebugService.WriteLine("Login to microsoft successful");
                 DebugService.WriteLine($"Welcome {ar.User.Name}");
                 DebugService.WriteLine($"Token expires on: {ar.ExpiresOn}");
                 DebugService.WriteLine($"Access token: {ar.AccessToken}");
 
+                await setupClientTask;
                 return true;
             }
             catch (MsalException msalException)
