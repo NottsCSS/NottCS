@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.EventRegistrationSuccessPage"
+             x:Name="Event Registration Success Page"
+             Title ="{Binding Title}"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+             xmlns:models="clr-namespace:NottCS.Models;assembly=NottCS"
+             d:DataContext="{d:DesignInstance viewModels:EventRegistrationSuccessViewModel}">
+    <ContentPage.Content>
+        <Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ScrollView Grid.Row="3"
+                            HorizontalOptions="Center">
+                    <StackLayout>
+                        <Image x:Name="SuccessIcon"
+                               Margin="10,20"
+                               VerticalOptions="Fill"
+                               HorizontalOptions="CenterAndExpand"/>
+                        <Label Text="Thanks for joining"
+                               FontSize="Large"
+                               HorizontalOptions="Center"/>
+                        <Label Text="The Event!"
+                               FontSize="Large"
+                               HorizontalOptions="Center"/>
+                    </StackLayout>
+                </ScrollView>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.EventRegistrationPage"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+             xmlns:models="clr-namespace:NottCS.Models;assembly=NottCS"
+             d:DataContext="{d:DesignInstance viewModels:EventRegistrationViewModel}">
+    <ContentPage.Content>
+        <Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0"
+                       Margin="10"
+                       HorizontalOptions="Center"
+                       FontSize="Medium"
+                       Text="{Binding EventName}"/>
+                <Image x:Name="EmailContent"
+                       Grid.Row="1"
+                       Margin="10"
+                       Aspect="AspectFit"
+                       HorizontalOptions="Center"/>
+                <Button Text="SIGN UP"
+                        Grid.Row="2"
+                        Style="{StaticResource SpanButtonStyle}"
+                        Command="{Binding SignupCommand}"/>
+                <!--StackLayout Grid.Row="0"
+                             HorizontalOptions="Center">
+                    <Label Text="{Binding EventName}"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           FontSize="Medium"/>
+                    <Image x:Name="EmailContent"
+                           Margin="0,0"
+                           Aspect="AspectFit"
+                           VerticalOptions="StartAndExpand"
+                           HorizontalOptions="Center"/>
+                </StackLayout-->
+                <!--StackLayout Grid.Row="1"
+                             HorizontalOptions="Center"
+                             VerticalOptions="End"
+                             Margin="0,0">
+                    <Button Text = "SIGN UP"
+                            FontSize="Medium"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="EndAndExpand"
+                            Margin="10"
+                            Command="{Binding SignupCommand}"/>
+                </StackLayout-->
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
+    

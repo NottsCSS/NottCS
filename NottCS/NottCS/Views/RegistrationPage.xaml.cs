@@ -12,11 +12,9 @@ namespace NottCS.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RegistrationPage : ContentPage
 	{
-	    private RegistrationViewModel viewModel;
         public RegistrationPage ()
 		{
-		    BindingContext = viewModel = new RegistrationViewModel();
-
+		    BindingContext = new RegistrationViewModel();
             InitializeComponent();
 		}
 	}

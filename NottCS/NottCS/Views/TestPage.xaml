@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.TestPage"
+             xmlns:customControls="clr-namespace:NottCS.CustomControls;assembly=NottCS"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+             xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
+             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModels:TestViewModel}"
+             >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
+            <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
+            <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView ItemsSource="{Binding ParametersList}"
+                      Margin="3,3,0,0"
+                      RowHeight="100"
+                      x:Name="SomeList"
+                      ItemTapped="Nothing"
+                      >
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemSelected"
+                        Source="{x:Reference SomeList}" 
+                        Command="{Binding DisableItemSelectedCommand}"
+                        Converter="{StaticResource SelectedItemConverter}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell Tapped="Nothing">
+                            <customControls:LabelledValidatableEntry Validations="{Binding ValidationList}"
+                                                                     Name="{Binding Name}"
+                                                                     Value="{Binding Value}"
+                                                                     IsValid="{Binding IsValid, Mode=TwoWay}"
+                                                                     ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Command="{Binding SomeCommand}" Text="Some Button"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

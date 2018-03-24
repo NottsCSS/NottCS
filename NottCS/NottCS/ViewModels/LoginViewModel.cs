@@ -2,129 +2,54 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
+using NottCS.Models;
 using Xamarin.Forms;
-
+using Newtonsoft.Json;
+using NottCS.Services;
 using NottCS.Validations;
-using NottCS.Views;
+using NottCS.Services.Navigation;
+using NottCS.Services.REST;
 
 namespace NottCS.ViewModels
 {
-    public class LoginViewModel : BaseViewModel
+    internal class LoginViewModel : BaseViewModel
     {
-        private ValidatableObject<string> _userName = new ValidatableObject<string>();
-        private ValidatableObject<string> _password = new ValidatableObject<string>();
-        private Color _registerTextColor = Color.Black;
-        private Color _forgotPasswordTextColor = Color.Black;
-        private bool _registerBold = false;
-        private bool _forgotPasswordBold = false;
-
-        //Public properties with private backing field
-        public ValidatableObject<string> UserName
-        {
-            get => _userName;
-            set => _userName = value;
-        }
-        public ValidatableObject<string> Password
-        {
-            get => _password;
-            set => _password = value;
-        }
-        public Color RegisterTextColor
-        {
-            get => _registerTextColor;
-            set => SetProperty(ref _registerTextColor,value);
-        }
-        public Color ForgotPasswordTextColor
-        {
-            get => _forgotPasswordTextColor;
-            set => SetProperty(ref _forgotPasswordTextColor, value);
-        }
-
-        //Automatic public properties
-        public bool RegisterBold
-        {
-            get => _registerBold;
-            set => SetProperty(ref _registerBold, value);
-        }
-        public bool ForgotPasswordBold
-        {
-            get => _forgotPasswordBold;
-            set => SetProperty(ref _forgotPasswordBold, value);
-        }
-
+        
+        
+        /// <summary>
+        /// Constructor to initialise values of various fields
+        /// </summary>
         public LoginViewModel()
         {
             Title = "NottCS Login";
-            AddValidationRules();
         }
+        /// <summary>
+        /// Command wrapper for sign in function
+        /// </summary>
         public ICommand SignInCommand => new Command(async () => await SignInAsync());
-        public ICommand RegisterCommand => new Command(async () => await Register());
-        public ICommand ForgotPasswordCommand => new Command(async () => await ForgotPassword());
-
-        //Private methods
-        private void AddValidationRules()
-        {
-            _userName.Validations.Add(new NotEmptyRule<string>() {ValidationMessage = "Username cannot be empty"});
-            _userName.Validations.Add(new AlphaNumericRule<string>() { ValidationMessage = "Only OWA is accepted" });
-            _password.Validations.Add(new NotEmptyRule<string>() { ValidationMessage = "Password cannot be empty" });
-        }
-        
-        private bool Validate()
-        {
-            bool isValidUser = _userName.Validate();
-            bool isValidPassword = _password.Validate();
-
-            return isValidUser && isValidPassword;
-        }
         private async Task SignInAsync()
         {
-            IsBusy = true;
+            if (!IsBusy)
+            {
+                IsBusy = true;
+                Debug.WriteLine($"IsBusy: {IsBusy}");                                                                                                                                                                                       
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
 
-            bool isValid = Validate();
-            //TODO: Implement login service under services, and then call the service from here
+                //error dialog handled inside SignInMicrosoftAsync, so no need to handle here
+                
+                bool canAuthenticateMicrosoft = await LoginService.SignInMicrosoftAsync(); 
+                if (canAuthenticateMicrosoft)
+                {
+                    await LoginService.SignInBackendAndNavigateAsync();
+                }
 
-            //Delay to simulate real code running
-            await Task.Delay(500);
-            //Debugging code
-            Debug.WriteLine("Sign in function called");
+                //Debugging code
+                DebugService.WriteLine("Sign in function called");
 
-            IsBusy = false;
-        }
-
-        private async Task Register()
-        {
-            IsBusy = true;
-            RegisterBold = true;
-            RegisterTextColor = Color.DarkBlue;
-
-            //TODO: implement navigation to registration page
-            //Delay to simulate real code running
-            await Task.Delay(1500);
-            //Debugging code
-            Debug.WriteLine("Registration function called");
-
-            RegisterTextColor = Color.Black;
-            RegisterBold = false;
-            IsBusy = false;
-        }
-
-        private async Task ForgotPassword()
-        {
-            IsBusy = true;
-            ForgotPasswordTextColor = Color.DarkBlue;
-            ForgotPasswordBold = true;
-
-            //TODO: navigate to forgot password page
-            //Delay to simulate real code running
-            await Task.Delay(1500);
-
-            //Debugging Code
-            Debug.WriteLine("Forgot password function called");
-
-            ForgotPasswordTextColor = Color.Black;
-            ForgotPasswordBold = false;
-            IsBusy = false;
+                IsBusy = false;
+            }
+            
         }
     }
 }

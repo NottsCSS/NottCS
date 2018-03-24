@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="NottCS.Views.ClubPage"
+            Title="{Binding Title}"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            mc:Ignorable="d"
+            xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+            xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+            xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
+            xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+            xmlns:gv="clr-namespace:Plugin.GridViewControl.Common;assembly=Plugin.GridViewControl"
+            d:DataContext="{d:DesignInstance viewModels:ClubViewModel}">
+  <!--Pages can be added as references or inline-->
+
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
+            <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
+            <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
+        </ResourceDictionary>
+    </TabbedPage.Resources>
+
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem x:Name="Settings" 
+                     Text="Settings"
+                     Icon="settings_icon.png"
+                     Command="{Binding ClubNavigationCommand}"/>
+    </TabbedPage.ToolbarItems>
+
+    <ContentPage Title="{Binding PageTitle1}">
+        <StackLayout>
+            <ListView ItemsSource="{Binding EventLists}"
+                      Margin="3,3,0,0"
+                      RowHeight="50"
+                      x:Name="SomeList">
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemTapped"
+                        Command="{Binding EventListNavigationCommand}" 
+                        Converter="{StaticResource TappedItemConverter}" />
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemSelected"
+                        Source="{x:Reference SomeList}"
+                        Command="{Binding DisableItemSelectedCommand, Mode=TwoWay}" 
+                        Converter="{StaticResource SelectedItemConverter}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5" 
+                                  x:Name="Items" 
+                                  Margin="2,2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"></RowDefinition>
+                                    <RowDefinition Height="20"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="1" 
+                                       Grid.Row="0"
+                                       Text="{Binding EventName}" 
+                                       LineBreakMode="TailTruncation" />
+                                <Image Grid.Column="0" 
+                                       Grid.Row="0"
+                                       Grid.RowSpan="2"
+                                       Source="{Binding ImageURL}" 
+                                       Aspect="AspectFill">
+                                </Image>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage>
+
+    <ContentPage Title="{Binding PageTitle2}">
+        <Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="PlaceHolder"
+                       Aspect="AspectFill"
+                       HorizontalOptions="FillAndExpand"
+                       Grid.Row="0" Grid.RowSpan="2"/>
+                <Image x:Name = "Logo1" 
+                       Margin="10,10"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Fill"
+                       Grid.Row="1"
+                       Grid.RowSpan="2">
+                </Image>
+                <ScrollView Grid.Row="3"
+                            HorizontalOptions="Center"
+                            WidthRequest="500"
+                            Margin="0,0,5,0">
+                    <StackLayout>
+                        <Label Text="{Binding ClubDescription}"
+                               HorizontalOptions="CenterAndExpand"
+                               HorizontalTextAlignment="Center"/>
+                    </StackLayout>
+                </ScrollView>
+                <Button Grid.Row="5" 
+                        Text = "SIGN UP"
+                        Style="{StaticResource SpanButtonStyle}"
+                        Command="{Binding SignUpCommand}"/>
+            </Grid>
+        </Grid>
+    </ContentPage>
+
+</TabbedPage>

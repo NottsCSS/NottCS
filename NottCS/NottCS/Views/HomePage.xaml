@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="NottCS.Views.HomePage"
+            Title="{Binding Title}"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            mc:Ignorable="d"
+            xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+            xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+            xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
+            xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+            xmlns:gv="clr-namespace:Plugin.GridViewControl.Common;assembly=Plugin.GridViewControl"
+            d:DataContext="{d:DesignInstance viewModels:HomeViewModel}">
+  <!--Pages can be added as references or inline-->
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
+            <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
+            <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
+            <Style TargetType="flv:FlowListView" x:Key="ShowFlowListViewStyle">
+                <Setter Property="IsVisible" Value="True"/>
+            </Style>
+            <Style TargetType="flv:FlowListView" x:Key="HideFlowListViewStyle">
+                <Setter Property="IsVisible" Value="False"/>
+            </Style>
+            <Style TargetType="gv:GridView" x:Key="ShowGridViewStyle">
+                <Setter Property="IsVisible" Value="True"/>
+            </Style>
+            <Style TargetType="gv:GridView" x:Key="HideGridViewStyle">
+                <Setter Property="IsVisible" Value="False"/>
+            </Style>
+        </ResourceDictionary>
+    </TabbedPage.Resources>
+    
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem x:Name="Settings" 
+                     Text="Settings"
+                     Icon="settings_icon.png"
+                     Command="{Binding SettingsPageNavigationCommand}"/>
+    </TabbedPage.ToolbarItems>
+
+    <ContentPage Title="{Binding PageTitle1}">
+        <StackLayout>
+            <ListView ItemsSource="{Binding EventLists}"
+                      Margin="3,3,0,0"
+                      RowHeight="50"
+                      x:Name="EventList">
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemTapped"
+                        Command="{Binding EventListNavigationCommand}" 
+                        Converter="{StaticResource TappedItemConverter}" />
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemSelected"
+                        Source="{x:Reference EventList}"
+                        Command="{Binding DisableItemSelectedCommand, Mode=TwoWay}" 
+                        Converter="{StaticResource SelectedItemConverter}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5" 
+                                  x:Name="Items" 
+                                  Margin="2,2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"></RowDefinition>
+                                    <RowDefinition Height="20"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="1" 
+                                       Grid.Row="0"
+                                       Text="{Binding EventName}" 
+                                       LineBreakMode="TailTruncation" />
+                                <Image Grid.Column="0" 
+                                       Grid.Row="0"
+                                       Grid.RowSpan="2"
+                                       Source="{Binding ImageURL}" 
+                                       Aspect="AspectFill">
+                                </Image>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage>
+
+
+    <ContentPage Title="{Binding PageTitle2}">
+        <StackLayout>
+            <Picker x:Name="ClubList"  
+                    HorizontalOptions="FillAndExpand"
+                    Margin="5,0"
+                    ItemsSource="{Binding ClubListTypePickerList}"
+                    SelectedItem="{Binding SelectedClubType}">
+            </Picker>
+            <flv:FlowListView x:Name="FlowListView" 
+                              FlowColumnCount="3" 
+                              SeparatorVisibility="Default" 
+                              RowHeight="100"
+                              FlowUseAbsoluteLayoutInternally="True" 
+                              FlowColumnExpand="None"
+                              FlowItemsSource="{Binding ClubList}" 
+                              FlowItemTappedCommand="{Binding ClubListNavigationCommand}"
+                              HasUnevenRows="False"
+                              Margin="5,10">
+                <flv:FlowListView.Style>
+                    <OnPlatform x:TypeArguments="Style">
+                        <On Platform="Android" Value="{StaticResource ShowFlowListViewStyle}"/>
+                        <On Platform="iOS" Value="{StaticResource ShowFlowListViewStyle}"/>
+                        <On Platform="UWP" Value="{StaticResource HideFlowListViewStyle}"/>
+                    </OnPlatform>
+                </flv:FlowListView.Style>
+                <flv:FlowListView.FlowColumnTemplate>
+                    <DataTemplate>
+                        <Frame OutlineColor="Black"
+                               Padding="0"
+                               Margin="2,2">
+                            <StackLayout>
+                                <Image Source="{Binding ImageURL}" 
+                                       Aspect="AspectFill"
+                                       HorizontalOptions="FillAndExpand"
+                                       VerticalOptions="StartAndExpand"/>
+<!--                                <Label Text="{Binding ImageURL}" />-->
+                                <Label FontSize="Small"
+                                       HorizontalTextAlignment="Center" 
+                                       VerticalTextAlignment="End" 
+                                       Text="{Binding ClubName}" 
+                                       LineBreakMode="WordWrap"/>
+
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </flv:FlowListView.FlowColumnTemplate>
+            </flv:FlowListView>
+
+            <gv:GridView x:Name="GridView" 
+                         SeparatorVisibility="Default" 
+                         RowHeight="100"
+                         HasUnevenRows="False"
+                         Margin="5,10"
+                         ItemsSource="{Binding ClubList}">
+                <gv:GridView.Style>
+                    <OnPlatform x:TypeArguments="Style">
+                        <On Platform="Android" Value="{StaticResource HideGridViewStyle}"/>
+                        <On Platform="iOS" Value="{StaticResource HideGridViewStyle}"/>
+                        <On Platform="UWP" Value="{StaticResource ShowGridViewStyle}"/>
+                    </OnPlatform>
+                </gv:GridView.Style>
+                <gv:GridView.Behaviors>
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemTapped"
+                        Command="{Binding ClubListNavigationCommand}" 
+                        Converter="{StaticResource TappedItemConverter}" />
+                </gv:GridView.Behaviors>
+                <gv:GridView.ItemTemplate>
+                    <DataTemplate>
+                        <gv:GridViewXamlCell>
+                            <Grid Margin="2"
+                                  Padding="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Image Source="{Binding ImageURL}" 
+                                       Aspect="AspectFit"
+                                       HeightRequest="50"
+                                       WidthRequest="50"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                                <Label Grid.Row="1" 
+                                       Text="{Binding ClubName}" 
+                                       FontSize="12"
+                                       HorizontalTextAlignment="Center"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Grid>
+                        </gv:GridViewXamlCell>
+                    </DataTemplate>
+                </gv:GridView.ItemTemplate>
+            </gv:GridView>
+        </StackLayout>
+    </ContentPage>
+
+
+
+    <ContentPage Title="{Binding PageTitle3}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <!--<RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="2*"/>-->
+            </Grid.RowDefinitions>
+            
+            <!--<Image x:Name="BannerImage"
+                   Aspect="AspectFill"
+                   HorizontalOptions="FillAndExpand"
+                   Grid.Row="0" Grid.RowSpan="2"/>
+            <Image x:Name = "IconOne" 
+                   Margin="10,20,10,0"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Fill"
+                   Grid.Row="1"
+                   Grid.RowSpan="2">
+            </Image>-->
+            <StackLayout WidthRequest="500">
+                <Label Text="NottCS Login"
+                       FontSize="Large"
+                       VerticalOptions="Start" 
+                       HorizontalOptions="CenterAndExpand" />
+                <Label Text="Account Details"
+                       HorizontalOptions="Center"
+                       FontSize="Small"
+                       Style="{StaticResource TitleLabelStyle}"/>
+                <ListView ItemsSource="{Binding DataList}"
+                          WidthRequest="500"
+                          HorizontalOptions="Center">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding DataName}" 
+                                      Detail="{Binding DataValue}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Text="Sign Out"  
+                        Command="{Binding SignOutCommand}"
+                        Style="{StaticResource SpanButtonStyle}"/>
+            </StackLayout>
+        </Grid>
+
+    </ContentPage>
+</TabbedPage>

@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-
+using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
+using NottCS.Services.JSONConverters;
 using NottCS.ViewModels;
 
+[assembly: InternalsVisibleTo("NottCSTest")]
 namespace NottCS.Validations
 {
-    public class ValidatableObject<T> : BaseViewModel
+    [JsonConverter(typeof(ValidatableObjectJsonConverter))]
+    internal class ValidatableObject<T> : BaseViewModel
     {
         private readonly List<IValidationRule<T>> _validations;
         private List<string> _errors;
@@ -26,7 +30,7 @@ namespace NottCS.Validations
             set => SetProperty(ref _value, value);
         }
 
-        public bool IsValid
+        private bool IsValid
         {
             get => _isValid;
             set => SetProperty(ref _isValid, value);
@@ -49,7 +53,12 @@ namespace NottCS.Validations
             Errors = errors.ToList();
             IsValid = !Errors.Any();
 
-            return this.IsValid;
+            return IsValid;
+        }
+
+        public override string ToString()
+        {
+            return Value?.ToString();
         }
     }
 }
