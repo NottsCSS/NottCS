@@ -16,7 +16,7 @@ namespace NottCS.Views
 		public QRCodePage ()
 		{
 			InitializeComponent ();
-		    AddImage(PlaceHolder, "NottCS.Images.example-background.jpg");
+		    //AddImage(PlaceHolder, "NottCS.Images.example-background.jpg");
             BindingContext = new QRCodeViewModel();
             //AddImage(Back, "NottCS.Images.Icons.back.png");
         }
@@ -29,22 +29,5 @@ namespace NottCS.Views
 	        }
 	    }
 
-
-        private async void Button_OnClicked(object sender, EventArgs e)
-	    {
-	        var scannerPage = new ZXingScannerPage();
-	        await Navigation.PushAsync(scannerPage);
-
-	        scannerPage.OnScanResult += (result) =>
-	        {
-	            scannerPage.IsScanning = false;
-	            Device.BeginInvokeOnMainThread(async () =>
-	            {
-	                await Navigation.PopAsync();
-	                await DisplayAlert("Scanned Detail", result.Text, "OK");
-	            });
-	        };
-
-	    }
     }
 }

@@ -15,11 +15,13 @@
                     <RowDefinition Height="150"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Image x:Name="PlaceHolder"
-                       Margin="10,5"
-                       HorizontalOptions="CenterAndExpand"
-                       VerticalOptions="FillAndExpand"
-                       Grid.Row="0"/>
+                <qrcode:ZXingBarcodeImageView  x:Name="QRCode" 
+                                               HeightRequest="100"
+                                               BarcodeFormat="QR_CODE" 
+                                               BarcodeValue="MuthaFarker"
+                                               Grid.Row="0"
+                                               Margin="10,5"
+                                               BarcodeOptions ="{Binding BarcodeOption}"/>
                 <ScrollView Grid.Row="1"
                             HorizontalOptions="Center"
                             Margin="10,10">
@@ -28,14 +30,12 @@
                                HorizontalOptions="CenterAndExpand"
                                HorizontalTextAlignment="Center"/>
                 <Button Text = "SAVE QR CODE"
-                        Clicked="Button_OnClicked"
+                        Command="{Binding ButtonOnClicked}"
                         FontSize="Medium"
                         Margin="5,10,5,0"/>
-                <qrcode:ZXingBarcodeImageView  x:Name="QRCode" 
-                                               HeightRequest="100"
-                                               BarcodeFormat="QR_CODE" 
-                                               BarcodeValue="Hello"
-                                               BarcodeOptions ="{Binding BarcodeOption}"/></StackLayout></ScrollView>
+                        </StackLayout>
+                    </ScrollView>
+                <!--Clicked="Button_OnClicked"-->
                 </Grid>
             </Grid>
     </ContentPage.Content>
