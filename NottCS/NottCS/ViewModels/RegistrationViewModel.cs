@@ -25,12 +25,10 @@ namespace NottCS.ViewModels
         private bool _isValidStudentID = true;
         private bool _isValidLibraryNumber = true;
 
-        private User _currentUser = new User
-        {
-            Name = "HELLO", Email = "ASD@ASD.COM"
-        };
+        private User _currentUser = new User();
         private bool _isValidCourse = true;
-        
+        private string _selectedYearOfStudy;
+
         #endregion
         public User CurrentUser
         {
@@ -73,7 +71,13 @@ namespace NottCS.ViewModels
             "4",
             "Other"
         };
-        
+
+        public string SelectedYearOfStudy
+        {
+            get => _selectedYearOfStudy;
+            set => SetProperty(ref _selectedYearOfStudy, value);
+        }
+
         public RegistrationViewModel()
         {
             Title = "NottCS Registration";
@@ -133,6 +137,7 @@ namespace NottCS.ViewModels
                 CurrentUser.StudentId = StudentID.Value;
                 CurrentUser.LibraryNumber = LibraryNumber.Value;
                 CurrentUser.Course = Course.Value;
+                CurrentUser.YearOfStudy = SelectedYearOfStudy;
 
                 var requestUpdate = await RestService.RequestUpdateAsync(CurrentUser);
                 if (requestUpdate == "OK")
@@ -178,8 +183,14 @@ namespace NottCS.ViewModels
         {
             if (navigationData is User user)
             {
+                DebugService.WriteLine("RegistrationViewModel receives User object");
                 CurrentUser = user;
+                StudentID.Value = user.StudentId;
+                LibraryNumber.Value = user.LibraryNumber;
+                Course.Value = user.Course;
+                SelectedYearOfStudy = user.YearOfStudy;
             }
+
             return base.InitializeAsync(navigationData);
         }
 

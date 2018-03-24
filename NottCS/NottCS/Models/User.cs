@@ -27,7 +27,7 @@ namespace NottCS.Models
         public string Course { get; set; }
 
         [JsonProperty(PropertyName = "year_of_study")]
-        public int YearOfStudy { get; set; }
+        public string YearOfStudy { get; set; }
 
         public User()
         {
@@ -36,7 +36,7 @@ namespace NottCS.Models
             StudentId = "18818888";
             LibraryNumber = "2001438888";
             Course = "Software Engineering";
-            YearOfStudy = 2;
+            YearOfStudy = "2";
             IsAuthenticated = false;
         }
     }

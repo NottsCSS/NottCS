@@ -165,6 +165,7 @@ namespace NottCS.Services
                     String.IsNullOrEmpty(userData.Item2.Course))
                 {
                     DebugService.WriteLine("User is not registered");
+                    await NavigationService.NavigateToAsync<RegistrationViewModel>(userData.Item2);
                 }
                 else
                 {
