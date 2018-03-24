@@ -14,8 +14,6 @@ using NottCS.ViewModels;
 
 namespace NottCS.Services
 {
-    //TODO: problem: calling login does not lead into registration, only can get into registration on app startup
-    //TODO: check what happens when token expires, and call AcquireTokenSilentAsync with no internet connection
     public static class LoginService
     {
         /// <summary>
@@ -158,8 +156,6 @@ namespace NottCS.Services
         /// <returns></returns>
         public static async Task SignInBackendAndNavigateAsync()
         {
-            Stopwatch stopwatch = new Stopwatch();
-
             var userData = await RestService.RequestGetAsync<User>();
             if (userData.Item1 == "OK") //first item represents whether the request is successful
             {
@@ -168,19 +164,17 @@ namespace NottCS.Services
                     String.IsNullOrEmpty(userData.Item2.LibraryNumber) ||
                     String.IsNullOrEmpty(userData.Item2.Course))
                 {
-                    stopwatch.Start();
-                    await NavigationService.NavigateToAsync<RegistrationViewModel>(userData.Item2);
-                    DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
+                    DebugService.WriteLine("User is not registered");
                 }
                 else
                 {
-                    stopwatch.Start();
+                    DebugService.WriteLine("User is registered");
                     await NavigationService.NavigateToAsync<HomeViewModel>(userData.Item2);
-                    DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds}ms");
                 }
             }
             else
             {
+                DebugService.WriteLine("Request get error");
                 await NavigationService.NavigateToAsync<LoginViewModel>();
                 Acr.UserDialogs.UserDialogs.Instance
                     .Alert($"{userData.Item1}"); //alert user of the http request message

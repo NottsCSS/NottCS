@@ -9,7 +9,6 @@ namespace NottCS.Services.REST
     //TODO: Write unit test for REST
     internal static partial class RestService
     {
-        //TODO: Update the Uri when the domain name is available
         /// <summary>
         /// Base address where the API endpoints are stored
         /// </summary>
