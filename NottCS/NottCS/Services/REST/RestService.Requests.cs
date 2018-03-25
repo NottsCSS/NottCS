@@ -21,18 +21,21 @@ namespace NottCS.Services.REST
             var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Delete, identifier);
             var httpRequest = HttpRequestMessageGenerator(HttpMethod.Delete, requestUri);
+            string errorMessage = null;
 
             try
             {
                 var requestTask = client.SendAsync(httpRequest);
                 var httpResponse = await requestTask;
-                return (httpResponse.IsSuccessStatusCode) ? "OK" : "Something went wrong";
+                return (httpResponse.IsSuccessStatusCode) ? "OK" : $"Something went wrong, http status code: {httpResponse.StatusCode}";
             }
             catch (Exception e)
             {
-                DebugService.WriteLine($"Expected exception {e.Message} at {e.TargetSite}");
-                return "Something went wrong";
+                DebugService.WriteLine(e);
+                errorMessage = e.Message;
+                DebugService.WriteLine($"Exception thrown in RequestPostAsync, Message: {errorMessage}");
             }
+            return errorMessage;
         }
 
         /// <summary>
@@ -48,6 +51,7 @@ namespace NottCS.Services.REST
             var requestUri = UriGenerator<T>(HttpMethod.Get, identifier);
 
             var httpRequest = HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
+            string errorMessage = null;
 
             try
             {
@@ -57,7 +61,7 @@ namespace NottCS.Services.REST
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     var result = JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync());
-                    DebugService.WriteLine($"{JsonConvert.SerializeObject(result)}");
+                    DebugService.WriteLine($"Get request JSON result: {JsonConvert.SerializeObject(result)}");
 
                     return Tuple.Create("OK", result);
                 }
@@ -65,8 +69,10 @@ namespace NottCS.Services.REST
             catch (Exception e)
             {
                 DebugService.WriteLine(e);
+                errorMessage = e.Message;
+                DebugService.WriteLine($"Exception thrown in RequestGetAsync, Message: {errorMessage}");
             }
-            return Tuple.Create("Something went wrong", new T());
+            return Tuple.Create($"{errorMessage}", new T());
         }
 
         /// <summary>
@@ -81,18 +87,21 @@ namespace NottCS.Services.REST
             var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Post);
             var httpRequest = HttpRequestMessageGenerator(HttpMethod.Post, requestUri, objectData);
+            string errorMessage = null;
 
             try
             {
                 var requestTask = client.SendAsync(httpRequest);
                 var httpResponse = await requestTask;
-                return (httpResponse.IsSuccessStatusCode) ? "OK" : "Something went wrong";
+                return (httpResponse.IsSuccessStatusCode) ? "OK" : $"Something went wrong, http status code: {httpResponse.StatusCode}";
             }
             catch (Exception e)
             {
                 DebugService.WriteLine(e);
-                return "Something went wrong";
+                errorMessage = e.Message;
+                DebugService.WriteLine($"Exception thrown in RequestPostAsync, Message: {errorMessage}");
             }
+            return errorMessage;
         }
 
         /// <summary>
@@ -108,18 +117,21 @@ namespace NottCS.Services.REST
             var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Put, identifier);
             var httpRequest = HttpRequestMessageGenerator(HttpMethod.Put, requestUri, objectData);
+            string errorMessage = null;
 
             try
             {
                 var requestTask = client.SendAsync(httpRequest);
                 var httpResponse = await requestTask;
-                return (httpResponse.IsSuccessStatusCode) ? "OK" : "Something went wrong";
+                return (httpResponse.IsSuccessStatusCode) ? "OK" : $"Something went wrong, http status code: {httpResponse.StatusCode}";
             }
             catch (Exception e)
             {
                 DebugService.WriteLine(e);
-                return "Something went wrong";
+                errorMessage = e.Message;
+                DebugService.WriteLine($"Exception thrown in RequestUpdateAsync, Message: {errorMessage}");
             }
+            return errorMessage;
         }
     }
 }

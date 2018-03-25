@@ -11,6 +11,7 @@ using Xunit;
 
 namespace NottCSTest
 {
+    //TODO: Split eventadditionalparameter serialize and deserialize test
     public class JSONSerializeTest
     {
         [Fact]
@@ -55,12 +56,6 @@ namespace NottCSTest
             var model1Deserialised = JsonConvert.DeserializeObject(model1JSON, settings);
 
             Assert.Equal(model1, model1Deserialised);
-
-//            var model1Deserialized = JsonConvert.DeserializeObject<EventAdditionalParameter>(model1JSON);
-//            JObject something = model1Deserialized as JObject;
-//            EventAdditionalParameter model1Deserialized2 = something?.ToObject<EventAdditionalParameter>();
-//            Assert.Equal(model1, model1Deserialized2);
-//            string something = "HAHA";
         }
 
         [Fact]

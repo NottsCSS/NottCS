@@ -15,20 +15,16 @@ namespace NottCS.ViewModels
 {
     public class HomeViewModel : BaseViewModel
     {
-        public string PageTitle1 { get; set; }
-        public string PageTitle2 { get; set; }
-        public string PageTitle3 { get; set; }
+        public string PageTitle1 { get; set; } = "News Feed";
+        public string PageTitle2 { get; set; } = "Clubs & Society";
+        public string PageTitle3 { get; set; } = "Profile";
         private string _selectedClubType;
         #region HomeViewModel Constructor
 
         public HomeViewModel()
         {
             Title = "NottCS";
-            PageTitle1 = "News Feed";
-            PageTitle2 = "Clubs & Society";
-            PageTitle3 = "Profile";
-            _clubList = new ObservableCollection<Item>();
-            SelectedClubType = ClubTypePickList[0];
+            SelectedClubType = ClubListTypePickerList[0];
         }
 
         #endregion
@@ -80,7 +76,7 @@ namespace NottCS.ViewModels
 
         #region Picker
 
-        public List<string> ClubTypePickList { get; set; } =
+        public List<string> ClubListTypePickerList { get; set; } =
             new List<string> { "My Clubs Only", "All Clubs", "Favourite Clubs" };
 
         public string SelectedClubType
@@ -130,7 +126,7 @@ namespace NottCS.ViewModels
         }
         #endregion
         #region Temporary ClubList
-        private ObservableCollection<Item> _clubList;
+        private ObservableCollection<Item> _clubList = new ObservableCollection<Item>();
         public ObservableCollection<Item> ClubList
         {
             get => _clubList;
@@ -279,8 +275,6 @@ namespace NottCS.ViewModels
 
         #endregion
 
-        //public string AccessToken { get; } = App.MicrosoftAuthenticationResult.AccessToken;
-
         /// <summary>
         /// Sets the data for the page
         /// </summary>
@@ -288,7 +282,7 @@ namespace NottCS.ViewModels
         private void SetPageDataAsync(User userData)
         {
             LoginUser = userData;
-            DebugService.WriteLine(JsonConvert.SerializeObject(LoginUser));
+            DebugService.WriteLine($"HomeViewModel navigationData serialized: {JsonConvert.SerializeObject(LoginUser)}");
             DataList = new List<UserDataObject>()
             {
                 new UserDataObject(){DataName = "Name", DataValue = LoginUser.Name},
@@ -304,7 +298,7 @@ namespace NottCS.ViewModels
 
         private static async void SignOut()
         {
-            await LoginService.SignOut();
+            await LoginService.SignOutAndNavigateAsync();
         }
 
         #endregion

@@ -95,7 +95,7 @@
             <Picker x:Name="ClubList"  
                     HorizontalOptions="FillAndExpand"
                     Margin="5,0"
-                    ItemsSource="{Binding ClubTypePickList}"
+                    ItemsSource="{Binding ClubListTypePickerList}"
                     SelectedItem="{Binding SelectedClubType}">
             </Picker>
             <flv:FlowListView x:Name="FlowListView" 
@@ -227,8 +227,6 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Label Text="Access token: " />
-                <Entry Text="{Binding AccessToken}"/>
                 <Button Text="Sign Out"  
                         Command="{Binding SignOutCommand}"
                         Style="{StaticResource SpanButtonStyle}"/>

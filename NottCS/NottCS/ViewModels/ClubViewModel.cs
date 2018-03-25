@@ -18,6 +18,21 @@ namespace NottCS.ViewModels
         public string PageTitle1 { get; set; }
         public string PageTitle2 { get; set; }
         public string ClubDescription { get; set; }
+
+        public ICommand ClubNavigationCommand => new Command(async () => await CreateEventNavigate());
+        private async Task CreateEventNavigate()
+        {
+            try
+            {
+                await NavigationService.NavigateToAsync<CreateEventViewModel>();
+                DebugService.WriteLine("Button pressed");
+            }
+            catch (Exception e)
+            {
+                DebugService.WriteLine(e.Message);
+            }
+        }
+
         #region Event List
         #region ListViewNavigation
         public ICommand EventListNavigationCommand => new Command(async (object p) => await EventListNavigation(p));

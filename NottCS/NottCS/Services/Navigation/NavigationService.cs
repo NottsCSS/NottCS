@@ -23,8 +23,7 @@ namespace NottCS.Services.Navigation
         /// <returns></returns>
         
         /// <summary>
-        /// Navigates using viewmodel, preferred way of navigation due to type checks during compile time
-        /// Calls InitializeAsync method with the passed parameter during navigation, override that method to use the parameter
+        /// Navigates using generic, preferred way of navigation due to type checks during compile time
         /// </summary>
         /// <typeparam name="TViewModel"></typeparam>
         /// <param name="navigationParameter">parameter to be passed during navigation</param>
@@ -49,6 +48,13 @@ namespace NottCS.Services.Navigation
                     _isNavigating = false;
                     return;
                 }
+                
+                //if viewmodel is of Home or Login then set it to root
+                if (viewModelType == typeof(LoginViewModel) || viewModelType == typeof(HomeViewModel))
+                {
+
+                }
+                
                 //Creating page
                 try
                 {
@@ -67,9 +73,12 @@ namespace NottCS.Services.Navigation
                     _isNavigating = false;
                     return;
                 }
+                if (viewModelType == typeof(LoginViewModel) || viewModelType == typeof(HomeViewModel))
+                {
+                    ClearNavigation();
+                }
                 if (Application.Current.MainPage is NavigationPage navigationPage)
                 {
-            
                     var previousPage = navigationPage.CurrentPage;
                     Task pushPageTask = navigationPage.Navigation.PushAsync(page);
                     Task initializeAsyncTask = null;
@@ -156,7 +165,6 @@ namespace NottCS.Services.Navigation
         {
             Type pageType = GetPageTypeForViewModel(typeof(TViewModel));
             var stack = Application.Current.MainPage.Navigation.NavigationStack;
-            
             foreach (var page in stack)
             {
                 if (pageType != page.GetType()) continue;

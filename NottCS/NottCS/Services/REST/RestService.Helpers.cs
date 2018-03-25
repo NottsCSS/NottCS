@@ -6,9 +6,9 @@ using Newtonsoft.Json;
 
 namespace NottCS.Services.REST
 {
+    //TODO: Write unit test for REST
     internal static partial class RestService
     {
-        //TODO: Update the Uri when the domain name is available
         /// <summary>
         /// Base address where the API endpoints are stored
         /// </summary>
@@ -39,6 +39,7 @@ namespace NottCS.Services.REST
         public static void IsValidToken()
         {
             var a = App.MicrosoftAuthenticationResult.ExpiresOn;
+            //Also call LoginService.SignInMicrosoftAsync to refresh the token
         }
 
         /// <summary>
@@ -60,7 +61,6 @@ namespace NottCS.Services.REST
 
             #endregion
 
-            //TODO: Check if the function generates proper HttpRequestMessage
             var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
             HttpRequestMessage httpRequest;
             if (httpMethod == HttpMethod.Get)

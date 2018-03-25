@@ -35,31 +35,13 @@ namespace NottCS.ViewModels
                 Debug.WriteLine($"IsBusy: {IsBusy}");                                                                                                                                                                                       
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
-                bool canSignInWithCache = await LoginService.MicrosoftAuthenticateWithCacheAsync();
-                if (!canSignInWithCache)
+
+                //error dialog handled inside SignInMicrosoftAsync, so no need to handle here
+                
+                bool canAuthenticateMicrosoft = await LoginService.SignInMicrosoftAsync(); 
+                if (canAuthenticateMicrosoft)
                 {
-                    await LoginService.MicrosoftAuthenticateWithUIAsync();
-                }
-
-                DebugService.WriteLine($"Authentication took {stopwatch.ElapsedMilliseconds} ms");
-                stopwatch.Restart();
-
-                var getUserTask = Task.Run(() => RestService.RequestGetAsync<User>());
-                var getUserTaskResult = await getUserTask;
-
-                DebugService.WriteLine($"User request took {stopwatch.ElapsedMilliseconds} ms");
-                stopwatch.Restart();
-
-                if (getUserTaskResult.Item1 == "OK")
-                {
-                    NavigationService.ClearNavigation();
-                    await NavigationService.NavigateToAsync<HomeViewModel>(getUserTaskResult.Item2);
-                    DebugService.WriteLine($"Navigation took {stopwatch.ElapsedMilliseconds} ms");
-                    stopwatch.Stop();
-                }
-                else
-                {
-                    Acr.UserDialogs.UserDialogs.Instance.Alert(getUserTaskResult.Item1, "Login Error", "Ok");
+                    await LoginService.SignInBackendAndNavigateAsync();
                 }
 
                 //Debugging code
