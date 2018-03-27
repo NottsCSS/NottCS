@@ -49,7 +49,7 @@ namespace NottCS.ViewModels
 
         private static async void SignOut()
         {
-            await LoginService.SignOut();
+            await LoginService.SignOutAndNavigateAsync();
         }
 
         private void SetPageData()
@@ -58,7 +58,7 @@ namespace NottCS.ViewModels
             {
                 new UserDataObject() {Name = "Notifications", ViewModelType = typeof(NotificationsViewModel)},
                 new UserDataObject() {Name = "About", ViewModelType = typeof(AboutViewModel)},
-                new UserDataObject() {Name = "Report an Issue", ViewModelType = typeof(AboutViewModel)},
+                new UserDataObject() {Name = "Report an Issue", ViewModelType = typeof(ReportIssueViewModel)},
             };
         }
     }

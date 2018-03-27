@@ -227,9 +227,6 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Text="Sign Out"  
-                        Command="{Binding SignOutCommand}"
-                        Style="{StaticResource SpanButtonStyle}"/>
             </StackLayout>
         </Grid>
 

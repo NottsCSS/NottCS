@@ -19,7 +19,7 @@
         <StackLayout Grid.Row="2">
             <ListView ItemsSource="{Binding DummyLists}"
                       Margin="0,0"
-                      RowHeight="30"
+                      RowHeight="40"
                       x:Name="SomeList"
                       Footer ="">
                 <ListView.Behaviors>
@@ -54,7 +54,7 @@
                 TextColor="Red"
                 BorderRadius="0"
                 BorderWidth="0"
-                BackgroundColor="WhiteSmoke" 
+                BackgroundColor="White" 
                 BorderColor="Transparent"
                 VerticalOptions="EndAndExpand"/>
         </StackLayout>
