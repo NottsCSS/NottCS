@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -87,40 +88,44 @@ namespace NottCS.Services.REST
         /// <returns></returns>
         private static string UriGenerator<T>(HttpMethod httpMethod, string identifier = null)
         {
-            var returnUri = String.Empty;
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            string returnUri;
+            DebugService.WriteLine($"[{stopwatch.ElapsedMilliseconds}] UriGenerator called");
 
             if (typeof(T) == typeof(User))
             {
-                returnUri = BaseAddress + "/azuread-user/me/";
+                returnUri = BaseAddress + "azuread-user/me/";
             }
             else if (typeof(T) == typeof(Event))
             {
-                returnUri = BaseAddress + "/event/" + identifier;
+                returnUri = BaseAddress + "event/" + identifier;
             }
             else if (typeof(T) == typeof(EventTime))
             {
-                returnUri = BaseAddress + "/event-time/" + identifier;
+                returnUri = BaseAddress + "event-time/" + identifier;
             }
-            else if (typeof(T) == typeof(Participants))
+            else if (typeof(T) == typeof(Participant))
             {
-                returnUri = BaseAddress + "/participant/" + identifier;
+                returnUri = BaseAddress + "participant/" + identifier;
             }
             else if (typeof(T) == typeof(Club))
             {
-                returnUri = BaseAddress + "/club/" + identifier;
+                returnUri = BaseAddress + "club/" + identifier;
             }
             else if (typeof(T) == typeof(ClubMember))
             {
-                returnUri = BaseAddress + "/member/" + identifier;
+                returnUri = BaseAddress + "member/" + identifier;
             }
             else if (typeof(T) == typeof(Attendance))
             {
-                returnUri = BaseAddress + "/attendence/" + identifier;
+                returnUri = BaseAddress + "attendence/" + identifier;
             }
             else
             {
-                returnUri = BaseAddress + "/unknown/";
+                returnUri = BaseAddress + "unknown/";
             }
+            DebugService.WriteLine($"[{stopwatch.ElapsedMilliseconds}] The request URI is {returnUri}");
             return returnUri;
         }
 
