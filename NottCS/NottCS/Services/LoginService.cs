@@ -156,7 +156,7 @@ namespace NottCS.Services
         /// <returns></returns>
         public static async Task SignInBackendAndNavigateAsync()
         {
-            var userData = await RestService.RequestGetAsync<User>();
+            var userData = await RestService.RequestGetAsync<User>("MustAddUsername");
             if (userData.Item1 == "OK") //first item represents whether the request is successful
             {
                 //if either studentId or librarynumber is not filled that means is new user
