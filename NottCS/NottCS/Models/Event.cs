@@ -32,7 +32,7 @@ namespace NottCS.Models
         public EventStatus Status { get; set; }
 
         [JsonProperty(PropertyName = "image")]
-        public Image EventImage { get; set; }
+        public string EventImage { get; set; }
 
         [JsonProperty(PropertyName = "venue")]
         public string Venue { get; set; }

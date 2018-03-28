@@ -19,7 +19,7 @@ namespace NottCS.Models
         public string Description { get; set; }
 
         [JsonProperty(PropertyName = "icon")]
-        public Image Image { get; set; }
+        public string Image { get; set; }
 
         [JsonProperty(PropertyName = "created_timestamp")]
         public DateTime CreatedTimeStamp { get; set; }

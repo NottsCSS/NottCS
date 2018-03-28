@@ -97,7 +97,7 @@ namespace NottCS.Services.REST
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     //TODO: Write a serializer to convert proper data to list
-                    var resultJson = JToken.Parse(await httpResponse.Content.ReadAsStringAsync()).ToString();
+                    var resultJson = JToken.Parse(await httpResponse.Content.ReadAsStringAsync())["results"].ToString();
                     var jTokenList = JArray.Parse(resultJson).ToList();
                     List<T> resultList = new List<T>();
                     foreach (var item in jTokenList)
