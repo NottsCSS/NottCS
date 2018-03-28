@@ -64,7 +64,6 @@ namespace NottCS.Services.REST
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     var result = JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync());
-                    DebugService.WriteLine($"Get request JSON result: {JsonConvert.SerializeObject(result)}");
 
                     return Tuple.Create("OK", result);
                 }
@@ -96,7 +95,6 @@ namespace NottCS.Services.REST
                 var httpResponse = requestTask.GetAwaiter().GetResult();
                 if (httpResponse.IsSuccessStatusCode)
                 {
-                    //TODO: Write a serializer to convert proper data to list
                     var resultJson = JToken.Parse(await httpResponse.Content.ReadAsStringAsync())["results"].ToString();
                     var jTokenList = JArray.Parse(resultJson).ToList();
                     List<T> resultList = new List<T>();
