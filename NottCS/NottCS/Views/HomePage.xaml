@@ -166,14 +166,14 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Image Source="{Binding ImageURL}" 
+                                <Image Source="{Binding Image}" 
                                        Aspect="AspectFit"
                                        HeightRequest="50"
                                        WidthRequest="50"
                                        HorizontalOptions="Center"
                                        VerticalOptions="Center"/>
                                 <Label Grid.Row="1" 
-                                       Text="{Binding ClubName}" 
+                                       Text="{Binding Name}" 
                                        FontSize="12"
                                        HorizontalTextAlignment="Center"
                                        HorizontalOptions="Center"
