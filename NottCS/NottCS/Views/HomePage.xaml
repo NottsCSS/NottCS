@@ -121,7 +121,7 @@
                                Padding="0"
                                Margin="2,2">
                             <StackLayout>
-                                <Image Source="{Binding ImageURL}" 
+                                <Image Source="{Binding Image}" 
                                        Aspect="AspectFill"
                                        HorizontalOptions="FillAndExpand"
                                        VerticalOptions="StartAndExpand"/>
@@ -129,7 +129,7 @@
                                 <Label FontSize="Small"
                                        HorizontalTextAlignment="Center" 
                                        VerticalTextAlignment="End" 
-                                       Text="{Binding ClubName}" 
+                                       Text="{Binding Name}" 
                                        LineBreakMode="WordWrap"/>
 
                             </StackLayout>
