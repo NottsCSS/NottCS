@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -86,7 +87,7 @@ namespace NottCS.Services.REST
         /// <param name="httpMethod">Request HttpMethod</param>
         /// <param name="identifier">Identifier for the server to lookup data</param>
         /// <returns></returns>
-        private static string UriGenerator<T>(HttpMethod httpMethod, string identifier = null)
+        private static string UriGenerator<T>(HttpMethod httpMethod, string identifier = null, Dictionary<string, string> filter = null)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();

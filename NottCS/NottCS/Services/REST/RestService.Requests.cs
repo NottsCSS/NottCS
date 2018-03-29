@@ -83,8 +83,10 @@ namespace NottCS.Services.REST
         /// <typeparam name="T">Type of request object</typeparam>
         /// <param name="optionalClient">Optional client for other client request</param>
         /// <returns></returns>
-        public static async Task<Tuple<string, List<T>>> RequestGetAsync<T>(HttpClient optionalClient = null)
+        public static async Task<Tuple<string, List<T>>> RequestGetAsync<T>(object filter = null, HttpClient optionalClient = null)
         {
+            var paramFilter = filter is T variable ? variable : default(T);
+
             var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Get);
             var httpRequest = HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
