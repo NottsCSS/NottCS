@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.ReportIssuePage"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+             d:DataContext="{d:DesignInstance viewModels:ReportIssueViewModel}">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label 
+                Grid.Row="0"
+                Text="How can we make NottCS better?"
+                FontSize="Medium"
+                VerticalOptions="StartAndExpand" 
+                HorizontalOptions="StartAndExpand"/>
+            <Editor Grid.Row="1"
+                    HeightRequest="50"></Editor>
+            <Label
+                Grid.Row="2"
+                Text ="Report an Issue"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="StartAndExpand"
+                FontSize="Medium"/>
+            <Editor Grid.Row="3"
+                    HeightRequest="50"></Editor>
+            <Button
+                Text="Submit"
+                Grid.Row="5"
+                Style="{StaticResource SpanButtonStyle}"
+                Margin="0,10"
+                Command ="{Binding ReportIssueCommand}"></Button>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

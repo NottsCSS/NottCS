@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NottCS.Views.SettingsPage"
@@ -16,10 +16,10 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Grid.Row="2">
             <ListView ItemsSource="{Binding DummyLists}"
                       Margin="0,0"
-                      RowHeight="30"
+                      RowHeight="40"
                       x:Name="SomeList"
                       Footer ="">
                 <ListView.Behaviors>
@@ -33,25 +33,30 @@
                         <ViewCell>
                             <Grid Padding="5" x:Name="About">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="20"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="40"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Row="0" 
-                                       Text ="{Binding Name}">
-                                </Label>
-                                <Label  Grid.Row="0" 
-                                        Grid.Column="0"
-                                        Text ="{Binding Logout}"
-                                        TextColor="Red">
+                                <Label
+                                    Grid.Row="0"
+                                    Text ="{Binding Name}">
                                 </Label>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Button
+                Text="Sign Out"  
+                Command="{Binding SignOutCommand}"
+                TextColor="Red"
+                BorderRadius="0"
+                BorderWidth="0"
+                BackgroundColor="White" 
+                BorderColor="Transparent"
+                Margin="0,10"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
