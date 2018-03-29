@@ -61,5 +61,7 @@
 			<string>Editor</string>
 		</dict>
 	</array>
+	<key>CFBundleName</key>
+	<string>NottCS</string>
 </dict>
 </plist>
