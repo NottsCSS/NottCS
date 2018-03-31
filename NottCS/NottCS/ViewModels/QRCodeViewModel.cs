@@ -11,11 +11,10 @@ namespace NottCS.ViewModels
 {
     internal class QRCodeViewModel : BaseViewModel
     {
-
-        //public ICommand Command1 => new Command(async () => await func1());
-        public ICommand ButtonOnClicked => new Command(async() => await (scanner()));
-
-        public async Task scanner()
+        public string GeneratedQRCodeText { get; set; }
+        
+        public ICommand ScanQRCode => new Command(async() => await (Scanner()));
+        public async Task Scanner()
         {
             var scannerPage = new ZXingScannerPage();
             var nav = Application.Current.MainPage.Navigation;
@@ -31,11 +30,18 @@ namespace NottCS.ViewModels
                 });
             };
         }
+        public EncodingOptions BarcodeOption => new EncodingOptions() { Height = 500, Width = 500, PureBarcode = true };
+        //public ICommand Command1 => new Command(async () => await func1());
         private async Task func1()
         {
             await NavigationService.BackUntilAsync<HomeViewModel>();
         }
 
-        public EncodingOptions BarcodeOption => new EncodingOptions() { Height = 500, Width = 500, PureBarcode = true };
+        public QRCodeViewModel()
+        {
+            GeneratedQRCodeText = "Just a bunch of text here";
+            //todo Dyanmically generate QRCode with format.
+        }
+        
     }
 }

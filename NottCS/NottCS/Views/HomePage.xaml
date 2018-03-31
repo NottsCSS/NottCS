@@ -131,7 +131,6 @@
                                        Aspect="AspectFill"
                                        HorizontalOptions="FillAndExpand"
                                        VerticalOptions="StartAndExpand"/>
-<!--                                <Label Text="{Binding ImageURL}" />-->
                                 <Label FontSize="Small"
                                        HorizontalTextAlignment="Center" 
                                        VerticalTextAlignment="End" 
@@ -196,12 +195,12 @@
 
     <ContentPage Title="{Binding PageTitle3}">
         <Grid>
-            <Grid.RowDefinitions>
-                <!--<RowDefinition Height="*"/>
+            <!--<Grid.RowDefinitions>
+                --><!--<RowDefinition Height="*"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
-                <RowDefinition Height="2*"/>-->
-            </Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>--><!--
+            </Grid.RowDefinitions>-->
             
             <!--<Image x:Name="BannerImage"
                    Aspect="AspectFill"

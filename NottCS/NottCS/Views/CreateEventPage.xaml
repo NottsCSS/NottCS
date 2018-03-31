@@ -30,7 +30,7 @@
         <Grid>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition>
                         <RowDefinition.Height>
@@ -75,13 +75,6 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell Height="150">
-                                <!--<ViewCell.ContextActions>
-                                    <MenuItem Text="Delete"
-                                              IsDestructive="True"
-                                              Command="{Binding Path=BindingContext.DeleteCellsCommand, Source={x:Reference Name=SomeListOfTextBox}}"
-                                              CommandParameter="{Binding .}"
-                                              IsEnabled="{Binding LessThan3ViewCell}"/>
-                                </ViewCell.ContextActions>-->
                                 <Grid x:Name="DynamicListViewItem" 
                                       Margin="1">
                                     <Grid.Padding>

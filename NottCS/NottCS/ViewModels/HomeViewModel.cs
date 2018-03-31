@@ -77,7 +77,7 @@ namespace NottCS.ViewModels
         #region Picker
 
         public List<string> ClubListTypePickerList { get; set; } =
-            new List<string> { "My Clubs Only", "All Clubs", "Favourite Clubs" };
+            new List<string> { "My Clubs Only", "All Clubs"};
 
         public string SelectedClubType
         {
@@ -93,9 +93,6 @@ namespace NottCS.ViewModels
                         break;
                     case "All Clubs":
                         ClubList = AllClubList;
-                        break;
-                    case "Favourite Clubs":
-                        ClubList = FavouriteClubList;
                         break;
                 }
             }
@@ -133,49 +130,6 @@ namespace NottCS.ViewModels
             set => SetProperty(ref _clubList, value);
         }
 
-        public ObservableCollection<Item> FavouriteClubList { get; set; } = new ObservableCollection<Item>()
-        {
-            new Item()
-            {
-                ClubName = "ClubName",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName1",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName2",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName3",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName4",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName5",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName6",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName7",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-        };
         public ObservableCollection<Item> AllClubList { get; set; } = new ObservableCollection<Item>()
         {
             new Item()
@@ -322,18 +276,6 @@ namespace NottCS.ViewModels
             }
 
             return base.InitializeAsync(navigationData);
-
-            //DebugService.WriteLine("Initializing Account Page...");
-            //if (navigationData is string username)
-            //{
-            //    DebugService.WriteLine("Stage 2...");
-            //    var isSuccess = SetPageDataAsync(username).GetAwaiter().GetResult();
-            //    if (isSuccess)
-            //    {
-            //        DebugService.WriteLine("Stage 3...");
-            //        return base.InitializeAsync(navigationData);
-            //    }
-            //}
         }
     }
 }

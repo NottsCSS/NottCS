@@ -18,7 +18,7 @@
                 <qrcode:ZXingBarcodeImageView  x:Name="QRCode" 
                                                HeightRequest="100"
                                                BarcodeFormat="QR_CODE" 
-                                               BarcodeValue="MuthaFarker"
+                                               BarcodeValue="{Binding GeneratedQRCodeText}"
                                                Grid.Row="0"
                                                Margin="10,5"
                                                BarcodeOptions ="{Binding BarcodeOption}"/>
@@ -26,17 +26,16 @@
                             HorizontalOptions="Center"
                             Margin="10,10">
                     <StackLayout WidthRequest="500">
-                <Label Text="Thank you for signing up, please verify your registration by paying the membership fees and scan the QR code."
+                        <Label Text="Thank you for signing up, please verify your registration by paying the membership fees and scan the QR code."
                                HorizontalOptions="CenterAndExpand"
                                HorizontalTextAlignment="Center"/>
-                <Button Text = "SAVE QR CODE"
-                        Command="{Binding ButtonOnClicked}"
-                        FontSize="Medium"
-                        Margin="5,10,5,0"/>
+                        <Button Text = "SAVE QR CODE"
+                                Command="{Binding ScanQRCode}"
+                                FontSize="Medium"
+                                Margin="5,10,5,0"/>
                         </StackLayout>
-                    </ScrollView>
-                <!--Clicked="Button_OnClicked"-->
-                </Grid>
+                </ScrollView>
+            </Grid>
             </Grid>
     </ContentPage.Content>
 </ContentPage>

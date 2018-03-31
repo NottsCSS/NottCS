@@ -39,7 +39,7 @@
                            VerticalOptions="StartAndExpand"
                            HorizontalOptions="StartAndExpand"
                            FontSize="Medium" />
-                    <Label Text="Below is the list of information that would be obtained from participants."
+                    <Label Text="Below is the list of information that would be used to generate registration forms."
                            VerticalOptions="StartAndExpand"
                            HorizontalOptions="StartAndExpand"
                            LineBreakMode="WordWrap"
