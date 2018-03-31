@@ -1,32 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NottCS.Views.NotificationsPage"
-             Title ="{Binding Title}"
+             x:Class="NottCS.Views.AdminPanelPage"
+             Title="{Binding Title}"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
              xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
              xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
-             d:DataContext="{d:DesignInstance viewModels:NotificationsViewModel}">
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:gv="clr-namespace:Plugin.GridViewControl.Common;assembly=Plugin.GridViewControl"
+             d:DataContext="{d:DesignInstance viewModels:AdminPanelViewModel}">
+
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
+            <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
             <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
+            <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Notify Me For"
-                   HorizontalOptions="Start">
-            </Label>
-            <ListView ItemsSource="{Binding DummyLists}"
-                      Margin="0,0"
+        <StackLayout Margin="2">
+            <Label Text="Admin Panel"
+                   FontSize="Medium"
+                   VerticalOptions="Start"
+                   HorizontalOptions="CenterAndExpand"/>
+            <ListView ItemsSource="{Binding AdminPanel}"
+                      Margin="2"
                       RowHeight="30"
-                      x:Name="SomeList"
-                      Footer ="">
+                      x:Name="SomeList">
                 <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemTapped"
+                        Command="{Binding NavigationCommand}"
+                        Converter="{StaticResource TappedItemConverter}" />
                     <behaviors:EventToCommandBehavior 
                         EventName="ItemSelected"
                         Source="{x:Reference SomeList}"
@@ -36,18 +44,10 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Padding="5" x:Name="Notifications">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="20"></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="40"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Row="0"
-                                       Text ="{Binding Name}">
-                                </Label>
-                            </Grid>
+                            <StackLayout>
+                                <Label Text ="{Binding FunctionName}"
+                                       VerticalOptions="CenterAndExpand"/>
+                            </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

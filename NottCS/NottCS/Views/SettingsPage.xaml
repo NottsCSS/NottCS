@@ -13,6 +13,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
+            <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -27,6 +28,11 @@
                         EventName="ItemTapped"
                         Command="{Binding SettingCommand}"
                         Converter="{StaticResource TappedItemConverter}" />
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemSelected"
+                        Source="{x:Reference SomeList}"
+                        Command="{Binding DisableItemSelectedCommand, Mode=TwoWay}" 
+                        Converter="{StaticResource SelectedItemConverter}" />
                 </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>

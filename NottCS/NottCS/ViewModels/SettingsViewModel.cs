@@ -44,7 +44,12 @@ namespace NottCS.ViewModels
                 }
             }
         }
-
+        #region Disable ItemSelectedCommand
+        public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
+        public void DisableItemSelected()
+        {
+        }
+        #endregion
         public ICommand SignOutCommand => new Command(SignOut);
 
         private static async void SignOut()

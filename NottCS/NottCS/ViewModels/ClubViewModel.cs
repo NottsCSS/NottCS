@@ -19,13 +19,13 @@ namespace NottCS.ViewModels
         public string PageTitle2 { get; set; }
         public string ClubDescription { get; set; }
 
-        public ICommand ClubNavigationCommand => new Command(async () => await CreateEventNavigate());
-        private async Task CreateEventNavigate()
+        public ICommand AdminPanelNavigationCommand => new Command(async () => await AdminPanelNavigate());
+        private async Task AdminPanelNavigate()
         {
             try
             {
-                await NavigationService.NavigateToAsync<CreateEventViewModel>();
-                DebugService.WriteLine("Button pressed");
+                await NavigationService.NavigateToAsync<AdminPanelViewModel>();
+                DebugService.WriteLine("Initiated navigation to AdminPanelPage");
             }
             catch (Exception e)
             {

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using NottCS.Services.Navigation;
 using System;
+using System.Windows.Input;
 using NottCS.Services;
+using Xamarin.Forms;
 
 namespace NottCS.ViewModels
 {
@@ -20,7 +22,12 @@ namespace NottCS.ViewModels
             Title = "Notifications";
             SetPageData();
         }
-
+        #region Disable ItemSelectedCommand
+        public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
+        public void DisableItemSelected()
+        {
+        }
+        #endregion
         private void SetPageData()
         {
             DummyLists = new List<UserDataObject>()

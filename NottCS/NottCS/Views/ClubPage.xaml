@@ -25,7 +25,7 @@
     <TabbedPage.ToolbarItems>
         <ToolbarItem x:Name="Settings" 
                      Text="Settings"
-                     Command="{Binding ClubNavigationCommand}">
+                     Command="{Binding AdminPanelNavigationCommand}">
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <On Platform="Android" Value="settings_icon.png"/>
