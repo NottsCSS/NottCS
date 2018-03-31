@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace NottCS.Models
 {
-    internal class Club
+    public class Club
     {
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

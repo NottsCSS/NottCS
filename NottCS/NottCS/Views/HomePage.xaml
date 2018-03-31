@@ -125,18 +125,17 @@
                     <DataTemplate>
                         <Frame OutlineColor="Black"
                                Padding="0"
-                               Margin="2,2">
+                               Margin="1">
                             <StackLayout>
-                                <Image Source="{Binding ImageURL}" 
-                                       Aspect="AspectFill"
-                                       HorizontalOptions="FillAndExpand"
+                                <Image Source="{Binding Image}" 
+                                       Aspect="Fill"
+                                       HorizontalOptions="CenterAndExpand"
                                        VerticalOptions="StartAndExpand"/>
                                 <Label FontSize="Small"
                                        HorizontalTextAlignment="Center" 
                                        VerticalTextAlignment="End" 
-                                       Text="{Binding ClubName}" 
+                                       Text="{Binding Name}" 
                                        LineBreakMode="WordWrap"/>
-
                             </StackLayout>
                         </Frame>
                     </DataTemplate>
@@ -171,14 +170,14 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Image Source="{Binding ImageURL}" 
+                                <Image Source="{Binding Image}" 
                                        Aspect="AspectFit"
                                        HeightRequest="50"
                                        WidthRequest="50"
                                        HorizontalOptions="Center"
                                        VerticalOptions="Center"/>
                                 <Label Grid.Row="1" 
-                                       Text="{Binding ClubName}" 
+                                       Text="{Binding Name}" 
                                        FontSize="12"
                                        HorizontalTextAlignment="Center"
                                        HorizontalOptions="Center"
