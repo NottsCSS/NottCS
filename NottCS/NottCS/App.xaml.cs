@@ -11,7 +11,7 @@ using NottCS.Services;
 
 namespace NottCS
 {
-    //TODO: Create club admin panel
+
 	public partial class App : Application
 	{
 	    public static PublicClientApplication ClientApplication { get; private set; }
