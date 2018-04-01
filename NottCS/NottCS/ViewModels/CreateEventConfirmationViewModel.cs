@@ -19,7 +19,6 @@ namespace NottCS.ViewModels
         public void DoNothingForNow()
         {
             //TODO: Pass all item to server through REST Service
-            //todo Seperate each model from each observable collection
             JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
             string ListJson = JsonConvert.SerializeObject(List, settings);
             DebugService.WriteLine(ListJson);
