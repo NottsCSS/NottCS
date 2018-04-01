@@ -14,7 +14,7 @@ namespace NottCS.Models
         public static readonly string Canceled = "Canceled";
     }
 
-    internal class Event
+    public class Event
     {
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

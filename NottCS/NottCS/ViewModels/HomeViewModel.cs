@@ -56,27 +56,27 @@ namespace NottCS.ViewModels
         }
         #endregion
         #region Temporary EventList
-        public ObservableCollection<Item> EventLists { get; set; } = new ObservableCollection<Item>()
+        public ObservableCollection<Event> EventLists { get; set; } = new ObservableCollection<Event>()
         {
-            new Item()
+            new Event()
             {
-                EventName = "I'm just a title",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
+                Title = "I'm just a title",
+                EventImage = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
             },
-            new Item()
+            new Event()
             {
-                EventName = "I'm just a title",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
+                Title = "I'm just a title",
+                EventImage = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
             },
-            new Item()
+            new Event()
             {
-                EventName = "I'm just a title",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
+                Title = "I'm just a title",
+                EventImage = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
             },
-            new Item()
+            new Event()
             {
-                EventName = "I'm just a title",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
+                Title = "I'm just a title",
+                EventImage = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
             }
         };
 

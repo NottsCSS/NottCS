@@ -91,7 +91,7 @@
                                     <Entry FontSize="Medium"
                                            Grid.Column="0"
                                            Margin="0"
-                                           Text ="{Binding Entry, Mode=TwoWay}"
+                                           Text ="{Binding Name, Mode=TwoWay}"
                                            Placeholder="Your Text Here"/>
                                     <Button Text="X"
                                             TextColor="Black"
