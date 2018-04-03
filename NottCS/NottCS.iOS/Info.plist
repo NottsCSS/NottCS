@@ -69,5 +69,7 @@
 	<string>This app needs access to microphone.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>This app needs access to the photo gallery.</string>
+	<key>CFBundleName</key>
+	<string>NottCS</string>
 </dict>
 </plist>
