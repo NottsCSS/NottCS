@@ -6,6 +6,7 @@ using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Xamarin.Forms;
 using Acr.UserDialogs;
+using NottCS.Services.REST;
 
 namespace NottCS.ViewModels
 {
@@ -17,7 +18,11 @@ namespace NottCS.ViewModels
         {
             Title = "Media Test Page";
         }
+
+        private MediaFile _image = null;
+
         public ICommand MediaPicker => new Command(MediaButtonClicked);
+        public ICommand Upload => new Command(UploadButtonClicked);
 
         public ImageSource ImgSrc
         {
@@ -42,13 +47,21 @@ namespace NottCS.ViewModels
 
             if (file == null)
                 return;
-
+            _image?.Dispose();
+            _image = file;
             ImgSrc = ImageSource.FromStream(() =>
             {
                 var stream = file.GetStream();
-                file.Dispose();
+//                file.Dispose();
                 return stream;
             });
+        }
+
+        private async void UploadButtonClicked()
+        {
+            if (_image == null)
+                return;
+            await RestService.RequestPostAsync2(_image);
         }
     }
 }

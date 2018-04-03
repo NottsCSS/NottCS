@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Plugin.Media.Abstractions;
 
 namespace NottCS.Services.REST
 {
@@ -132,6 +134,54 @@ namespace NottCS.Services.REST
                 DebugService.WriteLine($"Exception thrown in RequestUpdateAsync, Message: {errorMessage}");
             }
             return errorMessage;
+        }
+
+        private static byte[] ReadStream(Stream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
+
+        public static async Task RequestPostAsync2(object something)
+        {
+            if (something is MediaFile f)
+            {
+                var form = new MultipartFormDataContent
+                {
+                    {new ByteArrayContent(ReadStream(f.GetStream())), "icon", "upload.jpg"},
+                    {new StringContent("HahahaAASD"), "name"},
+                    {new StringContent("DESCRIPTION!?!?!?D?ASD"), "description"}
+                };
+
+                var requestUri = "https://testing-endpoints.herokuapp.com/club/";
+                try
+                {
+                    Acr.UserDialogs.UserDialogs.Instance.Alert("Attempting post");
+                    var requestTask = Client.PostAsync(requestUri, form);
+                    var httpResponse = await requestTask;
+                    DebugService.WriteLine(httpResponse);
+                    var resp = (httpResponse.IsSuccessStatusCode) ? "OK" : $"Something went wrong, http status code: {httpResponse.StatusCode}";
+                    DebugService.WriteLine(resp);
+
+                }
+                catch (Exception e)
+                {
+                    DebugService.WriteLine(e);
+                    DebugService.WriteLine($"Exception thrown in RequestUpdateAsync, Message: {e.Message}");
+                }
+            }
+            else
+            {
+                DebugService.WriteLine("Not media file");
+            }
         }
     }
 }

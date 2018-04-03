@@ -15,6 +15,7 @@
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
             <Button Text="PICK IMAGE" Command="{Binding MediaPicker}"/>
+            <Button Text="Upload" Command="{Binding Upload}"/>
             <Image Source="{Binding ImgSrc}" />
         </StackLayout>
     </ContentPage.Content>
