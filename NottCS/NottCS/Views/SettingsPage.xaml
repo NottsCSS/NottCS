@@ -16,7 +16,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Grid.Row="2">
             <ListView ItemsSource="{Binding DummyLists}"
                       Margin="0,0"
                       RowHeight="30"
@@ -33,25 +33,30 @@
                         <ViewCell>
                             <Grid Padding="5" x:Name="About">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="20"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="40"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Row="0" 
-                                       Text ="{Binding Name}">
-                                </Label>
-                                <Label  Grid.Row="0" 
-                                        Grid.Column="0"
-                                        Text ="{Binding Logout}"
-                                        TextColor="Red">
+                                <Label
+                                    Grid.Row="0"
+                                    Text ="{Binding Name}">
                                 </Label>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Button
+                Text="Sign Out"  
+                Command="{Binding SignOutCommand}"
+                TextColor="Red"
+                BorderRadius="0"
+                BorderWidth="0"
+                BackgroundColor="WhiteSmoke" 
+                BorderColor="Transparent"
+                VerticalOptions="EndAndExpand"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -45,14 +45,20 @@ namespace NottCS.ViewModels
             }
         }
 
+        public ICommand SignOutCommand => new Command(SignOut);
+
+        private static async void SignOut()
+        {
+            await LoginService.SignOutAndNavigateAsync();
+        }
+
         private void SetPageData()
         {
             DummyLists = new List<UserDataObject>()
             {
                 new UserDataObject() {Name = "Notifications", ViewModelType = typeof(NotificationsViewModel)},
                 new UserDataObject() {Name = "About", ViewModelType = typeof(AboutViewModel)},
-                new UserDataObject() {Name = "Report an Issue"},
-                new UserDataObject() {Logout = "Logout"}
+                new UserDataObject() {Name = "Report an Issue", ViewModelType = typeof(AboutViewModel)},
             };
         }
     }
