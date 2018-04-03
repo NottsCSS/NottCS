@@ -11,6 +11,9 @@ using NottCS.Models;
 using NottCS.Services.Navigation;
 using NottCS.Services.REST;
 using NottCS.ViewModels;
+using NottCS.Views;
+using Xamarin.Forms;
+using Newtonsoft.Json;
 
 namespace NottCS.Services
 {
@@ -48,8 +51,26 @@ namespace NottCS.Services
             catch (MsalUiRequiredException)
             {
                 DebugService.WriteLine("UI required");
-                AuthenticationResult ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
-                return ar;
+                if (Application.Current.MainPage is NavigationPage)
+                {
+                    var stack = Application.Current.MainPage.Navigation.NavigationStack;
+                    DebugService.WriteLine($"Navigation stack number of elements: {stack.LongCount()}");
+                    var lastPageType = stack.Last().GetType();
+                    DebugService.WriteLine($"Type of navigation stack last: {lastPageType}");
+                    if (lastPageType != typeof(LoginPage))
+                    {
+                        DebugService.WriteLine("Main page not login page, UI required, going to login page");
+                        return null;
+                    }
+                    else
+                    {
+                        DebugService.WriteLine("Already at login page, now calling microsoft login UI");
+                        AuthenticationResult ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
+                        return ar;
+                    }
+                }
+                else
+                    return null;
             }
         }
 
@@ -64,6 +85,10 @@ namespace NottCS.Services
             try
             {
                 AuthenticationResult ar = await InternalSignInMicrosoft();
+                if (ar == null)
+                {
+                    return false;
+                }
                 Task setupClientTask = Task.Run(() => RestService.SetupClient(ar.AccessToken));
                 App.MicrosoftAuthenticationResult = ar;
 
