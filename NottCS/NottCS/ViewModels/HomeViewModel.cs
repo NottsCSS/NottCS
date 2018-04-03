@@ -10,6 +10,7 @@ using NottCS.Services;
 using NottCS.Services.Navigation;
 using NottCS.Views;
 using Newtonsoft.Json;
+using NottCS.Services.REST;
 
 namespace NottCS.ViewModels
 {
@@ -25,6 +26,7 @@ namespace NottCS.ViewModels
         {
             Title = "NottCS";
             SelectedClubType = ClubListTypePickerList[0];
+            LoadClubs().GetAwaiter();
         }
 
         #endregion
@@ -126,121 +128,40 @@ namespace NottCS.ViewModels
         }
         #endregion
         #region Temporary ClubList
-        private ObservableCollection<Item> _clubList = new ObservableCollection<Item>();
-        public ObservableCollection<Item> ClubList
+
+        private async Task LoadClubs()
+        {
+            var result = (await RestService.RequestGetAsync<Club>());
+            var clubList = result.Item2;
+            if (result.Item1 != "OK")
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Alert(result.Item1, "Error", "OK");
+            }
+            
+            foreach (var club in clubList)
+            {
+                AllClubList.Add(club);
+            }
+        }
+
+        private ObservableCollection<Club> _clubList = new ObservableCollection<Club>();
+        public ObservableCollection<Club> ClubList
         {
             get => _clubList;
             set => SetProperty(ref _clubList, value);
         }
 
-        public ObservableCollection<Item> FavouriteClubList { get; set; } = new ObservableCollection<Item>()
+        public ObservableCollection<Club> FavouriteClubList { get; set; } = new ObservableCollection<Club>()
         {
-            new Item()
-            {
-                ClubName = "ClubName",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName1",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName2",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName3",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName4",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName5",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName6",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName7",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
+
         };
-        public ObservableCollection<Item> AllClubList { get; set; } = new ObservableCollection<Item>()
+        public ObservableCollection<Club> AllClubList { get; set; } = new ObservableCollection<Club>()
         {
-            new Item()
-            {
-                ClubName = "ClubName",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName1",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName2",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName3",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName4",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName5",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName6",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            }
+            
         };
-        public ObservableCollection<Item> MyClubList { get; set; } = new ObservableCollection<Item>()
+        public ObservableCollection<Club> MyClubList { get; set; } = new ObservableCollection<Club>()
         {
-            new Item()
-            {
-                ClubName = "ClubName",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName1",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName2",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName3",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Item()
-            {
-                ClubName = "ClubName4",
-                ImageURL = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            }
+            
         };
 
         #endregion

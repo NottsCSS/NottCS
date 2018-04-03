@@ -58,7 +58,7 @@ namespace NottCS.ViewModels
             {
                 new UserDataObject() {Name = "Notifications", ViewModelType = typeof(NotificationsViewModel)},
                 new UserDataObject() {Name = "About", ViewModelType = typeof(AboutViewModel)},
-                new UserDataObject() {Name = "Report an Issue", ViewModelType = typeof(AboutViewModel)},
+                new UserDataObject() {Name = "Report an Issue", ViewModelType = typeof(ReportIssueViewModel)},
             };
         }
     }

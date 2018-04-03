@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json;
+using NottCS.Models;
 
 namespace NottCS.Services.REST
 {
@@ -86,10 +88,44 @@ namespace NottCS.Services.REST
         /// <returns></returns>
         private static string UriGenerator<T>(HttpMethod httpMethod, string identifier = null)
         {
-            var returnUri = BaseAddress + "/azuread-user/me/";
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            string returnUri;
+            DebugService.WriteLine($"[{stopwatch.ElapsedMilliseconds}] UriGenerator called");
 
-            //TODO: Write a Uri generator logic based on the REST endpoint
-
+            if (typeof(T) == typeof(User))
+            {
+                returnUri = BaseAddress + "azuread-user/me/";
+            }
+            else if (typeof(T) == typeof(Event))
+            {
+                returnUri = BaseAddress + "event/" + identifier;
+            }
+            else if (typeof(T) == typeof(EventTime))
+            {
+                returnUri = BaseAddress + "event-time/" + identifier;
+            }
+            else if (typeof(T) == typeof(Participant))
+            {
+                returnUri = BaseAddress + "participant/" + identifier;
+            }
+            else if (typeof(T) == typeof(Club))
+            {
+                returnUri = BaseAddress + "club/" + identifier;
+            }
+            else if (typeof(T) == typeof(ClubMember))
+            {
+                returnUri = BaseAddress + "member/" + identifier;
+            }
+            else if (typeof(T) == typeof(Attendance))
+            {
+                returnUri = BaseAddress + "attendence/" + identifier;
+            }
+            else
+            {
+                returnUri = BaseAddress + "unknown/";
+            }
+            DebugService.WriteLine($"[{stopwatch.ElapsedMilliseconds}] The request URI is {returnUri}");
             return returnUri;
         }
 
