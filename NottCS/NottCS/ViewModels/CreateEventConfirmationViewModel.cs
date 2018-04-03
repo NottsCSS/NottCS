@@ -24,8 +24,8 @@ namespace NottCS.ViewModels
             DebugService.WriteLine(ListJson);
         }
 
-        private ObservableCollection<EventAdditionalParameter> _list;
-        public ObservableCollection<EventAdditionalParameter> List
+        private ObservableCollection<EventAdditionalParameterRequestList> _list;
+        public ObservableCollection<EventAdditionalParameterRequestList> List
         {
             get => _list;
             set => SetProperty(ref _list, value);
@@ -47,11 +47,11 @@ namespace NottCS.ViewModels
         {
             DebugService.WriteLine(navigationData);
 
-            if (navigationData is ObservableCollection<EventAdditionalParameter> entryList)
+            if (navigationData is ObservableCollection<EventAdditionalParameterRequestList> entryList)
             {
                 foreach (var item in entryList)
                 {
-                    DebugService.WriteLine(item.Name);
+                    DebugService.WriteLine(item.Entry);
                 }
 
                 List = entryList;

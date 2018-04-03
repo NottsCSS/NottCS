@@ -26,7 +26,7 @@ namespace NottCS.ViewModels
         
         private void CreateTextBox()
         {
-            ListOfTextBox.Add(new EventAdditionalParameter());
+            ListOfTextBox.Add(new EventAdditionalParameterRequestList());
             DebugService.WriteLine("New text box added");
             if (ListOfTextBox.Count > 3)
             {
@@ -39,7 +39,7 @@ namespace NottCS.ViewModels
             if (ListOfTextBox.Count > 3)
             {
                 DebugService.WriteLine(p);
-                ListOfTextBox.Remove((EventAdditionalParameter)p);
+                ListOfTextBox.Remove((EventAdditionalParameterRequestList)p);
                 DebugService.WriteLine(ListOfTextBox.Count);
                 DebugService.WriteLine("Delete command activated");
             }
@@ -56,7 +56,7 @@ namespace NottCS.ViewModels
             
             foreach (var item in ListOfTextBox)
             {
-                DebugService.WriteLine(item.Name);
+                DebugService.WriteLine(item.Entry);
             }
         }
 
@@ -77,10 +77,10 @@ namespace NottCS.ViewModels
         }
         #endregion
 
-        private ObservableCollection<EventAdditionalParameter> _listOfTextBox;
+        private ObservableCollection<EventAdditionalParameterRequestList> _listOfTextBox;
         private bool _lessThan3ViewCell;
 
-        public ObservableCollection<EventAdditionalParameter> ListOfTextBox
+        public ObservableCollection<EventAdditionalParameterRequestList> ListOfTextBox
         {
             get => _listOfTextBox;
             set => SetProperty(ref _listOfTextBox, value);
@@ -101,13 +101,14 @@ namespace NottCS.ViewModels
         #region CreateEventViewModel Constructor
         public CreateEventViewModel()
         {
-            ListOfTextBox =new ObservableCollection<EventAdditionalParameter>()
+            ListOfTextBox =new ObservableCollection<EventAdditionalParameterRequestList>()
             {
-                new EventAdditionalParameter(),
-                new EventAdditionalParameter(),
-                new EventAdditionalParameter()
+                new EventAdditionalParameterRequestList(),
+                new EventAdditionalParameterRequestList(),
+                new EventAdditionalParameterRequestList()
             };
             LessThan3ViewCell = false;
+            Title = "Create New Event Instance";
 
 
         }
