@@ -23,7 +23,7 @@ namespace NottCS.Services.REST
         {
             var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Delete, identifier);
-            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Delete, requestUri);
+            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Delete, requestUri);
             string errorMessage = null;
 
             try
@@ -53,7 +53,7 @@ namespace NottCS.Services.REST
             var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Get, identifier);
 
-            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
+            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
             string errorMessage = null;
 
             try
@@ -83,13 +83,11 @@ namespace NottCS.Services.REST
         /// <typeparam name="T">Type of request object</typeparam>
         /// <param name="optionalClient">Optional client for other client request</param>
         /// <returns></returns>
-        public static async Task<Tuple<string, List<T>>> RequestGetAsync<T>(object filter = null, HttpClient optionalClient = null)
+        public static async Task<Tuple<string, List<T>>> RequestGetAsync<T>(HttpClient optionalClient = null)
         {
-            var paramFilter = filter is T variable ? variable : default(T);
-
             var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Get);
-            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
+            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
             string errorMessage = null;
             try
             {
@@ -129,7 +127,7 @@ namespace NottCS.Services.REST
         {
             var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Post);
-            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Post, requestUri, objectData);
+            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Post, requestUri, objectData);
             string errorMessage = null;
 
             try
@@ -159,7 +157,7 @@ namespace NottCS.Services.REST
         {
             var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Put, identifier);
-            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Put, requestUri, objectData);
+            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Put, requestUri, objectData);
             string errorMessage = null;
 
             try

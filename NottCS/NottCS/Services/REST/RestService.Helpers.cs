@@ -4,8 +4,10 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NottCS.Models;
+using NottCS.ViewModels;
 
 namespace NottCS.Services.REST
 {
@@ -53,8 +55,15 @@ namespace NottCS.Services.REST
             Client.DefaultRequestHeaders.Clear();
         }
 
-        private static HttpRequestMessage HttpRequestMessageGenerator(HttpMethod httpMethod, string requestUri, object requestBody = null)
+        private static async Task<HttpRequestMessage> HttpRequestMessageGenerator(HttpMethod httpMethod, string requestUri, object requestBody = null)
         {
+            var isValidToken = await LoginService.SignInMicrosoftAsync();
+            if (!isValidToken)
+            {
+                Navigation.NavigationService.ClearNavigation();
+                await Navigation.NavigationService.NavigateToAsync<LoginViewModel>();
+            }
+
             #region ObjectValidator
 
             if (httpMethod == HttpMethod.Post && requestBody == null)
@@ -87,7 +96,7 @@ namespace NottCS.Services.REST
         /// <param name="httpMethod">Request HttpMethod</param>
         /// <param name="identifier">Identifier for the server to lookup data</param>
         /// <returns></returns>
-        private static string UriGenerator<T>(HttpMethod httpMethod, string identifier = null, Dictionary<string, string> filter = null)
+        private static string UriGenerator<T>(HttpMethod httpMethod, string identifier = null)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
