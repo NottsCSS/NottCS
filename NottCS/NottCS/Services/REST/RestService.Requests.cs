@@ -177,52 +177,63 @@ namespace NottCS.Services.REST
             return errorMessage;
         }
 
-        private static byte[] ReadStream(Stream input)
+        
+
+        public static async Task RequestPostAsync2(byte[] file, string filename, string name, string description)
         {
-            byte[] buffer = new byte[16 * 1024];
-            using (MemoryStream ms = new MemoryStream())
+            var form = new MultipartFormDataContent
             {
-                int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-                return ms.ToArray();
-            }
-        }
-
-        public static async Task RequestPostAsync2(object something)
-        {
-            if (something is MediaFile f)
+                {new ByteArrayContent(file), "icon", filename},
+                {new StringContent(name), "name" },
+                {new StringContent(description), "description" }
+            };
+            var requestUri = "https://testing-endpoints.herokuapp.com/club/";
+            try
             {
-                var form = new MultipartFormDataContent
-                {
-                    {new ByteArrayContent(ReadStream(f.GetStream())), "icon", "upload.jpg"},
-                    {new StringContent("HahahaAASD"), "name"},
-                    {new StringContent("DESCRIPTION!?!?!?D?ASD"), "description"}
-                };
-
-                var requestUri = "https://testing-endpoints.herokuapp.com/club/";
-                try
-                {
-                    Acr.UserDialogs.UserDialogs.Instance.Alert("Attempting post");
-                    var requestTask = Client.PostAsync(requestUri, form);
-                    var httpResponse = await requestTask;
-                    DebugService.WriteLine(httpResponse);
-                    var resp = (httpResponse.IsSuccessStatusCode) ? "OK" : $"Something went wrong, http status code: {httpResponse.StatusCode}";
-                    DebugService.WriteLine(resp);
-
-                }
-                catch (Exception e)
-                {
-                    DebugService.WriteLine(e);
-                    DebugService.WriteLine($"Exception thrown in RequestUpdateAsync, Message: {e.Message}");
-                }
+                Acr.UserDialogs.UserDialogs.Instance.Alert("Attempting post");
+                var requestTask = Client.PostAsync(requestUri, form);
+                var httpResponse = await requestTask;
+                DebugService.WriteLine(httpResponse);
+                var resp = (httpResponse.IsSuccessStatusCode) ? "OK" : $"Something went wrong, http status code: {httpResponse.StatusCode}";
+                DebugService.WriteLine(resp);
+            
             }
-            else
+            catch (Exception e)
             {
-                DebugService.WriteLine("Not media file");
+                DebugService.WriteLine(e);
+                DebugService.WriteLine($"Exception thrown in RequestUpdateAsync, Message: {e.Message}");
             }
+
+            //            if (something is MediaFile f)
+            //            {
+            //                var form = new MultipartFormDataContent
+            //                {
+            //                    {new ByteArrayContent(ReadStream(f.GetStream())), "icon", "upload.jpg"},
+            //                    {new StringContent("HahahaAASD"), "name"},
+            //                    {new StringContent("DESCRIPTION!?!?!?D?ASD"), "description"}
+            //                };
+            //
+            //                var requestUri = "https://testing-endpoints.herokuapp.com/club/";
+            //                try
+            //                {
+            //                    Acr.UserDialogs.UserDialogs.Instance.Alert("Attempting post");
+            //                    var requestTask = Client.PostAsync(requestUri, form);
+            //                    var httpResponse = await requestTask;
+            //                    DebugService.WriteLine(httpResponse);
+            //                    var resp = (httpResponse.IsSuccessStatusCode) ? "OK" : $"Something went wrong, http status code: {httpResponse.StatusCode}";
+            //                    DebugService.WriteLine(resp);
+            //
+            //                }
+            //                catch (Exception e)
+            //                {
+            //                    DebugService.WriteLine(e);
+            //                    DebugService.WriteLine($"Exception thrown in RequestUpdateAsync, Message: {e.Message}");
+            //                }
+            //            }
+            //            else
+            //            {
+            //                DebugService.WriteLine("Not media file");
+            //            }
         }
     }
 }

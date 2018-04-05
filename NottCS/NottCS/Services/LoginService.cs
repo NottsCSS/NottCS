@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
@@ -166,7 +167,16 @@ namespace NottCS.Services
             }
             catch (HttpRequestException httpException)
             {
-                Acr.UserDialogs.UserDialogs.Instance.Alert($"Http request error: {httpException}");
+                var ping = new Ping();
+                var pingReply = ping.Send("https://www.google.com/");
+                if (pingReply.Status != IPStatus.Success)
+                {
+                    Acr.UserDialogs.UserDialogs.Instance.Alert($"No internet connection");
+                }
+                else
+                {
+                    Acr.UserDialogs.UserDialogs.Instance.Alert($"Http request error: {httpException}");
+                }
             }
             catch (Exception e)
             {

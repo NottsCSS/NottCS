@@ -14,9 +14,22 @@
             <Label Text="Media Test Page"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Name"
+                       HorizontalOptions="Fill"/>
+                <Entry Text="{Binding Name}"
+                       HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Description" 
+                       HorizontalOptions="Fill"/>
+                <Entry Text="{Binding Description}" 
+                       HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+            <Image Source="{Binding ImgSrc}"
+                   VerticalOptions="FillAndExpand"/>
             <Button Text="PICK IMAGE" Command="{Binding MediaPicker}"/>
             <Button Text="Upload" Command="{Binding Upload}"/>
-            <Image Source="{Binding ImgSrc}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

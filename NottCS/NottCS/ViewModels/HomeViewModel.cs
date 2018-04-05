@@ -32,6 +32,7 @@ namespace NottCS.ViewModels
         #endregion
 
         public ICommand SettingsPageNavigationCommand => new Command(async() => await NavigationService.NavigateToAsync<SettingsViewModel>());
+        public ICommand MediaTestPageNavigationCommand => new Command(async () => await NavigationService.NavigateToAsync<MediaTestViewModel>());
 
         #region Event List
         #region ListViewNavigation
