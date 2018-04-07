@@ -9,6 +9,8 @@ using Android.Widget;
 using Android.OS;
 using Microsoft.Identity.Client;
 using System.Diagnostics;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 
 namespace NottCS.Droid
 {
@@ -27,6 +29,8 @@ namespace NottCS.Droid
             LoadApplication(new App());
 //            App.ClientApplication.RedirectUri = "msal81a5b712-2ec4-4d3f-9324-211f60d0a0c9://auth";
             App.UiParent = new UIParent(this);
+            
+            Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity = this; //for media plugin
         }
 
         /// <summary>
@@ -64,9 +68,10 @@ namespace NottCS.Droid
         /// <param name="requestCode">The request code.</param>
         /// <param name="permissions">The permissions.</param>
         /// <param name="grantResults">The grant results.</param>
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
         {
             ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 }

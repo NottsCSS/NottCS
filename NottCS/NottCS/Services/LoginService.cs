@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
@@ -12,6 +13,9 @@ using NottCS.Models;
 using NottCS.Services.Navigation;
 using NottCS.Services.REST;
 using NottCS.ViewModels;
+using NottCS.Views;
+using Xamarin.Forms;
+using Newtonsoft.Json;
 
 namespace NottCS.Services
 {
@@ -49,8 +53,26 @@ namespace NottCS.Services
             catch (MsalUiRequiredException)
             {
                 DebugService.WriteLine("UI required");
-                AuthenticationResult ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
-                return ar;
+                if (Application.Current.MainPage is NavigationPage)
+                {
+                    var stack = Application.Current.MainPage.Navigation.NavigationStack;
+                    DebugService.WriteLine($"Navigation stack number of elements: {stack.LongCount()}");
+                    var lastPageType = stack.Last().GetType();
+                    DebugService.WriteLine($"Type of navigation stack last: {lastPageType}");
+                    if (lastPageType != typeof(LoginPage))
+                    {
+                        DebugService.WriteLine("Main page not login page, UI required, going to login page");
+                        return null;
+                    }
+                    else
+                    {
+                        DebugService.WriteLine("Already at login page, now calling microsoft login UI");
+                        AuthenticationResult ar = await App.ClientApplication.AcquireTokenAsync(App.Scopes, App.UiParent);
+                        return ar;
+                    }
+                }
+                else
+                    return null;
             }
         }
 
@@ -65,6 +87,10 @@ namespace NottCS.Services
             try
             {
                 AuthenticationResult ar = await InternalSignInMicrosoft();
+                if (ar == null)
+                {
+                    return false;
+                }
                 Task setupClientTask = Task.Run(() => RestService.SetupClient(ar.AccessToken));
                 App.MicrosoftAuthenticationResult = ar;
 
@@ -141,7 +167,16 @@ namespace NottCS.Services
             }
             catch (HttpRequestException httpException)
             {
-                Acr.UserDialogs.UserDialogs.Instance.Alert($"Http request error: {httpException}");
+                var ping = new Ping();
+                var pingReply = ping.Send("https://www.google.com/");
+                if (pingReply.Status != IPStatus.Success)
+                {
+                    Acr.UserDialogs.UserDialogs.Instance.Alert($"No internet connection");
+                }
+                else
+                {
+                    Acr.UserDialogs.UserDialogs.Instance.Alert($"Http request error: {httpException}");
+                }
             }
             catch (Exception e)
             {

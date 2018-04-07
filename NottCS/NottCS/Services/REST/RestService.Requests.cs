@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Plugin.Media.Abstractions;
 using Newtonsoft.Json.Linq;
 
 namespace NottCS.Services.REST
@@ -173,6 +175,65 @@ namespace NottCS.Services.REST
                 DebugService.WriteLine($"Exception thrown in RequestUpdateAsync, Message: {errorMessage}");
             }
             return errorMessage;
+        }
+
+        
+
+        public static async Task RequestPostAsync2(byte[] file, string filename, string name, string description)
+        {
+            var form = new MultipartFormDataContent
+            {
+                {new ByteArrayContent(file), "icon", filename},
+                {new StringContent(name), "name" },
+                {new StringContent(description), "description" }
+            };
+            var requestUri = "https://testing-endpoints.herokuapp.com/club/";
+            try
+            {
+                Acr.UserDialogs.UserDialogs.Instance.Alert("Attempting post");
+                var requestTask = Client.PostAsync(requestUri, form);
+                var httpResponse = await requestTask;
+                DebugService.WriteLine(httpResponse);
+                var resp = (httpResponse.IsSuccessStatusCode) ? "OK" : $"Something went wrong, http status code: {httpResponse.StatusCode}";
+                DebugService.WriteLine(resp);
+            
+            }
+            catch (Exception e)
+            {
+                DebugService.WriteLine(e);
+                DebugService.WriteLine($"Exception thrown in RequestUpdateAsync, Message: {e.Message}");
+            }
+
+            //            if (something is MediaFile f)
+            //            {
+            //                var form = new MultipartFormDataContent
+            //                {
+            //                    {new ByteArrayContent(ReadStream(f.GetStream())), "icon", "upload.jpg"},
+            //                    {new StringContent("HahahaAASD"), "name"},
+            //                    {new StringContent("DESCRIPTION!?!?!?D?ASD"), "description"}
+            //                };
+            //
+            //                var requestUri = "https://testing-endpoints.herokuapp.com/club/";
+            //                try
+            //                {
+            //                    Acr.UserDialogs.UserDialogs.Instance.Alert("Attempting post");
+            //                    var requestTask = Client.PostAsync(requestUri, form);
+            //                    var httpResponse = await requestTask;
+            //                    DebugService.WriteLine(httpResponse);
+            //                    var resp = (httpResponse.IsSuccessStatusCode) ? "OK" : $"Something went wrong, http status code: {httpResponse.StatusCode}";
+            //                    DebugService.WriteLine(resp);
+            //
+            //                }
+            //                catch (Exception e)
+            //                {
+            //                    DebugService.WriteLine(e);
+            //                    DebugService.WriteLine($"Exception thrown in RequestUpdateAsync, Message: {e.Message}");
+            //                }
+            //            }
+            //            else
+            //            {
+            //                DebugService.WriteLine("Not media file");
+            //            }
         }
     }
 }

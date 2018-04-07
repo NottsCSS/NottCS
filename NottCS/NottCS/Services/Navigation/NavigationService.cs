@@ -49,11 +49,6 @@ namespace NottCS.Services.Navigation
                     return;
                 }
                 
-                //if viewmodel is of Home or Login then set it to root
-                if (viewModelType == typeof(LoginViewModel) || viewModelType == typeof(HomeViewModel))
-                {
-
-                }
                 
                 //Creating page
                 try
@@ -158,6 +153,7 @@ namespace NottCS.Services.Navigation
 
         internal static void ClearNavigation()
         {
+            DebugService.WriteLine("Setting empty page as mainpage");
             Application.Current.MainPage = new ContentPage();
         }
 
