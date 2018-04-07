@@ -76,8 +76,12 @@
                                 <Image Grid.Column="0" 
                                        Grid.Row="0"
                                        Grid.RowSpan="2"
-                                       Source="{Binding EventImage}" 
                                        Aspect="AspectFill">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding EventImage}"
+                                                        CachingEnabled="True"
+                                                        CacheValidity="30"/>
+                                    </Image.Source>
                                 </Image>
                             </Grid>
                         </ViewCell>

@@ -97,8 +97,13 @@
                                 <Image Grid.Column="0" 
                                        Grid.Row="0"
                                        Grid.RowSpan="2"
-                                       Source="{Binding EventImage}" 
                                        Aspect="AspectFill">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding EventImage}"
+                                                        CacheValidity="30"
+                                                        CachingEnabled="True">
+                                        </UriImageSource>
+                                    </Image.Source>
                                 </Image>
                             </Grid>
                         </ViewCell>
@@ -148,11 +153,16 @@
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="Auto"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <Image Source="{Binding Image}"
-                                       Grid.Row="0"
+                                <Image Grid.Row="0"
                                        Aspect="Fill"
                                        HorizontalOptions="CenterAndExpand"
-                                       VerticalOptions="StartAndExpand"/>
+                                       VerticalOptions="StartAndExpand">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding Image}"
+                                                        CachingEnabled="True"
+                                                        CacheValidity="30"/>
+                                    </Image.Source>
+                                </Image>
                                 <Label FontSize="Small"
                                        Grid.Row="1"
                                        HorizontalTextAlignment="Center" 
@@ -196,12 +206,17 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Image Source="{Binding Image}" 
-                                       Aspect="AspectFit"
+                                <Image Aspect="AspectFit"
                                        HeightRequest="50"
                                        WidthRequest="50"
                                        HorizontalOptions="Center"
-                                       VerticalOptions="Center"/>
+                                       VerticalOptions="Center">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding Image}"
+                                                        CachingEnabled="True"
+                                                        CacheValidity="30"/>
+                                    </Image.Source>
+                                </Image>
                                 <Label Grid.Row="1" 
                                        Text="{Binding Name}" 
                                        FontSize="12"
