@@ -25,14 +25,15 @@ namespace NottCS.ViewModels
         public HomeViewModel()
         {
             Title = "NottCS";
-            SelectedClubType = ClubListTypePickerList[0];
+            SelectedClubType = ClubListTypePickerList[1];
             LoadClubList().GetAwaiter();
+            LoadEventList().GetAwaiter();
         }
 
         #endregion
 
         public ICommand SettingsPageNavigationCommand => new Command(async() => await NavigationService.NavigateToAsync<SettingsViewModel>());
-
+        public ICommand MediaTestPageNavigationCommand => new Command(async () => await NavigationService.NavigateToAsync<MediaTestViewModel>());
         #region Event List
         #region ListViewNavigation
         public ICommand EventListNavigationCommand => new Command(async (object p) => await EventListNavigation(p));
@@ -56,30 +57,49 @@ namespace NottCS.ViewModels
         }
         #endregion
         #region Temporary EventList
-        public ObservableCollection<Event> EventLists { get; set; } = new ObservableCollection<Event>()
+        private async Task LoadEventList()
         {
-            new Event()
+            var result = await RestService.RequestGetAsync<Event>();
+            DebugService.WriteLine(result);
+            var eventList = result.Item2;
+            if (result.Item1 != "OK")
             {
-                Title = "I'm just a title",
-                EventImage = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Event()
-            {
-                Title = "I'm just a title",
-                EventImage = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Event()
-            {
-                Title = "I'm just a title",
-                EventImage = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Event()
-            {
-                Title = "I'm just a title",
-                EventImage = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
+                Acr.UserDialogs.UserDialogs.Instance.Alert(result.Item1, "Error", "OK");
             }
-        };
 
+            EventList = new ObservableCollection<Event>(eventList);
+        }
+        private ObservableCollection<Event> _eventLists = new ObservableCollection<Event>();
+        public ObservableCollection<Event> EventList
+        {
+            get => _eventLists;
+            set => SetProperty(ref _eventLists, value);
+        }
+        #region Reload EventList
+        private Command _reloadEventCommand;
+        public Command ReloadEventCommand
+        {
+            get
+            {
+                return _reloadEventCommand ?? (_reloadEventCommand = new Command(ExecuteReloadEventCommand, () => !IsBusy));
+            }
+        }
+        private async void ExecuteReloadEventCommand()
+        {
+            if (IsBusy)
+                return;
+            DebugService.WriteLine("Reload Event Initiated");
+            IsBusy = true;
+            ReloadEventCommand.ChangeCanExecute();
+
+            LoadEventList().GetAwaiter();
+
+            IsBusy = false;
+            ReloadEventCommand.ChangeCanExecute();
+            DebugService.WriteLine("Event Reload Completed");
+
+        }
+        #endregion
 
         #endregion
         #endregion
@@ -135,7 +155,7 @@ namespace NottCS.ViewModels
         #region Temporary ClubList
         private async Task LoadClubList()
         {
-            var result = (await RestService.RequestGetAsync<Club>());
+            var result = await RestService.RequestGetAsync<Club>();
             var clubList = result.Item2;
             if (result.Item1 != "OK")
             {
@@ -157,7 +177,31 @@ namespace NottCS.ViewModels
         public ObservableCollection<Club> MyClubList { get; set; } = new ObservableCollection<Club>()
         {
         };
+        #region Reload EventList
+        private Command _reloadClubCommand;
+        public Command ReloadClubCommand
+        {
+            get
+            {
+                return _reloadClubCommand ?? (_reloadClubCommand = new Command(ExecuteReloadClubCommand, () => !IsBusy));
+            }
+        }
+        private async void ExecuteReloadClubCommand()
+        {
+            if (IsBusy)
+                return;
+            DebugService.WriteLine("Reload Club Initiated");
+            IsBusy = true;
+            ReloadClubCommand.ChangeCanExecute();
 
+            LoadClubList().GetAwaiter();
+
+            IsBusy = false;
+            ReloadClubCommand.ChangeCanExecute();
+            DebugService.WriteLine("Event Club Completed");
+
+        }
+        #endregion
         #endregion
         #endregion
 

@@ -37,10 +37,13 @@
 
     <ContentPage Title="{Binding PageTitle1}">
         <StackLayout>
-            <ListView ItemsSource="{Binding EventLists}"
+            <ListView ItemsSource="{Binding EventList}"
                       Margin="3,3,0,0"
                       RowHeight="50"
-                      x:Name="SomeList">
+                      x:Name="SomeList"
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding ReloadEventCommand}"
+                      IsRefreshing="{Binding IsBusy, Mode=OneWay}">
                 <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior 
                         EventName="ItemTapped"

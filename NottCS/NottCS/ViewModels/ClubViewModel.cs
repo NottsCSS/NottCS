@@ -10,6 +10,7 @@ using NottCS.Services;
 using NottCS.Services.Navigation;
 using NottCS.Views;
 using Newtonsoft.Json;
+using NottCS.Services.REST;
 
 namespace NottCS.ViewModels
 {
@@ -58,19 +59,52 @@ namespace NottCS.ViewModels
         }
         #endregion
         #region Temporary EventList
-        public ObservableCollection<Event> EventLists { get; set; } = new ObservableCollection<Event>()
+        private async Task LoadEventList()
         {
-            new Event()
+            var result = await RestService.RequestGetAsync<Event>();
+            DebugService.WriteLine(result);
+            var eventList = result.Item2;
+            if (result.Item1 != "OK")
             {
-                Title = "I'm just a title",
-                EventImage = "http://icons.iconarchive.com/icons/graphicloads/100-flat/24/home-icon.png"
-            },
-            new Event(),
-            new Event(),
-            new Event()
-        };
+                Acr.UserDialogs.UserDialogs.Instance.Alert(result.Item1, "Error", "OK");
+            }
+
+            EventList = new ObservableCollection<Event>(eventList);
+        }
+        private ObservableCollection<Event> _eventLists = new ObservableCollection<Event>();
+        public ObservableCollection<Event> EventList
+        {
+            get => _eventLists;
+            set => SetProperty(ref _eventLists, value);
+        }
 
 
+        #endregion
+
+        #region Reload EventList
+        private Command _reloadEventCommand;
+        public Command ReloadEventCommand
+        {
+            get
+            {
+                return _reloadEventCommand ?? (_reloadEventCommand = new Command(ExecuteReloadEventCommand, () => !IsBusy));
+            }
+        }
+        private async void ExecuteReloadEventCommand()
+        {
+            if (IsBusy)
+                return;
+            DebugService.WriteLine("Reload Event Initiated");
+            IsBusy = true;
+            ReloadEventCommand.ChangeCanExecute();
+
+            LoadEventList().GetAwaiter();
+
+            IsBusy = false;
+            ReloadEventCommand.ChangeCanExecute();
+            DebugService.WriteLine("Event Reload Completed");
+            
+        }
         #endregion
         #endregion
         #region Profile
@@ -98,6 +132,7 @@ namespace NottCS.ViewModels
             PageTitle1 = "Event";
             PageTitle2 = "Club's Profile";
             ClubDescription = "Lorem ipsum dolor sit amet, consectetur  adipiscing elit, sed do eiusmod tempor incididunt  ut labore et dolore magna aliqua. Ut enim ad  minim veniam, quis nostrud exercitation ullamco  laboris nisi ut aliquip ex ea commodo consequat.";
+            LoadEventList().GetAwaiter();
         }
 
         #endregion

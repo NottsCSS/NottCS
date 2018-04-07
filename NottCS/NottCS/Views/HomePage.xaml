@@ -58,10 +58,13 @@
 
     <ContentPage Title="{Binding PageTitle1}">
         <StackLayout>
-            <ListView ItemsSource="{Binding EventLists}"
+            <ListView ItemsSource="{Binding EventList}"
                       Margin="3,3,0,0"
                       RowHeight="50"
-                      x:Name="EventList">
+                      x:Name="EventList"
+                      IsPullToRefreshEnabled="True"
+                      IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                      RefreshCommand="{Binding ReloadEventCommand}">
                 <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior 
                         EventName="ItemTapped"
@@ -110,7 +113,8 @@
         <StackLayout>
             <Picker x:Name="ClubList"  
                     HorizontalOptions="FillAndExpand"
-                    Margin="5,0"
+                    Margin="5,5"
+                    MinimumHeightRequest="50"
                     ItemsSource="{Binding ClubListTypePickerList}"
                     SelectedItem="{Binding SelectedClubType}">
             </Picker>
@@ -123,7 +127,10 @@
                               FlowItemsSource="{Binding ClubList}" 
                               FlowItemTappedCommand="{Binding ClubListNavigationCommand}"
                               HasUnevenRows="False"
-                              Margin="5,10">
+                              Margin="5,10"
+                              IsPullToRefreshEnabled="True"
+                              IsRefreshing="{Binding IsBusy,Mode=OneWay}"
+                              RefreshCommand="{Binding ReloadClubCommand}">
                 <flv:FlowListView.Style>
                     <OnPlatform x:TypeArguments="Style">
                         <On Platform="Android" Value="{StaticResource ShowFlowListViewStyle}"/>
@@ -136,17 +143,23 @@
                         <Frame OutlineColor="Black"
                                Padding="0"
                                Margin="1">
-                            <StackLayout>
-                                <Image Source="{Binding Image}" 
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Image Source="{Binding Image}"
+                                       Grid.Row="0"
                                        Aspect="Fill"
                                        HorizontalOptions="CenterAndExpand"
                                        VerticalOptions="StartAndExpand"/>
                                 <Label FontSize="Small"
+                                       Grid.Row="1"
                                        HorizontalTextAlignment="Center" 
                                        VerticalTextAlignment="End" 
                                        Text="{Binding Name}" 
                                        LineBreakMode="WordWrap"/>
-                            </StackLayout>
+                            </Grid>
                         </Frame>
                     </DataTemplate>
                 </flv:FlowListView.FlowColumnTemplate>
@@ -157,7 +170,10 @@
                          RowHeight="100"
                          HasUnevenRows="False"
                          Margin="5,10"
-                         ItemsSource="{Binding ClubList}">
+                         ItemsSource="{Binding ClubList}"
+                         IsPullToRefreshEnabled="True"
+                         IsRefreshing="{Binding IsBusy,Mode=OneWay}"
+                         RefreshCommand="{Binding ReloadClubCommand}">
                 <gv:GridView.Style>
                     <OnPlatform x:TypeArguments="Style">
                         <On Platform="Android" Value="{StaticResource HideGridViewStyle}"/>
@@ -205,12 +221,14 @@
     <ContentPage Title="{Binding PageTitle3}">
         <Grid>
             <!--<Grid.RowDefinitions>
-                --><!--<RowDefinition Height="*"/>
+                -->
+            <!--<RowDefinition Height="*"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
-                <RowDefinition Height="2*"/>--><!--
+                <RowDefinition Height="2*"/>-->
+            <!--
             </Grid.RowDefinitions>-->
-            
+
             <!--<Image x:Name="BannerImage"
                    Aspect="AspectFill"
                    HorizontalOptions="FillAndExpand"
@@ -243,6 +261,5 @@
                 </ListView>
             </StackLayout>
         </Grid>
-
     </ContentPage>
 </TabbedPage>
