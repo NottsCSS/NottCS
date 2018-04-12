@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace NottCS.Models
 {
-    internal class AttendanceStatus
+    internal enum AttendanceStatus
     {
-        public static readonly string Absent = "ABSENT";
-        public static readonly string Present = "PRESENT";
+        [EnumMember(Value = "ABSENT")]
+        Absent,
+
+        [EnumMember(Value = "PRESENT")]
+        Present
     }
 
     internal class Attendance
@@ -17,6 +22,7 @@ namespace NottCS.Models
         public string Id { get; set; }
 
         [JsonProperty(PropertyName = "attendance")]
+        [JsonConverter(typeof(StringEnumConverter))]
         public AttendanceStatus AttendanceStatus { get; set; }
 
         [JsonProperty(PropertyName = "feedback")]

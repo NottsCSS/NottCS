@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NottCS.Models;
+using NottCS.ViewModels;
 
 namespace NottCS.Services.REST
 {
@@ -52,8 +55,15 @@ namespace NottCS.Services.REST
             Client.DefaultRequestHeaders.Clear();
         }
 
-        private static HttpRequestMessage HttpRequestMessageGenerator(HttpMethod httpMethod, string requestUri, object requestBody = null)
+        private static async Task<HttpRequestMessage> HttpRequestMessageGenerator(HttpMethod httpMethod, string requestUri, object requestBody = null)
         {
+            var isValidToken = await LoginService.SignInMicrosoftAsync();
+            if (!isValidToken)
+            {
+                Navigation.NavigationService.ClearNavigation();
+                await Navigation.NavigationService.NavigateToAsync<LoginViewModel>();
+            }
+
             #region ObjectValidator
 
             if (httpMethod == HttpMethod.Post && requestBody == null)
