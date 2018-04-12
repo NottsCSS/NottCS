@@ -60,7 +60,7 @@
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout Margin="2">
-                                    <Label Text="{Binding Entry}"
+                                    <Label Text="{Binding Value}"
                                            FontSize="Medium"
                                            VerticalOptions="CenterAndExpand"/>
                                 </StackLayout>
