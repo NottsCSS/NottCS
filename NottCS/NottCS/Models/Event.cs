@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace NottCS.Models
 {
-    internal enum EventStatus
+    public enum EventStatus
     {
         [EnumMember(Value = "PD")]
         Pending,
