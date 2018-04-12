@@ -45,7 +45,7 @@
                            LineBreakMode="WordWrap"
                            FontSize="Small" />
                     </StackLayout>
-                <ListView ItemsSource="{Binding Entry}"
+                <ListView ItemsSource="{Binding List}"
                           Grid.Row="1"
                           Margin="3,3,0,0"
                           RowHeight="30"
@@ -60,7 +60,7 @@
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout Margin="2">
-                                    <Label Text="{Binding Name}"
+                                    <Label Text="{Binding Entry}"
                                            FontSize="Medium"
                                            VerticalOptions="CenterAndExpand"/>
                                 </StackLayout>
