@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
@@ -93,6 +94,15 @@ namespace NottCS.Services
                 }
                 Task setupClientTask = Task.Run(() => RestService.SetupClient(ar.AccessToken));
                 App.MicrosoftAuthenticationResult = ar;
+
+                MailAddress email = new MailAddress(ar.User.DisplayableId);
+                string host = email.Host;
+                if (host != "nottingham.edu.my")
+                {
+                    DebugService.WriteLine("Not nottingham email");
+                    await SignOutAndNavigateAsync();
+                    return false;
+                }
 
                 DebugService.WriteLine("Login to microsoft successful");
                 DebugService.WriteLine($"Welcome {ar.User.Name}");
