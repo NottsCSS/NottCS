@@ -141,7 +141,8 @@ namespace NottCS.ViewModels
                 var requestUpdate = await RestService.RequestUpdateAsync(CurrentUser);
                 if (requestUpdate == "OK")
                 {
-                    var userData = await RestService.RequestGetAsync<User>();
+                    var userData = await RestService.RequestGetAsync<User>("");
+                    DebugService.WriteLine($"Respond from server is : {userData.Item1}");
                     if (userData.Item1 == "OK")
                     {
                         await NavigationService.NavigateToAsync<HomeViewModel>(userData.Item2);
