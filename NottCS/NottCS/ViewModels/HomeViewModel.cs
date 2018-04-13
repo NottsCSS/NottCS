@@ -20,24 +20,43 @@ namespace NottCS.ViewModels
         public string PageTitle1 { get; set; } = "News Feed";
         public string PageTitle2 { get; set; } = "Clubs & Society";
         public string PageTitle3 { get; set; } = "Profile";
-        private string _selectedClubType;
-        #region HomeViewModel Constructor
 
         public HomeViewModel()
         {
             Title = "NottCS";
-            SelectedClubType = ClubListTypePickerList[1];
-            LoadClubList().GetAwaiter();
-            LoadEventList().GetAwaiter();
+            SelectedClubTypeIndex = 1;
         }
-
-        #endregion
+        /// <summary>
+        /// Initializes the page
+        /// </summary>
+        /// <param name="navigationData">Data passed from the previous page</param>
+        /// <returns></returns>
+        public override async Task InitializeAsync(object navigationData)
+        {
+            await LoadClubList();
+            await LoadEventList();
+            try
+            {
+                var userData = navigationData as User;
+                await Task.Run(() => SetProfileData(userData));
+            }
+            catch (Exception e)
+            {
+                DebugService.WriteLine(e);
+            }
+            SelectedClubTypeIndex = 1;
+        }
 
         public ICommand SettingsPageNavigationCommand => new Command(async() => await NavigationService.NavigateToAsync<SettingsViewModel>());
         public ICommand MediaTestPageNavigationCommand => new Command(async () => await NavigationService.NavigateToAsync<MediaTestViewModel>());
-        #region Event List
-        #region ListViewNavigation
+
+        #region Event Tab
+        #region Event Commands and Functions
+        //Commands
         public ICommand EventListNavigationCommand => new Command(async (object p) => await EventListNavigation(p));
+        public ICommand ReloadEventCommand => new Command(async() => await ReloadEvent());
+        public ICommand DisableItemSelectedCommand => new Command(() => {});
+        //Functions
         private async Task EventListNavigation(object p)
         {
             try
@@ -50,14 +69,17 @@ namespace NottCS.ViewModels
                 DebugService.WriteLine(e.Message);
             }
         }
-        #endregion
-        #region Disable ItemSelectedCommand
-        public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
-        public void DisableItemSelected()
+        private async Task ReloadEvent()
         {
+            if (!IsBusy)
+            {
+                IsBusy = true;
+                DebugService.WriteLine("Reload Event Initiated");
+                await LoadEventList();
+                DebugService.WriteLine("Event Reload Completed");
+                IsBusy = false;
+            }
         }
-        #endregion
-        #region Temporary EventList
         private async Task LoadEventList()
         {
             var result = await RestService.RequestGetAsync<Event>();
@@ -70,74 +92,45 @@ namespace NottCS.ViewModels
 
             EventList = new ObservableCollection<Event>(eventList);
         }
+        #endregion
+        //Data
         private ObservableCollection<Event> _eventLists = new ObservableCollection<Event>();
         public ObservableCollection<Event> EventList
         {
             get => _eventLists;
             set => SetProperty(ref _eventLists, value);
         }
-        #region Reload EventList
-        private Command _reloadEventCommand;
-        public Command ReloadEventCommand
-        {
-            get
-            {
-                return _reloadEventCommand ?? (_reloadEventCommand = new Command(ExecuteReloadEventCommand, () => !IsBusy));
-            }
-        }
-        private async void ExecuteReloadEventCommand()
-        {
-            if (IsBusy)
-                return;
-            DebugService.WriteLine("Reload Event Initiated");
-            IsBusy = true;
-            ReloadEventCommand.ChangeCanExecute();
-
-            LoadEventList().GetAwaiter();
-
-            IsBusy = false;
-            ReloadEventCommand.ChangeCanExecute();
-            DebugService.WriteLine("Event Reload Completed");
-
-        }
         #endregion
 
-        #endregion
-        #endregion
-
-        #region Club List
-
-        #region Picker
-
+        #region Club Tab
+        //Picker
         public List<string> ClubListTypePickerList { get; set; } =
             new List<string> { "My Clubs Only", "All Clubs"};
-
-        public string SelectedClubType
+        private int _selectedClubTypeIndex;
+        public int SelectedClubTypeIndex
         {
-            get => _selectedClubType;
+            get => _selectedClubTypeIndex;
             set
             {
-                UpdatePicker(value);
-                _selectedClubType = value;
+                _selectedClubTypeIndex = value;
                 switch (value)
                 {
-                    case "My Clubs Only":
+                    case 0:
                         ClubList = MyClubList;
+                        DebugService.WriteLine("ClubList changed to MyClubList");
                         break;
-                    case "All Clubs":
+                    case 1:
                         ClubList = AllClubList;
+                        DebugService.WriteLine("ClubList changed to AllClubList");
                         break;
                 }
             }
         }
-        private void UpdatePicker(object e)
-        {
-            string picked = e.ToString();
-        }
 
-        #endregion
-        #region EventListNavigation
+        #region Club Commands and Functions
         public ICommand ClubListNavigationCommand => new Command(async (object p) => await ClubListNavigation(p));
+        public ICommand ReloadClubCommand => new Command(async () => await ReloadClub());
+
         private async Task ClubListNavigation(object p)
         {
             try
@@ -152,8 +145,17 @@ namespace NottCS.ViewModels
             }
 
         }
-        #endregion
-        #region ClubList
+        private async Task ReloadClub()
+        {
+            if (!IsBusy)
+            {
+                IsBusy = true;
+                DebugService.WriteLine("Club Reload Initiated");
+                await LoadClubList();
+                DebugService.WriteLine("Club Reload Completed");
+                IsBusy = false;
+            }
+        }
         private async Task LoadClubList()
         {
             var result = await RestService.RequestGetAsync<Club>();
@@ -165,6 +167,8 @@ namespace NottCS.ViewModels
 
             AllClubList = new ObservableCollection<Club>(clubList);
         }
+        #endregion
+        #region Club Data Store
         private ObservableCollection<Club> _clubList = new ObservableCollection<Club>();
         public ObservableCollection<Club> ClubList
         {
@@ -172,117 +176,59 @@ namespace NottCS.ViewModels
             set => SetProperty(ref _clubList, value);
         }
 
-        public ObservableCollection<Club> AllClubList { get; set; } = new ObservableCollection<Club>()
+        private ObservableCollection<Club> AllClubList { get; set; } = new ObservableCollection<Club>()
         {
         };
-        public ObservableCollection<Club> MyClubList { get; set; } = new ObservableCollection<Club>()
+        private ObservableCollection<Club> MyClubList { get; set; } = new ObservableCollection<Club>()
         {
         };
-        #region Reload EventList
-        private Command _reloadClubCommand;
-        public Command ReloadClubCommand
-        {
-            get
-            {
-                return _reloadClubCommand ?? (_reloadClubCommand = new Command(ExecuteReloadClubCommand, () => !IsBusy));
-            }
-        }
-        private async void ExecuteReloadClubCommand()
-        {
-            if (IsBusy)
-                return;
-            DebugService.WriteLine("Reload Club Initiated");
-            IsBusy = true;
-            ReloadClubCommand.ChangeCanExecute();
-
-            LoadClubList().GetAwaiter();
-
-            IsBusy = false;
-            ReloadClubCommand.ChangeCanExecute();
-            DebugService.WriteLine("Event Club Completed");
-
-        }
-        #endregion
         #endregion
         #endregion
 
-        #region Profile
-        #region ViewModalAdditionalClass
-
-        public class UserDataObject
-        {
-            public string DataName { get; set; }
-            public string DataValue { get; set; }
-        }
-
-        #endregion
-
-        #region PageProperties
-        private User _loginUser;
-        private List<UserDataObject> _dataList;
-
-        public User LoginUser
-        {
-            get => _loginUser;
-            set => SetProperty(ref _loginUser, value);
-        }
-
-        public List<UserDataObject> DataList
-        {
-            get => _dataList;
-            set => SetProperty(ref _dataList, value);
-        }
-
-        #endregion
+        #region Profile tab
+        #region Profile Commands and Functions
 
         /// <summary>
         /// Sets the data for the page
         /// </summary>
         /// <param name="userData">Username for the account data</param>
-        private void SetPageDataAsync(User userData)
+        private void SetProfileData(User userData)
         {
             LoginUser = userData;
             GlobalUserData.CurrentUser = userData;
             DebugService.WriteLine($"HomeViewModel navigationData serialized: {JsonConvert.SerializeObject(LoginUser)}");
-            DataList = new List<UserDataObject>()
+            DataList = new List<KeyValuePair<string, string>>()
             {
-                new UserDataObject(){DataName = "Name", DataValue = LoginUser.Name},
-                new UserDataObject(){DataName = "Email", DataValue = LoginUser.Email},
-                new UserDataObject(){DataName = "Student ID", DataValue = LoginUser.StudentId},
-                new UserDataObject(){DataName = "Library Number", DataValue = LoginUser.LibraryNumber},
-                new UserDataObject(){DataName = "Course", DataValue = LoginUser.Course},
-                new UserDataObject(){DataName = "Year of Study", DataValue = LoginUser.YearOfStudy.ToString()}
+                new KeyValuePair<string, string>("Name", LoginUser.Name),
+                new KeyValuePair<string, string>("Email", LoginUser.Email),
+                new KeyValuePair<string, string>("Student ID", LoginUser.StudentId),
+                new KeyValuePair<string, string>("Library Number", LoginUser.LibraryNumber),
+                new KeyValuePair<string, string>("Course", LoginUser.Course),
+                new KeyValuePair<string, string>("Year of Study", LoginUser.YearOfStudy)
             };
         }
-
         public ICommand SignOutCommand => new Command(SignOut);
-
         private static async void SignOut()
         {
             await LoginService.SignOutAndNavigateAsync();
         }
+        #endregion
+        #region Profile Data Store
+        private User _loginUser;
+        private User LoginUser
+        {
+            get => _loginUser;
+            set => SetProperty(ref _loginUser, value);
+        }
 
+        private List<KeyValuePair<string, string>> _dataList;
+        public List<KeyValuePair<string, string>> DataList
+        {
+            get => _dataList;
+            set => SetProperty(ref _dataList, value);
+        }
+        #endregion
         #endregion
 
-        /// <summary>
-        /// Initializes the page
-        /// </summary>
-        /// <param name="navigationData">Data passed from the previous page</param>
-        /// <returns></returns>
-        public override Task InitializeAsync(object navigationData)
-        {
-
-            try
-            {
-                var userData = navigationData as User;
-                Task.Run(() => SetPageDataAsync(userData));
-            }
-            catch (Exception e)
-            {
-                DebugService.WriteLine(e);
-            }
-
-            return base.InitializeAsync(navigationData);
-        }
     }
 }

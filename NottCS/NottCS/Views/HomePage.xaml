@@ -118,8 +118,7 @@
                     Margin="5,5"
                     MinimumHeightRequest="50"
                     ItemsSource="{Binding ClubListTypePickerList}"
-                    SelectedItem="{Binding SelectedClubType}">
-            </Picker>
+                    SelectedIndex="{Binding SelectedClubTypeIndex}" />
             <flv:FlowListView FlowColumnCount="3" 
                               SeparatorVisibility="Default" 
                               RowHeight="100"
@@ -264,8 +263,8 @@
                           HorizontalOptions="Center">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Text="{Binding DataName}" 
-                                      Detail="{Binding DataValue}"/>
+                            <TextCell Text="{Binding Key}" 
+                                      Detail="{Binding Value}"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
