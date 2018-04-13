@@ -25,7 +25,12 @@
                         <Image x:Name="SuccessIcon"
                                Margin="10,20"
                                VerticalOptions="Fill"
-                               HorizontalOptions="CenterAndExpand"/>
+                               HorizontalOptions="CenterAndExpand">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OkTapped}"
+                                                      NumberOfTapsRequired="1"/>
+                            </Image.GestureRecognizers>
+                        </Image>
                         <Label Text="Thanks for joining"
                                FontSize="Large"
                                HorizontalOptions="Center"/>
