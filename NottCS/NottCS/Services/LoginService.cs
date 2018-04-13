@@ -10,6 +10,7 @@ using NottCS.Services.Navigation;
 using NottCS.Services.REST;
 using NottCS.ViewModels;
 using NottCS.Views;
+using Plugin.Connectivity;
 using Xamarin.Forms;
 
 namespace NottCS.Services
@@ -171,15 +172,14 @@ namespace NottCS.Services
             }
             catch (HttpRequestException httpException)
             {
-                var ping = new Ping();
-                var pingReply = ping.Send("https://www.google.com/");
-                if (pingReply.Status != IPStatus.Success)
+                bool hasInternet = CrossConnectivity.Current.IsConnected;
+                if (hasInternet)
                 {
-                    Acr.UserDialogs.UserDialogs.Instance.Alert($"No internet connection");
+                    Acr.UserDialogs.UserDialogs.Instance.Alert($"Http request error: {httpException}");
                 }
                 else
                 {
-                    Acr.UserDialogs.UserDialogs.Instance.Alert($"Http request error: {httpException}");
+                    Acr.UserDialogs.UserDialogs.Instance.Alert($"No internet connection, try again later");
                 }
             }
             catch (Exception e)

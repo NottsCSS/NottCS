@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using NottCS.Services;
 using NottCS.Services.JSONConverters;
 using NottCS.Validations;
 
@@ -13,6 +15,33 @@ namespace NottCS.Models
         private string _errorMessage;
         public string Name { get; set; }
         public List<IValidationRule<string>> ValidationList { get; set; } = new List<IValidationRule<string>>();
+        [JsonIgnore]
+        private bool _isOptional;
+        [JsonIgnore]
+        public bool IsOptional
+        {
+            get => _isOptional;
+            set
+            {
+                _isOptional = value;
+                if (value)
+                {
+                    var rule = new StringNotEmptyRule();
+                    ValidationList.Add(rule);
+                    DebugService.WriteLine("rule added");
+                }
+                else
+                {
+                    var notEmptyRules = ValidationList.OfType<StringNotEmptyRule>().ToList();
+                    foreach (var rule in notEmptyRules)
+                    {
+                        DebugService.WriteLine(rule);
+                        ValidationList.Remove(rule);
+                    }
+                }
+            }
+        }
+
         public string Value { get; set; }
         [JsonIgnore]
         public bool IsValid { get; set; }

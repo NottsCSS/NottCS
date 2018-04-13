@@ -37,3 +37,5 @@ using Android.App;
 [assembly: UsesFeature("android.hardware.camera", Required = false)]
 [assembly: UsesFeature("android.hardware.camera.autofocus", Required = false)]
 
+//Permissions for connectivity plugin
+[assembly: UsesFeature("android.hardware.wifi", Required = false)]
