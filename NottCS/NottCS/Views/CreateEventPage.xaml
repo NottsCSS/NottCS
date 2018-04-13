@@ -95,7 +95,8 @@
                                            Margin="0"
                                            Text ="{Binding Value, Mode=TwoWay}"
                                            Placeholder="{Binding Name}"/>
-                                    <Switch Grid.Column="1">
+                                    <Switch Grid.Column="1"
+                                            IsToggled="{Binding IsOptional}">
                                     </Switch>
                                     <Button Text="X"
                                             TextColor="Black"

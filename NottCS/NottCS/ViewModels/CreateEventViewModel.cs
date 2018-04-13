@@ -12,15 +12,24 @@ namespace NottCS.ViewModels
     class CreateEventViewModel : BaseViewModel
     {
         //todo Add validation and optional option to admin (Alphabet, Alphanumeric, Numeric and All)
+
+        private bool _lessThan3ViewCell;
+        private ObservableCollection<EventAdditionalParameter> _listOfTextBox;
         public bool LessThan3ViewCell
         {
             get => _lessThan3ViewCell;
             set => SetProperty(ref _lessThan3ViewCell, value);
         }
-        
+        public ObservableCollection<EventAdditionalParameter> ListOfTextBox
+        {
+            get => _listOfTextBox;
+            set => SetProperty(ref _listOfTextBox, value);
+        }
+
         public ICommand CreateTextBoxCommand => new Command(CreateTextBox);
         public ICommand DeleteCellsCommand =>new Command(DeleteTextBox);
-        
+        public ICommand CreateEventCommand => new Command(async () => await Navigate());
+
         private void CreateTextBox()
         {
             ListOfTextBox.Add(new EventAdditionalParameter());
@@ -30,7 +39,6 @@ namespace NottCS.ViewModels
                 LessThan3ViewCell = true;
             }
         }
-
         private void DeleteTextBox(object p)
         {
             if (ListOfTextBox.Count > 3)
@@ -38,7 +46,7 @@ namespace NottCS.ViewModels
                 DebugService.WriteLine(p);
                 ListOfTextBox.Remove((EventAdditionalParameter)p);
                 DebugService.WriteLine(ListOfTextBox.Count);
-                DebugService.WriteLine("Delete command activated");
+                DebugService.WriteLine("Delete textbox command activated");
             }
 
             if (ListOfTextBox.Count == 3)
@@ -47,41 +55,24 @@ namespace NottCS.ViewModels
             }
             
         }
-
-        public void DoNothingForNow()
-        {
-            
-            foreach (var item in ListOfTextBox)
-            {
-                DebugService.WriteLine(item.Value);
-            }
-        }
-
-        #region CreateEventNavigation
-        public ICommand CreateEventCommand => new Command(async () => await Navigate());
         private async Task Navigate()
         {
             try
             {
-                DoNothingForNow();
+                foreach (var item in ListOfTextBox)
+                {
+                    DebugService.WriteLine(item.Value);
+                }
                 await NavigationService.NavigateToAsync<CreateEventConfirmationViewModel>(ListOfTextBox);
-                DebugService.WriteLine("Button pressed");
+                DebugService.WriteLine("Create Event Button pressed");
             }
             catch (Exception e)
             {
                 DebugService.WriteLine(e.Message);
             }
         }
-        #endregion
 
-        private ObservableCollection<EventAdditionalParameter> _listOfTextBox;
-        private bool _lessThan3ViewCell;
 
-        public ObservableCollection<EventAdditionalParameter> ListOfTextBox
-        {
-            get => _listOfTextBox;
-            set => SetProperty(ref _listOfTextBox, value);
-        }
         
         #region Disable ItemSelectedCommand
         public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
