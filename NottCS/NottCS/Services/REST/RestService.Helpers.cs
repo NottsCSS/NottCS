@@ -4,8 +4,10 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using NottCS.Helpers;
 using NottCS.Models;
 using NottCS.ViewModels;
 
@@ -14,6 +16,8 @@ namespace NottCS.Services.REST
     //TODO: Write unit test for REST
     internal static partial class RestService
     {
+
+
         /// <summary>
         /// Base address where the API endpoints are stored
         /// </summary>
@@ -40,13 +44,6 @@ namespace NottCS.Services.REST
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         }
 
-        //TODO: DEAL WITH a
-        public static void IsValidToken()
-        {
-            var a = App.MicrosoftAuthenticationResult.ExpiresOn;
-            //Also call LoginService.SignInMicrosoftAsync to refresh the token
-        }
-
         /// <summary>
         /// Resets the authorization header
         /// </summary>
@@ -57,13 +54,16 @@ namespace NottCS.Services.REST
 
         private static async Task<HttpRequestMessage> HttpRequestMessageGenerator(HttpMethod httpMethod, string requestUri, object requestBody = null)
         {
-            var isValidToken = await LoginService.SignInMicrosoftAsync();
+            var isValidToken = false;
+            if (!GlobalUserData.isValidToken)
+            {
+                isValidToken = await LoginService.SignInMicrosoftAsync();
+            }
             if (!isValidToken)
             {
                 Navigation.NavigationService.ClearNavigation();
                 await Navigation.NavigationService.NavigateToAsync<LoginViewModel>();
             }
-
             #region ObjectValidator
 
             if (httpMethod == HttpMethod.Post && requestBody == null)
@@ -87,6 +87,8 @@ namespace NottCS.Services.REST
                 };
             }
             return httpRequest;
+
+            
         }
 
         /// <summary>

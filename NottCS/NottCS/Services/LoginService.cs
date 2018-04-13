@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
+using NottCS.Helpers;
 using NottCS.Models;
 using NottCS.Services.Navigation;
 using NottCS.Services.REST;
@@ -103,7 +104,8 @@ namespace NottCS.Services
                 DebugService.WriteLine($"Welcome {ar.User.Name}");
                 DebugService.WriteLine($"Token expires on: {ar.ExpiresOn}");
                 DebugService.WriteLine($"Access token: {ar.AccessToken}");
-
+                GlobalUserData.isValidToken = true;
+                GlobalUserData.ExpireTokenScheduler();
                 await setupClientTask;
                 return true;
             }
