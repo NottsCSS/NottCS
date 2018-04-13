@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using NottCS.Services;
-
-namespace NottCS.ViewModels
+﻿namespace NottCS.ViewModels
 {
     internal class AboutViewModel:BaseViewModel
     {

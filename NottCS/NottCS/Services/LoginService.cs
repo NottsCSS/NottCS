@@ -1,22 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Mail;
 using System.Net.NetworkInformation;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NottCS.Models;
 using NottCS.Services.Navigation;
 using NottCS.Services.REST;
 using NottCS.ViewModels;
 using NottCS.Views;
 using Xamarin.Forms;
-using Newtonsoft.Json;
 
 namespace NottCS.Services
 {

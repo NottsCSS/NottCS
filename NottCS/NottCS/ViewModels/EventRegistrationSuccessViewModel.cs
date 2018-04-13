@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NottCS.ViewModels
+﻿namespace NottCS.ViewModels
 {
     class EventRegistrationSuccessViewModel : BaseViewModel
     {

@@ -15,7 +15,6 @@
   <!--Pages can be added as references or inline-->
     <TabbedPage.Resources>
         <ResourceDictionary>
-            <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
             <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
             <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
             <Style TargetType="flv:FlowListView" x:Key="ShowFlowListViewStyle">
@@ -34,8 +33,7 @@
     </TabbedPage.Resources>
     
     <TabbedPage.ToolbarItems>
-        <ToolbarItem x:Name="Settings" 
-                     Text="Settings"
+        <ToolbarItem Text="Settings"
                      Command="{Binding SettingsPageNavigationCommand}">
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
@@ -61,7 +59,7 @@
             <ListView ItemsSource="{Binding EventList}"
                       Margin="3,3,0,0"
                       RowHeight="50"
-                      x:Name="EventList"
+                      x:Name="EventListView"
                       IsPullToRefreshEnabled="True"
                       IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                       RefreshCommand="{Binding ReloadEventCommand}">
@@ -72,7 +70,7 @@
                         Converter="{StaticResource TappedItemConverter}" />
                     <behaviors:EventToCommandBehavior 
                         EventName="ItemSelected"
-                        Source="{x:Reference EventList}"
+                        Source="{x:Reference EventListView}"
                         Command="{Binding DisableItemSelectedCommand, Mode=TwoWay}" 
                         Converter="{StaticResource SelectedItemConverter}" />
                 </ListView.Behaviors>
@@ -116,15 +114,13 @@
 
     <ContentPage Title="{Binding PageTitle2}">
         <StackLayout>
-            <Picker x:Name="ClubList"  
-                    HorizontalOptions="FillAndExpand"
+            <Picker HorizontalOptions="FillAndExpand"
                     Margin="5,5"
                     MinimumHeightRequest="50"
                     ItemsSource="{Binding ClubListTypePickerList}"
                     SelectedItem="{Binding SelectedClubType}">
             </Picker>
-            <flv:FlowListView x:Name="FlowListView" 
-                              FlowColumnCount="3" 
+            <flv:FlowListView FlowColumnCount="3" 
                               SeparatorVisibility="Default" 
                               RowHeight="100"
                               FlowUseAbsoluteLayoutInternally="True" 
@@ -175,8 +171,7 @@
                 </flv:FlowListView.FlowColumnTemplate>
             </flv:FlowListView>
 
-            <gv:GridView x:Name="GridView" 
-                         SeparatorVisibility="Default" 
+            <gv:GridView SeparatorVisibility="Default" 
                          RowHeight="100"
                          HasUnevenRows="False"
                          Margin="5,10"

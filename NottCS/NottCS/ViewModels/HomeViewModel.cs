@@ -153,7 +153,7 @@ namespace NottCS.ViewModels
 
         }
         #endregion
-        #region Temporary ClubList
+        #region ClubList
         private async Task LoadClubList()
         {
             var result = await RestService.RequestGetAsync<Club>();

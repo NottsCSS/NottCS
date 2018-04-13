@@ -1,9 +1,5 @@
-﻿using System.Diagnostics;
-using System.Collections.Generic;
-using NottCS.Services.Navigation;
-using System;
+﻿using System.Collections.Generic;
 using System.Windows.Input;
-using NottCS.Services;
 using Xamarin.Forms;
 
 namespace NottCS.ViewModels

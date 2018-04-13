@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Input;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using NottCS.Views;
 using NottCS.Services.Navigation;
 using System;
 using NottCS.Services;

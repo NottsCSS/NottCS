@@ -4,8 +4,6 @@ using NottCS.Services.Navigation;
 using Xamarin.Forms;
 using ZXing.Common;
 using ZXing.Net.Mobile.Forms;
-using ZXing.QrCode;
-using ZXing.QrCode.Internal;
 
 namespace NottCS.ViewModels
 {
