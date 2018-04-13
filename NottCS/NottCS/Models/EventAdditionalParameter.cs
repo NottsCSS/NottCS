@@ -7,7 +7,7 @@ using NottCS.Validations;
 
 namespace NottCS.Models
 {
-    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore, ItemTypeNameHandling = TypeNameHandling.All)]
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Include, ItemTypeNameHandling = TypeNameHandling.All)]
     public class EventAdditionalParameter
     {
         private string _errorMessage;

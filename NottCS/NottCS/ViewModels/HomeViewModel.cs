@@ -10,6 +10,7 @@ using NottCS.Services;
 using NottCS.Services.Navigation;
 using NottCS.Views;
 using Newtonsoft.Json;
+using NottCS.Helpers;
 using NottCS.Services.REST;
 
 namespace NottCS.ViewModels
@@ -152,7 +153,7 @@ namespace NottCS.ViewModels
 
         }
         #endregion
-        #region Temporary ClubList
+        #region ClubList
         private async Task LoadClubList()
         {
             var result = await RestService.RequestGetAsync<Club>();
@@ -241,6 +242,7 @@ namespace NottCS.ViewModels
         private void SetPageDataAsync(User userData)
         {
             LoginUser = userData;
+            GlobalUserData.CurrentUser = userData;
             DebugService.WriteLine($"HomeViewModel navigationData serialized: {JsonConvert.SerializeObject(LoginUser)}");
             DataList = new List<UserDataObject>()
             {

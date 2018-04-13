@@ -8,6 +8,9 @@ namespace NottCS.Models
 {
     public class User
     {
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
@@ -19,9 +22,6 @@ namespace NottCS.Models
 
         [JsonProperty(PropertyName = "library_no")]
         public string LibraryNumber { get; set; }
-
-        [JsonProperty(PropertyName = "is_authenticated")]
-        public bool IsAuthenticated { get; set; }
 
         [JsonProperty(PropertyName = "course")]
         public string Course { get; set; }
@@ -37,7 +37,6 @@ namespace NottCS.Models
             LibraryNumber = "2001438888";
             Course = "Software Engineering";
             YearOfStudy = "2";
-            IsAuthenticated = false;
         }
     }
 }

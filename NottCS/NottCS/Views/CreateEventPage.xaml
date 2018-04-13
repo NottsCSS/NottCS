@@ -87,17 +87,20 @@
                                     </Grid.Padding>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
                                         <ColumnDefinition Width="40"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                     <Entry FontSize="Medium"
                                            Grid.Column="0"
                                            Margin="0"
-                                           Text ="{Binding Entry, Mode=TwoWay}"
-                                           Placeholder="Your Text Here"/>
+                                           Text ="{Binding Value, Mode=TwoWay}"
+                                           Placeholder="{Binding Name}"/>
+                                    <Switch Grid.Column="1">
+                                    </Switch>
                                     <Button Text="X"
                                             TextColor="Black"
                                             FontSize="Large"
-                                            Grid.Column="1"
+                                            Grid.Column="2"
                                             Command="{Binding Path=BindingContext.DeleteCellsCommand, Source={x:Reference Name=SomeListOfTextBox}}"
                                             CommandParameter="{Binding .}"
                                             IsVisible="{Binding Path=BindingContext.LessThan3ViewCell, Source={x:Reference Name=SomeListOfTextBox}}">

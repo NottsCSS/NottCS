@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Windows.Input;
+using NottCS.Services.Navigation;
+using Xamarin.Forms;
 
 namespace NottCS.ViewModels
 {
-    class EventRegistrationSuccessViewModel : BaseViewModel
+    internal class EventRegistrationSuccessViewModel : BaseViewModel
     {
+        public ICommand OkTapped => new Command(async () => { await NavigationService.BackUntilAsync<HomeViewModel>(); });
     }
 }

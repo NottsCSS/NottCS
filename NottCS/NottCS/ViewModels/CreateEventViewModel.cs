@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Input;
 using NottCS.Models;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using NottCS.Services;
 using NottCS.Services.Navigation;
-using NottCS.Views;
 
 namespace NottCS.ViewModels
 {
@@ -26,7 +23,7 @@ namespace NottCS.ViewModels
         
         private void CreateTextBox()
         {
-            ListOfTextBox.Add(new EventAdditionalParameterRequestList());
+            ListOfTextBox.Add(new EventAdditionalParameter());
             DebugService.WriteLine("New text box added");
             if (ListOfTextBox.Count > 3)
             {
@@ -39,7 +36,7 @@ namespace NottCS.ViewModels
             if (ListOfTextBox.Count > 3)
             {
                 DebugService.WriteLine(p);
-                ListOfTextBox.Remove((EventAdditionalParameterRequestList)p);
+                ListOfTextBox.Remove((EventAdditionalParameter)p);
                 DebugService.WriteLine(ListOfTextBox.Count);
                 DebugService.WriteLine("Delete command activated");
             }
@@ -56,7 +53,7 @@ namespace NottCS.ViewModels
             
             foreach (var item in ListOfTextBox)
             {
-                DebugService.WriteLine(item.Entry);
+                DebugService.WriteLine(item.Value);
             }
         }
 
@@ -77,10 +74,10 @@ namespace NottCS.ViewModels
         }
         #endregion
 
-        private ObservableCollection<EventAdditionalParameterRequestList> _listOfTextBox;
+        private ObservableCollection<EventAdditionalParameter> _listOfTextBox;
         private bool _lessThan3ViewCell;
 
-        public ObservableCollection<EventAdditionalParameterRequestList> ListOfTextBox
+        public ObservableCollection<EventAdditionalParameter> ListOfTextBox
         {
             get => _listOfTextBox;
             set => SetProperty(ref _listOfTextBox, value);
@@ -101,11 +98,20 @@ namespace NottCS.ViewModels
         #region CreateEventViewModel Constructor
         public CreateEventViewModel()
         {
-            ListOfTextBox =new ObservableCollection<EventAdditionalParameterRequestList>()
+            ListOfTextBox =new ObservableCollection<EventAdditionalParameter>()
             {
-                new EventAdditionalParameterRequestList(),
-                new EventAdditionalParameterRequestList(),
-                new EventAdditionalParameterRequestList()
+                new EventAdditionalParameter()
+                {
+                    Name = "Additional Info 1"
+                },
+                new EventAdditionalParameter()
+                {
+                    Name = "Additional Info 2"
+                },
+                new EventAdditionalParameter()
+                {
+                    Name = "Additional Info 3"
+                }
             };
             LessThan3ViewCell = false;
             Title = "Create New Event Instance";

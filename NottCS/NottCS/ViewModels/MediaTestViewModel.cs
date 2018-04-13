@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using System.Windows.Input;
 using Plugin.Media;
-using Plugin.Media.Abstractions;
 using Xamarin.Forms;
 using Acr.UserDialogs;
 using NottCS.Services;

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using NottCS.Models;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NottCS.Services;
-using NottCS.Services.Navigation;
-using NottCS.Views;
 
 namespace NottCS.ViewModels
 {
@@ -24,8 +19,8 @@ namespace NottCS.ViewModels
             DebugService.WriteLine(ListJson);
         }
 
-        private ObservableCollection<EventAdditionalParameterRequestList> _list;
-        public ObservableCollection<EventAdditionalParameterRequestList> List
+        private ObservableCollection<EventAdditionalParameter> _list;
+        public ObservableCollection<EventAdditionalParameter> List
         {
             get => _list;
             set => SetProperty(ref _list, value);
@@ -47,11 +42,11 @@ namespace NottCS.ViewModels
         {
             DebugService.WriteLine(navigationData);
 
-            if (navigationData is ObservableCollection<EventAdditionalParameterRequestList> entryList)
+            if (navigationData is ObservableCollection<EventAdditionalParameter> entryList)
             {
                 foreach (var item in entryList)
                 {
-                    DebugService.WriteLine(item.Entry);
+                    DebugService.WriteLine(item.Value);
                 }
 
                 List = entryList;

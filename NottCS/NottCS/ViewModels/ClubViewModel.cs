@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Input;
 using NottCS.Models;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using NottCS.Services;
 using NottCS.Services.Navigation;
-using NottCS.Views;
-using Newtonsoft.Json;
 using NottCS.Services.REST;
 
 namespace NottCS.ViewModels
