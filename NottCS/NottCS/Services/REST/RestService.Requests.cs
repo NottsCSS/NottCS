@@ -50,24 +50,24 @@ namespace NottCS.Services.REST
         /// <param name="identifier">Identifier for the server to lookup</param>
         /// <param name="optionalClient">Optional client for other client request</param>
         /// <returns>Requested Object</returns>
-        public static async Task<Tuple<string, T>> RequestGetAsync<T>(string identifier, HttpClient optionalClient = null) where T : new()
+        public static async Task<Tuple<string, Task<T>>> RequestGetAsync<T>(string identifier, HttpClient optionalClient = null) where T : new()
         {
-            var client = optionalClient ?? Client;
-            var requestUri = UriGenerator<T>(HttpMethod.Get, identifier);
-
-            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
             string errorMessage = null;
+
+            var client = optionalClient ?? Client;
+            var uriGenerateTask = Task.Run(()=>UriGenerator<T>(HttpMethod.Get, identifier));
+            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Get, uriGenerateTask);
 
             try
             {
-                var requestTask = client.SendAsync(httpRequest);
-                var httpResponse = requestTask.GetAwaiter().GetResult();
+                var requestTask = client.SendAsync(httpRequest).ConfigureAwait(false);
+                var httpResponse = await requestTask;
 
                 if (httpResponse.IsSuccessStatusCode)
                 {
-                    var result = JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync());
+                    var resultTask = Task.Run(async()=>JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync()));
 
-                    return Tuple.Create("OK", result);
+                    return Tuple.Create("OK", resultTask);
                 }
             }
             catch (Exception e)
@@ -76,7 +76,7 @@ namespace NottCS.Services.REST
                 errorMessage = e.Message;
                 DebugService.WriteLine($"Exception thrown in RequestGetAsync, Message: {errorMessage}");
             }
-            return Tuple.Create($"{errorMessage}", new T());
+            return Tuple.Create($"{errorMessage}", Task.FromResult<T>(new T()));
         }
 
         /// <summary>
@@ -89,12 +89,14 @@ namespace NottCS.Services.REST
         {
             var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Get);
-            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
+
+            var uriGenerateTask = Task.FromResult(UriGenerator<T>(HttpMethod.Get));
+            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Get, uriGenerateTask);
             string errorMessage = null;
             try
             {
-                var requestTask = client.SendAsync(httpRequest);
-                var httpResponse = requestTask.GetAwaiter().GetResult();
+                var requestTask = client.SendAsync(httpRequest).ConfigureAwait(false);
+                var httpResponse = await requestTask;
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     var resultJson = JToken.Parse(await httpResponse.Content.ReadAsStringAsync())["results"].ToString();

@@ -201,13 +201,14 @@ namespace NottCS.Services
             var userData = await RestService.RequestGetAsync<User>("MustAddUsername");
             if (userData.Item1 == "OK") //first item represents whether the request is successful
             {
+                var result = await userData.Item2;
                 //if either studentId or librarynumber is not filled that means is new user
-                if (String.IsNullOrEmpty(userData.Item2.StudentId) ||
-                    String.IsNullOrEmpty(userData.Item2.LibraryNumber) ||
-                    String.IsNullOrEmpty(userData.Item2.Course))
+                if (String.IsNullOrEmpty(result.StudentId) ||
+                    String.IsNullOrEmpty(result.LibraryNumber) ||
+                    String.IsNullOrEmpty(result.Course))
                 {
                     DebugService.WriteLine("User is not registered");
-                    await NavigationService.NavigateToAsync<RegistrationViewModel>(userData.Item2);
+                    await NavigationService.NavigateToAsync<RegistrationViewModel>(result);
                 }
                 else
                 {

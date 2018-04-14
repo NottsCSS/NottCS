@@ -37,8 +37,11 @@ namespace NottCS.ViewModels
             await LoadEventList();
             try
             {
-                var userData = navigationData as User;
-                await Task.Run(() => SetProfileData(userData));
+                if (navigationData is Task<User> userDataTask)
+                {
+                    var userData = await userDataTask;
+                    await Task.Run(() => SetProfileData(userData));
+                }
             }
             catch (Exception e)
             {
