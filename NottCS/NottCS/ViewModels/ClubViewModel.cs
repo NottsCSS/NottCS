@@ -94,7 +94,7 @@ namespace NottCS.ViewModels
             IsBusy = true;
             ReloadEventCommand.ChangeCanExecute();
 
-            LoadEventList().GetAwaiter();
+            await LoadEventList();
 
             IsBusy = false;
             ReloadEventCommand.ChangeCanExecute();

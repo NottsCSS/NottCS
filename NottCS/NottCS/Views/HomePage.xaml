@@ -42,16 +42,6 @@
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>
-        <ToolbarItem x:Name="MediaTestPage" 
-                     Text="MediaPage"
-                     Command="{Binding MediaTestPageNavigationCommand}">
-            <ToolbarItem.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="Android" Value="settings_icon.png"/>
-                    <On Platform="UWP" Value="settings_icon.png"/>
-                </OnPlatform>
-            </ToolbarItem.Icon>
-        </ToolbarItem>
     </TabbedPage.ToolbarItems>
 
     <ContentPage Title="{Binding PageTitle1}">
