@@ -16,6 +16,23 @@ namespace NottCS.Services.Navigation
     {
         private static bool _isNavigating;
 
+        private static bool IsNavigating
+        {
+            get => _isNavigating;
+            set
+            {
+                _isNavigating = value;
+                if (value)
+                {
+                    Acr.UserDialogs.UserDialogs.Instance.ShowLoading();
+                }
+                else
+                {
+                    Acr.UserDialogs.UserDialogs.Instance.HideLoading();
+                }
+            }
+        }
+
         /// <summary>
         /// Used to determine the correct first page on app startup
         /// Handles all authentication on app startup
@@ -35,9 +52,9 @@ namespace NottCS.Services.Navigation
 
         internal static async Task NavigateToAsync(Type viewModelType, object navigationParameter = null)
         {
-            if (!_isNavigating) //prevents simultaneous navigations
+            if (!IsNavigating) //prevents simultaneous navigations
             {
-                _isNavigating = true;
+                IsNavigating = true;
                 Page page = null;
                 var createPageTask = CreatePage(viewModelType);
 
@@ -45,7 +62,7 @@ namespace NottCS.Services.Navigation
                 {
                     DebugService.WriteLine("passed viewmodel type does not inherit BaseViewModel");
                     DebugService.WriteLine("Terminating navigation...");
-                    _isNavigating = false;
+                    IsNavigating = false;
                     return;
                 }
                 
@@ -65,7 +82,7 @@ namespace NottCS.Services.Navigation
                 {
                     DebugService.WriteLine("Page unable to be created.");
                     DebugService.WriteLine("Terminating navigation...");
-                    _isNavigating = false;
+                    IsNavigating = false;
                     return;
                 }
                 if (viewModelType == typeof(LoginViewModel) || viewModelType == typeof(HomeViewModel))
@@ -99,7 +116,7 @@ namespace NottCS.Services.Navigation
                     if (initializeAsyncTask != null) await initializeAsyncTask;
                 }
 
-                _isNavigating = false;
+                IsNavigating = false;
             }
 
         }
