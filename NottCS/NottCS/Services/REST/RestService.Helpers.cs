@@ -55,12 +55,18 @@ namespace NottCS.Services.REST
         private static async Task<HttpRequestMessage> HttpRequestMessageGenerator(HttpMethod httpMethod, string requestUri, object requestBody = null)
         {
             var isValidToken = false;
-            if (!GlobalUserData.isValidToken)
+//            var isValidToken = await LoginService.SignInMicrosoftAsync();
+            bool globalTokenValidity = GlobalUserData.IsValidToken;
+            DebugService.WriteLine($"Global token valid: {globalTokenValidity}");
+            if (!globalTokenValidity)
             {
+                DebugService.WriteLine("Token not valid, now trying to obtain new one");
                 isValidToken = await LoginService.SignInMicrosoftAsync();
             }
+            else { isValidToken = true; }
             if (!isValidToken)
             {
+                DebugService.WriteLine("New Token not valid, now back to login page");
                 Navigation.NavigationService.ClearNavigation();
                 await Navigation.NavigationService.NavigateToAsync<LoginViewModel>();
             }

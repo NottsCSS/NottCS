@@ -17,8 +17,7 @@ namespace NottCS.Services
         internal static async Task InitializeAsync()
         {
             //Loading Dialog
-            var loadingDialog = Acr.UserDialogs.UserDialogs.Instance.Loading("Beep beep bop...");
-            loadingDialog.Show();
+            Acr.UserDialogs.UserDialogs.Instance.ShowLoading("Beep beep bop...");
 
             bool microsoftCanAuthenticate = await LoginService.SignInMicrosoftAsync();
             if (microsoftCanAuthenticate)
@@ -27,7 +26,7 @@ namespace NottCS.Services
             {
                 await NavigationService.NavigateToAsync<LoginViewModel>();
             }
-            loadingDialog.Hide();
+            Acr.UserDialogs.UserDialogs.Instance.HideLoading();
         }
     }
 }

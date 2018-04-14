@@ -104,7 +104,7 @@ namespace NottCS.Services
                 DebugService.WriteLine($"Welcome {ar.User.Name}");
                 DebugService.WriteLine($"Token expires on: {ar.ExpiresOn}");
                 DebugService.WriteLine($"Access token: {ar.AccessToken}");
-                GlobalUserData.isValidToken = true;
+                GlobalUserData.IsValidToken = true;
                 GlobalUserData.ExpireTokenScheduler();
                 await setupClientTask;
                 return true;
