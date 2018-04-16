@@ -267,7 +267,8 @@
                        Style="{StaticResource TitleLabelStyle}"/>
                 <ListView ItemsSource="{Binding DataList}"
                           WidthRequest="500"
-                          HorizontalOptions="Center">
+                          HorizontalOptions="Center"
+                          RowHeight="60">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextCell Text="{Binding Key}" 
