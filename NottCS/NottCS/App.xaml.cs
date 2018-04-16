@@ -11,8 +11,16 @@ using NottCS.Services;
 
 namespace NottCS
 {
-
-	public partial class App : Application
+    //TODO:Code behind for dynamic elements (like event additional parameter, event dates)
+    //TODO:Pull to refresh does not reload UI (Club only)
+    //TODO:Account details disable item selected
+    //TODO:Change admin panel icon
+    //TODO:Change EventAdditionalParameter to Event only (1 big model)
+    //TODO:Add ability to edit profile
+    //TODO:Fix report issue UI
+    //TODO:Disable notification
+    //TODO:Iphone camera for QR code unstable
+    public partial class App : Application
 	{
 	    public static PublicClientApplication ClientApplication { get; private set; }
 	    public static readonly string[] Scopes = { "User.Read" };
