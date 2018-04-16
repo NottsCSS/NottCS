@@ -260,3 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 /NottCS/NottCS/Properties/PublishProfiles/FolderProfile.pubxml
+
+.DS_Store

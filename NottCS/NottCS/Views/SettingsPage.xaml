@@ -21,8 +21,7 @@
             <ListView ItemsSource="{Binding DummyLists}"
                       Margin="0,0"
                       RowHeight="40"
-                      x:Name="SomeList"
-                      Footer ="">
+                      x:Name="SomeList">
                 <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior 
                         EventName="ItemTapped"
@@ -47,6 +46,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Label
                                     Grid.Row="0"
+                                    FontSize="Medium"
                                     Text ="{Binding Name}">
                                 </Label>
                             </Grid>
