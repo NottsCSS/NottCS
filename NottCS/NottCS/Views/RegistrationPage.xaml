@@ -48,18 +48,18 @@
                     <Label Text="Email: " Grid.Row="1" Grid.Column="0" />
                     <Label Text="{Binding CurrentUser.Email, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" />
 
-                    <Label Text="Student ID: " Grid.Row="2" Grid.Column="0" />
+                    <Label Text="Student ID: " Grid.Row="2" Grid.Column="0" VerticalOptions="CenterAndExpand"/>
                     <Entry Text="{Binding StudentID.Value, Mode=TwoWay}" Grid.Row="2" Grid.Column="1"/>
 
-                    <Label Text="Library Number: " Grid.Row="3" Grid.Column="0" />
+                    <Label Text="Library Number: " Grid.Row="3" Grid.Column="0" VerticalOptions="CenterAndExpand"/>
                     <Entry Text="{Binding LibraryNumber.Value, Mode=TwoWay}" Grid.Row="3" Grid.Column="1"/>
 
-                    <Label Text="Year of Study: " Grid.Row="4" Grid.Column="0" />
+                    <Label Text="Year of Study: " Grid.Row="4" Grid.Column="0" VerticalOptions="CenterAndExpand"/>
                     <Picker ItemsSource="{Binding YearOfStudy}" Grid.Row="4" Grid.Column="1" 
                             Margin="10,0,0,0"
                             SelectedItem="{Binding SelectedYearOfStudy, Mode=TwoWay}"/>
                     
-                    <Label Text="Course: " Grid.Row="5" Grid.Column="0" />
+                    <Label Text="Course: " Grid.Row="5" Grid.Column="0" VerticalOptions="CenterAndExpand"/>
                     <Entry x:Name="CourseEntry" Placeholder="Course" Grid.Row="5" Grid.Column="1"
                            Text="{Binding Course.Value, Mode=TwoWay}">
                         <Entry.Behaviors>

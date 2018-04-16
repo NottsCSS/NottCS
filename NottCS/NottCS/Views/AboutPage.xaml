@@ -24,21 +24,15 @@
                    HorizontalOptions="Center"
                    HeightRequest="150">
                 </Image>
-                <Label 
+                    <Label 
                     Text ="Version: 1.0.0"
                     FontSize="12"
                     TextColor="Black"
                     HorizontalOptions="Center"
                     VerticalOptions="StartAndExpand">
-                </Label>
-                <Label 
-                    Text ="Computer Science Society"
-                    FontSize="11"
-                    TextColor="Gray"
-                    HorizontalOptions="Center">
-                </Label>
-                <Label 
-                    Text ="Copyright © 2018"
+                    </Label>
+                    <Label 
+                    Text ="Copyright © 2018 Computer Science Society"
                     FontSize="11"
                     TextColor="Gray"
                     HorizontalOptions="Center">
