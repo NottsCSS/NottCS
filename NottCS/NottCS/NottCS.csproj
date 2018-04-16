@@ -59,14 +59,14 @@
     <PackageReference Include="Acr.UserDialogs" Version="7.0.1" />
     <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.10" />
     <PackageReference Include="Microsoft.Identity.Client" Version="1.1.2-preview0008" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
-    <PackageReference Include="Plugin.GridViewControl" Version="1.0.7" />
-    <PackageReference Include="Xam.Plugin.Connectivity" Version="3.1.1" />
-    <PackageReference Include="Xam.Plugin.Media" Version="3.1.3" />
-    <PackageReference Include="Xam.Plugins.Settings" Version="3.2.0.130-beta" />
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.77107" />
-    <PackageReference Include="ZXing.Net.Mobile" Version="2.3.2" />
-    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.3.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Plugin.GridViewControl" Version="1.0.8" />
+    <PackageReference Include="Xam.Plugin.Connectivity" Version="4.0.0.186-beta" />
+    <PackageReference Include="Xam.Plugin.Media" Version="3.2.0.245-beta" />
+    <PackageReference Include="Xam.Plugins.Settings" Version="4.0.0.3-beta" />
+    <PackageReference Include="Xamarin.Forms" Version="3.0.0.354232-pre3" />
+    <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\EventRegistrationPage.xaml.cs">
