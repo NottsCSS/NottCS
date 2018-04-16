@@ -29,6 +29,12 @@
             <Style TargetType="gv:GridView" x:Key="HideGridViewStyle">
                 <Setter Property="IsVisible" Value="False"/>
             </Style>
+            <Style TargetType="TabbedPage" x:Key="HideReload">
+                <Setter Property="IsEnabled" Value="False"/>
+            </Style>
+            <Style TargetType="TabbedPage" x:Key="ShowReload">
+                <Setter Property="IsEnabled" Value="False"/>
+            </Style>
         </ResourceDictionary>
     </TabbedPage.Resources>
     
@@ -41,6 +47,37 @@
                     <On Platform="UWP" Value="settings_icon.png"/>
                 </OnPlatform>
             </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Text="Refresh Club"
+                     Command="{Binding ReloadClubCommand}"
+                     >
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="settings_icon.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+            <ToolbarItem.IsEnabled>
+                <OnPlatform x:TypeArguments="x:Boolean">
+                    <On Platform="Android" Value="{StaticResource HideReload}"/>
+                    <On Platform="iOS" Value="{StaticResource HideReload}"/>
+                    <On Platform="UWP" Value="{StaticResource ShowReload}"/>
+                </OnPlatform>
+            </ToolbarItem.IsEnabled>
+        </ToolbarItem>
+        <ToolbarItem Text="Refresh Event"
+                     Command="{Binding ReloadEventCommand}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="settings_icon.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon> \
+            <ToolbarItem.IsEnabled>
+                <OnPlatform x:TypeArguments="x:Boolean">
+                    <On Platform="Android" Value="{StaticResource HideReload}"/>
+                    <On Platform="iOS" Value="{StaticResource HideReload}"/>
+                    <On Platform="UWP" Value="{StaticResource ShowReload}"/>
+                </OnPlatform>
+            </ToolbarItem.IsEnabled>    
         </ToolbarItem>
     </TabbedPage.ToolbarItems>
 
