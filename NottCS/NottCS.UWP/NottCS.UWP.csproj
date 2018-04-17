@@ -178,7 +178,7 @@
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.2.0.130-beta</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.77107" />
+    <PackageReference Include="Xamarin.Forms" Version="2.5.1.444934" />
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.5" />
     <PackageReference Include="ZXing.Net.Mobile">
       <Version>2.3.2</Version>
