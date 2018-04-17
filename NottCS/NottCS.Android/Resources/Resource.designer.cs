@@ -2570,7 +2570,6 @@ namespace NottCS.Droid
 			global::Plugin.GridViewControl.Droid.Resource.Interpolator.mr_linear_out_slow_in = global::NottCS.Droid.Resource.Interpolator.mr_linear_out_slow_in;
 			global::Plugin.GridViewControl.Droid.Resource.Layout.abc_action_bar_title_item = global::NottCS.Droid.Resource.Layout.abc_action_bar_title_item;
 			global::Plugin.GridViewControl.Droid.Resource.Layout.abc_action_bar_up_container = global::NottCS.Droid.Resource.Layout.abc_action_bar_up_container;
-			global::Plugin.GridViewControl.Droid.Resource.Layout.abc_action_bar_view_list_nav_layout = global::NottCS.Droid.Resource.Layout.abc_action_bar_view_list_nav_layout;
 			global::Plugin.GridViewControl.Droid.Resource.Layout.abc_action_menu_item_layout = global::NottCS.Droid.Resource.Layout.abc_action_menu_item_layout;
 			global::Plugin.GridViewControl.Droid.Resource.Layout.abc_action_menu_layout = global::NottCS.Droid.Resource.Layout.abc_action_menu_layout;
 			global::Plugin.GridViewControl.Droid.Resource.Layout.abc_action_mode_bar = global::NottCS.Droid.Resource.Layout.abc_action_mode_bar;
@@ -2637,8 +2636,6 @@ namespace NottCS.Droid
 			global::Plugin.GridViewControl.Droid.Resource.String.ApplicationName = global::NottCS.Droid.Resource.String.ApplicationName;
 			global::Plugin.GridViewControl.Droid.Resource.String.Hello = global::NottCS.Droid.Resource.String.Hello;
 			global::Plugin.GridViewControl.Droid.Resource.String.abc_action_bar_home_description = global::NottCS.Droid.Resource.String.abc_action_bar_home_description;
-			global::Plugin.GridViewControl.Droid.Resource.String.abc_action_bar_home_description_format = global::NottCS.Droid.Resource.String.abc_action_bar_home_description_format;
-			global::Plugin.GridViewControl.Droid.Resource.String.abc_action_bar_home_subtitle_description_format = global::NottCS.Droid.Resource.String.abc_action_bar_home_subtitle_description_format;
 			global::Plugin.GridViewControl.Droid.Resource.String.abc_action_bar_up_description = global::NottCS.Droid.Resource.String.abc_action_bar_up_description;
 			global::Plugin.GridViewControl.Droid.Resource.String.abc_action_menu_overflow_description = global::NottCS.Droid.Resource.String.abc_action_menu_overflow_description;
 			global::Plugin.GridViewControl.Droid.Resource.String.abc_action_mode_done = global::NottCS.Droid.Resource.String.abc_action_mode_done;
@@ -2909,16 +2906,6 @@ namespace NottCS.Droid
 			global::Plugin.GridViewControl.Droid.Resource.Style.TextAppearance_AppCompat_Medium = global::NottCS.Droid.Resource.Style.TextAppearance_AppCompat_Medium;
 			global::Plugin.GridViewControl.Droid.Resource.Style.TextAppearance_AppCompat_Medium_Inverse = global::NottCS.Droid.Resource.Style.TextAppearance_AppCompat_Medium_Inverse;
 			global::Plugin.GridViewControl.Droid.Resource.Style.TextAppearance_AppCompat_Menu = global::NottCS.Droid.Resource.Style.TextAppearance_AppCompat_Menu;
-			global::Plugin.GridViewControl.Droid.Resource.Style.TextAppearance_AppCompat_Notification = global::NottCS.Droid.Resource.Style.TextAppearance_AppCompat_Notification;
-			global::Plugin.GridViewControl.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Info = global::NottCS.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Info;
-			global::Plugin.GridViewControl.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Info_Media = global::NottCS.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Info_Media;
-			global::Plugin.GridViewControl.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Line2 = global::NottCS.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Line2;
-			global::Plugin.GridViewControl.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Line2_Media = global::NottCS.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Line2_Media;
-			global::Plugin.GridViewControl.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Media = global::NottCS.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Media;
-			global::Plugin.GridViewControl.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Time = global::NottCS.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Time;
-			global::Plugin.GridViewControl.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Time_Media = global::NottCS.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Time_Media;
-			global::Plugin.GridViewControl.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Title = global::NottCS.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Title;
-			global::Plugin.GridViewControl.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Title_Media = global::NottCS.Droid.Resource.Style.TextAppearance_AppCompat_Notification_Title_Media;
 			global::Plugin.GridViewControl.Droid.Resource.Style.TextAppearance_AppCompat_SearchResult_Subtitle = global::NottCS.Droid.Resource.Style.TextAppearance_AppCompat_SearchResult_Subtitle;
 			global::Plugin.GridViewControl.Droid.Resource.Style.TextAppearance_AppCompat_SearchResult_Title = global::NottCS.Droid.Resource.Style.TextAppearance_AppCompat_SearchResult_Title;
 			global::Plugin.GridViewControl.Droid.Resource.Style.TextAppearance_AppCompat_Small = global::NottCS.Droid.Resource.Style.TextAppearance_AppCompat_Small;
