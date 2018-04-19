@@ -1,21 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using NottCS.Converters;
 using Xamarin.Forms;
 
 namespace NottCS.Models
 {
-    public sealed class EventStatus
+    internal enum EventStatus
     {
-        public static readonly string Pending = "Pending";
-        public static readonly string Started = "Started";
-        public static readonly string Ended = "Ended";
-        public static readonly string Canceled = "Canceled";
+        [EnumMember(Value = "PD")]
+        Pending,
+
+        [EnumMember(Value = "ST")]
+        Started,
+
+        [EnumMember(Value = "ED")]
+        Ended,
+
+        [EnumMember(Value = "CC")]
+        Canceled
     }
 
     internal class Event
     {
+
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
@@ -29,6 +40,7 @@ namespace NottCS.Models
         public DateTime CreatedTimeStamp { get; set; }
 
         [JsonProperty(PropertyName = "status")]
+        [JsonConverter(typeof(StringEnumConverter))]
         public EventStatus Status { get; set; }
 
         [JsonProperty(PropertyName = "image")]

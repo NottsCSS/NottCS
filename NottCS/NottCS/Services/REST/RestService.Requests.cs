@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RestSharp;
 
 namespace NottCS.Services.REST
 {
@@ -23,7 +24,7 @@ namespace NottCS.Services.REST
         {
             var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Delete, identifier);
-            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Delete, requestUri);
+            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Delete, requestUri);
             string errorMessage = null;
 
             try
@@ -53,7 +54,7 @@ namespace NottCS.Services.REST
             var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Get, identifier);
 
-            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
+            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
             string errorMessage = null;
 
             try
@@ -87,7 +88,7 @@ namespace NottCS.Services.REST
         {
             var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Get);
-            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
+            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Get, requestUri);
             string errorMessage = null;
             try
             {
@@ -127,7 +128,7 @@ namespace NottCS.Services.REST
         {
             var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Post);
-            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Post, requestUri, objectData);
+            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Post, requestUri, objectData);
             string errorMessage = null;
 
             try
@@ -157,7 +158,7 @@ namespace NottCS.Services.REST
         {
             var client = optionalClient ?? Client;
             var requestUri = UriGenerator<T>(HttpMethod.Put, identifier);
-            var httpRequest = HttpRequestMessageGenerator(HttpMethod.Put, requestUri, objectData);
+            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Put, requestUri, objectData);
             string errorMessage = null;
 
             try
@@ -173,6 +174,23 @@ namespace NottCS.Services.REST
                 DebugService.WriteLine($"Exception thrown in RequestUpdateAsync, Message: {errorMessage}");
             }
             return errorMessage;
+        }
+
+        public static async Task<Tuple<string, T>> RequestGetRSAsync<T>(string identifier, RestClient optionalClient = null) where T : new()
+        {
+            var client = optionalClient ?? ClientRS;
+            var id = identifier;
+            var request = await Task.Run(() => RequestGeneratorRS<T>(Method.GET, identifier = id));
+            var response = client.Execute(request);
+            if (response.IsSuccessful)
+            {
+                var responseData = JsonConvert.DeserializeObject<T>(response.Content);
+                return Tuple.Create("OK", responseData);
+            }
+            else
+            {
+                return Tuple.Create(response.ErrorMessage, new T());
+            }
         }
     }
 }
