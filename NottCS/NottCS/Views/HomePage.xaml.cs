@@ -16,14 +16,14 @@ namespace NottCS.Views
         {
             InitializeComponent();
             BindingContext = new HomeViewModel();
-            if (Device.RuntimePlatform == Device.UWP)
-            {
-                ToolbarItem.IsEnabled = true;
-            }
-            else if (Device.RuntimePlatform != Device.UWP)
-            {
-                ToolbarItem.IsEnabled = false;
-            }
+            //if (Device.RuntimePlatform == Device.UWP)
+            //{
+            //    ToolbarItem.IsEnabled = true;
+            //}
+            //else if (Device.RuntimePlatform != Device.UWP)
+            //{
+            //    ToolbarItem.IsEnabled = false;
+            //}
             //AddImage(IconOne, "NottCS.Images.Icons.icon2.png");
             //AddImage(BannerImage, "NottCS.Images.example-background.jpg");
         }

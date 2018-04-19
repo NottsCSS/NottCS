@@ -42,7 +42,7 @@
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>
-        <ToolbarItem Text="Refresh Club"
+        <!--<ToolbarItem Text="Refresh Club"
                      Command="{Binding ReloadClubCommand}"
                      x:Name="ToolbarItem">
             <ToolbarItem.Icon>
@@ -58,7 +58,7 @@
                     <On Platform="UWP" Value="settings_icon.png"/>
                 </OnPlatform>
             </ToolbarItem.Icon>
-        </ToolbarItem>
+        </ToolbarItem>-->
     </TabbedPage.ToolbarItems>
 
     <ContentPage Title="{Binding PageTitle1}">
