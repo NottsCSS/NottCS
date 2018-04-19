@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RestSharp;
 
 namespace NottCS.Services.REST
 {
@@ -173,6 +174,23 @@ namespace NottCS.Services.REST
                 DebugService.WriteLine($"Exception thrown in RequestUpdateAsync, Message: {errorMessage}");
             }
             return errorMessage;
+        }
+
+        public static async Task<Tuple<string, T>> RequestGetRSAsync<T>(string identifier, RestClient optionalClient = null) where T : new()
+        {
+            var client = optionalClient ?? ClientRS;
+            var id = identifier;
+            var request = await Task.Run(() => RequestGeneratorRS<T>(Method.GET, identifier = id));
+            var response = client.Execute(request);
+            if (response.IsSuccessful)
+            {
+                var responseData = JsonConvert.DeserializeObject<T>(response.Content);
+                return Tuple.Create("OK", responseData);
+            }
+            else
+            {
+                return Tuple.Create(response.ErrorMessage, new T());
+            }
         }
     }
 }

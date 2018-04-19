@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NottCS.Models;
 using NottCS.ViewModels;
+using RestSharp;
+using RestSharp.Authenticators;
 
 namespace NottCS.Services.REST
 {
@@ -139,5 +141,64 @@ namespace NottCS.Services.REST
             return returnUri;
         }
 
+        private static readonly RestClient ClientRS = new RestClient();
+
+        public static void SetupClientRS(string accessToken)
+        {
+            DebugService.WriteLine($"[RestService] RestSharp Client is startting up...");
+            ClientRS.Timeout = 10000;
+            ClientRS.BaseUrl = new Uri(BaseAddress);
+            ClientRS.Authenticator = new JwtAuthenticator(accessToken);
+        }
+
+        private static RestRequest RequestGeneratorRS<T>(Method requestMethod, object objectData = null,
+            string identifier = null)
+        {
+            DebugService.WriteLine($"[RestService] Generating RestSharp Request...");
+
+            var resource = "unknown";
+
+            var identifierString = (identifier == null) ? "" : ("/" + identifier);
+
+            if (typeof(T) == typeof(User))
+            {
+                resource = "azuread-user/me";
+            }
+            else if (typeof(T) == typeof(Event))
+            {
+                resource = "event" + identifierString;
+            }
+            else if (typeof(T) == typeof(EventTime))
+            {
+                resource = "event-time" + identifierString;
+            }
+            else if (typeof(T) == typeof(Participant))
+            {
+                resource = "participant" + identifierString;
+            }
+            else if (typeof(T) == typeof(Club))
+            {
+                resource = "club" + identifierString;
+            }
+            else if (typeof(T) == typeof(ClubMember))
+            {
+                resource = "member" + identifierString;
+            }
+            else if (typeof(T) == typeof(Attendance))
+            {
+                resource = "attendence" + identifierString;
+            }
+
+            var request = new RestRequest()
+            {
+                Method = requestMethod,
+                Resource = resource
+            };
+
+            request.AddParameter("application/json", JsonConvert.SerializeObject(objectData),
+                ParameterType.RequestBody);
+
+            return request;
+        }
     }
 }

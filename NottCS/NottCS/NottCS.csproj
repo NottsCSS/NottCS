@@ -59,6 +59,7 @@
     <PackageReference Include="Microsoft.Identity.Client" Version="1.1.2-preview0008" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
     <PackageReference Include="Plugin.GridViewControl" Version="1.0.7" />
+    <PackageReference Include="RestSharp" Version="106.2.1" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.2.0.130-beta" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.77107" />
     <PackageReference Include="ZXing.Net.Mobile" Version="2.3.2" />

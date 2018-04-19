@@ -66,6 +66,7 @@ namespace NottCS.Services
             {
                 AuthenticationResult ar = await InternalSignInMicrosoft();
                 Task setupClientTask = Task.Run(() => RestService.SetupClient(ar.AccessToken));
+                Task setupRSClientTask = Task.Run(() => RestService.SetupClientRS(ar.AccessToken));
                 App.MicrosoftAuthenticationResult = ar;
 
                 DebugService.WriteLine("Login to microsoft successful");
@@ -74,6 +75,7 @@ namespace NottCS.Services
                 DebugService.WriteLine($"Access token: {ar.AccessToken}");
 
                 await setupClientTask;
+                await setupRSClientTask;
                 return true;
             }
             catch (MsalException msalException)
