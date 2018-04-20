@@ -13,7 +13,7 @@ namespace NottCS
 {
     //TODO:Code behind for dynamic elements (like event additional parameter, event dates)
     //TODO:Change EventAdditionalParameter to Event only (1 big model), redo CreateEventPage
-    //TODO:Add ability to edit profile
+    //TODO:Add ability to edit profile(Need to update homepage profile)
     //TODO:Fix report issue UI
     //TODO:Iphone camera for QR code unstable
     //TODO: implement my club(wait wen kang)
