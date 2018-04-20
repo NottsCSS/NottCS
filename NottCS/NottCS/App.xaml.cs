@@ -12,13 +12,9 @@ using NottCS.Services;
 namespace NottCS
 {
     //TODO:Code behind for dynamic elements (like event additional parameter, event dates)
-    //TODO:Pull to refresh does not reload UI (Club only)
-    //TODO:Account details disable item selected
-    //TODO:Change admin panel icon
     //TODO:Change EventAdditionalParameter to Event only (1 big model), redo CreateEventPage
     //TODO:Add ability to edit profile
     //TODO:Fix report issue UI
-    //TODO:Disable notification
     //TODO:Iphone camera for QR code unstable
     //TODO: implement my club(wait wen kang)
     //TODO: implement event for club(wait wen kang)

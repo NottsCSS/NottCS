@@ -58,7 +58,7 @@ namespace NottCS.ViewModels
         {
             DummyLists = new List<UserDataObject>()
             {
-                new UserDataObject() {Name = "Notifications", ViewModelType = typeof(NotificationsViewModel)},
+                //new UserDataObject() {Name = "Notifications", ViewModelType = typeof(NotificationsViewModel)},
                 new UserDataObject() {Name = "About", ViewModelType = typeof(AboutViewModel)},
                 new UserDataObject() {Name = "Report an Issue", ViewModelType = typeof(ReportIssueViewModel)},
             };

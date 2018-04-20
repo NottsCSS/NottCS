@@ -20,6 +20,7 @@ namespace NottCS.ViewModels
         public string PageTitle1 { get; set; } = "News Feed";
         public string PageTitle2 { get; set; } = "Clubs & Society";
         public string PageTitle3 { get; set; } = "Profile";
+        public bool Refreshing { get; set; } = true;
 
         public HomeViewModel()
         {
@@ -154,11 +155,13 @@ namespace NottCS.ViewModels
         {
             if (!IsBusy)
             {
+                ClubList = new ObservableCollection<Club>();
                 IsBusy = true;
                 DebugService.WriteLine("Club Reload Initiated");
                 await LoadClubList();
                 DebugService.WriteLine("Club Reload Completed");
                 IsBusy = false;
+                ClubList = AllClubList;
             }
         }
         private async Task LoadClubList()
@@ -181,12 +184,8 @@ namespace NottCS.ViewModels
             set => SetProperty(ref _clubList, value);
         }
 
-        private ObservableCollection<Club> AllClubList { get; set; } = new ObservableCollection<Club>()
-        {
-        };
-        private ObservableCollection<Club> MyClubList { get; set; } = new ObservableCollection<Club>()
-        {
-        };
+        private ObservableCollection<Club> AllClubList { get; set; } = new ObservableCollection<Club>();
+        private ObservableCollection<Club> MyClubList { get; set; } = new ObservableCollection<Club>();
         #endregion
         #endregion
 
@@ -212,7 +211,12 @@ namespace NottCS.ViewModels
                 new KeyValuePair<string, string>("Year of Study", LoginUser.YearOfStudy)
             };
         }
+
         public ICommand SignOutCommand => new Command(SignOut);
+
+        public ICommand EditProfileNavigation =>
+            new Command(async () => await NavigationService.NavigateToAsync<EditProfileViewModel>());
+        
         private static async void SignOut()
         {
             await LoginService.SignOutAndNavigateAsync();

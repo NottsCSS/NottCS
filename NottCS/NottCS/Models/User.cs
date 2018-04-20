@@ -29,14 +29,14 @@ namespace NottCS.Models
         [JsonProperty(PropertyName = "year_of_study")]
         public string YearOfStudy { get; set; }
 
-        public User()
-        {
-            Name = "Eagle Cheow";
-            Email = "noemail@nottingham.edu.my";
-            StudentId = "18818888";
-            LibraryNumber = "2001438888";
-            Course = "Software Engineering";
-            YearOfStudy = "2";
-        }
+        //public User()
+        //{
+        //    Name = "Eagle Cheow";
+        //    Email = "noemail@nottingham.edu.my";
+        //    StudentId = "18818888";
+        //    LibraryNumber = "2001438888";
+        //    Course = "Software Engineering";
+        //    YearOfStudy = "2";
+        //}
     }
 }

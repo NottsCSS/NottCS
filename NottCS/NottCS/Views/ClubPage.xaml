@@ -28,8 +28,8 @@
                      Command="{Binding AdminPanelNavigationCommand}">
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="Android" Value="settings_icon.png"/>
-                    <On Platform="UWP" Value="settings_icon.png"/>
+                    <On Platform="Android" Value="Admin_Icon.png"/>
+                    <On Platform="UWP" Value="Admin_Icon.png"/>
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>

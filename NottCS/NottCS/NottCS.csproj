@@ -19,6 +19,7 @@
     <None Remove="Images\Icons\EmailContent.png" />
     <None Remove="Images\Icons\icon2.png" />
     <None Remove="Images\Icons\logo1.jpeg" />
+    <None Remove="Images\Icons\NotAvailable.png" />
     <None Remove="Images\Icons\ok.png" />
     <None Remove="Images\Icons\okfixed.png" />
     <None Remove="Images\Icons\settings-icon.png" />
@@ -31,6 +32,7 @@
     <Compile Include="ViewModels\ClubViewModel.cs" />
     <Compile Include="ViewModels\CreateEventConfirmationViewModel.cs" />
     <Compile Include="ViewModels\CreateEventViewModel.cs" />
+    <Compile Include="ViewModels\EditProfileViewModel.cs" />
     <Compile Include="ViewModels\EventRegistrationFormsViewModel.cs" />
     <Compile Include="ViewModels\EventRegistrationSuccessViewModel.cs" />
     <Compile Include="ViewModels\EventRegistrationViewModel.cs" />
@@ -51,6 +53,7 @@
     <EmbeddedResource Include="Images\Icons\EmailContent.png" />
     <EmbeddedResource Include="Images\Icons\icon2.png" />
     <EmbeddedResource Include="Images\Icons\logo1.jpeg" />
+    <EmbeddedResource Include="Images\Icons\NotAvailable.png" />
     <EmbeddedResource Include="Images\Icons\ok.png" />
     <EmbeddedResource Include="Images\Icons\okfixed.png" />
     <EmbeddedResource Include="Images\Icons\settings-icon.png" />
@@ -105,6 +108,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\CreateEventPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\EditProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\EventRegistrationFormsPage.xaml">
