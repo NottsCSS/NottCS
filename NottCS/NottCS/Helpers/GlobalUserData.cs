@@ -9,7 +9,7 @@ namespace NottCS.Helpers
 {
     internal static class GlobalUserData
     {
-        public static User CurrentUser { get; set; } = null;
+        public static User CurrentUser = null;
         public static bool IsValidToken = false;
         public static async void ExpireTokenScheduler()
         {

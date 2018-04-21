@@ -25,15 +25,14 @@ namespace NottCS.ViewModels
         private bool _isValidStudentID = true;
         private bool _isValidLibraryNumber = true;
 
-        private User _currentUser = new User();
         private bool _isValidCourse = true;
         private string _selectedYearOfStudy;
 
         #endregion
-        public User CurrentUser
+        private User CurrentUser
         {
-            get => _currentUser;
-            set => SetProperty(ref _currentUser, value);
+            get => GlobalUserData.CurrentUser;
+            set => SetProperty(ref GlobalUserData.CurrentUser, value);
         }
 
         public ValidatableObject<string> StudentID { get; set; } = new ValidatableObject<string>()
@@ -141,7 +140,7 @@ namespace NottCS.ViewModels
                     DebugService.WriteLine($"Respond from server is : {userData.Item1}");
                     if (userData.Item1 == "OK")
                     {
-                        await NavigationService.BackUntilAsync<HomeViewModel>();
+                        await NavigationService.NavigateToAsync<HomeViewModel>();
                     }
                     else
                     {

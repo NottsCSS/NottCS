@@ -41,8 +41,9 @@ namespace NottCS.ViewModels
                 if (navigationData is Task<User> userDataTask)
                 {
                     var userData = await userDataTask;
-                    await Task.Run(() => SetProfileData(userData));
+                    GlobalUserData.CurrentUser = userData;
                 }
+                await Task.Run(() => SetProfileData());
             }
             catch (Exception e)
             {
@@ -195,20 +196,17 @@ namespace NottCS.ViewModels
         /// <summary>
         /// Sets the data for the page
         /// </summary>
-        /// <param name="userData">Username for the account data</param>
-        private void SetProfileData(User userData)
+        private void SetProfileData()
         {
-            LoginUser = userData;
-            GlobalUserData.CurrentUser = userData;
-            DebugService.WriteLine($"HomeViewModel navigationData serialized: {JsonConvert.SerializeObject(LoginUser)}");
+            DebugService.WriteLine($"HomeViewModel navigationData serialized: {JsonConvert.SerializeObject(GlobalUserData.CurrentUser)}");
             DataList = new List<KeyValuePair<string, string>>()
             {
-                new KeyValuePair<string, string>("Name", LoginUser.Name),
-                new KeyValuePair<string, string>("Email", LoginUser.Email),
-                new KeyValuePair<string, string>("Student ID", LoginUser.StudentId),
-                new KeyValuePair<string, string>("Library Number", LoginUser.LibraryNumber),
-                new KeyValuePair<string, string>("Course", LoginUser.Course),
-                new KeyValuePair<string, string>("Year of Study", LoginUser.YearOfStudy)
+                new KeyValuePair<string, string>("Name", GlobalUserData.CurrentUser.Name),
+                new KeyValuePair<string, string>("Email", GlobalUserData.CurrentUser.Email),
+                new KeyValuePair<string, string>("Student ID", GlobalUserData.CurrentUser.StudentId),
+                new KeyValuePair<string, string>("Library Number", GlobalUserData.CurrentUser.LibraryNumber),
+                new KeyValuePair<string, string>("Course", GlobalUserData.CurrentUser.Course),
+                new KeyValuePair<string, string>("Year of Study", GlobalUserData.CurrentUser.YearOfStudy)
             };
         }
 
@@ -223,12 +221,6 @@ namespace NottCS.ViewModels
         }
         #endregion
         #region Profile Data Store
-        private User _loginUser;
-        private User LoginUser
-        {
-            get => _loginUser;
-            set => SetProperty(ref _loginUser, value);
-        }
 
         private List<KeyValuePair<string, string>> _dataList;
         public List<KeyValuePair<string, string>> DataList
