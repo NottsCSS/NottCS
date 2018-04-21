@@ -88,7 +88,6 @@ namespace NottCS.Services.REST
         public static async Task<Tuple<string, List<T>>> RequestGetAsync<T>(HttpClient optionalClient = null)
         {
             var client = optionalClient ?? Client;
-            var requestUri = UriGenerator<T>(HttpMethod.Get);
 
             var uriGenerateTask = Task.FromResult(UriGenerator<T>(HttpMethod.Get));
             var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Get, uriGenerateTask);
