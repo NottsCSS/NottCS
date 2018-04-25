@@ -11,17 +11,13 @@ namespace NottCS.Models
 {
     public enum EventStatus
     {
-        [EnumMember(Value = "PD")]
-        Pending,
+        Pending = 0,
 
-        [EnumMember(Value = "ST")]
-        Started,
+        Started = 1,
 
-        [EnumMember(Value = "ED")]
-        Ended,
+        Ended = 3,
 
-        [EnumMember(Value = "CC")]
-        Canceled
+        Canceled = 4
     }
 
     public class Event
@@ -40,7 +36,6 @@ namespace NottCS.Models
         public DateTime CreatedTimeStamp { get; set; }
 
         [JsonProperty(PropertyName = "status")]
-        [JsonConverter(typeof(StringEnumConverter))]
         public EventStatus Status { get; set; }
 
         [JsonProperty(PropertyName = "image")]
@@ -50,9 +45,9 @@ namespace NottCS.Models
         public string Venue { get; set; }
 
         [JsonProperty(PropertyName = "organizing_club")]
-        public Club OrganizingClub { get; set; }
+        public string OrganizingClub { get; set; }
 
         [JsonProperty(PropertyName = "organizing_chairman")]
-        public User OrganizingChairman { get; set; }
+        public string OrganizingChairman { get; set; }
     }
 }

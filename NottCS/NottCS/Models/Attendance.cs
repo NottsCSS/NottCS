@@ -9,11 +9,9 @@ namespace NottCS.Models
 {
     internal enum AttendanceStatus
     {
-        [EnumMember(Value = "ABSENT")]
-        Absent,
+        Absent = 0,
 
-        [EnumMember(Value = "PRESENT")]
-        Present
+        Present = 1
     }
 
     internal class Attendance
@@ -22,16 +20,15 @@ namespace NottCS.Models
         public string Id { get; set; }
 
         [JsonProperty(PropertyName = "attendance")]
-        [JsonConverter(typeof(StringEnumConverter))]
         public AttendanceStatus AttendanceStatus { get; set; }
 
         [JsonProperty(PropertyName = "feedback")]
         public string Feedback { get; set; }
 
         [JsonProperty(PropertyName = "participant")]
-        public Participant Participant { get; set; }
+        public string Participant { get; set; }
 
         [JsonProperty(PropertyName = "event_time")]
-        public EventTime EventTime { get; set; }
+        public string EventTime { get; set; }
     }
 }

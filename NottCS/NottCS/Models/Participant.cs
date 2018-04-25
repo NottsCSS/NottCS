@@ -17,9 +17,9 @@ namespace NottCS.Models
         public string AdditionalInfo { get; set; }
 
         [JsonProperty(PropertyName = "user")]
-        public User User { get; set; }
+        public string User { get; set; }
 
         [JsonProperty(PropertyName = "event")]
-        public Event Event { get; set; }
+        public string Event { get; set; }
     }
 }

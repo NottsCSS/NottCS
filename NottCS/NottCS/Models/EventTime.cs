@@ -11,7 +11,7 @@ namespace NottCS.Models
         public string Id { get; set; }
 
         [JsonProperty(PropertyName = "event")]
-        public Event Event { get; set; }
+        public string Event { get; set; }
 
         [JsonProperty(PropertyName = "start_time")]
         public DateTime StartTime { get; set; }

@@ -3,19 +3,26 @@ using Newtonsoft.Json;
 
 namespace NottCS.Models
 {
+    internal enum MemberStatus
+    {
+        Pending = 0,
+        Approved = 1,
+        Canceled = 2
+    }
+
     internal class ClubMember
     {
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         [JsonProperty(PropertyName = "user")]
-        public User User { get; set; }
+        public string User { get; set; }
 
         [JsonProperty(PropertyName = "club")]
-        public Club Club { get; set; }
+        public string Club { get; set; }
 
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; set; }
+        public MemberStatus Status { get; set; }
 
         [JsonProperty(PropertyName = "position")]
         public string Position { get; set; }
