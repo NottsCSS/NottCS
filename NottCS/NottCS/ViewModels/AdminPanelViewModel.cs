@@ -60,7 +60,7 @@ namespace NottCS.ViewModels
         {
             try
             {
-                await NavigationService.NavigateToAsync<CreateEventViewModel>();
+                await NavigationService.NavigateToAsync<CreateEventViewModel3>();
                 DebugService.WriteLine("Initiated navigation to CreateEventPage");
             }
             catch (Exception e)

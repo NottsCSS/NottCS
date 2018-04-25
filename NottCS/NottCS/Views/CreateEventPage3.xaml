@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.CreateEventPage3"
+             Title="{Binding Title}"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+             xmlns:models="clr-namespace:NottCS.Models;assembly=NottCS"
+             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+             xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             d:DataContext="{d:DesignInstance viewModels:CreateEventViewModel3}">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <ScrollView x:Name="MainStack"
+                         Grid.Row="0">
+                <StackLayout>
+                    <Label Text="Please provide the information requires below to create an event instance."
+                           VerticalOptions="Center"
+                           HorizontalOptions="StartAndExpand"
+                           FontSize="Medium"/>
+                    <TableView x:Name="TableView"
+                               Intent="Menu"
+                               HeightRequest="1000">
+                        <TableRoot>
+                            <TableSection Title="Event Details">
+                                <ViewCell>
+                                    <Entry Placeholder="Enter Your Event Name Here"
+                                          Text="{Binding EventName}"/>
+                                </ViewCell>
+                                <ViewCell>
+                                    <Image Source="{Binding ImgSrc}"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Fill"/>
+                                </ViewCell>
+                                <ViewCell>
+                                    <Button Text="Add a poster"
+                                            Command="{Binding MediaPicker}"/>
+                                </ViewCell>
+                            </TableSection>
+                    <TableSection Title="Date and Time"
+                                  x:Name="Section2">
+                        <ViewCell>
+                            <Button x:Name="AddDateorTime"
+                                    Text="Add an event date and time"
+                                    MinimumHeightRequest="30"
+                                    VerticalOptions="Start"/>
+                        </ViewCell>
+                    </TableSection>
+                            </TableRoot>
+                        </TableView>
+                    </StackLayout>
+            </ScrollView>
+            <StackLayout Grid.Row="1"
+                         VerticalOptions="End">
+                <Button Text="Next Step"
+                        Command="{Binding NextPageNavigation}">
+                    <Button.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="Android" Value="2"/>
+                            <On Platform="iOS" Value="2,2,2,20"/>
+                            <On Platform="UWP" Value="2"/>
+                        </OnPlatform>
+                    </Button.Margin>
+                </Button>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

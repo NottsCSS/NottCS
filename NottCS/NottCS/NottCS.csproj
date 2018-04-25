@@ -32,6 +32,8 @@
     <Compile Include="ViewModels\ClubViewModel.cs" />
     <Compile Include="ViewModels\CreateEventConfirmationViewModel.cs" />
     <Compile Include="ViewModels\CreateEventViewModel.cs" />
+    <Compile Include="ViewModels\CreateEventViewModel2.cs" />
+    <Compile Include="ViewModels\CreateEventViewModel3.cs" />
     <Compile Include="ViewModels\EditProfileViewModel.cs" />
     <Compile Include="ViewModels\EventRegistrationFormsViewModel.cs" />
     <Compile Include="ViewModels\EventRegistrationSuccessViewModel.cs" />
@@ -72,6 +74,9 @@
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\CreateEventPage2.xaml.cs">
+      <DependentUpon>CreateEventPage2.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\EventRegistrationPage.xaml.cs">
       <DependentUpon>EventRegistrationPage.xaml</DependentUpon>
     </Compile>
@@ -104,10 +109,16 @@
     <EmbeddedResource Update="Views\ClubPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\CreateEventPage2.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\CreateEventConfirmationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\CreateEventPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\CreateEventPage3.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\EditProfilePage.xaml">

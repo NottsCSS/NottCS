@@ -121,8 +121,13 @@
 
     <ContentPage Title="{Binding PageTitle2}">
         <StackLayout>
+            <Label Text="Currently Viewing:"
+                   FontSize="Medium"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="Center"
+                   Margin="2,2,2,0"/>
             <Picker HorizontalOptions="FillAndExpand"
-                    Margin="5,5"
+                    Margin="5,0,5,5"
                     MinimumHeightRequest="50"
                     ItemsSource="{Binding ClubListTypePickerList}"
                     SelectedIndex="{Binding SelectedClubTypeIndex}" />
