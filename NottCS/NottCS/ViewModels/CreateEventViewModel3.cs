@@ -26,6 +26,21 @@ namespace NottCS.ViewModels
             public DateTime StartTime;
             public DateTime EndTime;
         }
+        //private DateTime testingDate;
+        //public DateTime TestingDate
+        //{
+        //    get { return testingDate; }
+        //    set
+        //    {
+        //        testingDate = value;
+        //        OnPropertyChanged("TestingDate");   //Call INPC Interface when property changes, so the view will know it has to update
+        //    }
+        //}
+
+        //private void ChangeDate(DateTime newDate)
+        //{
+        //    TestingDate = newDate;  //Assing your new date to your property
+        //}
         public string Name { get; set; }
         public string Description { get; set; }
         public string EventName { get; set; }
@@ -33,7 +48,7 @@ namespace NottCS.ViewModels
         public ICommand Upload => new Command(UploadButtonClicked);
         public ICommand NextPageNavigation => new Command(async() => await(DoStuff()));
         public ICommand BindingDateandTimeCommand => new Command(BindingDateandTime);
-        public List<EventTime> ListofDateandTime = new List<EventTime>()
+        public ObservableCollection<EventTime> ListofDateandTime = new ObservableCollection<EventTime>()
         {
             new EventTime()
         };
@@ -48,13 +63,13 @@ namespace NottCS.ViewModels
             {
                 await NavigationService.NavigateToAsync<CreateEventViewModel>();
                 DebugService.WriteLine("Initiated navigation to CreateEventPage");
+                //DebugService.WriteLine("Start Date   " + TestingDate);
                 foreach (var stuff in ListofDateandTime)
                 {
-                    DebugService.WriteLine("Start Date"+stuff.StartDate);
-                    DebugService.WriteLine("End Date" + stuff.EndDate);
-                    DebugService.WriteLine("Start Time" + stuff.StartTime);
-                    DebugService.WriteLine("End Time" + stuff.EndTime);
-
+                    DebugService.WriteLine("Start Date   " + stuff.StartDate.Day + "/" + stuff.StartDate.Month + "/" + stuff.StartDate.Year);
+                    DebugService.WriteLine("End Date   " + stuff.StartDate.Day + "/" + stuff.StartDate.Month + "/" + stuff.StartDate.Year);
+                    DebugService.WriteLine("Start Time   " + stuff.StartTime.Hour + ":" + stuff.StartTime.Minute + ":" + stuff.StartTime.Second);
+                    DebugService.WriteLine("End Time   " + stuff.StartTime.Hour + ":" + stuff.StartTime.Minute + ":" + stuff.StartTime.Second);
                 }
             }
             catch (Exception e)

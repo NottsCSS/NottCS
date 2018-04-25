@@ -20,7 +20,7 @@ namespace NottCS.Views
 		    BindingContext = new CreateEventViewModel3();
 			InitializeComponent ();
 		    InitializeTableViewSection2();
-		    AddDateorTime.Pressed += ButtonPressed;
+		    //AddDateorTime.Pressed += ButtonPressed;
 		}
 
 	    private void InitializeTableViewSection2()
@@ -28,19 +28,19 @@ namespace NottCS.Views
 	        StackLayout StartDateandTime = new StackLayout() { Orientation = StackOrientation.Horizontal };
 	        StartDateandTime.Children.Add(new Label() { Text = "Start: " });
             DatePicker StartDate = new DatePicker();
-            StartDate.SetBinding(DatePicker.DateProperty,new Binding("((CreateEventViewModel3)BindingContext).ListofDateandTime[element].StartDate",BindingMode.TwoWay,new DateTimeToTimeSpanConverter(),null,null));
+            StartDate.SetBinding(DatePicker.DateProperty,new Binding("ListofDateandTime[element].StartDate", BindingMode.TwoWay, new DateTimeToDateTimeOffsetConverter(), null,null, (CreateEventViewModel3)BindingContext));
 	        StartDateandTime.Children.Add(StartDate);
 	        TimePicker StartTime = new TimePicker();
-	        StartTime.SetBinding(TimePicker.TimeProperty, new Binding("((CreateEventViewModel3)BindingContext).ListofDateandTime[element].StartTime", BindingMode.OneWay, new DateTimeToDateTimeOffsetConverter(), null, null));
+	        StartTime.SetBinding(TimePicker.TimeProperty, new Binding("ListofDateandTime[element].StartTime", BindingMode.OneWay, new DateTimeToDateTimeOffsetConverter(), null,null,(CreateEventViewModel3)BindingContext));
 	        StartDateandTime.Children.Add(StartTime);
 
             StackLayout EndDateandTime = new StackLayout() { Orientation = StackOrientation.Horizontal };
 	        EndDateandTime.Children.Add(new Label() { Text = "End: " });
 	        DatePicker EndDate = new DatePicker();
-	        EndDate.SetBinding(DatePicker.DateProperty, new Binding("((CreateEventViewModel3)BindingContext).ListofDateandTime[element].EndDate", BindingMode.TwoWay, new DateTimeToTimeSpanConverter(), null, null));
+	        EndDate.SetBinding(DatePicker.DateProperty, new Binding("ListofDateandTime[element].EndDate", BindingMode.TwoWay, new DateTimeToTimeSpanConverter(), null, null, (CreateEventViewModel3)BindingContext));
 	        EndDateandTime.Children.Add(EndDate);
 	        TimePicker EndTime = new TimePicker();
-	        EndTime.SetBinding(TimePicker.TimeProperty, new Binding("((CreateEventViewModel3)BindingContext).ListofDateandTime[element].EndTime", BindingMode.OneWay, new DateTimeToDateTimeOffsetConverter(), null, null));
+	        EndTime.SetBinding(TimePicker.TimeProperty, new Binding("ListofDateandTime[element].EndTime", BindingMode.OneWay, new DateTimeToDateTimeOffsetConverter(), null, null, (CreateEventViewModel3)BindingContext));
 	        EndDateandTime.Children.Add(EndTime);
 
 
@@ -63,20 +63,25 @@ namespace NottCS.Views
 	            StackLayout StartDateandTime = new StackLayout() { Orientation = StackOrientation.Horizontal };
 	            StartDateandTime.Children.Add(new Label() { Text = "Start: " });
 	            DatePicker StartDate = new DatePicker();
-	            StartDate.SetBinding(DatePicker.DateProperty, new Binding("((CreateEventViewModel3)BindingContext).ListofDateandTime[element].StartDate", BindingMode.TwoWay, new DateTimeToTimeSpanConverter(), null, null));
+                StartDate.SetBinding(DatePicker.DateProperty, new Binding("ListofDateandTime[element].StartDate", BindingMode.TwoWay, new DateTimeToTimeSpanConverter(), null, null, (CreateEventViewModel3)BindingContext));
 	            StartDateandTime.Children.Add(StartDate);
 	            TimePicker StartTime = new TimePicker();
-	            StartTime.SetBinding(TimePicker.TimeProperty, new Binding("((CreateEventViewModel3)BindingContext).ListofDateandTime[element].StartTime", BindingMode.OneWay, new DateTimeToDateTimeOffsetConverter(), null, null));
+	            StartTime.SetBinding(TimePicker.TimeProperty, new Binding("ListofDateandTime[element].StartTime", BindingMode.OneWay, new DateTimeToDateTimeOffsetConverter(),null,null, (CreateEventViewModel3)BindingContext));
 	            StartDateandTime.Children.Add(StartTime);
 
 	            StackLayout EndDateandTime = new StackLayout() { Orientation = StackOrientation.Horizontal };
 	            EndDateandTime.Children.Add(new Label() { Text = "End: " });
 	            DatePicker EndDate = new DatePicker();
-	            EndDate.SetBinding(DatePicker.DateProperty, new Binding("((CreateEventViewModel3)BindingContext).ListofDateandTime[element].EndDate", BindingMode.TwoWay, new DateTimeToTimeSpanConverter(), null, null));
+	            EndDate.SetBinding(DatePicker.DateProperty, new Binding("ListofDateandTime[element].EndDate", BindingMode.TwoWay, new DateTimeToTimeSpanConverter(), null, null, (CreateEventViewModel3)BindingContext));
 	            EndDateandTime.Children.Add(EndDate);
 	            TimePicker EndTime = new TimePicker();
-	            EndTime.SetBinding(TimePicker.TimeProperty, new Binding("((CreateEventViewModel3)BindingContext).ListofDateandTime[element].EndTime", BindingMode.OneWay, new DateTimeToDateTimeOffsetConverter(), null, null));
+	            EndTime.SetBinding(TimePicker.TimeProperty, new Binding("ListofDateandTime[element].EndTime", BindingMode.OneWay, new DateTimeToDateTimeOffsetConverter(), null, null, (CreateEventViewModel3)BindingContext));
 	            EndDateandTime.Children.Add(EndTime);
+
+	            ViewCell StartDateandTimeCell = new ViewCell() { View = StartDateandTime };
+	            ViewCell EndDateandTimeCell = new ViewCell() { View = EndDateandTime };
+	            Section2.Insert(Section2.Count - 1, StartDateandTimeCell);
+	            Section2.Insert(Section2.Count - 1, EndDateandTimeCell);
             }
 	        catch (Exception e)
 	        {
