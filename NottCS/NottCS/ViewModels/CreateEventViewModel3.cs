@@ -48,6 +48,8 @@ namespace NottCS.ViewModels
         public ICommand Upload => new Command(UploadButtonClicked);
         public ICommand NextPageNavigation => new Command(async() => await(DoStuff()));
         public ICommand BindingDateandTimeCommand => new Command(BindingDateandTime);
+        public ICommand DateTimeChangedCommand => new Command(DateTimeChanged);
+
         public ObservableCollection<EventTime> ListofDateandTime = new ObservableCollection<EventTime>()
         {
             new EventTime()
@@ -56,6 +58,16 @@ namespace NottCS.ViewModels
         {
             ListofDateandTime.Add(new EventTime());
         }
+
+        public void DateTimeChanged(object index)
+        {
+            DebugService.WriteLine("Command called");
+            if (index is int listIndex)
+            {
+                DebugService.WriteLine("Command detected eventargs");
+            }
+        }
+
 
         public async Task DoStuff()
         {
