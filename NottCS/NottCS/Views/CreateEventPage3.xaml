@@ -48,6 +48,7 @@
                                   x:Name="Section2">
                         <ViewCell>
                             <Button x:Name="AddDateorTime"
+                                    Pressed="ButtonPressed"
                                     Text="Add an event date and time"
                                     MinimumHeightRequest="30"
                                     VerticalOptions="Start"/>

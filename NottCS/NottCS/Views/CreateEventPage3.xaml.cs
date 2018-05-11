@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using NottCS.Converters;
 using NottCS.Services;
 using NottCS.ViewModels;
@@ -22,74 +23,53 @@ namespace NottCS.Views
 		    BindingContext = new CreateEventViewModel3();
 			InitializeComponent ();
 		    InitializeTableViewSection2();
-		    //AddDateorTime.Pressed += ButtonPressed;
 		}
 
 	    private void InitializeTableViewSection2()
 	    {
-	        StackLayout startDateandTime = new StackLayout() { Orientation = StackOrientation.Horizontal };
+	        StackLayout startDateandTime = new StackLayout() { Orientation = StackOrientation.Horizontal};
 	        startDateandTime.Children.Add(new Label() { Text = "Start: " });
 
             DatePicker startDate = new DatePicker();
-	        startDate.PropertyChanged += DateTimePropertyChanged;
-	        startDateandTime.Children.Add(startDate);
 	        _dateTimeIdentifier.Add(startDate.GetHashCode(), _element);
+            startDate.PropertyChanged += DateTimePropertyChanged;
+	        startDate.SetValue(DatePicker.DateProperty, DateTime.Today);
+            startDateandTime.Children.Add(startDate);
 
 	        TimePicker startTime = new TimePicker();
-	        startTime.PropertyChanged += DateTimePropertyChanged;
+	        _dateTimeIdentifier.Add(startTime.GetHashCode(), _element + 1);
+            startTime.PropertyChanged += DateTimePropertyChanged;
             startDateandTime.Children.Add(startTime);
-	        _dateTimeIdentifier.Add(startTime.GetHashCode(), _element+1);
 
             StackLayout endDateandTime = new StackLayout() { Orientation = StackOrientation.Horizontal };
 	        endDateandTime.Children.Add(new Label() { Text = "End: " });
 
 	        DatePicker endDate = new DatePicker();
-	        endDate.PropertyChanged += DateTimePropertyChanged;
+	        _dateTimeIdentifier.Add(endDate.GetHashCode(), _element + 2);
+            endDate.PropertyChanged += DateTimePropertyChanged;
             endDateandTime.Children.Add(endDate);
-	        _dateTimeIdentifier.Add(endDate.GetHashCode(), _element+2);
 
             TimePicker endTime = new TimePicker();
-	        endTime.PropertyChanged += DateTimePropertyChanged;
+	        _dateTimeIdentifier.Add(endTime.GetHashCode(), _element + 3);
+            endTime.PropertyChanged += DateTimePropertyChanged;
             endDateandTime.Children.Add(endTime);
-	        _dateTimeIdentifier.Add(endTime.GetHashCode(), _element+3);
-            
-
+//            
+//
             ViewCell startDateandTimeCell = new ViewCell() { View = startDateandTime };
 	        ViewCell endDateandTimeCell = new ViewCell() { View = endDateandTime };
 	        Section2.Insert(Section2.Count - 1, startDateandTimeCell);
 	        Section2.Insert(Section2.Count - 1, endDateandTimeCell);
-        }
+	    }
 
 	    private void DateTimePropertyChanged(object sender, EventArgs args)
 	    {
 	        var pickerId = _dateTimeIdentifier[sender.GetHashCode()];
-	        var index = pickerId / 4; //assume this is floored
 
-	        TimeSpan val;
-            DateTime val1;
-	        switch (pickerId % 4)
+	        Tuple<int, object> data = new Tuple<int, object>(pickerId, sender);
+
+	        if (((CreateEventViewModel3)BindingContext).DateTimeChangedCommand.CanExecute(data))
 	        {
-                case 0: //Start Date
-                    val1 = ((DatePicker) sender).Date;
-                    break;
-                case 1: //Start Time
-                    val = ((TimePicker)sender).Time;
-                    break;
-	            case 2: //End Date
-	                val1 = ((DatePicker)sender).Date;
-	                break;
-	            case 3: //End Time
-	                val = ((TimePicker)sender).Time;
-	                break;
-            }
-
-
-
-
-            
-	        if (((CreateEventViewModel3)BindingContext).DateTimeChangedCommand.CanExecute(args))
-	        {
-	            ((CreateEventViewModel3)BindingContext).DateTimeChangedCommand.Execute(args);
+	            ((CreateEventViewModel3)BindingContext).DateTimeChangedCommand.Execute(data);
             }
         }
 
@@ -109,34 +89,34 @@ namespace NottCS.Views
 	            startDateandTime.Children.Add(new Label() { Text = "Start: " });
 
 	            DatePicker startDate = new DatePicker();
+	            _dateTimeIdentifier.Add(startDate.GetHashCode(), _element);
 	            startDate.PropertyChanged += DateTimePropertyChanged;
 	            startDateandTime.Children.Add(startDate);
-	            _dateTimeIdentifier.Add(startDate.GetHashCode(), _element);
 
 	            TimePicker startTime = new TimePicker();
+	            _dateTimeIdentifier.Add(startTime.GetHashCode(), _element + 1);
 	            startTime.PropertyChanged += DateTimePropertyChanged;
 	            startDateandTime.Children.Add(startTime);
-	            _dateTimeIdentifier.Add(startTime.GetHashCode(), _element+1);
 
 	            StackLayout endDateandTime = new StackLayout() { Orientation = StackOrientation.Horizontal };
 	            endDateandTime.Children.Add(new Label() { Text = "End: " });
 
 	            DatePicker endDate = new DatePicker();
+	            _dateTimeIdentifier.Add(endDate.GetHashCode(), _element + 2);
 	            endDate.PropertyChanged += DateTimePropertyChanged;
 	            endDateandTime.Children.Add(endDate);
-	            _dateTimeIdentifier.Add(endDate.GetHashCode(), _element+2);
 
 	            TimePicker endTime = new TimePicker();
+	            _dateTimeIdentifier.Add(endTime.GetHashCode(), _element + 3);
 	            endTime.PropertyChanged += DateTimePropertyChanged;
 	            endDateandTime.Children.Add(endTime);
-	            _dateTimeIdentifier.Add(endTime.GetHashCode(), _element+3);
-
-
+	            //            
+	            //
 	            ViewCell startDateandTimeCell = new ViewCell() { View = startDateandTime };
 	            ViewCell endDateandTimeCell = new ViewCell() { View = endDateandTime };
 	            Section2.Insert(Section2.Count - 1, startDateandTimeCell);
 	            Section2.Insert(Section2.Count - 1, endDateandTimeCell);
-            }
+	        }
 	        catch (Exception e)
 	        {
 	            DebugService.WriteLine(e);

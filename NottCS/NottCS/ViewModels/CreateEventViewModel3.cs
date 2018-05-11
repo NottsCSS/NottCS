@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Acr.UserDialogs;
+using Newtonsoft.Json;
 using NottCS.Services;
 using NottCS.Services.Navigation;
 using NottCS.Services.REST;
@@ -21,10 +22,8 @@ namespace NottCS.ViewModels
         private byte[] _image = null;
         public class EventTime
         {
-            public DateTime StartDate;
-            public DateTime EndDate;
-            public DateTime StartTime;
-            public DateTime EndTime;
+            public DateTime StartDateTime;
+            public DateTime EndDateTime;
         }
         //private DateTime testingDate;
         //public DateTime TestingDate
@@ -59,12 +58,42 @@ namespace NottCS.ViewModels
             ListofDateandTime.Add(new EventTime());
         }
 
-        public void DateTimeChanged(object index)
+        public void DateTimeChanged(object data)
         {
-            DebugService.WriteLine("Command called");
-            if (index is int listIndex)
+            if (data is Tuple<int, object> dataTuple)
             {
-                DebugService.WriteLine("Command detected eventargs");
+                int pickerId = dataTuple.Item1;
+                int index = pickerId / 4;
+                object sender = dataTuple.Item2;
+                DateTime previousStartDateTime = ListofDateandTime[index].StartDateTime;
+                DateTime previousEndDateTime = ListofDateandTime[index].EndDateTime;
+                switch (pickerId % 4)
+                {
+                    case 0: //Start Date
+                        var newStartDate = ((DatePicker)sender).Date;
+                        var previousStartTime = previousStartDateTime.TimeOfDay;
+                        ListofDateandTime[index].StartDateTime = newStartDate.Add(previousStartTime);
+                        DebugService.WriteLine($"New start dateTime: {ListofDateandTime[index].StartDateTime}");
+                        break;
+                    case 1: //Start Time
+                        var newStartTime = ((TimePicker)sender).Time;
+                        var previousStartDate = previousStartDateTime.Date;
+                        ListofDateandTime[index].StartDateTime = previousStartDate.Add(newStartTime);
+                        DebugService.WriteLine($"New start dateTime: {ListofDateandTime[index].StartDateTime}");
+                        break;
+                	case 2: //End Date
+	                    var newEndDate = ((DatePicker)sender).Date;
+	                    var previousEndTime = previousEndDateTime.TimeOfDay;
+	                    ListofDateandTime[index].EndDateTime = newEndDate.Add(previousEndTime);
+	                    DebugService.WriteLine($"New end dateTime: {ListofDateandTime[index].EndDateTime}");
+                        break;
+                	case 3: //End Time
+	                    var newEndTime = ((TimePicker)sender).Time;
+	                    var previousEndDate = previousEndDateTime.Date;
+	                    ListofDateandTime[index].EndDateTime = previousEndDate.Add(newEndTime);
+	                    DebugService.WriteLine($"New end dateTime: {ListofDateandTime[index].EndDateTime}");
+                        break;
+                }
             }
         }
 
@@ -76,12 +105,12 @@ namespace NottCS.ViewModels
                 await NavigationService.NavigateToAsync<CreateEventViewModel>();
                 DebugService.WriteLine("Initiated navigation to CreateEventPage");
                 //DebugService.WriteLine("Start Date   " + TestingDate);
-                foreach (var stuff in ListofDateandTime)
+                foreach (var eventDateTime in ListofDateandTime)
                 {
-                    DebugService.WriteLine("Start Date   " + stuff.StartDate.Day + "/" + stuff.StartDate.Month + "/" + stuff.StartDate.Year);
-                    DebugService.WriteLine("End Date   " + stuff.StartDate.Day + "/" + stuff.StartDate.Month + "/" + stuff.StartDate.Year);
-                    DebugService.WriteLine("Start Time   " + stuff.StartTime.Hour + ":" + stuff.StartTime.Minute + ":" + stuff.StartTime.Second);
-                    DebugService.WriteLine("End Time   " + stuff.StartTime.Hour + ":" + stuff.StartTime.Minute + ":" + stuff.StartTime.Second);
+                    var endDateTimeJson = JsonConvert.SerializeObject(eventDateTime.EndDateTime);
+                    var startDateTimeJson = JsonConvert.SerializeObject(eventDateTime.StartDateTime);
+                    DebugService.WriteLine($"Start date time: {startDateTimeJson}");
+                    DebugService.WriteLine($"End date time: {endDateTimeJson}");
                 }
             }
             catch (Exception e)
