@@ -29,20 +29,46 @@
                     Grid.Column="0"
                     Placeholder="Enter your suggestion here"
                     VerticalOptions="FillAndExpand"            
-                    HorizontalOptions ="FillAndExpand"/>
-            <Label Grid.Row="3"
-                   Margin="5,0"
-                   Text ="Report an Issue"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="StartAndExpand"
-                   FontSize="Large"/>
+                    HorizontalOptions ="FillAndExpand">
+                <Entry.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS">80</On>
+                        <On Platform="Android,Windows">70</On>
+                    </OnPlatform>
+                </Entry.WidthRequest>
+                <Entry.HeightRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS">80</On>
+                        <On Platform="Android,Windows">70</On>
+                    </OnPlatform>
+                </Entry.HeightRequest>
+            </Entry>
+            <Label  Grid.Row="3"
+                    Margin="5,0"
+                    Text ="Report an Issue"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="StartAndExpand"
+                    FontSize="Large"/>
             <Entry  FontSize="Large"
                     Grid.Row="4"
                     Grid.Column="0"
                     Margin="5,0"
                     VerticalOptions="FillAndExpand"
                     HorizontalOptions="FillAndExpand"
-                    Placeholder="Enter your issues here"/>
+                    Placeholder="Enter your issues here">
+                <Entry.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS">80</On>
+                        <On Platform="Android,Windows">70</On>
+                    </OnPlatform>
+                </Entry.WidthRequest>
+                <Entry.HeightRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS">80</On>
+                        <On Platform="Android,Windows">70</On>
+                    </OnPlatform>
+                </Entry.HeightRequest>
+            </Entry>
             <Button Text="Submit"
                     Grid.Row="6"
                     Style="{StaticResource SpanButtonStyle}"
