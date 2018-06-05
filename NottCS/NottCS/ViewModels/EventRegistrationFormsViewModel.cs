@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using System.Threading.Tasks;
 using NottCS.Services;
 using NottCS.Services.Navigation;
+using NottCS.Helpers;
 
 namespace NottCS.ViewModels
 {
@@ -15,19 +16,23 @@ namespace NottCS.ViewModels
         {
             new Item()
             {
-                FilledInformation ="Name"
+                FilledInformation ="Name",
+                Information = GlobalUserData.CurrentUser.Name
             },
             new Item()
             {
-                FilledInformation="Student ID"
+                FilledInformation="Student ID",
+                Information = GlobalUserData.CurrentUser.StudentId
             },
             new Item()
             {
-                FilledInformation="OWA"
+                FilledInformation="OWA",
+                Information = GlobalUserData.CurrentUser.Email
             },
             new Item()
             {
-                FilledInformation="Stuff"
+                FilledInformation="Stuff",
+                Information = GlobalUserData.CurrentUser.LibraryNumber
             }
         };
 
