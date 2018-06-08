@@ -16,7 +16,6 @@ namespace NottCS
     //TODO:Add ability to edit profile(Need to update homepage profile)
     //TODO: implement my club(wait wen kang)
     //TODO: implement event for club(wait wen kang)
-    //TODO: refactor REST to probably use RestSharp
     //TODO: refactor club page for readability
     public partial class App : Application
 	{

@@ -16,33 +16,36 @@ namespace NottCS.ViewModels
         {
             new Item()
             {
-                FilledInformation ="Name",
+                FilledInformation = "Name",
                 Information = GlobalUserData.CurrentUser.Name
             },
             new Item()
             {
-                FilledInformation="Student ID",
+                FilledInformation = "Student ID",
                 Information = GlobalUserData.CurrentUser.StudentId
             },
             new Item()
             {
-                FilledInformation="OWA",
+                FilledInformation = "OWA",
                 Information = GlobalUserData.CurrentUser.Email
             },
             new Item()
             {
-                FilledInformation="Stuff",
+                FilledInformation = "Stuff",
                 Information = GlobalUserData.CurrentUser.LibraryNumber
             }
         };
 
         #region EventRegistrationNavigation
-        public ICommand SignUpCommand => new Command(async () => await Navigate());
-        private async Task Navigate()
+
+        public ICommand SignUpCommand => new Command(async () => await SignUpAndNavigate());
+
+        private async Task SignUpAndNavigate()
         {
+            IsBusy = true;
             try
             {
-                DoNothingForNow();
+                await SignUpAsync();
                 await NavigationService.NavigateToAsync<EventRegistrationSuccessViewModel>();
                 DebugService.WriteLine("Button pressed");
             }
@@ -50,9 +53,15 @@ namespace NottCS.ViewModels
             {
                 DebugService.WriteLine(e.Message);
             }
+            finally
+            {
+                IsBusy = false;
+            }
         }
+
         #endregion
-        public void DoNothingForNow()
+
+        public async Task SignUpAsync()
         {
 
             foreach (var item in TemporaryForms)
@@ -60,6 +69,7 @@ namespace NottCS.ViewModels
                 DebugService.WriteLine(item.Information);
             }
         }
+
         //public override Task InitializeAsync(object navigationData)
         //{
         //    if (navigationData is Item s)
@@ -68,18 +78,10 @@ namespace NottCS.ViewModels
         //    }
         //    return base.InitializeAsync(navigationData);
         //}
+
         #region Disable ItemSelectedCommand
-        public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
-        public void DisableItemSelected()
-        {
-        }
-        #endregion
-        #region EventRegistrationFormsViewModel Constructor
 
-        public EventRegistrationFormsViewModel()
-        {
-
-        }
+        public ICommand DisableItemSelectedCommand => new Command(() => { });
         #endregion
     }
 }

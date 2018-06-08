@@ -19,7 +19,7 @@ namespace NottCS.Converters
                 TimeSpan ts = dt - dt.Date;
                 return ts;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return TimeSpan.MinValue;
             }
