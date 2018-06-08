@@ -96,52 +96,6 @@ namespace NottCS.Services.REST
 
             
         }
-
-        private static async Task<HttpRequestMessage> HttpRequestMessageGenerator(HttpMethod httpMethod, Task<string> requestUriTask, object requestBody = null)
-        {
-            var isValidToken = false;
-            //            var isValidToken = await LoginService.SignInMicrosoftAsync();
-            bool globalTokenValidity = GlobalUserData.IsValidToken;
-            DebugService.WriteLine($"Global token valid: {globalTokenValidity}");
-            if (!globalTokenValidity)
-            {
-                DebugService.WriteLine("Token not valid, now trying to obtain new one");
-                isValidToken = await LoginService.SignInMicrosoftAsync();
-            }
-            else { isValidToken = true; }
-            if (!isValidToken)
-            {
-                DebugService.WriteLine("New Token not valid, now back to login page");
-                Navigation.NavigationService.ClearNavigation();
-                await Navigation.NavigationService.NavigateToAsync<LoginViewModel>();
-            }
-            #region ObjectValidator
-
-            if (httpMethod == HttpMethod.Post && requestBody == null)
-            {
-                DebugService.WriteLine("[BaseRestService] WARNING : No valid request body");
-            }
-
-            #endregion
-
-            var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
-            HttpRequestMessage httpRequest;
-            var requestUri = await requestUriTask;
-            if (httpMethod == HttpMethod.Get)
-            {
-                httpRequest = new HttpRequestMessage(httpMethod, requestUri);
-            }
-            else
-            {
-                httpRequest = new HttpRequestMessage(httpMethod, requestUri)
-                {
-                    Content = content
-                };
-            }
-            return httpRequest;
-
-
-        }
         /// <summary>
         /// Generates proper request Uri based on the method
         /// </summary>

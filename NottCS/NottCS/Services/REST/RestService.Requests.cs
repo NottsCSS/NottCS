@@ -55,8 +55,8 @@ namespace NottCS.Services.REST
             string errorMessage = null;
 
             var client = optionalClient ?? Client;
-            var uriGenerateTask = Task.Run(()=>UriGenerator<T>(HttpMethod.Get, identifier));
-            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Get, uriGenerateTask);
+            var uri = await Task.Run(()=>UriGenerator<T>(HttpMethod.Get, identifier));
+            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Get, uri);
 
             try
             {
@@ -89,8 +89,8 @@ namespace NottCS.Services.REST
         {
             var client = optionalClient ?? Client;
 
-            var uriGenerateTask = Task.FromResult(UriGenerator<T>(HttpMethod.Get));
-            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Get, uriGenerateTask);
+            var uri = await Task.Run(()=>UriGenerator<T>(HttpMethod.Get));
+            var httpRequest = await HttpRequestMessageGenerator(HttpMethod.Get, uri);
             string errorMessage = null;
             try
             {
