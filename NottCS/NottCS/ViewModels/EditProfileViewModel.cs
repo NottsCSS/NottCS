@@ -187,10 +187,10 @@ namespace NottCS.ViewModels
         {
             Title = "Edit Profile";
             AddCoursesToList();
-            StudentID.Value = GlobalUserData.CurrentUser.StudentId;
-            LibraryNumber.Value = GlobalUserData.CurrentUser.LibraryNumber;
-            Course.Value = GlobalUserData.CurrentUser.Course;
-            SelectedYearOfStudy = GlobalUserData.CurrentUser.YearOfStudy;
+            StudentID.Value = GlobalUserData.CurrentUser?.StudentId;
+            LibraryNumber.Value = GlobalUserData.CurrentUser?.LibraryNumber;
+            Course.Value = GlobalUserData.CurrentUser?.Course;
+            SelectedYearOfStudy = GlobalUserData.CurrentUser?.YearOfStudy;
         }
     }
 }

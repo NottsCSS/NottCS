@@ -1,7 +1,9 @@
-﻿using NottCS.Models;
+﻿using System;
+using NottCS.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using NottCS.Services;
 using NottCS.Validations;
 using Xamarin.Forms;
 
@@ -9,6 +11,8 @@ namespace NottCS.ViewModels
 {
     public class TestViewModel : BaseViewModel
     {
+//        private ObservableCollection<EventTime> _eventTimeList 
+
         #region Disable ItemSelectedCommand
         public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
         public void DisableItemSelected()
@@ -51,22 +55,35 @@ namespace NottCS.ViewModels
                 }
             }
         };
+
+        public ObservableCollection<EventTime> EventTimeList { get; set; } = new ObservableCollection<EventTime>()
+        {
+            new EventTime()
+            {
+                StartTime = DateTime.Now,
+                EndTime = DateTime.Now
+            }
+        };
+
         public ICommand SomeCommand => new Command(SomeFunction);
+        public ICommand AddCommand => new Command(AddItem);
+
+        private void AddItem()
+        {
+            var eventTime = new EventTime();
+            EventTimeList.Add(eventTime);
+            eventTime.StartTime = DateTime.Now;
+            eventTime.EndTime = DateTime.Now;
+        }
         private void SomeFunction()
         {
-            bool isValid = true;
-            foreach (var param in ParametersList)
+            DebugService.WriteLine("----------------");
+            foreach (var param in EventTimeList)
             {
-                if (!param.IsValid)
-                {
-                    Acr.UserDialogs.UserDialogs.Instance.Alert(param.ErrorMessage);
-                    isValid = false;
-                }
-            }
-
-            if (isValid)
-            {
-                //do stuff when all parameters are valid, contact server, navigate, etc.
+                DebugService.WriteLine(param.StartTime);
+                DebugService.WriteLine(param.EndTime);
+                DebugService.WriteLine(param.Id);
+                DebugService.WriteLine(param.Event);
             }
 
         }

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.CustomControls.EventDateTimePicker"
+             x:Name="EventDateTimePickerView">
+  <ContentView.Content>
+        <Grid BindingContext="{x:Reference EventDateTimePickerView}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="2" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label Text="{Binding Title}" 
+                   FontSize="Medium"
+                   FontAttributes="Bold"
+                   Grid.Row="0"
+                   Grid.ColumnSpan="3"
+                   Margin="0,10,0,0"/>
+
+            <BoxView HeightRequest="1"
+                     BackgroundColor="Black"
+                     Grid.Row="1"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="3" />
+
+            <Label Text="Start" 
+                   Grid.Row="2"
+                   Grid.Column="0"
+                   Margin="15,0,0,0"/>
+            <DatePicker Date="{Binding StartDate}"
+                        Grid.Row="2"
+                        Grid.Column="1" />
+            <TimePicker Time="{Binding StartTime}"
+                        Grid.Row="2"
+                        Grid.Column="2" />
+
+            <Label Text="End" 
+                   Grid.Row="3"
+                   Grid.Column="0"
+                   Margin="15,0,0,0"/>
+            <DatePicker Date="{Binding EndDate}"
+                        Grid.Row="3"
+                        Grid.Column="1" />
+            <TimePicker Time="{Binding EndTime}"
+                        Grid.Row="3"
+                        Grid.Column="2" />
+        </Grid>
+    </ContentView.Content>
+</ContentView>

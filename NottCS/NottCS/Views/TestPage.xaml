@@ -15,36 +15,32 @@
         <ResourceDictionary>
             <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
             <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
-            <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
+            <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>  
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <ListView ItemsSource="{Binding ParametersList}"
-                      Margin="3,3,0,0"
-                      RowHeight="100"
-                      x:Name="SomeList"
-                      ItemTapped="Nothing"
-                      >
+            <ListView ItemsSource="{Binding EventTimeList}" 
+                       Margin="3,3,0,0" 
+                       x:Name="SomeList"
+                       VerticalOptions="FillAndExpand"
+                       HorizontalOptions="FillAndExpand">
                 <ListView.Behaviors>
-                    <behaviors:EventToCommandBehavior 
-                        EventName="ItemSelected"
-                        Source="{x:Reference SomeList}" 
-                        Command="{Binding DisableItemSelectedCommand}"
-                        Converter="{StaticResource SelectedItemConverter}" />
+                    <behaviors:EventToCommandBehavior  
+                         EventName="ItemSelected" 
+                         Source="{x:Reference SomeList}"  
+                         Command="{Binding DisableItemSelectedCommand}" 
+                         Converter="{StaticResource SelectedItemConverter}" />
                 </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell Tapped="Nothing">
-                            <customControls:LabelledValidatableEntry Validations="{Binding ValidationList}"
-                                                                     Name="{Binding Name}"
-                                                                     Value="{Binding Value}"
-                                                                     IsValid="{Binding IsValid, Mode=TwoWay}"
-                                                                     ErrorMessage="{Binding ErrorMessage, Mode=TwoWay}"/>
+                        <ViewCell>
+                            <customControls:EventDateTimePicker EventTimeSlot="{Binding ., Mode=TwoWay}" Margin="3"/>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Button Command="{Binding AddCommand}" Text="Add"/>
             <Button Command="{Binding SomeCommand}" Text="Some Button"/>
         </StackLayout>
     </ContentPage.Content>

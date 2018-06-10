@@ -7,24 +7,32 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Acr.UserDialogs;
 using Newtonsoft.Json;
+using NottCS.Models;
 using NottCS.Services;
 using NottCS.Services.Navigation;
 using NottCS.Services.REST;
 using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Xamarin.Forms;
 
 namespace NottCS.ViewModels
 {
-    class CreateEventViewModel3:BaseViewModel
+    class CreateEventViewModel3 : BaseViewModel
     {
         private ImageSource _imgSrc;
 
         private byte[] _image = null;
-        public class EventTime
+
+        private ObservableCollection<EventTime> _eventTimeList = new ObservableCollection<EventTime>()
         {
-            public DateTime StartDateTime;
-            public DateTime EndDateTime;
-        }
+            new EventTime()
+            {
+                Id = "0",
+                Event = "3", //TODO: to be determined based on this event id
+                StartTime = DateTime.Now,
+                EndTime = DateTime.Now + new TimeSpan(0, 2, 0, 0)
+            }
+        };
         //private DateTime testingDate;
         //public DateTime TestingDate
         //{
@@ -45,57 +53,47 @@ namespace NottCS.ViewModels
         public string EventName { get; set; }
         public ICommand MediaPicker => new Command(MediaButtonClicked);
         public ICommand Upload => new Command(UploadButtonClicked);
-        public ICommand NextPageNavigation => new Command(async() => await(DoStuff()));
-        public ICommand BindingDateandTimeCommand => new Command(BindingDateandTime);
-        public ICommand DateTimeChangedCommand => new Command(DateTimeChanged);
+        public ICommand NextPageNavigation => new Command(async () => await (DoStuff()));
+        public ICommand AddEventTimeCommand => new Command(AddEventTime);
+        public ICommand PrintEventTimeCommand => new Command(PrintEventTime);
 
-        public ObservableCollection<EventTime> ListofDateandTime = new ObservableCollection<EventTime>()
+        public ICommand DisableItemSelectedCommand => new Command(() => { });
+
+        public ObservableCollection<EventTime> EventTimeList
         {
-            new EventTime()
-        };
-        public void BindingDateandTime()
-        {
-            ListofDateandTime.Add(new EventTime());
+            get => _eventTimeList;
+            set => SetProperty(ref _eventTimeList, value);
         }
 
-        public void DateTimeChanged(object data)
+        public EventTime TestEventTime { get; set; } = new EventTime()
         {
-            if (data is Tuple<int, object> dataTuple)
+            Id = "0",
+            Event = "3",
+            StartTime = DateTime.Now,
+            EndTime = DateTime.Now + new TimeSpan(0, 2, 0, 0)
+        };
+   
+
+        private void AddEventTime()
+        {
+            EventTimeList.Add(new EventTime()
             {
-                int pickerId = dataTuple.Item1;
-                int index = pickerId / 4;
-                object sender = dataTuple.Item2;
-                DateTime previousStartDateTime = ListofDateandTime[index].StartDateTime;
-                DateTime previousEndDateTime = ListofDateandTime[index].EndDateTime;
-                switch (pickerId % 4)
-                {
-                    case 0: //Start Date
-                        var newStartDate = ((DatePicker)sender).Date;
-                        var previousStartTime = previousStartDateTime.TimeOfDay;
-                        ListofDateandTime[index].StartDateTime = newStartDate.Add(previousStartTime);
-                        DebugService.WriteLine($"New start dateTime: {ListofDateandTime[index].StartDateTime}");
-                        break;
-                    case 1: //Start Time
-                        var newStartTime = ((TimePicker)sender).Time;
-                        var previousStartDate = previousStartDateTime.Date;
-                        ListofDateandTime[index].StartDateTime = previousStartDate.Add(newStartTime);
-                        DebugService.WriteLine($"New start dateTime: {ListofDateandTime[index].StartDateTime}");
-                        break;
-                	case 2: //End Date
-	                    var newEndDate = ((DatePicker)sender).Date;
-	                    var previousEndTime = previousEndDateTime.TimeOfDay;
-	                    ListofDateandTime[index].EndDateTime = newEndDate.Add(previousEndTime);
-	                    DebugService.WriteLine($"New end dateTime: {ListofDateandTime[index].EndDateTime}");
-                        break;
-                	case 3: //End Time
-	                    var newEndTime = ((TimePicker)sender).Time;
-	                    var previousEndDate = previousEndDateTime.Date;
-	                    ListofDateandTime[index].EndDateTime = previousEndDate.Add(newEndTime);
-	                    DebugService.WriteLine($"New end dateTime: {ListofDateandTime[index].EndDateTime}");
-                        break;
-                }
+                Id = "0",
+                Event = "3", //TODO: change this event to be based on current event id
+                StartTime = DateTime.Now,
+                EndTime = DateTime.Now + new TimeSpan(0,2,0,0)
+            });
+        }
+
+        private void PrintEventTime()
+        {
+            foreach (var eventTime in EventTimeList)
+            {
+                DebugService.WriteLine(eventTime.StartTime);
+                DebugService.WriteLine(eventTime.EndTime);
             }
         }
+        
 
 
         public async Task DoStuff()
@@ -105,12 +103,10 @@ namespace NottCS.ViewModels
                 await NavigationService.NavigateToAsync<CreateEventViewModel>();
                 DebugService.WriteLine("Initiated navigation to CreateEventPage");
                 //DebugService.WriteLine("Start Date   " + TestingDate);
-                foreach (var eventDateTime in ListofDateandTime)
+                foreach (var eventDateTime in EventTimeList)
                 {
-                    var endDateTimeJson = JsonConvert.SerializeObject(eventDateTime.EndDateTime);
-                    var startDateTimeJson = JsonConvert.SerializeObject(eventDateTime.StartDateTime);
-                    DebugService.WriteLine($"Start date time: {startDateTimeJson}");
-                    DebugService.WriteLine($"End date time: {endDateTimeJson}");
+                    var eventDateTimeJson = JsonConvert.SerializeObject(eventDateTime);
+                    DebugService.WriteLine($"Event date time: {eventDateTimeJson}");
                 }
             }
             catch (Exception e)
@@ -144,21 +140,34 @@ namespace NottCS.ViewModels
                 UserDialogs.Instance.Alert(":( Permission not granted to photos.", "Photos Not Supported", "OK");
                 return;
             }
-            var file = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
+
+            MediaFile file = null;
+            try
             {
-                //                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
-                PhotoSize = Plugin.Media.Abstractions.PhotoSize.MaxWidthHeight,
-                MaxWidthHeight = 100
-            });
+
+                file = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(
+                    new Plugin.Media.Abstractions.PickMediaOptions
+                    {
+                        //                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
+                        PhotoSize = Plugin.Media.Abstractions.PhotoSize.MaxWidthHeight,
+                        MaxWidthHeight = 100
+                    });
+            }
+            catch (Exception e)
+            {
+                DebugService.WriteLine(e);
+                Acr.UserDialogs.UserDialogs.Instance.Alert(e.Message,
+                    "File Picker Exception", "OK");
+            }
             if (file == null)
                 return;
             DebugService.WriteLine(file.Path);
             DebugService.WriteLine(file.ToString());
-
             ImgSrc = ImageSource.FromStream(file.GetStream);
 
             var stream = file.GetStream();
             _image = ReadStream(stream);
+
             //            ImgSrc = ImageSource.FromStream(() =>
             //            {
             //                return stream;

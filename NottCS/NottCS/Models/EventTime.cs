@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace NottCS.Models
 {
-    internal class EventTime
+    public class EventTime
     {
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
