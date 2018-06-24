@@ -8,6 +8,7 @@
              xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
              xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
              xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+             x:Name="TestPageName"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:TestViewModel}"
              >
@@ -20,28 +21,32 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <ListView ItemsSource="{Binding EventTimeList}" 
-                       Margin="3,3,0,0" 
-                       x:Name="SomeList"
-                       VerticalOptions="FillAndExpand"
-                       HorizontalOptions="FillAndExpand">
-                <ListView.Behaviors>
-                    <behaviors:EventToCommandBehavior  
-                         EventName="ItemSelected" 
-                         Source="{x:Reference SomeList}"  
-                         Command="{Binding DisableItemSelectedCommand}" 
-                         Converter="{StaticResource SelectedItemConverter}" />
-                </ListView.Behaviors>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <customControls:EventDateTimePicker EventTimeSlot="{Binding ., Mode=TwoWay}" Margin="3"/>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <!-- <ListView ItemsSource="{Binding EventTimeList, Mode=TwoWay}"  -->
+            <!--            Margin="3,3,0,0"  -->
+            <!--            x:Name="SomeList" -->
+            <!--            VerticalOptions="FillAndExpand" -->
+            <!--            HorizontalOptions="FillAndExpand"> -->
+            <!--     <ListView.Behaviors> -->
+            <!--         <behaviors:EventToCommandBehavior   -->
+            <!--              EventName="ItemSelected"  -->
+            <!--              Source="{x:Reference SomeList}"   -->
+            <!--              Command="{Binding DisableItemSelectedCommand}"  -->
+            <!--              Converter="{StaticResource SelectedItemConverter}" /> -->
+            <!--     </ListView.Behaviors> -->
+            <!--     <ListView.ItemTemplate> -->
+            <!--         <DataTemplate> -->
+            <!--             <ViewCell> -->
+            <!--                 <customControls:EventDateTimePicker EventTimeSlot="{Binding ., Mode=TwoWay}" Title="{Binding EventTitle}"  Margin="3"/> -->
+            <!--             </ViewCell> -->
+            <!--         </DataTemplate> -->
+            <!--     </ListView.ItemTemplate> -->
+            <!-- </ListView> -->
+            <customControls:EventDateTimePicker x:Name="EventDateTimePicker1" Title1="{Binding EventTitle, Mode=TwoWay}" EventTimeSlot="{Binding EventTime1, Mode=TwoWay}"/>
             <Button Command="{Binding AddCommand}" Text="Add"/>
-            <Button Command="{Binding SomeCommand}" Text="Some Button"/>
+            <StackLayout Orientation="Horizontal">
+                <Button Command="{Binding PrintData}" Text="PrintData"/>
+                <Button Command="{Binding AddValue}" Text="Add Value"/>
+            </StackLayout> 
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

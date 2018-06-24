@@ -10,13 +10,14 @@
                 <RowDefinition Height="2" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Text="{Binding Title}" 
+            <Label Text="{Binding Source={x:Reference EventDateTimePickerView}, Path=Title1, Mode=TwoWay}" 
                    FontSize="Medium"
                    FontAttributes="Bold"
                    Grid.Row="0"
@@ -33,10 +34,12 @@
                    Grid.Row="2"
                    Grid.Column="0"
                    Margin="15,0,0,0"/>
-            <DatePicker Date="{Binding StartDate}"
+            <DatePicker Date="{Binding Source={x:Reference EventDateTimePickerView}, Path=StartDate, Mode=TwoWay}"
+                        x:Name="StartDatePicker"
                         Grid.Row="2"
                         Grid.Column="1" />
-            <TimePicker Time="{Binding StartTime}"
+            <TimePicker Time="{Binding Source={x:Reference EventDateTimePickerView}, Path=StartTime, Mode=TwoWay}"
+                        x:Name="StartTimePicker"
                         Grid.Row="2"
                         Grid.Column="2" />
 
@@ -44,12 +47,19 @@
                    Grid.Row="3"
                    Grid.Column="0"
                    Margin="15,0,0,0"/>
-            <DatePicker Date="{Binding EndDate}"
+            <DatePicker Date="{Binding Source={x:Reference EventDateTimePickerView}, Path=EndDate, Mode=TwoWay}"
+                        x:Name="EndDatePicker"
                         Grid.Row="3"
                         Grid.Column="1" />
-            <TimePicker Time="{Binding EndTime}"
+            <TimePicker Time="{Binding Source={x:Reference EventDateTimePickerView}, Path=EndTime, Mode=TwoWay}"
+                        x:Name="EndTimePicker"
                         Grid.Row="3"
                         Grid.Column="2" />
+            <Button Grid.Row="4"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Text="Print(CustomControl)" 
+                    Command="{Binding PrintDataCommand}" />
         </Grid>
     </ContentView.Content>
 </ContentView>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Windows.Input;
 using NottCS.Models;
 using NottCS.Services;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace NottCS.CustomControls
@@ -15,8 +17,10 @@ namespace NottCS.CustomControls
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class EventDateTimePicker : ContentView
 	{
-	    public static readonly BindableProperty TitleProperty =
-	        BindableProperty.Create(nameof(Title), typeof(string), typeof(EventDateTimePicker), "Default Title", BindingMode.OneWay);
+
+        //TODO: Use OnPropertyChanged to do 2 way binding
+	    public static readonly BindableProperty Title1Property =
+	        BindableProperty.Create(nameof(Title1), typeof(string), typeof(EventDateTimePicker), defaultBindingMode:BindingMode.TwoWay, propertyChanged:OnTitleChanged, defaultValue: "TITLE??");
 
 	    public static readonly BindableProperty EventTimeSlotProperty =
 	        BindableProperty.Create(nameof(EventTimeSlot), typeof(EventTime), typeof(EventDateTimePicker),
@@ -26,69 +30,59 @@ namespace NottCS.CustomControls
 	                EndTime = DateTime.Now + new TimeSpan(1, 3, 30, 0),
 	                Id = "0",
 	                Event = "0"
-	            }, BindingMode.TwoWay);
+	            }, BindingMode.TwoWay, propertyChanged:OnStartDateChangedFunction);
+
 
 	    public EventTime EventTimeSlot
 	    {
 	        get
 	        {
-	            StackTrace stackTrace = new StackTrace();           // get call stack
-	            StackFrame[] stackFrames = stackTrace.GetFrames();  // get method calls (frames)
-	            if (stackFrames != null) DebugService.WriteLine(stackFrames[1].GetMethod().Name);
-	            DebugService.WriteLine("EventTime getter called");
 	            return (EventTime)GetValue(EventTimeSlotProperty);
             } 
 	        set
 	        {
-	            DebugService.WriteLine("EventTime setter called");
                 SetValue(EventTimeSlotProperty, value);
-	            DebugService.WriteLine("On start date property changed");
-                OnPropertyChanged("StartDate");
-	            OnPropertyChanged("EndDate");
-	            OnPropertyChanged("StartTime");
-	            OnPropertyChanged("EndTime");
+	            OnPropertyChanged(nameof(StartDate));
+	            OnPropertyChanged(nameof(StartTime));
+                OnPropertyChanged(nameof(EndDate));
+	            OnPropertyChanged(nameof(EndTime));
             }
 	    }
-        public string Title
+        public string Title1
 	    {
-	        get => (string)GetValue(TitleProperty);
-	        set => SetValue(TitleProperty, value);
+	        get => (string)GetValue(Title1Property);
+	        set => SetValue(Title1Property, value);
 	    }
-        
 
+        private static void OnTitleChanged(BindableObject obj, object oldValue, object newValue)
+	    {
+            DebugService.WriteLine($"Title changed from {oldValue} to {newValue}");
+	        DebugService.WriteLine($"Object type: {obj.GetType()}");
+        }
+
+        
 	    public DateTime StartDate
 	    {
 	        get
             {
-                StackTrace stackTrace = new StackTrace();           // get call stack
-                StackFrame[] stackFrames = stackTrace.GetFrames();  // get method calls (frames)
-                if (stackFrames != null)
-                    foreach (var frame in stackFrames)
-                    {
-                        DebugService.WriteLine(frame);
-                    }
 
-                DebugService.WriteLine("StartDate getter called");
                 return EventTimeSlot.StartTime.Date;
             }
 	        set
 	        {
-                var oldEventTime = EventTimeSlot;
+	            var oldEventTime = EventTimeSlot;
 	            var oldStartTime = oldEventTime.StartTime;
 	            var newTime = new DateTime(value.Year, value.Month, value.Day, oldStartTime.Hour, oldStartTime.Minute,
 	                oldStartTime.Second);
-	            var newEventTime = new EventTime()
+                var newEventTime = new EventTime()
 	            {
 	                Id = oldEventTime.Id,
 	                Event = oldEventTime.Event,
 	                StartTime = newTime,
 	                EndTime = oldEventTime.EndTime
 	            };
-
+                SetValue(EventTimeSlotProperty, newEventTime );
 	            DebugService.WriteLine("setting event time");
-                EventTimeSlot = newEventTime;
-                
-                DebugService.WriteLine("StartDate setter called");
 	        }
 	    }
 
@@ -106,7 +100,7 @@ namespace NottCS.CustomControls
 	                StartTime = oldStartTime.Date + value,
 	                EndTime = oldEventTime.EndTime
 	            };
-	            EventTimeSlot = newEventTime;
+	            SetValue(EventTimeSlotProperty, newEventTime);
 //                var oldTime = EventTimeSlot.StartTime;
 //	            EventTimeSlot.StartTime = oldTime.Date + value;
             }
@@ -120,14 +114,16 @@ namespace NottCS.CustomControls
 	            var oldEndTime = oldEventTime.EndTime;
 	            var newTime = new DateTime(value.Year, value.Month, value.Day, oldEndTime.Hour, oldEndTime.Minute,
 	                oldEndTime.Second);
-	            var newEventTime = new EventTime()
-	            {
-	                Id = oldEventTime.Id,
-	                Event = oldEventTime.Event,
-	                StartTime = oldEventTime.StartTime,
-	                EndTime = newTime
+                var newEventTime = new EventTime()
+                {
+                    Id = oldEventTime.Id,
+                    Event = oldEventTime.Event,
+                    StartTime = oldEventTime.StartTime,
+                    EndTime = newTime
                 };
-	            EventTimeSlot = newEventTime;
+//                SetValue(EventTimeSlotProperty, newEventTime);
+	            //EventTimeSlot.EndTime = newTime;
+                SetValue(EventTimeSlotProperty, newEventTime);
             }
 	    }
 
@@ -145,12 +141,14 @@ namespace NottCS.CustomControls
 	                StartTime = oldEventTime.StartTime,
 	                EndTime = oldEndTime.Date + value
 	            };
+	            SetValue(EventTimeSlotProperty, newEventTime);
 	        }
 	    }
 
         public ICommand PrintDataCommand => new Command(PrintData);
 	    private void PrintData()
-        {
+	    {
+	        Title1 = Title1 + "1";
             DebugService.WriteLine($"Id: {EventTimeSlot.Id}");
             DebugService.WriteLine($"Event: {EventTimeSlot.Event}");
             DebugService.WriteLine($"StartDateTime: {EventTimeSlot.StartTime}");
@@ -161,11 +159,36 @@ namespace NottCS.CustomControls
 	        DebugService.WriteLine($"EndTime: {EndTime}");
         }
 
-
         public EventDateTimePicker ()
 		{
 			InitializeComponent ();
 		}
 
-    }
+	    private static void OnStartDateChangedFunction(BindableObject bindable, object oldValue, object newValue)
+	    {
+            if (bindable is EventDateTimePicker picker && newValue is EventTime newTime)
+            {
+                if (picker.StartDatePicker.Date != newTime.StartTime.Date)
+                    picker.StartDatePicker.Date = newTime.StartTime.Date;
+
+                if (picker.StartTimePicker.Time != newTime.StartTime.TimeOfDay)
+                    picker.StartTimePicker.Time = newTime.StartTime.TimeOfDay;
+
+                if (picker.EndDatePicker.Date != newTime.EndTime.Date)
+                    picker.EndDatePicker.Date = newTime.EndTime.Date;
+
+                if (picker.EndTimePicker.Time != newTime.EndTime.TimeOfDay)
+                    picker.EndTimePicker.Time = newTime.EndTime.TimeOfDay;
+            }
+            //OnPropertyChanged(nameof(StartDate));
+            //DebugService.WriteLine(bindable.GetType());
+            //DebugService.WriteLine(oldValue.GetType());
+            //DebugService.WriteLine($"old: {oldValue}"); 
+            //DebugService.WriteLine($"new: {newValue}"); 
+            DebugService.WriteLine("DateTime changed");
+            
+
+	    }
+        
+	}
 }

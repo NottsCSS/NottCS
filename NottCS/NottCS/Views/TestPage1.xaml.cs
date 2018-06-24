@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NottCS.Validations;
 using NottCS.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,17 +10,12 @@ using Xamarin.Forms.Xaml;
 namespace NottCS.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class TestPage : ContentPage
+	public partial class TestPage1 : ContentPage
 	{
-		public TestPage ()
+		public TestPage1 ()
 		{
-		    BindingContext = new TestViewModel();
 			InitializeComponent ();
+		    BindingContext = new TestViewModel1();
 		}
-
-
-	    private void Nothing(object sender, EventArgs e)
-	    {
-	    }
 	}
 }
