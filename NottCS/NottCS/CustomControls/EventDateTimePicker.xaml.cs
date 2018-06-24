@@ -17,9 +17,9 @@ namespace NottCS.CustomControls
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class EventDateTimePicker : ContentView
 	{
-
+	    private bool _updatingUI = false;
         //TODO: Use OnPropertyChanged to do 2 way binding
-	    public static readonly BindableProperty Title1Property =
+        public static readonly BindableProperty Title1Property =
 	        BindableProperty.Create(nameof(Title1), typeof(string), typeof(EventDateTimePicker), defaultBindingMode:BindingMode.TwoWay, propertyChanged:OnTitleChanged, defaultValue: "TITLE??");
 
 	    public static readonly BindableProperty EventTimeSlotProperty =
@@ -30,7 +30,7 @@ namespace NottCS.CustomControls
 	                EndTime = DateTime.Now + new TimeSpan(1, 3, 30, 0),
 	                Id = "0",
 	                Event = "0"
-	            }, BindingMode.TwoWay, propertyChanged:OnStartDateChangedFunction);
+	            }, BindingMode.TwoWay, propertyChanged:OnEventTimeSlotPropertyChanged);
 
 
 	    public EventTime EventTimeSlot
@@ -82,7 +82,7 @@ namespace NottCS.CustomControls
 	                EndTime = oldEventTime.EndTime
 	            };
                 SetValue(EventTimeSlotProperty, newEventTime );
-	            DebugService.WriteLine("setting event time");
+                DebugService.WriteLine("setting event time");
 	        }
 	    }
 
@@ -100,9 +100,9 @@ namespace NottCS.CustomControls
 	                StartTime = oldStartTime.Date + value,
 	                EndTime = oldEventTime.EndTime
 	            };
-	            SetValue(EventTimeSlotProperty, newEventTime);
-//                var oldTime = EventTimeSlot.StartTime;
-//	            EventTimeSlot.StartTime = oldTime.Date + value;
+                SetValue(EventTimeSlotProperty, newEventTime);
+                //                var oldTime = EventTimeSlot.StartTime;
+                //	            EventTimeSlot.StartTime = oldTime.Date + value;
             }
 	    }
 	    public DateTime EndDate
@@ -121,8 +121,8 @@ namespace NottCS.CustomControls
                     StartTime = oldEventTime.StartTime,
                     EndTime = newTime
                 };
-//                SetValue(EventTimeSlotProperty, newEventTime);
-	            //EventTimeSlot.EndTime = newTime;
+                //                SetValue(EventTimeSlotProperty, newEventTime);
+                //EventTimeSlot.EndTime = newTime;
                 SetValue(EventTimeSlotProperty, newEventTime);
             }
 	    }
@@ -142,7 +142,7 @@ namespace NottCS.CustomControls
 	                EndTime = oldEndTime.Date + value
 	            };
 	            SetValue(EventTimeSlotProperty, newEventTime);
-	        }
+            }
 	    }
 
         public ICommand PrintDataCommand => new Command(PrintData);
@@ -164,21 +164,29 @@ namespace NottCS.CustomControls
 			InitializeComponent ();
 		}
 
-	    private static void OnStartDateChangedFunction(BindableObject bindable, object oldValue, object newValue)
+	    private void UpdateUI(EventTime newTime)
+	    {
+	        if (!_updatingUI)
+	        {
+	            _updatingUI = true;
+	            StartDatePicker.Date = newTime.StartTime.Date;
+	            StartTimePicker.Time = newTime.StartTime.TimeOfDay;
+	            EndDatePicker.Date = newTime.EndTime.Date;
+	            EndTimePicker.Time = newTime.EndTime.TimeOfDay;
+	            DebugService.WriteLine("UI updated");
+	            Task.Run(async () =>
+	            {
+	                await Task.Delay(100);
+	                _updatingUI = false;
+	            });
+	        }
+	    }
+
+	    private static void OnEventTimeSlotPropertyChanged(BindableObject bindable, object oldValue, object newValue)
 	    {
             if (bindable is EventDateTimePicker picker && newValue is EventTime newTime)
             {
-                if (picker.StartDatePicker.Date != newTime.StartTime.Date)
-                    picker.StartDatePicker.Date = newTime.StartTime.Date;
-
-                if (picker.StartTimePicker.Time != newTime.StartTime.TimeOfDay)
-                    picker.StartTimePicker.Time = newTime.StartTime.TimeOfDay;
-
-                if (picker.EndDatePicker.Date != newTime.EndTime.Date)
-                    picker.EndDatePicker.Date = newTime.EndTime.Date;
-
-                if (picker.EndTimePicker.Time != newTime.EndTime.TimeOfDay)
-                    picker.EndTimePicker.Time = newTime.EndTime.TimeOfDay;
+                picker.UpdateUI(newTime);
             }
             //OnPropertyChanged(nameof(StartDate));
             //DebugService.WriteLine(bindable.GetType());
