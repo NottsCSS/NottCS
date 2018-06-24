@@ -176,7 +176,7 @@ namespace NottCS.CustomControls
 	            DebugService.WriteLine("UI updated");
 	            Task.Run(async () =>
 	            {
-	                await Task.Delay(100);
+	                await Task.Delay(50);
 	                _updatingUI = false;
 	            });
 	        }
