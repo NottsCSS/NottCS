@@ -17,7 +17,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Label Text="{Binding Source={x:Reference EventDateTimePickerView}, Path=Title1, Mode=TwoWay}" 
+            <Label Text="{Binding Source={x:Reference EventDateTimePickerView}, Path=Title, Mode=TwoWay}" 
                    FontSize="Medium"
                    FontAttributes="Bold"
                    Grid.Row="0"

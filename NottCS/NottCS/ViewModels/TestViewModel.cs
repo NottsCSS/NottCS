@@ -2,6 +2,7 @@
 using NottCS.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using NottCS.Services;
 using NottCS.Validations;
@@ -11,16 +12,26 @@ namespace NottCS.ViewModels
 {
     public class TestViewModel : BaseViewModel
     {
-        private string _eventTitle = "some title";
-
-        private EventTime _eventTime1 = new EventTime()
+        public bool ShowDeleteBox { get; set; } = false;
+        public class TitledEventTime
         {
-            StartTime = DateTime.Now,
-            EndTime = DateTime.Now,
-            Id = "5",
-            Event = "Some event"
+            public string Title { get; set; } = "Default title";
+
+            public EventTime EventTimeSlot { get; set; } = new EventTime
+            {
+                StartTime = DateTime.Now,
+                EndTime = DateTime.Now,
+                Event = "-1",
+                Id = "-1"
+            };
+        }
+
+
+        public ObservableCollection<string> TitleList { get; set; } = new ObservableCollection<string>()
+        {
+            "1",
+            "2"
         };
-//        private ObservableCollection<EventTime> _eventTimeList 
 
         #region Disable ItemSelectedCommand
         public ICommand DisableItemSelectedCommand => new Command(DisableItemSelected);
@@ -65,70 +76,61 @@ namespace NottCS.ViewModels
             }
         };
 
-        public ObservableCollection<EventTime> EventTimeList { get; set; } = new ObservableCollection<EventTime>()
+        public ObservableCollection<TitledEventTime> EventTimeList { get; set; } = new ObservableCollection<TitledEventTime>()
         {
-            new EventTime()
-            {
-                StartTime = DateTime.Now,
-                EndTime = DateTime.Now
-            }
+            new TitledEventTime()
         };
-
-        public EventTime EventTime1
-        {
-            get => _eventTime1;
-            set => SetProperty(ref _eventTime1, value);
-        }
-
-        public string EventTitle
-        {
-            get => _eventTitle;
-            set => SetProperty(ref _eventTitle, value);
-        }
-
+        
         public ICommand PrintData => new Command(PrintDataFunction);
-        public ICommand AddValue => new Command(AddValueFunction);
         public ICommand AddCommand => new Command(AddItem);
+        public ICommand DeleteRowCommand => new Command(DeleteItem);
+
+        private void DeleteItem(object item)
+        {
+            EventTimeList.Remove((TitledEventTime)item);
+            DateTimeListChanged();
+            ShowDeleteBox = EventTimeList.Count > 1;
+        }
 
         private void AddItem()
         {
-            var eventTime = new EventTime();
-            EventTimeList.Add(eventTime);
-            eventTime.StartTime = DateTime.Now;
-            eventTime.EndTime = DateTime.Now;
+
+//            foreach (var eventTime in EventTimeList)
+//            {
+//                eventTime.StartTime += new TimeSpan(1, 1, 0, 0);
+//                OnPropertyChanged(nameof(eventTime.StartTime));
+//            }
+            EventTimeList.Add(new TitledEventTime());
+            DateTimeListChanged();
+            ShowDeleteBox = EventTimeList.Count > 1;
         }
         private void PrintDataFunction()
         {
             DebugService.WriteLine("----------------");
-            //    foreach (var param in EventTimeList)
-            //{
-            //    DebugService.WriteLine(param.StartTime);
-            //    DebugService.WriteLine(param.EndTime);
-            //    DebugService.WriteLine(param.Id);
-            //    DebugService.WriteLine(param.Event);
-            //}
-            DebugService.WriteLine(EventTime1.StartTime);
-            DebugService.WriteLine(EventTime1.EndTime);
-
-        }
-
-        private void AddValueFunction()
-        {
-            DebugService.WriteLine("addvalue pressed");
-            EventTitle = EventTitle + "2";
-            DebugService.WriteLine(EventTitle);
-            var event2 = new EventTime()
+                foreach (var param in EventTimeList)
             {
-                StartTime = EventTime1.StartTime + new TimeSpan(1, 1, 1, 1),
-                EndTime = EventTime1.EndTime + new TimeSpan(1, 1, 1, 1)
-            };
-            EventTime1 = event2;
-
-            //foreach (var time in EventTimeList)
-            //{
-            //    time.StartTime += new TimeSpan(1, 1, 1, 1);
-            //    time.EndTime += new TimeSpan(1, 1, 1, 1);
-            //}
+                DebugService.WriteLine(param.EventTimeSlot.StartTime);
+                DebugService.WriteLine(param.EventTimeSlot.EndTime);
+                DebugService.WriteLine(param.EventTimeSlot.Id);
+                DebugService.WriteLine(param.EventTimeSlot.Event);
+            }
         }
+        private void DateTimeListChanged()
+        {
+            DebugService.WriteLine("EventTimeList changed");
+            for (int i = 0; i < EventTimeList.Count; i++)
+            {
+                var oldEventTime = EventTimeList[i];
+                var newEventTime = new TitledEventTime()
+                {
+                    EventTimeSlot = oldEventTime.EventTimeSlot,
+                    Title = $"Time Slot {i}"
+                };
+                EventTimeList[i] = newEventTime;
+            }
+        }
+
+
+        
     }
 }
