@@ -30,7 +30,7 @@
                     Placeholder="Enter your suggestion here"
                     VerticalOptions="FillAndExpand"            
                     HorizontalOptions ="FillAndExpand">
-                <Entry.WidthRequest>
+                <!--<Entry.WidthRequest>
                     <OnPlatform x:TypeArguments="x:Double">
                         <On Platform="iOS">80</On>
                         <On Platform="Android,Windows">70</On>
@@ -41,7 +41,7 @@
                         <On Platform="iOS">80</On>
                         <On Platform="Android,Windows">70</On>
                     </OnPlatform>
-                </Entry.HeightRequest>
+                </Entry.HeightRequest>-->
             </Entry>
             <Label  Grid.Row="3"
                     Margin="5,0"
@@ -56,7 +56,7 @@
                     VerticalOptions="FillAndExpand"
                     HorizontalOptions="FillAndExpand"
                     Placeholder="Enter your issues here">
-                <Entry.WidthRequest>
+                <!--<Entry.WidthRequest>
                     <OnPlatform x:TypeArguments="x:Double">
                         <On Platform="iOS">80</On>
                         <On Platform="Android,Windows">70</On>
@@ -67,7 +67,7 @@
                         <On Platform="iOS">80</On>
                         <On Platform="Android,Windows">70</On>
                     </OnPlatform>
-                </Entry.HeightRequest>
+                </Entry.HeightRequest>-->
             </Entry>
             <Button Text="Submit"
                     Grid.Row="6"

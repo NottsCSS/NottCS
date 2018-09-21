@@ -9,12 +9,13 @@ using Xamarin.Forms;
 
 namespace NottCS.CustomControls
 {
-    public class DateTimePicker : Entry, INotifyPropertyChanged
+    public class DateTimePicker : Entry
     {
         public DatePicker _datePicker { get; private set; } = new DatePicker() { MinimumDate = DateTime.Today, IsVisible = false };
         public TimePicker _timePicker { get; private set; } = new TimePicker() { IsVisible = false };
-        string _stringFormat { get; set; }
-        public string StringFormat { get { return _stringFormat ?? "dd/MM/yyyy HH:mm"; } set { _stringFormat = value; } }
+
+        public string StringFormat => "dd/MM/yyyy HH:mm";
+
         public DateTime DateTime
         {
             get { return (DateTime)GetValue(DateTimeProperty); }
@@ -45,7 +46,7 @@ namespace NottCS.CustomControls
             }
         }
 
-        BindableProperty DateTimeProperty = BindableProperty.Create("DateTime", typeof(DateTime), typeof(DateTimePicker), DateTime.Now, BindingMode.TwoWay, propertyChanged: DTPropertyChanged);
+        readonly BindableProperty DateTimeProperty = BindableProperty.Create("DateTime", typeof(DateTime), typeof(DateTimePicker), DateTime.Now, BindingMode.TwoWay, propertyChanged: DTPropertyChanged);
 
         public DateTimePicker()
         {
@@ -83,8 +84,8 @@ namespace NottCS.CustomControls
 
         static void DTPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            var timePicker = (bindable as DateTimePicker);
-            if (timePicker != null) timePicker.UpdateEntryText();
+            if (bindable is DateTimePicker timePicker)
+                timePicker.UpdateEntryText();
         }
     }
 }
