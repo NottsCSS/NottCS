@@ -16,6 +16,7 @@
   <ItemGroup>
     <None Remove="Images\example-background.jpg" />
     <None Remove="Images\Icons\back.png" />
+    <None Remove="Images\Icons\DeleteIcon.png" />
     <None Remove="Images\Icons\EmailContent.png" />
     <None Remove="Images\Icons\icon2.png" />
     <None Remove="Images\Icons\logo1.jpeg" />
@@ -47,11 +48,16 @@
     <Compile Include="ViewModels\RegistrationViewModel.cs" />
     <Compile Include="ViewModels\ReportIssueViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\Tests\BasicListViewViewModel.cs" />
+    <Compile Include="ViewModels\Tests\DateTimePickerTestViewModel.cs" />
     <Compile Include="ViewModels\TestViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\example-background.jpg" />
     <EmbeddedResource Include="Images\Icons\back.png" />
+    <Content Include="Images\Icons\DeleteIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Images\Icons\EmailContent.png" />
     <EmbeddedResource Include="Images\Icons\icon2.png" />
     <EmbeddedResource Include="Images\Icons\logo1.jpeg" />
@@ -95,9 +101,18 @@
     <Compile Update="Views\TestPage.xaml.cs">
       <DependentUpon>TestPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Tests\BasicListView.xaml.cs">
+      <DependentUpon>BasicListView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="CustomControls\DateTimePicker.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="CustomControls\EventDateTimePicker.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="CustomControls\EventDateTimePicker1.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="CustomControls\LabelledValidatableEntry.xaml">
@@ -163,6 +178,12 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\TestPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Tests\BasicListView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Tests\DateTimePickerTest.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

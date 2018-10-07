@@ -109,6 +109,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin_Icon.png" />
+    <Content Include="Images\DeleteIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-100.png" />
     <Content Include="Assets\LockScreenLogo.scale-125.png" />

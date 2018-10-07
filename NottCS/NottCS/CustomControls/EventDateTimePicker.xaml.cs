@@ -17,6 +17,38 @@ namespace NottCS.CustomControls
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class EventDateTimePicker : ContentView
 	{
+
+	    public EventDateTimePicker()
+	    {
+	        InitializeComponent();
+            PropertyChanged += OnPropertyChanged1;
+	    }
+
+	    private void OnPropertyChanged1(object sender, PropertyChangedEventArgs e)
+	    {
+	        if (sender is EventDateTimePicker picker)
+	        {
+	            switch (e.PropertyName)
+                {
+                    case nameof(Title):
+                        Debug.WriteLine("Title Changed called1");
+                        break;
+                    case nameof(StartDate):
+                        Debug.WriteLine("StartDate Changed called1");
+                        break;
+                    case nameof(StartTime):
+                        Debug.WriteLine("StartTime Changed called1");
+                        break;
+                    case nameof(EndDate):
+                        Debug.WriteLine("EndDate Changed called1");
+                        break;
+                    case nameof(EndTime):
+                        Debug.WriteLine("EndTime Changed called1");
+                        break;
+                }
+	        }
+	    }
+
 	    private bool _updatingUI = false;
         //TODO: Use OnPropertyChanged to do 2 way binding
         public static readonly BindableProperty TitleProperty =
@@ -35,28 +67,22 @@ namespace NottCS.CustomControls
 
 	    public EventTime EventTimeSlot
 	    {
-	        get
-	        {
-	            return (EventTime)GetValue(EventTimeSlotProperty);
-            } 
-	        set
-	        {
-                SetValue(EventTimeSlotProperty, value);
-            }
+	        get => (EventTime)GetValue(EventTimeSlotProperty);
+	        set => SetValue(EventTimeSlotProperty, value);
 	    }
         public string Title
-	    {
-	        get => (string)GetValue(TitleProperty);
-	        set => SetValue(TitleProperty, value);
-	    }
-        
+        {
+            get => (string)GetValue(TitleProperty);
+            set
+            {
+                SetValue(TitleProperty, value); 
+                OnPropertyChanged();
+            }
+        }
+
 	    public DateTime StartDate
 	    {
-	        get
-            {
-
-                return EventTimeSlot.StartTime.Date;
-            }
+	        get => EventTimeSlot.StartTime.Date;
 	        set
 	        {
 	            var oldStartTime = EventTimeSlot.StartTime;
@@ -103,10 +129,6 @@ namespace NottCS.CustomControls
 	        DebugService.WriteLine($"EndTime: {EndTime}");
         }
 
-        public EventDateTimePicker ()
-		{
-			InitializeComponent ();
-		}
 
 	    private void UpdateUI(EventTime newTime)
 	    {
