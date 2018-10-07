@@ -6,18 +6,21 @@
     <ContentView.Content>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
 
-            <Label Text="Start"
+            <Label Text="{Binding Source={x:Reference DateTimePickerView}, Path=Title}"
+                   VerticalOptions="Center"
                    Grid.Column="0"
                    Margin="5,0,0,0"/>
             <DatePicker Date="{Binding Source={x:Reference DateTimePickerView}, Path=SelectedDate, Mode=TwoWay}"
+                        VerticalOptions="Center"
                         Grid.Column="1" />
             <TimePicker Time="{Binding Source={x:Reference DateTimePickerView}, Path=SelectedTime}"
+                        VerticalOptions="Center"
                         Grid.Column="2" />
         </Grid>
     </ContentView.Content>

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          xmlns:customControls="clr-namespace:NottCS.CustomControls;assembly=NottCS"
+          xmlns:system="clr-namespace:System;assembly=netstandard"
+          x:Name="Cell"
+          x:Class="NottCS.CustomControls.ViewCells.EventTimeSlotPickerCell">
+    <ViewCell.ContextActions>
+        <MenuItem Command="{Binding Source={x:Reference Cell}, Path=DeleteCommand}" CommandParameter="{Binding .}"
+                  Text="Delete" IsDestructive="True" />
+    </ViewCell.ContextActions>
+    <ViewCell.View>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition>
+                    <ColumnDefinition.Width>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="iOS" Value="0" />
+                            <On Platform="Android" Value="0" />
+                            <On Platform="UWP" Value="60" />
+                        </OnPlatform>
+                    </ColumnDefinition.Width>
+                </ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="{Binding Source={x:Reference Cell}, Path=Title}" />
+
+
+            <customControls:DateTimePicker Grid.Row="1" Grid.ColumnSpan="1"
+                                           HorizontalOptions="Start"
+                                           SelectedDateTime="{Binding Path=StartTime}"
+                                           Title="Start"/>
+            <customControls:DateTimePicker Grid.Row="2" Grid.ColumnSpan="1"
+                                           HorizontalOptions="Start"
+                                           SelectedDateTime="{Binding Path=EndTime}"
+                                           Title="End"/>
+
+            <Image Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"
+                   HorizontalOptions="Start"
+                   Source="Images/DeleteIcon.png"
+                   WidthRequest="50"
+                   HeightRequest="50"
+                   Margin="2">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Source={x:Reference Cell}, Path=DeleteCommand}"
+                                          CommandParameter="{Binding .}"/>
+                </Image.GestureRecognizers>
+                <Image.IsVisible>
+                    <OnPlatform x:TypeArguments="system:Boolean">
+                        <On Platform="iOS" Value="False" />
+                        <On Platform="Android" Value="False" />
+                        <On Platform="UWP" Value="True" />
+                    </OnPlatform>
+                </Image.IsVisible>
+            </Image>
+        </Grid>
+  </ViewCell.View>
+</ViewCell>

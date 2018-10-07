@@ -126,6 +126,10 @@ namespace NottCS.CustomControls
 	    public static readonly BindableProperty SelectedDateTimeProperty =
 	        BindableProperty.Create(nameof(SelectedDateTime), typeof(DateTime), typeof(DateTimePicker), DateTime.Now, BindingMode.TwoWay);
 
+	    public static readonly BindableProperty TitleProperty =
+            BindableProperty.Create(nameof(Title), typeof(string), typeof(DateTimePicker), "SLOT");
+
+
 	    private DateTime _selectedDate;
 	    private TimeSpan _selectedTime;
 
@@ -151,5 +155,11 @@ namespace NottCS.CustomControls
 	        get => _selectedTime;
 	        set { _selectedTime = value; OnPropertyChanged(nameof(SelectedTime));}
 	    }
+
+        public string Title
+        {
+            get => (string)GetValue(TitleProperty);
+            set => SetValue(TitleProperty, value);
+        }
 	}
 }

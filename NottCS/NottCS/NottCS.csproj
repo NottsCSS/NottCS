@@ -50,7 +50,7 @@
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Tests\BasicListViewViewModel.cs" />
     <Compile Include="ViewModels\Tests\DateTimePickerTestViewModel.cs" />
-    <Compile Include="ViewModels\TestViewModel.cs" />
+    <Compile Include="ViewModels\Tests\EventTimeSlotPickerTestViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Images\example-background.jpg" />
@@ -98,9 +98,6 @@
     <Compile Update="Views\RegistrationPage.xaml.cs">
       <DependentUpon>RegistrationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\TestPage.xaml.cs">
-      <DependentUpon>TestPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\Tests\BasicListView.xaml.cs">
       <DependentUpon>BasicListView.xaml</DependentUpon>
     </Compile>
@@ -109,13 +106,13 @@
     <EmbeddedResource Update="CustomControls\DateTimePicker.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="CustomControls\EventDateTimePicker.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="CustomControls\EventDateTimePicker1.xaml">
+    <EmbeddedResource Update="CustomControls\IndexedEventTimeSlotPicker.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="CustomControls\LabelledValidatableEntry.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="CustomControls\ViewCells\EventTimeSlotPickerCell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\AccountPage.xaml">
@@ -177,13 +174,13 @@
     <EmbeddedResource Update="Views\ReportIssuePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TestPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\Tests\BasicListView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Tests\DateTimePickerTest.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Tests\EventTimeSlotPickerTest.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

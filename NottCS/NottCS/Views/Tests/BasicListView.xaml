@@ -23,19 +23,22 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <Label Text="{Binding .}" />
-                                <!-- <Image Grid.Column="1" -->
-                                <!--        Source="Images/DeleteIcon.png"  -->
-                                <!--        WidthRequest="50" -->
-                                <!--        HeightRequest="50" /> -->
-                                <Button Grid.Column="1"
-                                        Command="{Binding Source={x:Reference listView}, Path=BindingContext.DeleteCommand}"
-                                        CommandParameter="{Binding .}"
-                                        Image="Images/DeleteIcon.png"
-                                        HeightRequest="50"
-                                        WidthRequest="50" />
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="80" />
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding .}" VerticalOptions="Center"/>
+                                <Image Grid.Column="1"
+                                       Source="Images/DeleteIcon.png"
+                                       WidthRequest="50"
+                                       HeightRequest="50"
+                                       Margin="2">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference listView}, Path=BindingContext.DeleteCommand}" 
+                                                              CommandParameter="{Binding .}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
