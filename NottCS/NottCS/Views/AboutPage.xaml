@@ -3,12 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NottCS.Views.AboutPage"
              xmlns:vm="clr-namespace:NottCS.ViewModels"
-             Title="{Binding Title}">
-    
-    <ContentPage.BindingContext>
-        <vm:AboutViewModel />
-    </ContentPage.BindingContext>
-    
+             Title="{Binding Title}"
+             BindingContext="{Binding Source={StaticResource Locator}, Path=About}">
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <!--Page Level Resources: Compatibile with Xamarin Live Player -->
@@ -36,8 +33,8 @@
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>
-                                <Span Text="AppName" FontAttributes="Bold" FontSize="22" />
-                                <Span Text=" " />
+                                <Span Text="{Binding Title}" FontAttributes="Bold" FontSize="22" />
+                                <Span Text="{Binding ASD}" />
                                 <Span Text="1.0" ForegroundColor="{StaticResource LightTextColor}" />
                             </FormattedString.Spans>
                         </FormattedString>
