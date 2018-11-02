@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.NottCS">
-    <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="27" />
-    <application android:label="NottCS.Android"></application>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.NottCS" android:installLocation="auto">
+	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="27" />
+	<application android:label="NottCS.Android" android:icon="@drawable/application_icon" android:theme="Theme.Material"></application>
 </manifest>
