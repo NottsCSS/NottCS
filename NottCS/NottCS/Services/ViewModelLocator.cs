@@ -16,7 +16,6 @@ namespace NottCS.Services
             RegisterServices(ref builder);
             RegisterViewModels(ref builder);
 
-
             _container = builder.Build();
         }
 
