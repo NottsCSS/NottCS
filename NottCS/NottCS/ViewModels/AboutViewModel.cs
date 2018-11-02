@@ -1,11 +1,19 @@
-﻿namespace NottCS.ViewModels
+﻿using System;
+using System.Windows.Input;
+
+using Xamarin.Forms;
+
+namespace NottCS.ViewModels
 {
-    internal class AboutViewModel:BaseViewModel
+    public class AboutViewModel : BaseViewModel
     {
         public AboutViewModel()
         {
-            //DebugService.WriteLine("Constructor is called");
             Title = "About";
+
+            OpenWebCommand = new Command(() => Device.OpenUri(new Uri("https://xamarin.com/platform")));
         }
+
+        public ICommand OpenWebCommand { get; }
     }
 }

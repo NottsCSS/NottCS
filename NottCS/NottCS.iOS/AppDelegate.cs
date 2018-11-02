@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
-using Microsoft.Identity.Client;
 using UIKit;
 
 namespace NottCS.iOS
@@ -25,22 +24,8 @@ namespace NottCS.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
-            InitializeService();
 
             return base.FinishedLaunching(app, options);
-        }
-        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
-        {
-            AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(url);
-            return true;
-        }
-
-        /// <summary>
-        /// Initializes the service.
-        /// </summary>
-        private void InitializeService()
-        {
-            ZXing.Net.Mobile.Forms.iOS.Platform.Init();
         }
     }
 }

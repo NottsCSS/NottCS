@@ -20,16 +20,8 @@ namespace NottCS.UWP
         public MainPage()
         {
             this.InitializeComponent();
-            InitializeService();
-            LoadApplication(new NottCS.App());
-        }
 
-        /// <summary>
-        /// Initializes the service.
-        /// </summary>
-        private void InitializeService()
-        {
-            ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingScannerViewRenderer.Init();
+            LoadApplication(new NottCS.App());
         }
     }
 }

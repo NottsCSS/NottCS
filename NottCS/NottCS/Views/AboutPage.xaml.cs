@@ -1,25 +1,16 @@
-﻿using NottCS.ViewModels;
+﻿using System;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace NottCS.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class AboutPage : ContentPage
-	{
-		public AboutPage ()
-		{
-			InitializeComponent ();
-            BindingContext = new AboutViewModel();
-            AddImage(NottCsLogo, "NottCS.Images.Icons.logo1.jpeg");
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class AboutPage : ContentPage
+    {
+        public AboutPage()
+        {
+            InitializeComponent();
         }
-	    private void AddImage(Image imageContainer, string imageLocation)
-	    {
-	        var assembly = typeof(NottCS.Views.AboutPage);
-	        if (imageContainer != null)
-	        {
-	            imageContainer.Source = ImageSource.FromResource(imageLocation, assembly);
-	        }
-	    }
     }
 }

@@ -1,102 +1,78 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NottCS.Views.AboutPage"
-             Title ="{Binding Title}"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
-             d:DataContext="{d:DesignInstance viewModels:AboutViewModel}">
-    <ContentPage.Content>
-                <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-        <ScrollView Margin="5,0">
-            <StackLayout BackgroundColor="White">
-                <Image x:Name = "NottCsLogo" 
-                   HorizontalOptions="Center"
-                   HeightRequest="150">
-                </Image>
-                    <Label 
-                    Text ="Version: 1.0.0"
-                    FontSize="12"
-                    TextColor="Black"
-                    HorizontalOptions="Center"
-                    VerticalOptions="StartAndExpand">
-                    </Label>
-                    <Label 
-                    Text ="Copyright © 2018 Computer Science Society"
-                    FontSize="11"
-                    TextColor="Gray"
-                    HorizontalOptions="Center">
+             xmlns:vm="clr-namespace:NottCS.ViewModels"
+             Title="{Binding Title}">
+    
+    <ContentPage.BindingContext>
+        <vm:AboutViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--Page Level Resources: Compatibile with Xamarin Live Player -->
+            <Color x:Key="Primary">#2196F3</Color>
+            <Color x:Key="Accent">#96d1ff</Color>
+            <Color x:Key="LightTextColor">#999999</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                <ContentView Padding="0,40,0,40" VerticalOptions="FillAndExpand">
+                    <Image Source="xamarin_logo.png" VerticalOptions="Center" HeightRequest="64" />
+                </ContentView>
+            </StackLayout>
+        </StackLayout>
+        <ScrollView Grid.Row="1">
+            <StackLayout Orientation="Vertical" Padding="16,40,16,40" Spacing="10">
+                <Label FontSize="22">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span Text="AppName" FontAttributes="Bold" FontSize="22" />
+                                <Span Text=" " />
+                                <Span Text="1.0" ForegroundColor="{StaticResource LightTextColor}" />
+                            </FormattedString.Spans>
+                        </FormattedString>
+                    </Label.FormattedText>
                 </Label>
-                <Label
-                    Text="Why NottCS Exists?"
-                    FontSize="20"
-                    HorizontalOptions="Start"
-                    Margin="0,5"
-                    FontAttributes="Bold">
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span Text="This app is written in C# and native APIs using the" />
+                                <Span Text=" " />
+                                <Span Text="Xamarin Platform" FontAttributes="Bold" />
+                                <Span Text="." />
+                            </FormattedString.Spans>
+                        </FormattedString>
+                    </Label.FormattedText>
                 </Label>
-                <Label LineBreakMode="WordWrap" 
-                       FontSize="14">
-                    Founded in 2017, Computer Science Society of The University of Nottingham Malaysia Campus is proud to release their first ever cross-platform application.
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span Text="It shares code with its" />
+                                <Span Text=" " />
+                                <Span Text="iOS, Android, and Windows" FontAttributes="Bold" />
+                                <Span Text=" " />
+                                <Span Text="versions." />
+                            </FormattedString.Spans>
+                        </FormattedString>
+                    </Label.FormattedText>
                 </Label>
-                <Label LineBreakMode="WordWrap"
-                       FontSize="14">
-                    NottCS mission is to bring all the clubs and societies under a single application and connect students in this platform. 
-                </Label>
-                <Label LineBreakMode="WordWrap"
-                       FontSize="14">
-                    We also want to reduce the email spam and ease the signing up of events/activities held by the clubs and societies.
-                </Label>
-                <Label
-                    Text="NottCS Features"
-                    FontSize="20"
-                    HorizontalOptions="Start"
-                    Margin="0,5"
-                    FontAttributes="Bold">
-                </Label>
-                <Label LineBreakMode="WordWrap"
-                       FontSize="14">
-                    One of the main features in NottCS is that, students can register to any clubs and societies with a click of a button.
-                </Label>
-                <Label LineBreakMode ="WordWrap"
-                       FontSize="14">
-                    Students just have to pay the registeration fees and get the QR code scan and you successfully join it.
-                </Label>
-                <Label LineBreakMode="WordWrap"
-                       FontSize="14">
-                    To further simplify the process of signing up events/activities, students can just sign up to their respective events. 
-                </Label>
-                <Label LineBreakMode="WordWrap"
-                       FontSize="14">
-                    All they need to do is just go to their selected events and click sign up. No registeration form is needed to fill in.
-                </Label>
-                <Label LineBreakMode="WordWrap"
-                       FontSize="14">
-                    With NottCS, a special feature called Admin Panel is just what the committees of the clubs needs.
-                </Label>
-                <Label LineBreakMode="WordWrap"
-                       FontSize="14">
-                    Admin Panel enables committees to post their attracting and fun activities/events without spamming students inbox. 
-                </Label>
-                <Label LineBreakMode="WordWrap"
-                       FontSize="14">
-                    Moreover, Admin Panel has the privileges to setup an QR code for students to scan it for SCPD points at the end of their activities/events.
-                </Label>
-                <Label LineBreakMode="WordWrap"
-                       FontSize="14">
-                    This will remove the scanning student ID process and saves both parties time.
-                    </Label>
-                </StackLayout>
-            </ScrollView>
-        </Grid>
-    </ContentPage.Content>
+                <Button Margin="0,10,0,0" Text="Learn more"
+                        Command="{Binding OpenWebCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+            </StackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>
