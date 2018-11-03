@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="DTO\" />
-    <Folder Include="Services\Logging\" />
     <Folder Include="ViewModels\Event\" />
     <Folder Include="ViewModels\Club\" />
     <Folder Include="Views\Club\" />

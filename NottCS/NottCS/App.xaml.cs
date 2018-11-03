@@ -36,22 +36,22 @@ namespace NottCS
 
             NLog.Config.LoggingConfiguration cfg = new NLog.Config.LoggingConfiguration();
             
-            FileTarget ft = new FileTarget("f");
-            string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-            string filename = Path.Combine(path, "log123.txt");
-            ft.FileName = filename;
-            ft.FileNameKind = FilePathKind.Absolute;
-            ft.AutoFlush = true;
-            cfg.AddTarget("f", ft);
+//            FileTarget ft = new FileTarget("f");
+//            string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+//            string filename = Path.Combine(path, "log123.txt");
+//            ft.FileName = filename;
+//            ft.FileNameKind = FilePathKind.Absolute;
+//            ft.AutoFlush = true;
+//            cfg.AddTarget("f", ft);
 
 
             var debugTarget = new OutputDebugStringTarget("target1")
             {
-                Layout = @"[${level}] ${message} ${exception} ${callsite} ${date:format=HH\:mm\:ss} "
+                Layout = @"[${level}] ${message} ${date:format=HH\:mm\:ss} ${callsite}"
             };
             cfg.AddTarget(debugTarget);
 
-            cfg.AddRuleForOneLevel(LogLevel.Error, ft); // only errors to file
+//            cfg.AddRuleForOneLevel(LogLevel.Error, ft); // only errors to file
             cfg.AddRuleForAllLevels(debugTarget); // all to console
             NLog.LogManager.Configuration = cfg;
             NLog.LogManager.ReconfigExistingLoggers();
