@@ -10,6 +10,8 @@ namespace NottCS.Services.Navigation
     {
         Task NavigateToAsync<TViewModel>(object navigationParameter = null) where TViewModel : BaseViewModel, new();
         Task NavigateToAsync(Type viewModelType, object navigationParameter = null);
+        Task SetMainPageAsync<TViewModel>(object navigationParameter = null) where TViewModel : BaseViewModel, new();
+        Task SetMainPageAsync(Type viewModelType, object navigationParameter = null);
         Task BackUntilAsync<TViewModel>() where TViewModel : BaseViewModel, new();
     }
 }
