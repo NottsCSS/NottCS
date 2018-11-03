@@ -106,16 +106,16 @@ namespace NottCS.Services.Navigation
         }
 
         /// <summary>
-        /// Sets main page using generics, preferred way of navigation due to compile time type checks
+        /// Sets the detail page using generics, preferred way of navigation due to compile time type checks
         /// </summary>
         /// <typeparam name="TViewModel"></typeparam>
         /// <param name="navigationParameter">parameter to be passed during navigation</param>
         /// <returns></returns>
-        public async Task SetMainPageAsync<TViewModel>(object navigationParameter = null) where TViewModel : BaseViewModel, new()
+        public async Task SetDetailPageAsync<TViewModel>(object navigationParameter = null) where TViewModel : BaseViewModel, new()
         {
-            await SetMainPageAsync(typeof(TViewModel), navigationParameter);
+            await SetDetailPageAsync(typeof(TViewModel), navigationParameter);
         }
-        public async Task SetMainPageAsync(Type viewModelType, object navigationParameter = null)
+        public async Task SetDetailPageAsync(Type viewModelType, object navigationParameter = null)
         {
             if (IsNavigating)
                 return;
@@ -140,7 +140,7 @@ namespace NottCS.Services.Navigation
                     throw new Exception($"BindingContext of {page.GetType()} does not inherit BaseViewModel");
                 Task initializeAsyncTask = viewModel.InitializeAsync(navigationParameter);
 
-                //Set the Page as the main page
+                //Set the Detail page to the newly created Page
                 mainPage.Detail = new NavigationPage(page);
 
                 await initializeAsyncTask;

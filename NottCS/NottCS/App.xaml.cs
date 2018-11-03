@@ -18,15 +18,9 @@ namespace NottCS
         public App()
         {
             InitializeComponent();
-
-
+            
             MainPage = new MainPage();
             SetupNLog();
-
-            string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-            string filename = Path.Combine(path, "log123.txt");
-            Debug.WriteLine(System.Environment.SpecialFolder.Personal);
-            Debug.WriteLine($"Log file exists: {File.Exists(filename)}");
         }
 
         private void SetupNLog()

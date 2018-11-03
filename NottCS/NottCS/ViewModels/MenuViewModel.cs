@@ -39,7 +39,7 @@ namespace NottCS.ViewModels
                 return;
             }
             _logger.LogDebug("NavigateCommand called");
-            await _navigationService.SetMainPageAsync(item.ViewModelType);
+            await _navigationService.SetDetailPageAsync(item.ViewModelType);
         }
     }
 }
