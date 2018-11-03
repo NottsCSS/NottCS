@@ -125,6 +125,108 @@ namespace NottCS.Services.Navigation
 
         }
 
+        public async Task SetMainPageAsync(Type viewModelType, object navigationParameter = null)
+        {
+            if (IsNavigating)
+                return;
+            IsNavigating = true;
+            try
+            {
+                if (!IsNavigating) //prevents simultaneous navigation
+                {
+                    Page page = null;
+                    var createPageTask = Task.Run(() => CreatePage(viewModelType));
+
+                    if (viewModelType == null || !viewModelType.IsSubclassOf(typeof(BaseViewModel)))
+                    {
+                        _logger.Error(
+                            $"Attempted navigation to {viewModelType} failed because it does not inherit BaseViewModel");
+                        _logger.Info("Navigation terminated prematurely");
+                        IsNavigating = false;
+                        return;
+                    }
+
+                    //Creating page
+                    try
+                    {
+                        page = await createPageTask;
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.Error(e);
+                    }
+
+                    if (page == null)
+                    {
+                        _logger.Error("Page unable to be created");
+                        _logger.Info("Navigation terminated prematurely");
+                        IsNavigating = false;
+                        return;
+                    }
+
+                    //                if (viewModelType == typeof(LoginViewModel) || viewModelType == typeof(HomeViewModel))
+                    //                {
+                    //                    ClearNavigation();
+                    //                }
+                    if (Application.Current.MainPage is NavigationPage navigationPage)
+                    {
+                        var previousPage = navigationPage.CurrentPage;
+                        Task pushPageTask = navigationPage.Navigation.PushAsync(page);
+                        Task initializeAsyncTask = null;
+                        if (page.BindingContext is BaseViewModel viewModel)
+                        {
+                            initializeAsyncTask = viewModel.InitializeAsync(navigationParameter);
+                        }
+                        else
+                        {
+                            _logger.Error(
+                                $"Navigation failed, {page.GetType()} has BindingContext that does not inherit BaseViewModel, " +
+                                $"BindingContext has type: {page.BindingContext.GetType()}");
+                            IsNavigating = false;
+                            return;
+                        }
+
+                        _logger.Debug($"Previous page is: {previousPage}");
+                        _logger.Info($"Navigation to {page} started");
+                        await pushPageTask;
+                        if (initializeAsyncTask != null) await initializeAsyncTask;
+                        _logger.Info($"Navigation to {page} ended");
+                    }
+                    else
+                    {
+                        _logger.Info($"MainPage is not Navigation page, will be replaced with new page");
+                        Task initializeAsyncTask = null;
+                        if (page.BindingContext is BaseViewModel viewModel)
+                        {
+                            initializeAsyncTask = viewModel.InitializeAsync(navigationParameter);
+                        }
+                        else
+                        {
+                            _logger.Error(
+                                $"Navigation failed, {page.GetType()} has BindingContext that does not inherit BaseViewModel, " +
+                                $"BindingContext has type: {page.BindingContext.GetType()}");
+                            IsNavigating = false;
+                            return;
+                        }
+
+                        Application.Current.MainPage = new NavigationPage(page);
+                        if (initializeAsyncTask != null) await initializeAsyncTask;
+                    }
+
+                    IsNavigating = false;
+                }
+
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e);
+            }
+            finally
+            {
+                IsNavigating = false;
+            }
+        }
+
         private Type GetPageTypeForViewModel(Type viewModelType)
         {
             if(viewModelType.FullName == null)
@@ -136,7 +238,7 @@ namespace NottCS.Services.Navigation
             Type viewType = Type.GetType(viewAssemblyName);
             return viewType;
         }
-        private Task<Page> CreatePage(Type viewModelType)
+        private Page CreatePage(Type viewModelType)
         {
             Type pageType = GetPageTypeForViewModel(viewModelType);
             if (pageType == null)
@@ -147,8 +249,8 @@ namespace NottCS.Services.Navigation
             Page page = null;
             try
             {
-
-                page = Activator.CreateInstance(pageType) as Page;
+               Device.BeginInvokeOnMainThread(()=> page = Activator.CreateInstance(pageType) as Page);
+                //Ensure that create page is run on main thread, even when the rest is ran on background
             }
             catch (Exception e)
             {
@@ -163,7 +265,7 @@ namespace NottCS.Services.Navigation
             else
             {
                 _logger.Info($"{page} successfully created");
-                return Task.FromResult(page);
+                return page;
             }
         }
 

@@ -26,8 +26,12 @@ namespace NottCS.Services
         void RegisterViewModels(ref ContainerBuilder builder)
         {
             builder.RegisterType<AboutViewModel>().InstancePerDependency();
+            builder.RegisterType<MainViewModel>().InstancePerDependency();
+            builder.RegisterType<MenuViewModel>().InstancePerDependency();
         }
 
         public AboutViewModel About => _container.Resolve<AboutViewModel>();
+        public MainViewModel Main => _container.Resolve<MainViewModel>();
+        public MenuViewModel Menu => _container.Resolve<MenuViewModel>();
     }
 }

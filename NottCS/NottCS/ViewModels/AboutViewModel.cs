@@ -7,15 +7,11 @@ using Xamarin.Forms;
 
 namespace NottCS.ViewModels
 {
+    //This ViewModel is used purely to test out the dependency injection method using the ViewModelLocator pattern
+    //Can be deleted once it is clear that the dependency injection is stable
     public class AboutViewModel : BaseViewModel
     {
         private readonly IStuffService _stuffService;
-        public AboutViewModel()
-        {
-            Title = "About";
-
-            OpenWebCommand = new Command(() => Device.OpenUri(new Uri("https://xamarin.com/platform")));
-        }
 
         public AboutViewModel(IStuffService stuffService)
         {

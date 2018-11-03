@@ -4,15 +4,10 @@ using System.Text;
 
 namespace NottCS.Models
 {
-    public enum MenuItemType
-    {
-        Browse,
-        About
-    }
     public class HomeMenuItem
     {
-        public MenuItemType Id { get; set; }
-
-        public string Title { get; set; }
+        public string ImageUri { get; set; }
+        public string Name { get; set; }
+        public Type ViewModelType { get; set; }
     }
 }
