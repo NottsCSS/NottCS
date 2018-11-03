@@ -1,9 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
+             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
              x:Class="NottCS.Views.MenuPage"
+             x:Name="MenuPageVar"
              BindingContext="{Binding Source={StaticResource Locator}, Path=Menu}"
              Title="Menu">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
+            <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
+            <converters:TappedItemEventArgsToTappedItemConverter x:Key="ItemTappedConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <StackLayout VerticalOptions="FillAndExpand">
         <Grid>
             <Grid.RowDefinitions>
@@ -15,13 +25,23 @@
 
             <ListView x:Name="ListViewMenu"
                       Grid.Row="1"
-                      HasUnevenRows="True"
                       ItemsSource="{Binding Path=MenuItems}">
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemSelected"
+                        Command="{Binding NavigateCommand}"
+                        Converter="{StaticResource SelectedItemConverter}" />
+                </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <Grid Padding="10">
-                                <Label Text="{Binding Name}" FontSize="20"/>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="3*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding ImageUri}"/>
+                                <Label Grid.Column="1" Text="{Binding Name}" FontSize="20"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
-using log4net;
+using NLog;
 
 namespace NottCS.ViewModels
 {
-    public class MainViewModel
+    public class MainViewModel : BaseViewModel
     {
-        private readonly ILog _logger;
-        public MainViewModel(ILog logger)
+        public MainViewModel()
         {
-            _logger = logger;
-            _logger.Info("MainViewModel created");
+            Debug.WriteLine("MainViewModel created");
         }
 
     }

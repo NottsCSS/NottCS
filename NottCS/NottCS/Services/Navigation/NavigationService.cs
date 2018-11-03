@@ -5,17 +5,35 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using NLog;
 using NottCS.ViewModels;
 using NottCS.Views;
 using Xamarin.Forms;
+using ILogger = NLog.ILogger;
 
 namespace NottCS.Services.Navigation
 {
     internal class NavigationService : INavigationService
     {
-        private readonly ILogger _logger;
-        public NavigationService(ILogger logger)
+        private Task BeginInvokeOnMainThreadAsync(Action action)
+        {
+            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
+            Device.BeginInvokeOnMainThread(() => {
+                try
+                {
+                    action();
+                    tcs.SetResult(null);
+                }
+                catch (Exception ex)
+                {
+                    tcs.SetException(ex);
+                }
+            });
+            return tcs.Task;
+        }
+        private readonly ILogger<NavigationService> _logger;
+        public NavigationService(ILogger<NavigationService> logger)
         {
             _logger = logger;
         }
@@ -51,10 +69,9 @@ namespace NottCS.Services.Navigation
                 if (viewModelType == null || !viewModelType.IsSubclassOf(typeof(BaseViewModel)))
                     throw new Exception("Cannot navigate to ViewModel that does not inherit BaseViewModel");
                 if (!(Application.Current.MainPage is MainPage mainPage))
-                    throw new Exception("Application MainPage is not set to NottCS.Views.MainPage");
+                    throw new Exception("Application MainPage is not NottCS.Views.MainPage");
                 if (!(mainPage.Detail is NavigationPage navigationPage))
-                    throw new Exception("Detail of MainPage is not NavigationPage");
-
+                    throw new Exception("MainPage.Detail is not a NavigationPage");
                 //Create the Page
                 Page page = await createPageTask;
                 if (page == null)
@@ -70,16 +87,16 @@ namespace NottCS.Services.Navigation
                 var previousPageType = navigationPage.CurrentPage.GetType();
                 Task pushPageTask = navigationPage.Navigation.PushAsync(page);
 
-                _logger.Debug($"Previous page is: {previousPageType}");
-                _logger.Info($"Pushing {page} to navigation stack");
+                _logger.LogDebug($"Previous page is: {previousPageType}");
+                _logger.LogInformation($"Pushing {page} to navigation stack");
                 await pushPageTask;
                 await initializeAsyncTask;
-                _logger.Info($"Navigation to {page} completed successfully");
+                _logger.LogInformation($"Navigation to {page} completed successfully");
             }
             catch (Exception e)
             {
-                _logger.Error(e);
-                _logger.Info("Navigation terminated prematurely");
+                _logger.LogError(e.ToString());
+                _logger.LogInformation("Navigation terminated prematurely");
             }
             finally
             {
@@ -111,7 +128,7 @@ namespace NottCS.Services.Navigation
                     throw new Exception("Cannot navigate to ViewModel that does not inherit BaseViewModel");
 
                 if (!(Application.Current.MainPage is MainPage mainPage))
-                    throw new Exception("Application MainPage is not set to NottCS.Views.MainPage");
+                    throw new Exception("Application MainPage is not NottCS.Views.MainPage");
 
                 //Create the Page
                 Page page = await createPageTask;
@@ -127,12 +144,12 @@ namespace NottCS.Services.Navigation
                 mainPage.Detail = new NavigationPage(page);
 
                 await initializeAsyncTask;
-                _logger.Info($"Navigation to {page} completed successfully");
+                _logger.LogInformation($"Navigation to {page} completed successfully");
             }
             catch (Exception e)
             {
-                _logger.Error(e);
-                _logger.Info("Navigation terminated prematurely");
+                _logger.LogError(e.ToString());
+                _logger.LogInformation("Navigation terminated prematurely");
             }
             finally
             {
@@ -151,7 +168,7 @@ namespace NottCS.Services.Navigation
             Type viewType = Type.GetType(viewAssemblyName);
             return viewType;
         }
-        private Page CreatePage(Type viewModelType)
+        private async Task<Page> CreatePage(Type viewModelType)
         {
             Type pageType = GetPageTypeForViewModel(viewModelType);
             if (pageType == null)
@@ -162,22 +179,23 @@ namespace NottCS.Services.Navigation
             Page page = null;
             try
             {
-               Device.BeginInvokeOnMainThread(()=> page = Activator.CreateInstance(pageType) as Page);
+                await BeginInvokeOnMainThreadAsync(() => page = Activator.CreateInstance(pageType) as Page);
+//               Device.BeginInvokeOnMainThread(()=> page = Activator.CreateInstance(pageType) as Page);
                 //Ensure that create page is run on main thread, even when the rest is ran on background
             }
             catch (Exception e)
             {
-                _logger.Error(e);
+                _logger.LogError(e.ToString());
                 return null;
             }
             if (page == null)
             {
-                _logger.Fatal("Page not created but exception not thrown. Please check implementation.");
+                _logger.LogCritical("Page not created but exception not thrown. Please check implementation.");
                 return null;
             }
             else
             {
-                _logger.Info($"{page} successfully created");
+                _logger.LogInformation($"{page} successfully created");
                 return page;
             }
         }
