@@ -24,15 +24,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition>
-                        <RowDefinition.Height>
-                            <OnPlatform x:TypeArguments="GridLength">
-                                <On Platform="Android" Value="40"/>
-                                <On Platform="iOS" Value="60"/>
-                                <On Platform="UWP" Value="40"/>
-                            </OnPlatform>
-                        </RowDefinition.Height>
-                    </RowDefinition>
+                    <RowDefinition Height="{x:OnPlatform Android=40,iOS=60,UWP=40}"/>
                 </Grid.RowDefinitions>
                 <StackLayout Grid.Row="0">
                     <Label Text="Create Event"
@@ -74,14 +66,8 @@
                         HorizontalOptions="CenterAndExpand"
                         VerticalOptions="StartAndExpand"
                         MinimumHeightRequest="40"
-                        Grid.Row="2">
-                    <Button.Margin>
-                        <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="iOS" Value="0,20,0,0" />
-                            <On Platform="Android, WinPhone, UWP" Value="2,2" />
-                        </OnPlatform>
-                    </Button.Margin>
-                </Button>
+                        Grid.Row="2"
+                        Margin="{x:OnPlatform iOS='0,0,0,10',Android='2,2',UWP='2,2',WPF='2,2'}"/>               
             </Grid>
         </Grid>
     </ContentPage.Content>

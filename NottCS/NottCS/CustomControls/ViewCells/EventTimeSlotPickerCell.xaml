@@ -18,15 +18,7 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition>
-                    <ColumnDefinition.Width>
-                        <OnPlatform x:TypeArguments="GridLength">
-                            <On Platform="iOS" Value="0" />
-                            <On Platform="Android" Value="0" />
-                            <On Platform="UWP" Value="60" />
-                        </OnPlatform>
-                    </ColumnDefinition.Width>
-                </ColumnDefinition>
+                <ColumnDefinition Width="{x:OnPlatform iOS=0,Android=0,UWP=60}"/>
             </Grid.ColumnDefinitions>
 
             <Label Text="{Binding Source={x:Reference Cell}, Path=Title}" />
@@ -46,18 +38,12 @@
                    Source="Images/DeleteIcon.png"
                    WidthRequest="50"
                    HeightRequest="50"
-                   Margin="2">
+                   Margin="2"
+                   IsVisible="{x:OnPlatform iOS='False',Android='False',UWP='True'}">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding Source={x:Reference Cell}, Path=DeleteCommand}"
                                           CommandParameter="{Binding .}"/>
                 </Image.GestureRecognizers>
-                <Image.IsVisible>
-                    <OnPlatform x:TypeArguments="system:Boolean">
-                        <On Platform="iOS" Value="False" />
-                        <On Platform="Android" Value="False" />
-                        <On Platform="UWP" Value="True" />
-                    </OnPlatform>
-                </Image.IsVisible>
             </Image>
         </Grid>
   </ViewCell.View>

@@ -13,15 +13,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="25" />
                 <RowDefinition Height="*" />
-                <RowDefinition>
-                    <RowDefinition.Height>
-                        <OnPlatform x:TypeArguments="GridLength">
-                            <On Platform="iOS" Value="40" />
-                            <On Platform="UWP" Value="50" />
-                            <On Platform="Android" Value="50" />
-                        </OnPlatform>
-                    </RowDefinition.Height>
-                </RowDefinition>
+                <RowDefinition Height="{x:OnPlatform iOS=40,UWP=50,Android=50}"/>
             </Grid.RowDefinitions>
             <customControls:IndexedEventTimeSlotPicker Grid.Row="1" EventTimeList="{Binding EventTimeList}" />
             <Button Grid.Row="2" Text="Save" Margin="10,2"/>

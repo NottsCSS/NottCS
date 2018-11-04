@@ -25,13 +25,8 @@
     <TabbedPage.ToolbarItems>
         <ToolbarItem x:Name="Settings" 
                      Text="Settings"
-                     Command="{Binding AdminPanelNavigationCommand}">
-            <ToolbarItem.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="Android" Value="Admin_Icon.png"/>
-                    <On Platform="UWP" Value="Admin_Icon.png"/>
-                </OnPlatform>
-            </ToolbarItem.Icon>
+                     Command="{Binding AdminPanelNavigationCommand}"
+                     Icon="{x:OnPlatform Android='Admin_Icon.png',UWP='Admin_Icon.png'}">
         </ToolbarItem>
     </TabbedPage.ToolbarItems>
 
