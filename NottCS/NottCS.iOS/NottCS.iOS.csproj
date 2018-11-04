@@ -189,13 +189,121 @@
     <ImageAsset Include="SettingsIcon.xcassets\AppIcons.appiconset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Default-568h.imageset\Default-568h@2x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Default-Portrait.imageset\Default-Portrait.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Default-Portrait.imageset\Default-Portrait@2x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Default.imageset\Default.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Default.imageset\Default@2x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\DeleteIcon.imageset\DeleteIcon.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Icon-60.imageset\Icon-60@2x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Icon-60.imageset\Icon-60@3x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Icon-76.imageset\Icon-76.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Icon-76.imageset\Icon-76@2x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Icon-Small-40.imageset\Icon-Small-40.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Icon-Small-40.imageset\Icon-Small-40@2x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Icon-Small-40.imageset\Icon-Small-40@3x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Icon-Small.imageset\Icon-Small.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Icon-Small.imageset\Icon-Small@2x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Icon-Small.imageset\Icon-Small@3x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
     <ImageAsset Include="SettingsIcon.xcassets\Images.imageset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
     <ImageAsset Include="SettingsIcon.xcassets\Images.imageset\settings-icon.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\tab_about.imageset\tab_about.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\tab_about.imageset\tab_about@2x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\tab_about.imageset\tab_about@3x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\tab_feed.imageset\tab_feed.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\tab_feed.imageset\tab_feed@2x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\tab_feed.imageset\tab_feed@3x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\xamarin_logo.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Default-568h.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\DeleteIcon.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\tab_feed.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\tab_about.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Icon-Small.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Icon-Small-40.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Icon-76.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Icon-60.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Default.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\Default-Portrait.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
     <ImageAsset Include="SettingsIcon.xcassets\LaunchImages.launchimage\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\xamarin_logo.imageset\xamarin_logo.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\xamarin_logo.imageset\xamarin_logo@2x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="SettingsIcon.xcassets\xamarin_logo.imageset\xamarin_logo@3x.png">
       <Visible>false</Visible>
     </ImageAsset>
   </ItemGroup>
