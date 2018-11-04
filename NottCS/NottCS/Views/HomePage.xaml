@@ -17,13 +17,30 @@
         <ResourceDictionary>
             <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
             <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
+            <Style TargetType="flv:FlowListView" x:Key="ShowFlowListViewStyle">
+                <Setter Property="IsVisible" Value="True"/>
+            </Style>
+            <Style TargetType="flv:FlowListView" x:Key="HideFlowListViewStyle">
+                <Setter Property="IsVisible" Value="False"/>
+            </Style>
+            <Style TargetType="gv:GridView" x:Key="ShowGridViewStyle">
+                <Setter Property="IsVisible" Value="True"/>
+            </Style>
+            <Style TargetType="gv:GridView" x:Key="HideGridViewStyle">
+                <Setter Property="IsVisible" Value="False"/>
+            </Style>
         </ResourceDictionary>
     </TabbedPage.Resources>
     
     <TabbedPage.ToolbarItems>
         <ToolbarItem Text="Settings"
-                     Command="{Binding SettingsPageNavigationCommand}"
-                     Icon="{x:OnPlatform Android='settings_icon.png', UWP='settings_icon.png'}">
+                     Command="{Binding SettingsPageNavigationCommand}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android" Value="settings_icon.png"/>
+                    <On Platform="UWP" Value="settings_icon.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
         </ToolbarItem>
         <!--<ToolbarItem Text="Refresh Club"
                      Command="{Binding ReloadClubCommand}"
@@ -114,13 +131,106 @@
                     MinimumHeightRequest="50"
                     ItemsSource="{Binding ClubListTypePickerList}"
                     SelectedIndex="{Binding SelectedClubTypeIndex}" />
-            <Grid>
-                <ScrollView>
-                    <FlexLayout x:Name="flexLayout"
-                                Wrap="Wrap"
-                                JustifyContent="SpaceAround" />
-                </ScrollView>
-            </Grid>
+            <flv:FlowListView FlowColumnCount="3" 
+                              SeparatorVisibility="Default" 
+                              RowHeight="100"
+                              FlowUseAbsoluteLayoutInternally="True" 
+                              FlowColumnExpand="None"
+                              FlowItemsSource="{Binding ClubList}" 
+                              FlowItemTappedCommand="{Binding ClubListNavigationCommand}"
+                              HasUnevenRows="False"
+                              Margin="5,10"
+                              IsPullToRefreshEnabled="True"
+                              IsRefreshing="{Binding IsBusy,Mode=OneWay}"
+                              RefreshCommand="{Binding ReloadClubCommand}">
+                <flv:FlowListView.Style>
+                    <OnPlatform x:TypeArguments="Style">
+                        <On Platform="Android" Value="{StaticResource ShowFlowListViewStyle}"/>
+                        <On Platform="iOS" Value="{StaticResource ShowFlowListViewStyle}"/>
+                        <On Platform="UWP" Value="{StaticResource HideFlowListViewStyle}"/>
+                    </OnPlatform>
+                </flv:FlowListView.Style>
+                <flv:FlowListView.FlowColumnTemplate>
+                    <DataTemplate>
+                        <Frame OutlineColor="Black"
+                               Padding="0"
+                               Margin="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Image Grid.Row="0"
+                                       Aspect="Fill"
+                                       HorizontalOptions="CenterAndExpand"
+                                       VerticalOptions="StartAndExpand">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding Image}"
+                                                        CachingEnabled="True"
+                                                        CacheValidity="30"/>
+                                    </Image.Source>
+                                </Image>
+                                <Label FontSize="Small"
+                                       Grid.Row="1"
+                                       HorizontalTextAlignment="Center" 
+                                       VerticalTextAlignment="End" 
+                                       Text="{Binding Name}" 
+                                       LineBreakMode="WordWrap"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </flv:FlowListView.FlowColumnTemplate>
+            </flv:FlowListView>
+
+            <gv:GridView SeparatorVisibility="Default" 
+                         RowHeight="100"
+                         HasUnevenRows="False"
+                         Margin="5,10"
+                         ItemsSource="{Binding ClubList}">
+                <gv:GridView.Style>
+                    <OnPlatform x:TypeArguments="Style">
+                        <On Platform="Android" Value="{StaticResource HideGridViewStyle}"/>
+                        <On Platform="iOS" Value="{StaticResource HideGridViewStyle}"/>
+                        <On Platform="UWP" Value="{StaticResource ShowGridViewStyle}"/>
+                    </OnPlatform>
+                </gv:GridView.Style>
+                <gv:GridView.Behaviors>
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemTapped"
+                        Command="{Binding ClubListNavigationCommand}" 
+                        Converter="{StaticResource TappedItemConverter}" />
+                </gv:GridView.Behaviors>
+                <gv:GridView.ItemTemplate>
+                    <DataTemplate>
+                        <gv:GridViewXamlCell>
+                            <Grid Margin="2"
+                                  Padding="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Image Aspect="AspectFit"
+                                       HeightRequest="50"
+                                       WidthRequest="50"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding Image}"
+                                                        CachingEnabled="True"
+                                                        CacheValidity="30"/>
+                                    </Image.Source>
+                                </Image>
+                                <Label Grid.Row="1" 
+                                       Text="{Binding Name}" 
+                                       FontSize="12"
+                                       HorizontalTextAlignment="Center"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Grid>
+                        </gv:GridViewXamlCell>
+                    </DataTemplate>
+                </gv:GridView.ItemTemplate>
+            </gv:GridView>
         </StackLayout>
     </ContentPage>
 

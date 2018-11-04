@@ -33,7 +33,15 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="{x:OnPlatform Android=60,iOS=40,UWP=40}"/>
+                    <RowDefinition>
+                        <RowDefinition.Height>
+                            <OnPlatform x:TypeArguments="GridLength">
+                                <On Platform="Android" Value="60"/>
+                                <On Platform="iOS" Value="40"/>
+                                <On Platform="UWP" Value="40"/>
+                            </OnPlatform>
+                        </RowDefinition.Height>
+                    </RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -69,8 +77,14 @@
                         <DataTemplate>
                             <ViewCell Height="150">
                                 <Grid x:Name="DynamicListViewItem" 
-                                      Margin="1"
-                                      Padding="{x:OnPlatform Android=5,iOS=5,UWP=-5}">
+                                      Margin="1">
+                                    <Grid.Padding>
+                                        <OnPlatform x:TypeArguments="Thickness">
+                                            <On Platform="Android" Value="5"/>
+                                            <On Platform="iOS" Value="5"/>
+                                            <On Platform="UWP" Value="-5"/>
+                                        </OnPlatform>
+                                    </Grid.Padding>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
                                         <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -104,8 +118,14 @@
                         VerticalOptions="StartAndExpand"
                         MinimumHeightRequest="40"
                         Grid.Row="2"
-                        Grid.Column="0"
-                        Margin="{x:OnPlatform iOS='0,0,0,10',Android='2,2',UWP='2,2',WPF='2,2'}"/>               
+                        Grid.Column="0">
+                    <Button.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="0,0,0,10" />
+                            <On Platform="Android, WinPhone, UWP" Value="2,2" />
+                        </OnPlatform>
+                    </Button.Margin>
+                </Button>
                 <Button Text="Create Event"
                         Command="{Binding CreateEventCommand}"
                         FontSize="Small"
@@ -113,8 +133,14 @@
                         VerticalOptions="StartAndExpand"
                         MinimumHeightRequest="40"
                         Grid.Row="2"
-                        Grid.Column="1"
-                        Margin="{x:OnPlatform iOS='0,0,0,10',Android='2,2',UWP='2,2',WPF='2,2'}"/>                
+                        Grid.Column="1">
+                    <Button.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="0,0,0,10" />
+                            <On Platform="Android, WinPhone, UWP" Value="2,2" />
+                        </OnPlatform>
+                    </Button.Margin>
+                </Button>
             </Grid>
         </Grid>
     </ContentPage.Content>

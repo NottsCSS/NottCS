@@ -8,8 +8,14 @@
     <ContentView.Content>
         <ListView ItemsSource="{Binding Source={x:Reference EventTimeSlotList}, Path=EventTimeList}"
                   x:Name="ListViewObject"
-                  SeparatorVisibility="Default"
-                  RowHeight="{x:OnPlatform iOS=80,Android=150,UWP=130}">
+                  SeparatorVisibility="Default">
+            <ListView.RowHeight>
+                <OnPlatform x:TypeArguments="system:Int32">
+                    <On Platform="iOS" Value="80" />
+                    <On Platform="Android" Value="150" />
+                    <On Platform="UWP" Value="130" />
+                </OnPlatform>
+            </ListView.RowHeight>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <customControlCell:EventTimeSlotPickerCell DeleteCommand="{Binding Source={x:Reference ListViewObject}, Path=BindingContext.DeleteCommand}" />
