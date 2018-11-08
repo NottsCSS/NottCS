@@ -1,5 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.UNMC.NottCS" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="27" />
-	<application android:label="NottCS.Android" android:icon="@drawable/application_icon"></application>
+	<application android:label="NottCS.Android" android:icon="@drawable/application_icon">
+	  <activity android:name="microsoft.identity.client.BrowserTabActivity">
+	    <intent-filter>
+	      <action android:name="android.intent.action.VIEW" />
+	      <category android:name="android.intent.category.DEFAULT" />
+	      <category android:name="android.intent.category.BROWSABLE" />
+	      <data android:scheme="msal81a5b712-2ec4-4d3f-9324-211f60d0a0c9" android:host="auth" />
+	    </intent-filter>
+	  </activity>
+	</application>
 </manifest>

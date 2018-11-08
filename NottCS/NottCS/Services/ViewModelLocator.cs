@@ -5,6 +5,7 @@ using Autofac;
 using Microsoft.Extensions.Logging;
 using NLog;
 using NLog.Extensions.Logging;
+using NottCS.Services.LoginService;
 using NottCS.Services.Navigation;
 using NottCS.Services.Stuff;
 using NottCS.ViewModels;
@@ -31,8 +32,10 @@ namespace NottCS.Services
             builder.RegisterInstance(loggerFactory).As<ILoggerFactory>().SingleInstance();
             builder.RegisterGeneric(typeof(Logger<>)).As(typeof(ILogger<>));
             
+            //registering services
             builder.RegisterType<StuffService>().As<IStuffService>().SingleInstance();
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
+            builder.RegisterType<LoginService.LoginService>().As<ILoginService>().SingleInstance();
         }
 
         void RegisterViewModels(ref ContainerBuilder builder)
@@ -40,10 +43,12 @@ namespace NottCS.Services
             builder.RegisterType<AboutViewModel>().InstancePerDependency();
             builder.RegisterType<MainViewModel>().InstancePerDependency();
             builder.RegisterType<MenuViewModel>().InstancePerDependency();
+            builder.RegisterType<LoginViewModel>().InstancePerDependency();
         }
 
         public AboutViewModel About => _container.Resolve<AboutViewModel>();
         public MainViewModel Main => _container.Resolve<MainViewModel>();
         public MenuViewModel Menu => _container.Resolve<MenuViewModel>();
+        public LoginViewModel Login => _container.Resolve<LoginViewModel>();
     }
 }

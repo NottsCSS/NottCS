@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using Microsoft.Identity.Client;
 using NLog;
 using NLog.Common;
 using NLog.Config;
 using NLog.Targets;
+using NottCS.PrivateData;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using NottCS.Views;
@@ -14,11 +16,16 @@ namespace NottCS
 {
     public partial class App : Application
     {
-
+        public static PublicClientApplication ClientApplication { get; private set; }
+        public static UIParent UiParent { get; set; }
         public App()
         {
             InitializeComponent();
-            
+
+            ClientApplication = new PublicClientApplication(Config.MicrosoftApplicationId)
+            {
+                RedirectUri = $"msal{Config.MicrosoftApplicationId}://auth",
+            };
             MainPage = new MainPage();
             SetupNLog();
         }

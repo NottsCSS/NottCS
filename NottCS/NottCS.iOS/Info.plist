@@ -34,5 +34,18 @@
     <string>NottCS</string>
     <key>XSAppIconAssets</key>
     <string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>CFBundleURLTypes</key>
+    <array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.yourcompany.UserDetailsClient</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>msal81a5b712-2ec4-4d3f-9324-211f60d0a0c9</string>
+			</array>
+		</dict>
+    </array>
 </dict>
 </plist>

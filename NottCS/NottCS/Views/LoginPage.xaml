@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.LoginPage"
+             Title="Login"
+             BindingContext="{Binding Source={StaticResource Locator}, Path=Login}">
+    <ContentPage.Content>
+        <Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Text="NottCS Login"
+                   FontSize="Large"
+                   VerticalOptions="Start" 
+                   HorizontalOptions="CenterAndExpand" />
+                <ScrollView Grid.Row="3"
+                            HorizontalOptions="Center"
+                            WidthRequest="500">
+                    <StackLayout>
+                        <Button Text="LOGIN" 
+                                Command="{Binding SignInCommand}" 
+                            Margin="50,0,50,0" />
+                        <Button Text="Log out" 
+                                Command="{Binding SignOutCommand}" 
+                                Margin="50,0,50,0" />
+                        <Label Text="{Binding Message}" />
+                        <ActivityIndicator Color="Green" IsRunning="{Binding IsBusy}" />
+                    </StackLayout>
+                </ScrollView>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
