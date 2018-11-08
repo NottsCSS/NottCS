@@ -45,7 +45,7 @@
             </Entry>
             <Label  Grid.Row="3"
                     Margin="5,0"
-                    Text ="Report an Issue"
+                    Text ="Report an issue"
                     VerticalOptions="CenterAndExpand"
                     HorizontalOptions="StartAndExpand"
                     FontSize="Large"/>
