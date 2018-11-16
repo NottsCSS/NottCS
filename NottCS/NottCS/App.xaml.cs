@@ -21,7 +21,6 @@ namespace NottCS
         public App()
         {
             InitializeComponent();
-
             ClientApplication = new PublicClientApplication(Config.MicrosoftApplicationId)
             {
                 RedirectUri = $"msal{Config.MicrosoftApplicationId}://auth",
