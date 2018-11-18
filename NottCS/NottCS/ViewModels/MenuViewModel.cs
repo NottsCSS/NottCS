@@ -25,8 +25,9 @@ namespace NottCS.ViewModels
         }
         public List<HomeMenuItem> MenuItems { get; set; } = new List<HomeMenuItem>()
         {
-            new HomeMenuItem(){ImageUri = "xamarin_logo.png", Name="Home", ViewModelType = typeof(AboutViewModel)},
-            new HomeMenuItem(){ImageUri = "account_box_icon.png", Name="About", ViewModelType = typeof(AboutViewModel)}
+            new HomeMenuItem(){ImageUri = "xamarin_logo.png", Name="Home", ViewModelType = typeof(HomeViewModel)},
+            new HomeMenuItem(){ImageUri = "account_box_icon.png", Name="Profile", ViewModelType = typeof(ProfileViewModel)},
+            new HomeMenuItem(){ImageUri = "account_box_icon.png", Name="About", ViewModelType = typeof(AboutViewModel)},
         };
 
         public ICommand NavigateCommand => new Command<object>(async(t) => await Navigate(t));

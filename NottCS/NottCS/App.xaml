@@ -12,6 +12,30 @@
                 <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
                 <Setter Property="BarTextColor" Value="White" />
             </Style>
+            <!-- Label Text Style -->
+            <Style TargetType="Label"
+                   x:Key="TitleLabelStyle">
+                <Setter Property="FontSize" Value="30"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+            </Style>
+
+            <!-- Button Style -->
+            <Style TargetType="Button"
+                   x:Key="DefaultButtonStyle">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="Margin" Value="20"/>
+                <Setter Property="BorderWidth" Value="0"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+
+            <Style TargetType="Button"
+                   x:Key="SpanButtonStyle">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="BorderWidth" Value="0"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

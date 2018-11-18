@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+            xmlns:club="clr-namespace:NottCS.Views.Club;assembly=NottCS"
+            xmlns:event="clr-namespace:NottCS.Views.Event;assembly=NottCS"
+            BindingContext="{Binding Source={StaticResource Locator}, Path=Home}"
+            x:Class="NottCS.Views.HomePage">
+    <!--Pages can be added as references or inline-->
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter" />
+            <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter" />
+        </ResourceDictionary>
+    </TabbedPage.Resources>
+
+    <event:EventListPage />
+    <club:ClubListPage />
+
+</TabbedPage>

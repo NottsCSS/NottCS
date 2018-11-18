@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 using NottCS.Models;
@@ -13,6 +14,7 @@ namespace NottCS.ViewModels
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
         private bool _isBusy = false;
+        private bool _isRefreshing = true;
         public bool IsBusy
         {
             get => _isBusy;
@@ -68,5 +70,6 @@ namespace NottCS.ViewModels
             changed?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+        public ICommand DisableItemSelectedCommand => new Command(() => { });
     }
 }

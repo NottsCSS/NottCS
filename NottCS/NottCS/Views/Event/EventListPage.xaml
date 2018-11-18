@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
+             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+             x:Class="NottCS.Views.Event.EventListPage"
+             BindingContext="{Binding Source={StaticResource Locator}, Path=EventList}"
+             Title="Event">
+    <ContentPage.Resources>
+        <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter" />
+        <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView x:Name="EventListView"
+                      ItemsSource="{Binding EventsList}"
+                      Margin="3,3,0,0"
+                      RowHeight="50"
+                      IsPullToRefreshEnabled="True"
+                      IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                      RefreshCommand="{Binding ReloadEventCommand}">
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior
+                        EventName="ItemTapped"
+                        Command="{Binding EventListNavigationCommand}"
+                        Converter="{StaticResource TappedItemConverter}" />
+                    <behaviors:EventToCommandBehavior
+                        EventName="ItemSelected"
+                        Source="{x:Reference EventListView}"
+                        Command="{Binding DisableItemSelectedCommand, Mode=TwoWay}"
+                        Converter="{StaticResource SelectedItemConverter}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5"
+                                  x:Name="Items"
+                                  Margin="2,2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="20" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="1"
+                                       Grid.Row="0"
+                                       Text="{Binding Title}"
+                                       LineBreakMode="TailTruncation" />
+                                <Image Grid.Column="0"
+                                       Grid.Row="0"
+                                       Grid.RowSpan="2"
+                                       Aspect="AspectFill">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding EventImage}"
+                                                        CacheValidity="30"
+                                                        CachingEnabled="True" />
+                                    </Image.Source>
+                                </Image>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.Club.ClubListPage"
+             BindingContext="{Binding Source={StaticResource Locator}, Path=ClubList}"
+             Title="Club">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Currently Viewing:"
+                   FontSize="Medium"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="Center"
+                   Margin="2,2,2,0"/>
+            <Picker HorizontalOptions="FillAndExpand"
+                    Margin="5,0,5,5"
+                    MinimumHeightRequest="50"
+                    ItemsSource="{Binding ClubListTypePickerList}"
+                    SelectedIndex="{Binding SelectedClubTypeIndex}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
