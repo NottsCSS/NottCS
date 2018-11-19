@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 using NLog;
+using NottCS.Services.BackendService;
 using NottCS.Services.LoginService;
+using NottCS.Services.Sync;
 using Xamarin.Forms;
 
 namespace NottCS.ViewModels
@@ -14,6 +16,8 @@ namespace NottCS.ViewModels
     {
         private readonly ILogger<LoginViewModel> _logger;
         private readonly ILoginService _loginService;
+        private readonly BackendService _backendService;
+        private readonly SyncService _syncService;
         private string _message;
 
         public string Message
@@ -22,15 +26,19 @@ namespace NottCS.ViewModels
             set => SetProperty(ref _message, value);
         }
 
-        public LoginViewModel(ILogger<LoginViewModel> logger, ILoginService loginService)
+        public LoginViewModel(ILogger<LoginViewModel> logger, ILoginService loginService, 
+            BackendService backendService, SyncService syncService)
         {
             _logger = logger;
             _loginService = loginService;
+            _backendService = backendService;
+            _syncService = syncService;
             logger.LogInformation("LoginViewModel created");
         }
 
         public ICommand SignInCommand => new Command(async() => await SignIn());
         public ICommand SignOutCommand => new Command(async () => await SignOut());
+        public ICommand SyncCommand => new Command(async () => await Sync());
 
         private async Task SignIn()
         {
@@ -41,6 +49,7 @@ namespace NottCS.ViewModels
             {
                 var result = await _loginService.SignInAsync();
                 Message = result.AccessToken;
+                _backendService.SetupClient(Message);
             }
             catch (MicrosoftAccountException e)
             {
@@ -64,6 +73,7 @@ namespace NottCS.ViewModels
             try
             {
                 await _loginService.SignOutAsync();
+                _backendService.ResetClient();
             }
             catch (Exception e)
             {
@@ -73,6 +83,11 @@ namespace NottCS.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        private async Task Sync()
+        {
+            await _syncService.Sync();
         }
     }
 }

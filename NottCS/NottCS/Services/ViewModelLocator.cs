@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Autofac;
 using Microsoft.Extensions.Logging;
 using NLog;
 using NLog.Extensions.Logging;
+using NottCS.Services.Data;
 using NottCS.Services.LoginService;
 using NottCS.Services.Navigation;
 using NottCS.Services.Stuff;
+using NottCS.Services.Sync;
 using NottCS.ViewModels;
 using NottCS.ViewModels.Club;
 using NottCS.ViewModels.Event;
+using NottCS.ViewModels.Test;
 
 namespace NottCS.Services
 {
@@ -38,6 +42,13 @@ namespace NottCS.Services
             builder.RegisterType<StuffService>().As<IStuffService>().SingleInstance();
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
             builder.RegisterType<LoginService.LoginService>().As<ILoginService>().SingleInstance();
+            builder.RegisterType<BackendService.BackendService>().AsSelf().SingleInstance();
+            builder.RegisterType<LocalDatabaseService>().AsSelf().SingleInstance();
+            builder.RegisterType<SyncService>().AsSelf().SingleInstance();
+
+            //registering database
+            //            var db = new LocalDatabase(path);
+            //            builder.RegisterType<LocalDatabase>().As
         }
 
         void RegisterViewModels(ref ContainerBuilder builder)
@@ -52,6 +63,9 @@ namespace NottCS.Services
             builder.RegisterType<ProfileViewModel>().InstancePerDependency();
             builder.RegisterType<ClubViewModel>().InstancePerDependency();
             builder.RegisterType<AdminPanelViewModel>().InstancePerDependency();
+
+            //Test
+            builder.RegisterType<DatabaseTestViewModel>().InstancePerDependency();
         }
 
         public AboutViewModel About => _container.Resolve<AboutViewModel>();
@@ -64,5 +78,6 @@ namespace NottCS.Services
         public ProfileViewModel Profile => _container.Resolve<ProfileViewModel>();
         public ClubViewModel Club => _container.Resolve<ClubViewModel>();
         public AdminPanelViewModel AdminPanel => _container.Resolve<AdminPanelViewModel>();
+        public DatabaseTestViewModel DatabaseTest => _container.Resolve<DatabaseTestViewModel>();
     }
 }
