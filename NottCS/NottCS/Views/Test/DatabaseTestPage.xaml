@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.Test.DatabaseTestPage"
+             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+             BindingContext="{Binding Source={StaticResource Locator}, Path=DatabaseTest}">
+    <ContentPage.Resources>
+        <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+                <Label Text="Name" />
+                <Entry Grid.Row="0" Grid.Column="1" 
+                       Text="{Binding Name}" />
+
+                <Label Grid.Row="1" Grid.Column="0" 
+                       Text="Description" />
+                <Entry Grid.Row="1" Grid.Column="1" 
+                       Text="{Binding Description}" />
+
+                <Label Grid.Row="2" Grid.Column="0" 
+                       Text="IconUrl" />
+                <Entry Grid.Row="2" Grid.Column="1" 
+                       Text="{Binding IconUrl}" />
+
+                <Button Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" Command="{Binding SubmitCommand}"></Button>    
+            </Grid>
+            <ListView Grid.Row="1"
+                      ItemsSource="{Binding ClubList}" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5"
+                                  x:Name="Items"
+                                  Margin="2,2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="20" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="1"
+                                       Grid.Row="0"
+                                       Text="{Binding Name}"
+                                       LineBreakMode="TailTruncation" />
+
+                                <Image Grid.Column="0"
+                                       Grid.Row="0"
+                                       Grid.RowSpan="2"
+                                       Aspect="AspectFill">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding IconUrl}"
+                                                        CacheValidity="30"
+                                                        CachingEnabled="True" />
+                                    </Image.Source>
+                                </Image>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ActivityIndicator Grid.Row="2" IsRunning="{Binding IsBusy}" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

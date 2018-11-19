@@ -3,7 +3,8 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:views="clr-namespace:NottCS.Views"
             x:Class="NottCS.Views.MainPage"
-            MasterBehavior="Popover">
+            MasterBehavior="Popover"
+            BindingContext="{Binding Source={StaticResource Locator}, Path=Main}">
 
     <MasterDetailPage.Master>
         <views:MenuPage />

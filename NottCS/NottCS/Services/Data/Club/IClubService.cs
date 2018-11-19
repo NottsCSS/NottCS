@@ -9,5 +9,10 @@ namespace NottCS.Services.Data.Club
     public interface IClubService
     {
         Task<List<Models.Club>> GetAllClubsAsync();
+        Task<Models.Club> GetClubByIdAsync(int id);
+        Task<Models.Club> GetClubByNameAsync(string name);
+        Task AddClubAsync(Models.Club club);
+        Task DeleteClubAsync(Models.Club club);
+        Task DeleteClubAsync(int id);
     }
 }

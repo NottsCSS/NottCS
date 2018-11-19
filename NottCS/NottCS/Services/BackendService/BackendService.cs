@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -133,6 +134,35 @@ namespace NottCS.Services.BackendService
             {
                 throw new Exception($"Something went wrong, http status code: {result.StatusCode}");
             }
+        }
+
+        public async Task AddClubAsync(Club club)
+        {
+            if (!_isClientSetup)
+                throw new Exception("Client is not setup");
+
+            
+            var webClient = new WebClient();
+            byte[] imageBytes = webClient.DownloadData(club.IconUrl);
+
+            MultipartFormDataContent form = new MultipartFormDataContent
+            {
+                {new StringContent(club.Name), "name"},
+                {new StringContent(club.Description), "description"},
+                {new ByteArrayContent(imageBytes), "icon", "icon123.jpg"}
+            };
+
+            var httpRequest = new HttpRequestMessage(HttpMethod.Post, _client.BaseAddress + "club/")
+            {
+                Content = form
+            };
+            
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            var result = await _client.SendAsync(httpRequest);
+            _logger.LogDebug($"Request took {stopwatch.Elapsed}");
+            if (!result.IsSuccessStatusCode)
+                throw new Exception($"Something went wrong, http status code: {result.StatusCode}");
         }
         #endregion
     }

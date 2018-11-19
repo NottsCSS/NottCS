@@ -26,20 +26,11 @@ namespace NottCS.Services.Sync
         public async Task Sync()
         {
             var clubList = await _backendService.GetClubsAsync();
-
-                var stopwatch = new Stopwatch();
-                stopwatch.Start();
-            var clubListLocal1 = await _localDatabaseService.Table<Club>().ToListAsync();
-                _logger.LogDebug($"ToList(initial) took {stopwatch.Elapsed}");
-                stopwatch.Restart();
+            await _localDatabaseService.ExecuteAsync("DELETE FROM Club");
             foreach (var item in clubList.Results)
             {
                 await _localDatabaseService.InsertOrReplaceAsync(item);
             }
-                _logger.LogDebug($"InsertOrReplace took {stopwatch.Elapsed}");
-                stopwatch.Restart();
-            var clubListLocal = await _localDatabaseService.Table<Club>().ToListAsync();
-                _logger.LogDebug($"ToList(final) took {stopwatch.Elapsed}");
         }
     }
 }

@@ -25,7 +25,7 @@ namespace NottCS
             {
                 RedirectUri = $"msal{Config.MicrosoftApplicationId}://auth",
             };
-            MainPage = new MainPage();
+            MainPage = new LoginPage();
             SetupNLog();
         }
 

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using NLog;
 using NottCS.Services.BackendService;
 using NottCS.Services.LoginService;
+using NottCS.Services.Navigation;
 using NottCS.Services.Sync;
 using Xamarin.Forms;
 
@@ -18,6 +19,7 @@ namespace NottCS.ViewModels
         private readonly ILoginService _loginService;
         private readonly BackendService _backendService;
         private readonly SyncService _syncService;
+        private readonly INavigationService _navigationService;
         private string _message;
 
         public string Message
@@ -27,12 +29,13 @@ namespace NottCS.ViewModels
         }
 
         public LoginViewModel(ILogger<LoginViewModel> logger, ILoginService loginService, 
-            BackendService backendService, SyncService syncService)
+            BackendService backendService, SyncService syncService, INavigationService navigationService)
         {
             _logger = logger;
             _loginService = loginService;
             _backendService = backendService;
             _syncService = syncService;
+            _navigationService = navigationService;
             logger.LogInformation("LoginViewModel created");
         }
 
@@ -50,6 +53,9 @@ namespace NottCS.ViewModels
                 var result = await _loginService.SignInAsync();
                 Message = result.AccessToken;
                 _backendService.SetupClient(Message);
+                var syncTask =  _syncService.Sync();
+                await _navigationService.SetMainPageAsync<MainViewModel>();
+                await syncTask;
             }
             catch (MicrosoftAccountException e)
             {

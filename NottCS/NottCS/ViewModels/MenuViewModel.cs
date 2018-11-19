@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 using NottCS.Models;
 using NottCS.Services.Navigation;
+using NottCS.ViewModels.Test;
 using Xamarin.Forms;
 using ILogger = NLog.ILogger;
 
@@ -28,6 +29,7 @@ namespace NottCS.ViewModels
             new HomeMenuItem(){ImageUri = "xamarin_logo.png", Name="Home", ViewModelType = typeof(HomeViewModel)},
             new HomeMenuItem(){ImageUri = "account_box_icon.png", Name="Profile", ViewModelType = typeof(ProfileViewModel)},
             new HomeMenuItem(){ImageUri = "account_box_icon.png", Name="About", ViewModelType = typeof(AboutViewModel)},
+            new HomeMenuItem(){ImageUri = "xamarin_logo.png", Name="DbTest", ViewModelType = typeof(DatabaseTestViewModel)}
         };
 
         public ICommand NavigateCommand => new Command<object>(async(t) => await Navigate(t));

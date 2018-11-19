@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace NottCS.Views.Test
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class DatabaseTest : ContentPage
+	public partial class DatabaseTestPage : ContentPage
 	{
-		public DatabaseTest ()
+		public DatabaseTestPage()
 		{
 			InitializeComponent ();
 		}
