@@ -8,13 +8,13 @@ using NottCS.Models;
 
 namespace NottCS.Services.Data
 {
-    public class LocalDatabaseService : SQLiteAsyncConnection
+    public class LocalDatabaseConnection : SQLiteAsyncConnection
     {
 
         private static readonly string DbPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "NottCSData.db3");
-        public LocalDatabaseService() : base(DbPath, storeDateTimeAsTicks:false)
+        public LocalDatabaseConnection() : base(DbPath, storeDateTimeAsTicks:false)
         {
             CreateTableAsync<Models.Club>().Wait();
         }

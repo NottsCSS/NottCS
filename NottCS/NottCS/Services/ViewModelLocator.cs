@@ -44,7 +44,7 @@ namespace NottCS.Services
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
             builder.RegisterType<LoginService.LoginService>().As<ILoginService>().SingleInstance();
             builder.RegisterType<BackendService.BackendService>().AsSelf().SingleInstance();
-            builder.RegisterType<LocalDatabaseService>().AsSelf().SingleInstance();
+            builder.RegisterType<LocalDatabaseConnection>().AsSelf().SingleInstance();
             builder.RegisterType<SyncService>().AsSelf().SingleInstance();
             builder.RegisterType<ClubService>().As<IClubService>().SingleInstance();
         }

@@ -13,10 +13,10 @@ namespace NottCS.Services.Sync
     public class SyncService
     {
         private readonly BackendService.BackendService _backendService;
-        private readonly LocalDatabaseService _localDatabaseService;
+        private readonly LocalDatabaseConnection _localDatabaseService;
         private readonly ILogger<ClubService> _logger;
 
-        public SyncService(BackendService.BackendService backendService, LocalDatabaseService localDatabaseService, ILogger<ClubService> logger)
+        public SyncService(BackendService.BackendService backendService, LocalDatabaseConnection localDatabaseService, ILogger<ClubService> logger)
         {
             _backendService = backendService;
             _localDatabaseService = localDatabaseService;
