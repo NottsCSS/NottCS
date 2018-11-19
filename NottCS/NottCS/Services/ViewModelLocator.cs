@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using NLog;
 using NLog.Extensions.Logging;
 using NottCS.Services.Data;
+using NottCS.Services.Data.Club;
 using NottCS.Services.LoginService;
 using NottCS.Services.Navigation;
 using NottCS.Services.Stuff;
@@ -45,10 +46,7 @@ namespace NottCS.Services
             builder.RegisterType<BackendService.BackendService>().AsSelf().SingleInstance();
             builder.RegisterType<LocalDatabaseService>().AsSelf().SingleInstance();
             builder.RegisterType<SyncService>().AsSelf().SingleInstance();
-
-            //registering database
-            //            var db = new LocalDatabase(path);
-            //            builder.RegisterType<LocalDatabase>().As
+            builder.RegisterType<ClubService>().As<IClubService>().SingleInstance();
         }
 
         void RegisterViewModels(ref ContainerBuilder builder)

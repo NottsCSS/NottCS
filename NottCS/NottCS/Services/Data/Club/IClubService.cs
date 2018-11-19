@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using NottCS.Services.Data.Models;
+using System.Threading.Tasks;
+using NottCS.Models;
 
-namespace NottCS.Services.Data
+namespace NottCS.Services.Data.Club
 {
     public interface IClubService
     {
-        IEnumerable<Models.ClubData> GetAllClubs();
+        Task<List<Models.Club>> GetAllClubsAsync();
     }
 }

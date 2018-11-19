@@ -5,17 +5,61 @@
              BindingContext="{Binding Source={StaticResource Locator}, Path=ClubList}"
              Title="Club">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Currently Viewing:"
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0"
+                   Text="Currently Viewing:"
                    FontSize="Medium"
                    HorizontalOptions="StartAndExpand"
                    VerticalOptions="Center"
                    Margin="2,2,2,0"/>
-            <Picker HorizontalOptions="FillAndExpand"
+            <Picker Grid.Row="1"
+                    HorizontalOptions="FillAndExpand"
                     Margin="5,0,5,5"
                     MinimumHeightRequest="50"
                     ItemsSource="{Binding ClubListTypePickerList}"
                     SelectedIndex="{Binding SelectedClubTypeIndex}" />
-        </StackLayout>
+
+            <ListView Grid.Row="2"
+                      ItemsSource="{Binding ClubList}" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5"
+                                  x:Name="Items"
+                                  Margin="2,2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="20" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="1"
+                                       Grid.Row="0"
+                                       Text="{Binding Name}"
+                                       LineBreakMode="TailTruncation" />
+
+                                <Image Grid.Column="0"
+                                       Grid.Row="0"
+                                       Grid.RowSpan="2"
+                                       Aspect="AspectFill">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding IconUrl}"
+                                                        CacheValidity="30"
+                                                        CachingEnabled="True" />
+                                    </Image.Source>
+                                </Image>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

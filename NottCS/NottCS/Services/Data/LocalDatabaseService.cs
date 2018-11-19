@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.IO;
 using System.Text;
-using NottCS.Services.Data.Models;
+using NottCS.Models;
 
 namespace NottCS.Services.Data
 {
@@ -16,7 +16,7 @@ namespace NottCS.Services.Data
             "NottCSData.db3");
         public LocalDatabaseService() : base(DbPath, storeDateTimeAsTicks:false)
         {
-            CreateTableAsync<ClubData>().Wait();
+            CreateTableAsync<Models.Club>().Wait();
         }
     }
 }

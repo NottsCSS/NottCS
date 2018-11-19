@@ -3,15 +3,28 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
+using NottCS.Services.Data;
+using NottCS.Services.Data.Club;
 
 namespace NottCS.ViewModels.Club
 {
     public class ClubListViewModel:BaseViewModel
     {
-        public ClubListViewModel()
+        private readonly IClubService _clubService;
+        public ClubListViewModel(IClubService clubService)
         {
+            _clubService = clubService;
+            SelectedClubTypeIndex = 1;
+            InitializeAsync(null);
+        }
+
+        public override async Task InitializeAsync(object navigationData)
+        {
+            AllClubList = new ObservableCollection<Models.Club>(await _clubService.GetAllClubsAsync());
             SelectedClubTypeIndex = 1;
         }
+
         public List<string> ClubListTypePickerList { get; set; } = new List<string> { "My Clubs Only", "All Clubs" };
         private int _selectedClubTypeIndex;
         public int SelectedClubTypeIndex
@@ -40,33 +53,26 @@ namespace NottCS.ViewModels.Club
             set => SetProperty(ref _clubList, value);
         }
 
-        #region MockData
-        private ObservableCollection<Models.Club> AllClubList { get; set; } = new ObservableCollection<Models.Club>
+#region MockData
+
+        private ObservableCollection<Models.Club> _allClubList = new ObservableCollection<Models.Club>();
+        private ObservableCollection<Models.Club> AllClubList
         {
-            new Models.Club()
-            {
-                Id = "0",
-                Name = "Test1",
-                Description = "Loren Ipsum"
-            },
-            new Models.Club()
-            {
-                Id = "1",
-                Name = "Test2",
-                Description = "Loren Gypsum"
-            }
-        };
+            get => _allClubList;
+            set => SetProperty(ref _allClubList, value);
+        }
+
         private ObservableCollection<Models.Club> MyClubList { get; set; } = new ObservableCollection<Models.Club>()
         {
             new Models.Club()
             {
-                Id = "0",
+                Id = 0,
                 Name = "TestMy1",
                 Description = "Loren Ipsum"
             },
             new Models.Club()
             {
-                Id = "1",
+                Id = 1,
                 Name = "TestMy2",
                 Description = "Loren Blek"
             }

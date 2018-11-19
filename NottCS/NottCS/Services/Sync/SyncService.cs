@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using NottCS.Services.Data;
 using NottCS.Services.Data.Club;
-using NottCS.Services.Data.Models;
+using NottCS.Models;
 
 namespace NottCS.Services.Sync
 {
@@ -29,7 +29,7 @@ namespace NottCS.Services.Sync
 
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
-            var clubListLocal1 = await _localDatabaseService.Table<ClubData>().ToListAsync();
+            var clubListLocal1 = await _localDatabaseService.Table<Club>().ToListAsync();
                 _logger.LogDebug($"ToList(initial) took {stopwatch.Elapsed}");
                 stopwatch.Restart();
             foreach (var item in clubList.Results)
@@ -38,7 +38,7 @@ namespace NottCS.Services.Sync
             }
                 _logger.LogDebug($"InsertOrReplace took {stopwatch.Elapsed}");
                 stopwatch.Restart();
-            var clubListLocal = await _localDatabaseService.Table<ClubData>().ToListAsync();
+            var clubListLocal = await _localDatabaseService.Table<Club>().ToListAsync();
                 _logger.LogDebug($"ToList(final) took {stopwatch.Elapsed}");
         }
     }

@@ -7,6 +7,6 @@ namespace NottCS.ViewModels.Test
 {
     public class DatabaseTestViewModel : BaseViewModel
     {
-        public ObservableCollection<Services.Data.Models.ClubData> ClubList { get; set; }
+        public ObservableCollection<Models.Club> ClubList { get; set; }
     }
 }

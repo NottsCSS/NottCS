@@ -9,8 +9,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using NottCS.Models;
 using NottCS.PrivateData;
-using NottCS.Services.Data.Models;
 
 namespace NottCS.Services.BackendService
 {
