@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
+             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+             BindingContext="{Binding Source={StaticResource Locator}, Path=Profile}"
+             x:Class="NottCS.Views.ProfilePage">
+    <ContentPage.Resources>
+        <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
+        <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout WidthRequest="500">
+                <Label Text="NottCS Login"
+                       FontSize="Large"
+                       VerticalOptions="Start" 
+                       HorizontalOptions="CenterAndExpand" />
+                <Label Text="Account Details"
+                       HorizontalOptions="Center"
+                       FontSize="Small"
+                       Style="{StaticResource TitleLabelStyle}"/>
+                <ListView ItemsSource="{Binding DataList}"
+                          WidthRequest="500"
+                          HorizontalOptions="Center"
+                          RowHeight="60"
+                          x:Name="ProfileListView">
+                    <ListView.Behaviors>
+                        <behaviors:EventToCommandBehavior 
+                            EventName="ItemSelected"
+                            Source="{x:Reference ProfileListView}"
+                            Command="{Binding DisableItemSelectedCommand, Mode=TwoWay}" 
+                            Converter="{StaticResource SelectedItemConverter}" />
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding Key}" 
+                                      Detail="{Binding Value}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Text="Edit Profile"
+                        Command="{Binding EditProfileNavigation}"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

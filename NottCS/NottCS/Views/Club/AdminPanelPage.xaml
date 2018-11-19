@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:NottCS.Behaviors;assembly=NottCS"
+             xmlns:converters="clr-namespace:NottCS.Converters;assembly=NottCS"
+             x:Class="NottCS.Views.Club.AdminPanelPage"
+             BindingContext="{Binding Source={StaticResource Locator},Path=AdminPanel}"
+             Title="Admin Panel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <behaviors:EventToCommandBehavior x:Key ="EventToCommandBehavior"/>
+            <converters:SelectedItemEventArgsToSelectedItemConverter x:Key="SelectedItemConverter"/>
+            <converters:TappedItemEventArgsToTappedItemConverter x:Key="TappedItemConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Margin="2">
+            <Label Text="Admin Panel"
+                   FontSize="Medium"
+                   VerticalOptions="Start"
+                   HorizontalOptions="CenterAndExpand"/>
+            <ListView ItemsSource="{Binding AdminPanel}"
+                      Margin="2"
+                      RowHeight="30"
+                      x:Name="SomeList">
+                <ListView.Behaviors>
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemTapped"
+                        Command="{Binding NavigationCommand}"
+                        Converter="{StaticResource TappedItemConverter}" />
+                    <behaviors:EventToCommandBehavior 
+                        EventName="ItemSelected"
+                        Source="{x:Reference SomeList}"
+                        Command="{Binding DisableItemSelectedCommand, Mode=TwoWay}" 
+                        Converter="{StaticResource SelectedItemConverter}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label Text ="{Binding FunctionName}"
+                                       VerticalOptions="CenterAndExpand"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

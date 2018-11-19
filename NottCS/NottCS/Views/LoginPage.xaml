@@ -5,6 +5,7 @@
              Title="Login"
              BindingContext="{Binding Source={StaticResource Locator}, Path=Login}">
     <ContentPage.Content>
+
         <Grid>
             <Grid>
                 <Grid.RowDefinitions>
