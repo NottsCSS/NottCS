@@ -46,7 +46,7 @@ namespace NottCS.Services.Navigation
         /// <typeparam name="TViewModel"></typeparam>
         /// <param name="navigationParameter">parameter to be passed during navigation</param>
         /// <returns></returns>
-        public async Task NavigateToAsync<TViewModel>(object navigationParameter = null) where TViewModel : BaseViewModel, new()
+        public async Task NavigateToAsync<TViewModel>(object navigationParameter = null) where TViewModel : BaseViewModel
         {
             await NavigateToAsync(typeof(TViewModel), navigationParameter);
         }
@@ -111,7 +111,7 @@ namespace NottCS.Services.Navigation
         /// <typeparam name="TViewModel"></typeparam>
         /// <param name="navigationParameter">parameter to be passed during navigation</param>
         /// <returns></returns>
-        public async Task SetDetailPageAsync<TViewModel>(object navigationParameter = null) where TViewModel : BaseViewModel, new()
+        public async Task SetDetailPageAsync<TViewModel>(object navigationParameter = null) where TViewModel : BaseViewModel
         {
             await SetDetailPageAsync(typeof(TViewModel), navigationParameter);
         }
@@ -145,6 +145,50 @@ namespace NottCS.Services.Navigation
 
                 await initializeAsyncTask;
                 _logger.LogInformation($"Navigation to {page} completed successfully");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.ToString());
+                _logger.LogInformation("Navigation terminated prematurely");
+            }
+            finally
+            {
+                IsNavigating = false;
+            }
+        }
+
+        public async Task SetMainPageAsync<TViewModel>(object navigationParameter = null) where TViewModel : BaseViewModel
+        {
+            await SetMainPageAsync(typeof(TViewModel), navigationParameter);
+
+        }
+        public async Task SetMainPageAsync(Type viewModelType, object navigationParameter = null)
+        {
+            if (IsNavigating)
+                return;
+            IsNavigating = true;
+            try
+            {
+                var createPageTask = Task.Run(() => CreatePage(viewModelType));
+
+                if (viewModelType == null || !viewModelType.IsSubclassOf(typeof(BaseViewModel)))
+                    throw new Exception("Cannot navigate to ViewModel that does not inherit BaseViewModel");
+                //Create the Page
+                Page page = await createPageTask;
+                if (page == null)
+                    throw new Exception("Page unable to be created but no exception was thrown previously. Please check implementation");
+
+                //Pass data into the ViewModel
+                if (!(page.BindingContext is BaseViewModel viewModel))
+                    throw new Exception($"BindingContext of {page.GetType()} does not inherit BaseViewModel");
+                Task initializeAsyncTask = viewModel.InitializeAsync(navigationParameter);
+
+
+                //Push the Page into the current Navigation stack
+                
+                _logger.LogInformation($"Setting {page} as MainPage");
+                Application.Current.MainPage = page;
+                _logger.LogInformation($"Setting MainPage to {page} completed successfully");
             }
             catch (Exception e)
             {
