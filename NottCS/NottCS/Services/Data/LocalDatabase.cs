@@ -1,8 +1,8 @@
-﻿using NottCS.Services.Data.DTO;
-using SQLite;
+﻿using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NottCS.Services.Data.Models;
 
 namespace NottCS.Services.Data
 {
@@ -13,6 +13,10 @@ namespace NottCS.Services.Data
         {
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<Club>().Wait();
+        }
+
+        public void GetStuffAsync()
+        {
         }
     }
 }

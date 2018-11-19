@@ -28,7 +28,7 @@
                         <Button Text="Log out" 
                                 Command="{Binding SignOutCommand}" 
                                 Margin="50,0,50,0" />
-                        <Label Text="{Binding Message}" />
+                        <Entry Text="{Binding Message}" />
                         <ActivityIndicator Color="Green" IsRunning="{Binding IsBusy}" />
                     </StackLayout>
                 </ScrollView>
