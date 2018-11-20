@@ -48,7 +48,7 @@ namespace NottCS.Services
             builder.RegisterType<LoginService.LoginService>().As<ILoginService>().SingleInstance();
 
             builder.RegisterType<BackendService.BackendService>().AsSelf().SingleInstance();
-            builder.RegisterType<LocalDatabaseConnection>().AsSelf().SingleInstance();
+            builder.RegisterType<LocalDatabaseConnection>().AsSelf().InstancePerDependency();
             builder.RegisterType<SyncService>().AsSelf().SingleInstance();
 
             //data services

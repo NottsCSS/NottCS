@@ -14,7 +14,8 @@ namespace NottCS.Services.Data
         private static readonly string DbPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "NottCSData.db3");
-        public LocalDatabaseConnection() : base(DbPath, storeDateTimeAsTicks:false)
+        public LocalDatabaseConnection() : base(DbPath, storeDateTimeAsTicks:false, 
+            openFlags: SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create | SQLiteOpenFlags.FullMutex)
         {
             CreateTableAsync<Models.Club>().Wait();
             CreateTableAsync<Models.Member>().Wait();

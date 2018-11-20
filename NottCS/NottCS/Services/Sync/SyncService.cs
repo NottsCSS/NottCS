@@ -13,42 +13,51 @@ namespace NottCS.Services.Sync
     public class SyncService
     {
         private readonly BackendService.BackendService _backendService;
-        private readonly LocalDatabaseConnection _localDatabaseService;
         private readonly ILogger<ClubService> _logger;
 
-        public SyncService(BackendService.BackendService backendService, LocalDatabaseConnection localDatabaseService, ILogger<ClubService> logger)
+        public SyncService(BackendService.BackendService backendService, ILogger<ClubService> logger)
         {
             _backendService = backendService;
-            _localDatabaseService = localDatabaseService;
             _logger = logger;
         }
 
         public async Task Sync()
         {
-            //cannot parallel run, data race
-            await SyncUser();
-            await SyncMember();
+            var userTask = SyncUser();
+            var memberTask = SyncMember();
+            var clubTask = SyncClub();
+            
+            await userTask;
+            await memberTask;
+            await clubTask;
+        }
+
+        private async Task SyncClub()
+        {
+            var conn = new LocalDatabaseConnection();
             var clubList = await _backendService.RequestGetListAsync<ClubList>();
-            await _localDatabaseService.ExecuteAsync("DELETE FROM Club");
+            await conn.ExecuteAsync("DELETE FROM Club");
             foreach (var item in clubList.Results)
             {
-                await _localDatabaseService.InsertOrReplaceAsync(item);
+                await conn.InsertOrReplaceAsync(item);
             }
         }
 
         private async Task SyncUser()
         {
+            var conn = new LocalDatabaseConnection();
             var user = await _backendService.GetUserAsync();
-            await _localDatabaseService.ExecuteAsync("DELETE FROM User");
-            await _localDatabaseService.InsertOrReplaceAsync(user);
+            await conn.ExecuteAsync("DELETE FROM User");
+            await conn.InsertOrReplaceAsync(user);
         }
         private async Task SyncMember()
         {
+            var conn = new LocalDatabaseConnection();
             var memberList = await _backendService.RequestGetListAsync<MemberList>();
-            await _localDatabaseService.ExecuteAsync("DELETE FROM Member");
+            await conn.ExecuteAsync("DELETE FROM Member");
             foreach (var item in memberList.Results)
             {
-                await _localDatabaseService.InsertOrReplaceAsync(item);
+                await conn.InsertOrReplaceAsync(item);
             }
         }
     }
