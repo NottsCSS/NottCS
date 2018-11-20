@@ -12,16 +12,12 @@ using NottCS.Services.Data.User.NottCS.Services.Data.Club;
 
 namespace NottCS.ViewModels.Club
 {
-    public class ClubListViewModel:BaseViewModel
+    public class ClubListViewModel : BaseViewModel
     {
         private readonly IClubService _clubService;
-        private readonly IMemberService _memberService;
-        private readonly IUserService _userService;
-        public ClubListViewModel(IClubService clubService, IMemberService memberService, IUserService userService)
+        public ClubListViewModel(IClubService clubService)
         {
             _clubService = clubService;
-            _memberService = memberService;
-            _userService = userService;
             SelectedClubTypeIndex = 1;
             var task = InitializeAsync();
         }
@@ -30,14 +26,7 @@ namespace NottCS.ViewModels.Club
         private async Task InitializeAsync()
         {
             AllClubList = new ObservableCollection<Models.Club>(await _clubService.GetAllClubsAsync());
-            var userId = (await _userService.GetUser()).Id;
-            Debug.WriteLine($"User id is :{userId}");
-            var memberList = await _memberService.GetMemberByUserId(userId);
-            foreach (var member in memberList)
-            {
-                Debug.WriteLine($"Member id: {member.Id}, adding club by id :{member.ClubId}");
-                MyClubList.Add(await _clubService.GetClubByIdAsync(member.ClubId));
-            }
+            MyClubList = new ObservableCollection<Models.Club>(await _clubService.GetMyClubsAsync());
             SelectedClubTypeIndex = 1;
         }
 
