@@ -142,6 +142,7 @@ namespace NottCS.Services.Navigation
 
                 //Set the Detail page to the newly created Page
                 mainPage.Detail = new NavigationPage(page);
+                mainPage.IsPresented = false;
 
                 await initializeAsyncTask;
                 _logger.LogInformation($"Navigation to {page} completed successfully");
