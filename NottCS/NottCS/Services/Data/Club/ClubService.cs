@@ -34,7 +34,7 @@ namespace NottCS.Services.Data.Club
         {
             //This query checks for member status, remove the check if don't want
             var clubQuery =
-                "Select Club.Id, Club.Name, Club.Description, Club.IconUrl, Club.CreatedTime, Club.UpdatedTime, Member.Id, Member.Status From Club " +
+                "Select Club.Id, Club.Name, Club.Description, Club.IconUrl, Club.CreatedTime, Club.UpdatedTime, Member.Id From Club " +
                 "Left Join Member on Club.Id = Member.ClubId AND Member.Status = 1 " + 
                 "Inner Join User on User.Id = Member.UserId " +
                 "ORDER BY Member.Id";

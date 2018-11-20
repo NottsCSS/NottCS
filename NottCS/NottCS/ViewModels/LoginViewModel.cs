@@ -40,8 +40,7 @@ namespace NottCS.ViewModels
         }
 
         public ICommand SignInCommand => new Command(async() => await SignIn());
-        public ICommand SignOutCommand => new Command(async () => await SignOut());
-        public ICommand SyncCommand => new Command(async () => await Sync());
+        public ICommand OfflineCommand => new Command(async () => await ViewOffline());
 
         private async Task SignIn()
         {
@@ -71,29 +70,10 @@ namespace NottCS.ViewModels
                 IsBusy = false;
             }
         }
-        private async Task SignOut()
-        {
-            if (IsBusy)
-                return;
-            IsBusy = true;
-            try
-            {
-                await _loginService.SignOutAsync();
-                _backendService.ResetClient();
-            }
-            catch (Exception e)
-            {
-                Message = e.ToString();
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-        }
 
-        private async Task Sync()
+        private async Task ViewOffline()
         {
-            await _syncService.Sync();
+            await _navigationService.SetMainPageAsync<MainViewModel>();
         }
     }
 }
