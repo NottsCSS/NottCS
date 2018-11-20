@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,6 @@ namespace NottCS.Services.Data.Club
         private readonly BackendService.BackendService _backendService;
         private readonly LocalDatabaseConnection _localDatabaseService;
         private readonly ILogger<ClubService> _logger;
-        private readonly IMemberService _memberService;
 
         public ClubService(BackendService.BackendService backendService, LocalDatabaseConnection localDatabaseService, 
             ILogger<ClubService> logger, IMemberService memberService)
@@ -24,7 +24,6 @@ namespace NottCS.Services.Data.Club
             _backendService = backendService;
             _localDatabaseService = localDatabaseService;
             _logger = logger;
-            _memberService = memberService;
         }
         public Task<List<Models.Club>> GetAllClubsAsync()
         {
@@ -33,15 +32,21 @@ namespace NottCS.Services.Data.Club
 
         public async Task<List<Models.Club>> GetMyClubsAsync()
         {
-//            var memberTableQuery = "(Select Userid,ClubId From Member Inner Join User on User.Id = Member.UserId) AS ";
+            //This query checks for member status, remove the check if don't want
             var clubQuery =
-                "Select Club.Id, Club.Name, Club.Description, Club.IconUrl, Club.CreatedTime, Club.UpdatedTime, Member.Id From Club " +
-                "Left Join Member on Club.Id = Member.ClubId " +
-                "Inner Join User on User.Id = Member.UserId ORDER BY Member.Id";
-
-            var a = await _localDatabaseService.QueryAsync<Models.Club>(clubQuery
-                );
-//            _localDatabaseService.QueryAsync<Models.Club>("Select * From Club Inner Join ");
+                "Select Club.Id, Club.Name, Club.Description, Club.IconUrl, Club.CreatedTime, Club.UpdatedTime, Member.Id, Member.Status From Club " +
+                "Left Join Member on Club.Id = Member.ClubId AND Member.Status = 1 " + 
+                "Inner Join User on User.Id = Member.UserId " +
+                "ORDER BY Member.Id";
+            try
+            {
+                var a = await _localDatabaseService.QueryAsync<Models.Club>(clubQuery);
+                return a;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
             return new List<Models.Club>();
         }
 

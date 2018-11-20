@@ -54,8 +54,8 @@ namespace NottCS.ViewModels
                 Message = result.AccessToken;
                 _backendService.SetupClient(Message);
                 var syncTask =  _syncService.Sync();
-                await _navigationService.SetMainPageAsync<MainViewModel>();
                 await syncTask;
+                await _navigationService.SetMainPageAsync<MainViewModel>();
             }
             catch (MicrosoftAccountException e)
             {
