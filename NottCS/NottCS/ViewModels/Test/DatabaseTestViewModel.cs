@@ -53,6 +53,7 @@ namespace NottCS.ViewModels.Test
             IsBusy = true;
             try
             {
+                var qqq = _clubService.GetAllClubsAsync();
                 var club = new Models.Club()
                 {
                     Name = this.Name,

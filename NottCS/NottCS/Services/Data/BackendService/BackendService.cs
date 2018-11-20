@@ -114,12 +114,47 @@ namespace NottCS.Services.BackendService
 
         //The section below is for testing purposes only, remove after proper Service is written
         #region Testing
-        public async Task<ClubList> GetClubsAsync()
+            
+        public async Task<T> RequestGetListAsync<T>() where T : new()
+        {
+            if(!_isClientSetup)
+                throw new Exception("Client not set up");
+
+            string uri;
+
+            if (typeof(T) == typeof(Models.ClubList))
+            {
+                uri = _baseAddress + "club/";
+            }
+            else if (typeof(T) == typeof(Models.MemberList))
+            {
+                uri = _baseAddress + "member/";
+            }
+            else
+            {
+                throw new Exception("Unknown type passed into request");
+            }
+
+            var request = new HttpRequestMessage(HttpMethod.Get, uri);
+            var requestTask = _client.SendAsync(request);
+
+            var httpResponse = await requestTask;
+            if (httpResponse.IsSuccessStatusCode)
+            {
+                var resultTask = Task.Run(async () => JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync()));
+                return await resultTask;
+            }
+            else
+            {
+                throw new Exception($"Http request failed with error code: {httpResponse.StatusCode}");
+            }
+        }
+        public async Task<User> GetUserAsync()
         {
             if (!_isClientSetup)
                 throw new Exception("Client is not setup");
 
-            var httpRequest = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + "club/");
+            var httpRequest = new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress + "azuread-user/me/");
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -128,14 +163,13 @@ namespace NottCS.Services.BackendService
             if (result.IsSuccessStatusCode)
             {
                 var resultString = await result.Content.ReadAsStringAsync();
-                return await Task.Run(() => JsonConvert.DeserializeObject<ClubList>(resultString));
+                return await Task.Run(() => JsonConvert.DeserializeObject<User>(resultString));
             }
             else
             {
                 throw new Exception($"Something went wrong, http status code: {result.StatusCode}");
             }
         }
-
         public async Task AddClubAsync(Club club)
         {
             if (!_isClientSetup)

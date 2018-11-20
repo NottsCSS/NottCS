@@ -25,9 +25,28 @@ namespace NottCS.Services.Sync
 
         public async Task Sync()
         {
-            var clubList = await _backendService.GetClubsAsync();
+            //cannot parallel run, data race
+            await SyncUser();
+            await SyncMember();
+            var clubList = await _backendService.RequestGetListAsync<ClubList>();
             await _localDatabaseService.ExecuteAsync("DELETE FROM Club");
             foreach (var item in clubList.Results)
+            {
+                await _localDatabaseService.InsertOrReplaceAsync(item);
+            }
+        }
+
+        private async Task SyncUser()
+        {
+            var user = await _backendService.GetUserAsync();
+            await _localDatabaseService.ExecuteAsync("DELETE FROM User");
+            await _localDatabaseService.InsertOrReplaceAsync(user);
+        }
+        private async Task SyncMember()
+        {
+            var memberList = await _backendService.RequestGetListAsync<MemberList>();
+            await _localDatabaseService.ExecuteAsync("DELETE FROM Member");
+            foreach (var item in memberList.Results)
             {
                 await _localDatabaseService.InsertOrReplaceAsync(item);
             }

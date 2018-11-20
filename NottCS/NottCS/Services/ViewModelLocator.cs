@@ -8,6 +8,9 @@ using NLog;
 using NLog.Extensions.Logging;
 using NottCS.Services.Data;
 using NottCS.Services.Data.Club;
+using NottCS.Services.Data.Member;
+using NottCS.Services.Data.User;
+using NottCS.Services.Data.User.NottCS.Services.Data.Club;
 using NottCS.Services.LoginService;
 using NottCS.Services.Navigation;
 using NottCS.Services.Stuff;
@@ -43,10 +46,15 @@ namespace NottCS.Services
             builder.RegisterType<StuffService>().As<IStuffService>().SingleInstance();
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
             builder.RegisterType<LoginService.LoginService>().As<ILoginService>().SingleInstance();
+
             builder.RegisterType<BackendService.BackendService>().AsSelf().SingleInstance();
             builder.RegisterType<LocalDatabaseConnection>().AsSelf().SingleInstance();
             builder.RegisterType<SyncService>().AsSelf().SingleInstance();
+
+            //data services
             builder.RegisterType<ClubService>().As<IClubService>().SingleInstance();
+            builder.RegisterType<MemberService>().As<IMemberService>().SingleInstance();
+            builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
         }
 
         void RegisterViewModels(ref ContainerBuilder builder)

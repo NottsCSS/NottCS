@@ -17,6 +17,8 @@ namespace NottCS.Services.Data
         public LocalDatabaseConnection() : base(DbPath, storeDateTimeAsTicks:false)
         {
             CreateTableAsync<Models.Club>().Wait();
+            CreateTableAsync<Models.Member>().Wait();
+            CreateTableAsync<Models.User>().Wait();
         }
     }
 }

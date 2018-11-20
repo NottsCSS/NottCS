@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -7,6 +8,7 @@ using NottCS.Models;
 
 namespace NottCS.Services.Data.Club
 {
+    //Will have data race problem, not sure if the use case will fully show it
     public class ClubService : IClubService
     {
         private readonly BackendService.BackendService _backendService;
@@ -21,7 +23,7 @@ namespace NottCS.Services.Data.Club
         }
         public Task<List<Models.Club>> GetAllClubsAsync()
         {
-            return _localDatabaseService.Table<Models.Club>().ToListAsync();
+            return _localDatabaseService.QueryAsync<Models.Club>("SELECT * FROM Club ORDER BY Name COLLATE NOCASE ASC");
         }
 
         public Task<Models.Club> GetClubByIdAsync(int id)
