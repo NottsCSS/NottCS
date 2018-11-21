@@ -69,7 +69,6 @@ namespace NottCS.Services
             builder.RegisterType<ProfileViewModel>().InstancePerDependency();
             builder.RegisterType<ClubViewModel>().InstancePerDependency();
             builder.RegisterType<AdminPanelViewModel>().InstancePerDependency();
-
             //Test
             builder.RegisterType<DatabaseTestViewModel>().InstancePerDependency();
         }
