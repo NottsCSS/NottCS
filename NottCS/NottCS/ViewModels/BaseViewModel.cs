@@ -70,6 +70,5 @@ namespace NottCS.ViewModels
             changed?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-        public ICommand DisableItemSelectedCommand => new Command(() => { });
     }
 }

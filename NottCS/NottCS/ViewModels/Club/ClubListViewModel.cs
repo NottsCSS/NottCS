@@ -4,21 +4,30 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
+using NottCS.Models;
 using NottCS.Services.Data;
 using NottCS.Services.Data.Club;
 using NottCS.Services.Data.Member;
 using NottCS.Services.Data.User.NottCS.Services.Data.Club;
+using NottCS.Services.Navigation;
+using ILogger = NLog.ILogger;
+using Xamarin.Forms;
 
 namespace NottCS.ViewModels.Club
 {
     public class ClubListViewModel : BaseViewModel
     {
+        private readonly INavigationService _navigationService;
         private readonly IClubService _clubService;
-        public ClubListViewModel(IClubService clubService)
+        public ICommand DisableItemSelectedCommand => new Command(() => { });
+        public ClubListViewModel(IClubService clubService, INavigationService navigationService)
         {
             _clubService = clubService;
             SelectedClubTypeIndex = 1;
+            _navigationService = navigationService;
             var task = InitializeAsync();
         }
 
@@ -57,8 +66,12 @@ namespace NottCS.ViewModels.Club
             get => _clubList;
             set => SetProperty(ref _clubList, value);
         }
-
-#region MockData
+        public ICommand ClubListNavigationCommand => new Command(async (object p) => await Navigate(p));
+        private async Task Navigate(object param)
+        {
+            await _navigationService.NavigateToAsync<ClubViewModel>(param);
+        }
+        #region MockData
 
         private ObservableCollection<Models.Club> _allClubList = new ObservableCollection<Models.Club>();
         private ObservableCollection<Models.Club> _myClubList = new ObservableCollection<Models.Club>();

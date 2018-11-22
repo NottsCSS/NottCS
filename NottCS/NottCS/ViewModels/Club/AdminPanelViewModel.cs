@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace NottCS.ViewModels.Club
 {
@@ -12,7 +14,7 @@ namespace NottCS.ViewModels.Club
             public string FunctionName { get; set; }
             public string FucntionId { get; set; }
         }
-
+        public ICommand DisableItemSelectedCommand => new Command(() => { });
         public ObservableCollection<AdminPanelObject> AdminPanel { get; set; } = new ObservableCollection<AdminPanelObject>()
         {
             new AdminPanelObject()

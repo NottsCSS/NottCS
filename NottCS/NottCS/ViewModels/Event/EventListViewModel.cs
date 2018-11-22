@@ -15,6 +15,7 @@ namespace NottCS.ViewModels.Event
         //    get => _eventLists;
         //    set => SetProperty(ref _eventLists, value);
         //}
+        public ICommand DisableItemSelectedCommand => new Command(() => { });
         public ObservableCollection<Models.Event> EventsList { get; set; } = new ObservableCollection<Models.Event>()
         {
             new Models.Event()
