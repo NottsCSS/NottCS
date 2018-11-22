@@ -21,7 +21,7 @@
             <RowDefinition Height="7*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Image Source="account_box_icon.png" />
+        <Image Source="account_box_icon" />
 
         <ListView x:Name="ListViewMenu"
                   Grid.Row="1"
