@@ -33,9 +33,9 @@
                   RowHeight="50">
             <ListView.Behaviors>
                 <behaviors:EventToCommandBehavior
-                    EventName="ItemSelected"
+                    EventName="ItemTapped"
                     Command="{Binding NavigateCommand}"
-                    Converter="{StaticResource SelectedItemConverter}" />
+                    Converter="{StaticResource ItemTappedConverter}" />
             </ListView.Behaviors>
             <ListView.ItemTemplate>
                 <DataTemplate>

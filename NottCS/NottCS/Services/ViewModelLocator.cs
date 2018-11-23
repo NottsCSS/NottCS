@@ -59,7 +59,7 @@ namespace NottCS.Services
 
         void RegisterViewModels(ref ContainerBuilder builder)
         {
-            builder.RegisterType<AboutViewModel>().InstancePerDependency();
+            builder.RegisterType<DITestViewModel>().InstancePerDependency();
             builder.RegisterType<MainViewModel>().InstancePerDependency();
             builder.RegisterType<MenuViewModel>().InstancePerDependency();
             builder.RegisterType<LoginViewModel>().InstancePerDependency();
@@ -73,7 +73,7 @@ namespace NottCS.Services
             builder.RegisterType<DatabaseTestViewModel>().InstancePerDependency();
         }
 
-        public AboutViewModel About => _container.Resolve<AboutViewModel>();
+        public DITestViewModel DITest => _container.Resolve<DITestViewModel>();
         public MainViewModel Main => _container.Resolve<MainViewModel>();
         public MenuViewModel Menu => _container.Resolve<MenuViewModel>();
         public LoginViewModel Login => _container.Resolve<LoginViewModel>();

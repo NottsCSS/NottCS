@@ -29,7 +29,6 @@ namespace NottCS.ViewModels.Club
             Debug.WriteLine("Temporary Empty");
         }
 
-        public ICommand DisableItemSelectedCommand => new Command(() => { });
 
         #region Constructor
 

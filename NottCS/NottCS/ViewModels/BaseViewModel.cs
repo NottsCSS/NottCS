@@ -51,6 +51,7 @@ namespace NottCS.ViewModels
             OnPropertyChanged(propertyName);
             return true;
         }
+        public ICommand EmptyCommand => new Command(() => { });
         /// <summary>
         /// <para>Have to be overriden by derived classes that needs navigationData during navigation</para>
         /// <para>Overriden method needs to typecheck navigationData, and then process the data</para>

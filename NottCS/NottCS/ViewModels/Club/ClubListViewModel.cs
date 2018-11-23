@@ -22,7 +22,6 @@ namespace NottCS.ViewModels.Club
     {
         private readonly INavigationService _navigationService;
         private readonly IClubService _clubService;
-        public ICommand DisableItemSelectedCommand => new Command(() => { });
         public ClubListViewModel(IClubService clubService, INavigationService navigationService)
         {
             _clubService = clubService;

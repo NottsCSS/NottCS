@@ -28,7 +28,7 @@
                     <behaviors:EventToCommandBehavior
                         EventName="ItemSelected"
                         Source="{x:Reference EventListView}"
-                        Command="{Binding DisableItemSelectedCommand, Mode=TwoWay}"
+                        Command="{Binding EmptyCommand, Mode=TwoWay}"
                         Converter="{StaticResource SelectedItemConverter}" />
                 </ListView.Behaviors>
                 <ListView.ItemTemplate>
