@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.AboutPage"
+             xmlns:vm="clr-namespace:NottCS.ViewModels"
+             Title="{Binding Title}"
+             BindingContext="{Binding Source={StaticResource Locator}, Path=DITest}">
+
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,30,0,0" />
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ScrollView Margin="5,0">
+                <StackLayout BackgroundColor="White">
+                    <Image Source="account_box_icon" 
+                           HeightRequest="150"
+                           HorizontalOptions="Center"/>
+                    <Label 
+                    Text ="Version: 1.0.0"
+                    FontSize="12"
+                    TextColor="Black"
+                    HorizontalOptions="Center"
+                    VerticalOptions="StartAndExpand">
+                    </Label>
+                    <Label 
+                    Text ="Copyright © 2018 Computer Science Society"
+                    FontSize="11"
+                    TextColor="Gray"
+                    HorizontalOptions="Center">
+                    </Label>
+                    <Label
+                    Text="Why NottCS Exists?"
+                    FontSize="20"
+                    HorizontalOptions="Start"
+                    Margin="0,5"
+                    FontAttributes="Bold">
+                    </Label>
+                    <Label LineBreakMode="WordWrap" 
+                       FontSize="14">
+                        Founded in 2017, Computer Science Society of The University of Nottingham Malaysia Campus is proud to release their first ever cross-platform application.
+                    </Label>
+                    <Label LineBreakMode="WordWrap"
+                       FontSize="14">
+                        NottCS mission is to bring all the clubs and societies under a single application and connect students in this platform.
+                    </Label>
+                    <Label LineBreakMode="WordWrap"
+                       FontSize="14">
+                        We also want to reduce the email spam and ease the signing up of events/activities held by the clubs and societies.
+                    </Label>
+                    <Label
+                    Text="NottCS Features"
+                    FontSize="20"
+                    HorizontalOptions="Start"
+                    Margin="0,5"
+                    FontAttributes="Bold">
+                    </Label>
+                    <Label LineBreakMode="WordWrap"
+                       FontSize="14">
+                        One of the main features in NottCS is that, students can register to any clubs and societies with a click of a button.
+                    </Label>
+                    <Label LineBreakMode ="WordWrap"
+                       FontSize="14">
+                        Students just have to pay the registeration fees and get the QR code scan and you successfully join it.
+                    </Label>
+                    <Label LineBreakMode="WordWrap"
+                       FontSize="14">
+                        To further simplify the process of signing up events/activities, students can just sign up to their respective events.
+                    </Label>
+                    <Label LineBreakMode="WordWrap"
+                       FontSize="14">
+                        All they need to do is just go to their selected events and click sign up. No registeration form is needed to fill in.
+                    </Label>
+                    <Label LineBreakMode="WordWrap"
+                       FontSize="14">
+                        With NottCS, a special feature called Admin Panel is just what the committees of the clubs needs.
+                    </Label>
+                    <Label LineBreakMode="WordWrap"
+                       FontSize="14">
+                        Admin Panel enables committees to post their attracting and fun activities/events without spamming students inbox.
+                    </Label>
+                    <Label LineBreakMode="WordWrap"
+                       FontSize="14">
+                        Moreover, Admin Panel has the privileges to setup an QR code for students to scan it for SCPD points at the end of their activities/events.
+                    </Label>
+                    <Label LineBreakMode="WordWrap"
+                       FontSize="14">
+                        This will remove the scanning student ID process and saves both parties time.
+                    </Label>
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
