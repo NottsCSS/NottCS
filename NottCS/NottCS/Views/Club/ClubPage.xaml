@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -16,8 +16,8 @@
     </TabbedPage.Resources>
 
     <TabbedPage.ToolbarItems>
-        <ToolbarItem x:Name="Settings"
-                     Text="Settings"
+        <ToolbarItem x:Name="Admin_Panel"
+                     Text="Admin Panel"
                      Command="{Binding AdminPanelNavigationCommand}"
                      Icon="{x:OnPlatform Android='Admin_Icon.png', UWP='Admin_Icon.png'}">
         </ToolbarItem>
