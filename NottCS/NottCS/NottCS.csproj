@@ -25,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\DITestPage.xaml.cs">
+      <DependentUpon>DITestPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Test\DatabaseTestPage.xaml.cs">
       <DependentUpon>DatabaseTestPage.xaml</DependentUpon>
     </Compile>

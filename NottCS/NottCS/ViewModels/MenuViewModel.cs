@@ -35,7 +35,7 @@ namespace NottCS.ViewModels
         {
             new HomeMenuItem(){ImageUri = "xamarin_logo.png", Name="Home", ViewModelType = typeof(HomeViewModel)},
             new HomeMenuItem(){ImageUri = "account_box_icon.png", Name="Profile", ViewModelType = typeof(ProfileViewModel)},
-            new HomeMenuItem(){ImageUri = "account_box_icon.png", Name="About", ViewModelType = typeof(AboutViewModel)},
+            new HomeMenuItem(){ImageUri = "account_box_icon.png", Name="DITest", ViewModelType = typeof(DITestViewModel)},
             new HomeMenuItem(){ImageUri = "xamarin_logo.png", Name="DbTest", ViewModelType = typeof(DatabaseTestViewModel)}
         };
 

@@ -8,6 +8,5 @@ namespace NottCS.ViewModels
 {
     public class ProfileViewModel:BaseViewModel
     {
-        public ICommand DisableItemSelectedCommand => new Command(() => { });
     }
 }

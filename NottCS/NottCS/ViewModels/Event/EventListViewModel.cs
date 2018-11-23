@@ -15,19 +15,18 @@ namespace NottCS.ViewModels.Event
         //    get => _eventLists;
         //    set => SetProperty(ref _eventLists, value);
         //}
-        public ICommand DisableItemSelectedCommand => new Command(() => { });
         public ObservableCollection<Models.Event> EventsList { get; set; } = new ObservableCollection<Models.Event>()
         {
             new Models.Event()
             {
-                Id = "0",
+                Id = 0,
                 Title = "Nothing here",
                 Description = "Just nothing here",
                 EventImage = "https://blog.mozilla.org/firefox/files/2017/12/firefox-logo-600x619.png"
             },
             new Models.Event()
             {
-                Id = "1",
+                Id = 1,
                 Title = "Something here",
                 Description = "Just something here",
                 EventImage = "https://blog.mozilla.org/firefox/files/2017/12/firefox-logo-600x619.png"
