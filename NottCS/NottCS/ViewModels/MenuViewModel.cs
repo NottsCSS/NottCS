@@ -36,7 +36,7 @@ namespace NottCS.ViewModels
             new HomeMenuItem(){ImageUri = "tab_home_icon", Name="Home", ViewModelType = typeof(HomeViewModel)},
             new HomeMenuItem(){ImageUri = "account_box_icon", Name="Profile", ViewModelType = typeof(ProfileViewModel)},
             new HomeMenuItem(){ImageUri = "tab_about_icon", Name="About", ViewModelType = typeof(AboutViewModel)},
-            new HomeMenuItem(){ImageUri = "tab_database_icon", Name="Setting", ViewModelType = typeof(SettingViewModel)},
+            new HomeMenuItem(){ImageUri = "tab_setting_icon", Name="Setting", ViewModelType = typeof(SettingViewModel)},
             new HomeMenuItem(){ImageUri = "tab_DITest_icon", Name="DITest", ViewModelType = typeof(DITestViewModel)},
             new HomeMenuItem(){ImageUri = "tab_database_icon", Name="DbTest", ViewModelType = typeof(DatabaseTestViewModel)}
         };

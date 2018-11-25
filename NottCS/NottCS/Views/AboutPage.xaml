@@ -4,11 +4,7 @@
              x:Class="NottCS.Views.AboutPage"
              xmlns:vm="clr-namespace:NottCS.ViewModels"
              Title="{Binding Title}"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
-             d:DataContext="{d:DesignInstance viewModels:AboutViewModel}">
+             BindingContext="{Binding Source={StaticResource Locator}, Path=DITest}">
 
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
