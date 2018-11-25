@@ -4,7 +4,11 @@
              x:Class="NottCS.Views.AboutPage"
              xmlns:vm="clr-namespace:NottCS.ViewModels"
              Title="{Binding Title}"
-             BindingContext="{Binding Source={StaticResource Locator}, Path=DITest}">
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:viewModels="clr-namespace:NottCS.ViewModels;assembly=NottCS"
+             d:DataContext="{d:DesignInstance viewModels:AboutViewModel}">
 
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
@@ -24,7 +28,7 @@
             <ScrollView Margin="5,0">
                 <StackLayout BackgroundColor="White">
                     <Image Source="account_box_icon" 
-                           HeightRequest="150"
+                           HeightRequest="300"
                            HorizontalOptions="Center"/>
                     <Label 
                     Text ="Version: 1.0.0"

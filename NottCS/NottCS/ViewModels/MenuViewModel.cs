@@ -33,11 +33,12 @@ namespace NottCS.ViewModels
         }
         public List<HomeMenuItem> MenuItems { get; set; } = new List<HomeMenuItem>()
         {
-            new HomeMenuItem(){ImageUri = "xamarin_logo.png", Name="Home", ViewModelType = typeof(HomeViewModel)},
-            new HomeMenuItem(){ImageUri = "account_box_icon.png", Name="Profile", ViewModelType = typeof(ProfileViewModel)},
-            new HomeMenuItem(){ImageUri = "tab_about_icon.png", Name="About", ViewModelType = typeof(AboutViewModel)},
-            new HomeMenuItem(){ImageUri = "account_box_icon.png", Name="DITest", ViewModelType = typeof(DITestViewModel)},
-            new HomeMenuItem(){ImageUri = "xamarin_logo.png", Name="DbTest", ViewModelType = typeof(DatabaseTestViewModel)}
+            new HomeMenuItem(){ImageUri = "tab_home_icon", Name="Home", ViewModelType = typeof(HomeViewModel)},
+            new HomeMenuItem(){ImageUri = "account_box_icon", Name="Profile", ViewModelType = typeof(ProfileViewModel)},
+            new HomeMenuItem(){ImageUri = "tab_about_icon", Name="About", ViewModelType = typeof(AboutViewModel)},
+            new HomeMenuItem(){ImageUri = "tab_database_icon", Name="Setting", ViewModelType = typeof(SettingViewModel)},
+            new HomeMenuItem(){ImageUri = "tab_DITest_icon", Name="DITest", ViewModelType = typeof(DITestViewModel)},
+            new HomeMenuItem(){ImageUri = "tab_database_icon", Name="DbTest", ViewModelType = typeof(DatabaseTestViewModel)}
         };
 
         public ICommand NavigateCommand => new Command<object>(async(t) => await Navigate(t));

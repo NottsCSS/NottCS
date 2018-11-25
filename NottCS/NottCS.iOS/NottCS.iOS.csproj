@@ -153,18 +153,6 @@
     <ImageAsset Include="Assets.xcassets\tab_setting_icon.imageset\ic_settings_grey_50_36pt@3x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\xamarin_icon.imageset\Contents.json">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\xamarin_icon.imageset\xamarin_logo.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\xamarin_icon.imageset\xamarin_logo@2x.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\xamarin_icon.imageset\xamarin_logo@3x.png">
-      <Visible>false</Visible>
-    </ImageAsset>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
     <ImageAsset Include="Assets.xcassets\account_box_icon.imageset\Contents.json">
       <Visible>false</Visible>
