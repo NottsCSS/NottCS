@@ -5,7 +5,7 @@
              BindingContext="{Binding Source={StaticResource Locator}, Path=DITest}">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Empty123"
+            <Label Text="Empty12345"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>
