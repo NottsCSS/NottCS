@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="account_box_icon.png" />
+    <Content Include="check_circle_icon.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-200.png" />
@@ -133,6 +134,11 @@
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="tab_about_icon.png" />
+    <Content Include="tab_database_icon.png" />
+    <Content Include="tab_DITest_icon.png" />
+    <Content Include="tab_home_icon.png" />
+    <Content Include="tab_setting_icon.png" />
     <Content Include="xamarin_logo.png" />
     <Content Include="add.png" />
     <Content Include="save.png" />
