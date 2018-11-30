@@ -25,6 +25,8 @@
                 <StackLayout BackgroundColor="White">
                     <Image Source="account_box_icon" 
                            HeightRequest="300"
+                           WidthRequest="300"
+                           Aspect="Fill"
                            HorizontalOptions="Center"/>
                     <Label 
                     Text ="Version: 1.0.0"
