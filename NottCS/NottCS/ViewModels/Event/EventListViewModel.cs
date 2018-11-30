@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NottCS.Services.Data.Event;
 using NottCS.Services.Navigation;
 using Xamarin.Forms;
 
@@ -13,18 +14,21 @@ namespace NottCS.ViewModels.Event
     public class EventListViewModel : BaseViewModel
     {
         private readonly INavigationService _navigationService;
-        private ObservableCollection<Models.Event> _eventsLists = new ObservableCollection<Models.Event>();
+        private readonly IEventService _eventService;
+        private ObservableCollection<Models.Event> _eventsList = new ObservableCollection<Models.Event>();
 
-        public EventListViewModel(INavigationService navigationService)
+        public EventListViewModel(INavigationService navigationService, IEventService eventService)
         {
             _navigationService = navigationService;
+            _eventService = eventService;
+            var i = InitializeAsync();
         }
 
-        //public ObservableCollection<Models.Event> EventList
-        //{
-        //    get => _eventLists;
-        //    set => SetProperty(ref _eventLists, value);
-        //}
+        private async Task InitializeAsync()
+        {
+            EventsList = new ObservableCollection<Models.Event>(await _eventService.GetAllEventsAsync());
+        }
+        
         public ICommand EventListNavigationCommand => new Command(async (object p) => await EventListNavigation(p));
         private async Task EventListNavigation(object p)
         {
@@ -40,24 +44,11 @@ namespace NottCS.ViewModels.Event
                 Debug.WriteLine(e.Message);
             }
         }
-        public ObservableCollection<Models.Event> EventsList { get; set; } = new ObservableCollection<Models.Event>()
-        {
-            new Models.Event()
-            {
-                Id = 0,
-                Title = "Nothing here",
-                Description = "Just nothing here",
-                EventImage = "https://blog.mozilla.org/firefox/files/2017/12/firefox-logo-600x619.png"
-            },
-            new Models.Event()
-            {
-                Id = 1,
-                Title = "Something here",
-                Description = "Just something here",
-                EventImage = "https://blog.mozilla.org/firefox/files/2017/12/firefox-logo-600x619.png"
-            },
-        };
-        
 
+        public ObservableCollection<Models.Event> EventsList
+        {
+            get => _eventsList;
+            set => SetProperty(ref _eventsList, value);
+        }
     }
 }

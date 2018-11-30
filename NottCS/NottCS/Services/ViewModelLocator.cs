@@ -8,6 +8,7 @@ using NLog;
 using NLog.Extensions.Logging;
 using NottCS.Services.Data;
 using NottCS.Services.Data.Club;
+using NottCS.Services.Data.Event;
 using NottCS.Services.Data.Member;
 using NottCS.Services.Data.User;
 using NottCS.Services.Data.User.NottCS.Services.Data.Club;
@@ -55,6 +56,7 @@ namespace NottCS.Services
             builder.RegisterType<ClubService>().As<IClubService>().SingleInstance();
             builder.RegisterType<MemberService>().As<IMemberService>().SingleInstance();
             builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
+            builder.RegisterType<TestEventService>().As<IEventService>().SingleInstance();
         }
 
         void RegisterViewModels(ref ContainerBuilder builder)

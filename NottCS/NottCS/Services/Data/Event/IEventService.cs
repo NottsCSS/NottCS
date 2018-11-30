@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NottCS.Services.Data.Event
 {
-    interface IEventService
+    public interface IEventService
     {
         Task<List<Models.Event>> GetAllEventsAsync();
         Task<List<Models.Event>> GetEventByClubAsync(int clubid);

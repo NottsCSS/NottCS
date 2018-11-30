@@ -30,9 +30,9 @@ namespace NottCS.Models
 
         public string Venue { get; set; }
 
-        public string OrganizingClub { get; set; }
+        public int OrganizingClub { get; set; }
 
-        public string OrganizingChairman { get; set; }
+        public int OrganizingChairman { get; set; }
         public List<Forms> ParamList { get; set; }
     }
 }
