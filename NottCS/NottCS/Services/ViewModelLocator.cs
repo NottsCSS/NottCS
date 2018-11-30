@@ -69,6 +69,9 @@ namespace NottCS.Services
             builder.RegisterType<ProfileViewModel>().InstancePerDependency();
             builder.RegisterType<ClubViewModel>().InstancePerDependency();
             builder.RegisterType<AdminPanelViewModel>().InstancePerDependency();
+            builder.RegisterType<EventViewModel>().InstancePerDependency();
+            builder.RegisterType<EventRegistrationFormsViewModel>().InstancePerDependency();
+            builder.RegisterType<EventRegistrationSuccessViewModel>().InstancePerDependency();
             //Test
             builder.RegisterType<DatabaseTestViewModel>().InstancePerDependency();
         }
@@ -84,5 +87,8 @@ namespace NottCS.Services
         public ClubViewModel Club => _container.Resolve<ClubViewModel>();
         public AdminPanelViewModel AdminPanel => _container.Resolve<AdminPanelViewModel>();
         public DatabaseTestViewModel DatabaseTest => _container.Resolve<DatabaseTestViewModel>();
+        public EventViewModel Event => _container.Resolve<EventViewModel>();
+        public EventRegistrationFormsViewModel EventRegistrationForms => _container.Resolve<EventRegistrationFormsViewModel>();
+        public EventRegistrationSuccessViewModel EventRegistrationSuccess => _container.Resolve<EventRegistrationSuccessViewModel>();
     }
 }

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NottCS.Views.Event.EventPage"
+             BindingContext="{Binding Source={StaticResource Locator},Path=Event}">
+    <ContentPage.Content>
+        <Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0"
+                       Margin="5,5,5,0"
+                       HorizontalOptions="Center"
+                       FontSize="Medium"
+                       Text="{Binding EventName}"/>
+                <Image x:Name="EmailContent"
+                       Grid.Row="1"
+                       Margin="5"
+                       Aspect="Fill"
+                       HorizontalOptions="CenterAndExpand"/>
+                <Button Text="SIGN UP"
+                        Grid.Row="2"
+                        Style="{StaticResource SpanButtonStyle}"
+                        Command="{Binding SignupCommand}"
+                        Margin="{x:OnPlatform Android=2, UWP=2, iOS='2,2,2,30'}">
+                    <!--<Button.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="Android" Value="2"/>
+                            <On Platform="iOS" Value="2,2,2,20"/>
+                            <On Platform="UWP" Value="2"/>
+                        </OnPlatform>
+                    </Button.Margin>-->
+                </Button>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
