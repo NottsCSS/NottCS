@@ -11,10 +11,28 @@ namespace NottCS.ViewModels.Event
 {
     public class EventViewModel:BaseViewModel
     {
-        public string EventName { get; set; }
-        public string Description { get; set; }
-        public string EventImage { get; set; }
+        public string EventName
+        {
+            get => _eventName;
+            set => SetProperty(ref _eventName, value);
+        }
+
+        public string Description
+        {
+            get => _description;
+            set => SetProperty(ref _description, value);
+        }
+
+        public string EventImage
+        {
+            get => _eventImage;
+            set => SetProperty(ref _eventImage, value);
+        }
+
         private readonly INavigationService _navigationService;
+        private string _eventName;
+        private string _description;
+        private string _eventImage;
         public ICommand SignupCommand => new Command(async () => await Navigate());
         private async Task Navigate()
         {
