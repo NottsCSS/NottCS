@@ -20,7 +20,7 @@ namespace NottCS.Services.BackendService
     {
         private readonly HttpClient _client;
         private bool _isClientSetup = false;
-        private readonly string _baseAddress = Config.EndpointAddress;
+        private readonly string _baseAddress = Config.EndPointAddress;
         private readonly ILogger<BackendService> _logger;
 
         public BackendService(ILogger<BackendService> logger)
