@@ -14,7 +14,6 @@ namespace NottCS.ViewModels
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
         private bool _isBusy = false;
-        private bool _isRefreshing = true;
         public bool IsBusy
         {
             get => _isBusy;
